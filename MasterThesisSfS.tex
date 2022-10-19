@@ -1,0 +1,273 @@
+%%%--- Template for master thesis at SfS
+%%%--- Modified template with more comments and examples -- SG, 11/06/09
+%%%--- Modified with more comments -- YW, 22/10/18
+
+% INFO
+% mainly two SfS sty file are used here and each of them will use 
+% a few sty or CTAN package on its own.
+% the main structure:
+
+% ETHDAsfs
+% ├── sfs-hyper: url, hyperref + lang options
+% └── ETHDASA
+%     ├── articleint: multi-lang support
+%     ├── page style: ETHform (ETHSfSlogo)
+%     └── initialize string: ETHDASA.str, define "submissiondateprefix" etc 
+
+% in house sty: texab, sfsbib (DEPRECATED!, REPLACED by natbib)
+
+% texab: latex abbreviations
+% ORIGINAL:  /u/sfs/tex/tex/latex/texab.sty
+% NOTE: texab contains many useful definitions and "shortcuts". It is
+% worth to open the file and have a look at them. HOWEVER, some
+% definitions are a bit can lead to conflicts with other packages. You
+% might for example want to comment out the line defininf \IF as an
+% operator when working with the algorithmic package, or to comment out
+% the line defining a command \Cite with working with the Biblatex package  
+
+% sfsbib: for literature reference 
+% 1) "Hampel, Ronchetti, ..,"  2) "Hampel et al"
+% Engineers (and other funny people) want to see [1], [2] 
+% use 'numbers' : \usepackage[longnamesfirst,number]{natbib}
+
+\documentclass[11pt,a4paper,twoside,openright]{report}
+\usepackage[english]{style/ETHDAsfs}
+
+\usepackage{pdfpages}        % include the confirmation of originality (includepdf)
+\usepackage{amsbsy}          % for \boldsymbol and \pmb{.}
+\usepackage{amssymb}         % calls  amsfonts...
+\usepackage{graphicx}        % for PostScript graphics (better than psfig!)
+\usepackage[longnamesfirst]{natbib}
+\usepackage{style/texab}     % SfS sty: tex abb.
+\usepackage{amsmath}
+\usepackage[utf8]{inputenc}  % Unicode, *NOT* iso-latin1 !
+\usepackage{ae}              % A[lmost] E[uropean] Fonts
+\usepackage{enumerate}       % adds an optional argument to the enumerate 
+\usepackage{relsize}         %  \smaller (etc) used here
+\usepackage{color}           % to allow coloring in code listings
+\usepackage{listings}        % include code
+
+% Optional argument
+% \usepackage{mathrsfs}       % \mathscr
+% grafics shown as boxes --> faster compilation
+% \usepackage[draft]{graphicx}
+
+% ******************************************************************************
+% *                               PACKAGE OPTIONS                              *
+% ******************************************************************************
+
+% listings
+\definecolor{Mygrey}{gray}{0.75}% for linenumbers only!
+\definecolor{Cgrey}{gray}{0.4}% for comments
+\lstloadlanguages{R}
+% first version of "listings of R"-style:
+% % using \smaller here: makes R code listings use a *small* font:
+% \lstset{language=R,basicstyle=\smaller[2],commentstyle=\rmfamily\smaller,
+%   showstringspaces=false,xleftmargin=4ex,
+%   literate={<-}{{$\leftarrow$}}1 {~}{{$\sim$}}1}
+% \lstset{escapeinside={(*}{*)}} % for (*\ref{ }*) inside lstlistings (Scode) 
+%\newcommand{\lil}[1]{\lstinline|#1|}
+% newer version of "listings of R"-style :
+% See: https://en.wikibooks.org/wiki/LaTeX/Source_Code_Listings
+\lstset{
+  language=R,
+  % \small > \footnotesize > \scriptsize > \tiny
+  basicstyle=\ttfamily\scriptsize,
+  % commentstyle=\ttfamily\color{Cgrey},
+  commentstyle=\itshape\color{Cgrey},
+  numbers=left,
+  numberstyle=\ttfamily\color{Mygrey}\tiny,
+  stepnumber=1,
+  numbersep=5pt,
+  backgroundcolor=\color{white},
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  frame=single,
+  tabsize=2,
+  captionpos=b,
+  breaklines=true,
+  % breakatwhitespace=false,
+  keywordstyle={},
+  morekeywords={},
+  xleftmargin=4ex, 
+  literate={<-}{{$\leftarrow$}}1 {~}{{$\sim$}}1
+}
+
+% for (*\ref{ }*) inside lstlistings (Scode)
+\lstset{escapeinside={(*}{*)}}
+% ******************************************************************************
+% *                                   Theorem                                  *
+% ******************************************************************************
+\newtheorem{definition}{Definition}[subsection]
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{Coro}[definition]{Corollary}
+\theoremstyle{definition} 
+\newtheorem{example}[definition]{Example}
+\newtheorem*{note}{Note}
+\newtheorem*{remark}{Remark}
+
+\DeclareMathOperator*{\plim}{plim}
+% \def\MR#1{\href{http://www.ams.org/mathscinet-getitem?mr=#1}{MR#1}}
+
+% \newcommand{\Lecture}[3]{\marginpar{#3.#2.#1}}
+% \newcommand{\Fu}{\mathcal{F}}
+\newcommand{\aatop}[2]{\genfrac{}{}{0pt}{}{#1}{#2}}
+
+%\renewcommand{\theequation}{\arabic{equation}}
+\numberwithin{equation}{subsection}
+
+
+% ******************************************************************************
+% *                            Path for your figures                           *
+% ******************************************************************************
+% Set the paths where all figures are taken from:
+\graphicspath{{figures/}}
+
+
+% ******************************************************************************
+% *                        Define your own commands here                       *
+% ******************************************************************************
+\newcommand{\Bruch}[2]{{}^{#1}\!\!/\!_{#2}}
+\renewcommand{\labelenumi}{\roman{enumi}.)}
+
+
+\begin{document}
+\bibliographystyle{chicago}
+% Hampel,F., E.Ronchetti,... W.Stahel(1986) ...
+% was \bibliographystyle{sfsbib}\citationstyle{dcu} 
+% OR DEFAULT : \citationstyle{agsm}
+
+\pagenumbering{roman} % roman numbering for first few pages
+
+% ******************************************************************************
+% *                                 Title page                                 *
+% ******************************************************************************
+
+\period{Summer 2009}
+\dasatype{Master Thesis}
+\students{Student Muster}
+\mainreaderprefix{Adviser:}
+\mainreader{Prof.\ Dr.\ Sara van de Geer}
+\alternatereaderprefix{Co-Adviser}
+\alternatereader{Markus Kalisch}
+\submissiondate{August 19th 2009}
+\title{The title of my thesis \\
+      which should be split on \\
+      several lines \\
+      if it is too long}
+
+\maketitle % Front page is completed
+\cleardoublepage
+
+% ******************************************************************************
+% *                  Insert here acknowledgements and abstract                 *
+% ******************************************************************************
+
+% Dedication (optional)
+\newpage
+\markboth{Dedication}{Dedication}
+\include{tex/Dedication}
+
+% Preface (optional)
+\newpage
+\markboth{Preface}{Preface}
+\include{tex/Preface}
+
+% Abstract should not be longer than one page.
+\newpage
+\markboth{Abstract}{Abstract}
+\include{tex/Abstract}
+
+% ******************************************************************************
+% *                  Table of contents and list of figures and                 *
+% *                   tables (no need to change this usually)                  *
+% ******************************************************************************
+\newpage
+\tableofcontents
+\newpage
+\listoffigures
+\newpage
+\listoftables
+
+%% Notations and glossary (optional)
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{\protect\numberline{}{Notation}}
+\markboth{Notation}{Notation}
+\include{tex/Notation}
+
+\cleardoublepage
+\pagenumbering{arabic} % switch back to standard numbering 
+
+
+% ******************************************************************************
+% *                               Thesis content                               *
+% ******************************************************************************
+
+% Simply write your chapters here or even better: write each chapter 
+% in a separate `.tex' file and include them here
+
+\include{tex/Introduction}
+\include{tex/Chapter1}
+% \include{tex/Chapter...}
+\include{tex/Summary}
+
+% ******************************************************************************
+% *                                Bibliography                                *
+% ******************************************************************************
+\addtocontents{toc}{\vspace{.5\baselineskip}}
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{\protect\numberline{}{Bibliography}}
+\bibliography{bib/myReferences}
+% All books from our library (SfS) are already in a BiBTeX file
+% 'Assbib.bib' (included here as well), using
+% \bibliography{myReferences,Assbib}
+% ---------------------------------- instead of the above
+
+
+
+% ******************************************************************************
+% *                   Appendices (if needed, e.g. for R code)                  *
+% ******************************************************************************
+\addtocontents{toc}{\vspace{.5\baselineskip}}
+\appendix
+\include{tex/Appendix1}
+\include{tex/Appendix2}
+\include{tex/Appendix_more_R}
+
+
+% ******************************************************************************
+% *                             Epilogue (optional)                            *
+% ******************************************************************************
+\addtocontents{toc}{\vspace{.5\baselineskip}}
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{\protect\numberline{}{Epilogue}}
+\markboth{Epilogue}{Epilogue}
+\include{tex/Epilogue}
+
+
+% ******************************************************************************
+% *                 Declaration of originality (Do not remove!)                *
+% ******************************************************************************
+% Instructions:
+%
+% fill in the empty document confirmation-originality.pdf electronically
+% print it out and sign it
+% scan it in again and save the scan in this directory with name
+% confirmation-originality-scan.pdf 
+%
+% General info on plagiarism:
+% https://www.ethz.ch/students/en/studies/performance-assessments/plagiarism.html 
+\cleardoublepage
+\includepdf[pages={-}, frame=true,scale=1]{misc/confirmation-originality-scan.pdf}
+\end{document}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "MasterThesisSfS"
+%%% End:
