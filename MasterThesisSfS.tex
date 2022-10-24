@@ -129,8 +129,26 @@
 % ******************************************************************************
 % *                        Define your own commands here                       *
 % ******************************************************************************
-\newcommand{\Bruch}[2]{{}^{#1}\!\!/\!_{#2}}
-\renewcommand{\labelenumi}{\roman{enumi}.)}
+\newcommand{\barronnorm}[2]{\left\lVert#1\right\rVert_{\mathcal{B}_#2}}
+\newcommand{\bigO}{\mathcal{O}}
+\newcommand{\stepfunction}[1]{\mathbb{1}_{\{#1\}}}
+
+% amsmath
+\numberwithin{equation}{section} % using section number in equation number
+\DeclareMathOperator\supp{supp}
+
+\DeclarePairedDelimiterX{\inp}[2]{\langle}{\rangle}{#1, #2} % mathtools
+% [physics] already include abs and norm
+% \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+% \newcommand{\abs}[1]{\lvert#1\rvert}
+\newcommand{\lpspace}[2]{\mathcal{L}^{#1}(\mathcal{#2})}
+\newcommand{\lp}[1]{\mathcal{L}^{#1}}
+
+% custom function
+\newcommand{\TOCITE}{\textcolor{blue}{\bf [TO CITE]}}
+\newcommand{\tonote}[1]{\textcolor{red}{(\textit{#1})}}
+
+
 
 
 \begin{document}
@@ -145,18 +163,17 @@
 % *                                 Title page                                 *
 % ******************************************************************************
 
-\period{Summer 2009}
+\period{Fall 2022}
 \dasatype{Master Thesis}
-\students{Student Muster}
+\students{Yongqi Wang}
 \mainreaderprefix{Adviser:}
 \mainreader{Prof.\ Dr.\ Sara van de Geer}
-\alternatereaderprefix{Co-Adviser}
-\alternatereader{Markus Kalisch}
-\submissiondate{August 19th 2009}
-\title{The title of my thesis \\
-      which should be split on \\
-      several lines \\
-      if it is too long}
+% \alternatereaderprefix{Co-Adviser}
+% \alternatereader{Markus Kalisch}
+\submissiondate{March 31th 2023}
+\title{Analysis of the Generalization Properties\\
+      and the Function Spaces Associated with\\
+      Two-Layer Neural Network Model}
 
 \maketitle % Front page is completed
 \cleardoublepage
@@ -168,17 +185,17 @@
 % Dedication (optional)
 \newpage
 \markboth{Dedication}{Dedication}
-\include{tex/Dedication}
+% \include{tex/Dedication}
 
 % Preface (optional)
 \newpage
 \markboth{Preface}{Preface}
-\include{tex/Preface}
+% \include{tex/Preface}
 
 % Abstract should not be longer than one page.
 \newpage
 \markboth{Abstract}{Abstract}
-\include{tex/Abstract}
+% \include{tex/Abstract}
 
 % ******************************************************************************
 % *                  Table of contents and list of figures and                 *
@@ -209,10 +226,10 @@
 % Simply write your chapters here or even better: write each chapter 
 % in a separate `.tex' file and include them here
 
-\include{tex/Introduction}
+% \include{tex/Introduction}
 \include{tex/Chapter1}
 % \include{tex/Chapter...}
-\include{tex/Summary}
+% \include{tex/Summary}
 
 % ******************************************************************************
 % *                                Bibliography                                *
@@ -234,9 +251,9 @@
 % ******************************************************************************
 \addtocontents{toc}{\vspace{.5\baselineskip}}
 \appendix
-\include{tex/Appendix1}
-\include{tex/Appendix2}
-\include{tex/Appendix_more_R}
+% \include{tex/Appendix1}
+% \include{tex/Appendix2}
+% \include{tex/Appendix_more_R}
 
 
 % ******************************************************************************
@@ -247,7 +264,7 @@
 \phantomsection
 \addcontentsline{toc}{chapter}{\protect\numberline{}{Epilogue}}
 \markboth{Epilogue}{Epilogue}
-\include{tex/Epilogue}
+% \include{tex/Epilogue}
 
 
 % ******************************************************************************
@@ -262,8 +279,8 @@
 %
 % General info on plagiarism:
 % https://www.ethz.ch/students/en/studies/performance-assessments/plagiarism.html 
-\cleardoublepage
-\includepdf[pages={-}, frame=true,scale=1]{misc/confirmation-originality-scan.pdf}
+% \cleardoublepage
+% \includepdf[pages={-}, frame=true,scale=1]{misc/confirmation-originality-scan.pdf}
 \end{document}
 
 

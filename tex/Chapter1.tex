@@ -1,50 +1,180 @@
-\chapter{First Chapter} 
-
-\section{To include a picture}
-\begin{figure}[hbt!]%--- Picture 'H'ere, 'B'ottom or 'T'op; '!' Try to
-                    %impose your will to LaTeX
-  \epsfCfile{.85}{geys-2kern} %<< no file extension
-  %%         --- .85 stands for 85% of text width
-  \caption[Geyser data: binned histogram, Silverman's and another
-  kernel]%<<-- Legend for the list of figures at the beginning of you thesis
-  {Old Faithful Geyser eruption lengths, $n=272$; binned data and two
-    (Gaussian) kernel density estimates ($\times 10$) with $h=h^*= .3348$
-    and $h= .1$ (dotted).}% legend displayed below the graph.
-  \label{fig:geys1}
-\end{figure}
-
-Or also with \texttt{includegraphics}:
-\begin{figure}[hbt!]%--- Picture 'H'ere, 'B'ottom or 'T'op; '!' Try to
-                    %impose your will to LaTeX
-  \centering
-  \includegraphics[width=.5\textwidth]{geys-2kern} %<< no file extension
-  %%         --- .5\textwidth stands for 50% of text width
-  \caption[Geyser data: binned histogram, Silverman's and another
-  kernel]%<<-- Legend for the list of figures at the beginning of you thesis
-  {Old Faithful Geyser eruption lengths, $n=272$; binned data and two
-    (Gaussian) kernel density estimates ($\times 10$) with $h=h^*= .3348$
-    and $h= .1$ (dotted).}% legend displayed below the graph.
-  \label{fig:geys2}
-\end{figure}
-
-\section{To make a proof}
-\begin{proof}
-  $1 + 1 = 2$
-\end{proof}
-
-\section{To include \Rp code}
-See information in Appendix~\ref{app:complement}.
+\chapter{Barron and Spectral norm}
 
 
-\section{Other information}
-Put a text between quotes: make sure to use nice quotes, such as ``quote''.
+It is shown in the \cite{barron_universal_1993} that function with one finite Fourier moment 
+can be approximated with the superpositions of sigmoidal functions at a rate 
+independent of the dimensionality $d$. In other words, for any functions in said
+space, \textit{Fourier-analytic Barron spaces}, can be approximated
+with a (shallow) neural network at error rate $\bigO(N^{-1})$.
 
-Cite an article or book you refer shortly here, and then listed in the bibliography: \cite{ReferenceKey}. 
-%%--> in file   myReferences.bib  (same directory)
-Or mention that \citeauthor{HamF85} (a person) or \citeauthor{StaWW91} (two
-persons) have already done quite a bit work.
 
-Referencing a different part of your work: please refer to Appendix \ref{app:complement}.
+\section{Barron function space and main result}
+
+We formulated the class of functions introduced in \cite{barron_neural_1992, barron_universal_1993} below. 
+
+\begin{definition}
+    Let $X$ be a bounded set in $\mathbb{R}^d$, a function 
+    $f: X \to \mathbb{R}$ is said to be in
+    \textit{Barron class} with constant $C > 0$, if there
+    are $x_0$ in $X$ and $c \in [-C, C]$ and a measurable function
+    $F: \mathbb{R}^d \to \mathbb{C}$ satisfying:
+
+    \begin{align}
+        &\int_{\mathbb{R}^d} \abs{\omega}_{X, x_0} \cdot \abs{F(\omega)} d\omega < C \\
+        &f(x) = c + \int_{\mathbb{R}^d} (e^{i\inp{x}{\omega}} - e^{i\inp{x_0}{\omega}}) \cdot F(\omega) d\omega
+    \end{align}
+
+    where $\abs{\omega}_{X, x_0} := \sup_{x\in X}\abs{\inp{\omega}{x - x_0}}$.
+    We refer the class of all functions as $\Gamma_C(X, x_0)$.
+\end{definition}
+
+\begin{theorem}\cite[Theorem~1]{barron_universal_1993}\label{thm:barron_1993_1}
+    For every function in $\Gamma_C(X, x_0)$, every sigmoidal function
+    $\phi$, every probability measure $\mu$, and every $n \geq 1$,
+    there exists a linear combination of sigmoidal function $f_n(x)$ of 
+    the form, such that
+    \begin{equation}
+        \int_X(f(x) - f_n(x))^2 \mu(dx) \leq \frac{(2C)^2}{n}
+    \end{equation}
+\end{theorem}
+
+
+\section{Proof}
+
+The main ideas behind the the proof of Theorem \ref{thm:barron_1993_1} is that
+functions with finite Fourier moment belong to the closed convex hull of the
+set of half planes and law of large numbers.
+
+\textbf{Step 0} (\textit{Fixing $x_0$}): Changing $x_0$ to $x_1$ 
+affects the norm by a factor of $2$. Let $x_0, x_1 \in X$, and $f$ fulfilling
+the assumption above, that is $f \in \Gamma_C(X, x_0)$. 
+For any $\omega \in \mathbb{R}^d$, we have
+
+\begin{equation}
+    \abs{\omega}_{X, x_1} = \abs{\inp{\omega}{x-x_1}} \leq \abs{\inp{\omega}{x-x_0}} + \abs{\inp{\omega}{x_0-x_1}} \leq 2\abs{\omega}_{X, x_1}
+\end{equation}
+
+Thus we have $\int_{\mathbb{R}^d} \abs{\omega}_{X, x_0} \cdot \abs{F(\omega)} d\omega < 2C$.
+If we have $\tilde{c} = c + \int_{\mathbb{R}^d} (e^{\inp{\omega}{x_0}} - e^{\inp{\omega}{x_1}}) d\omega$, 
+then $f(x) = \tilde{c} + \int_{\mathbb{R}^d} (e^{i\inp{x}{\omega}} - e^{i\inp{x_1}{\omega}})$ with $\tilde{c} \leq 2C$.
+
+This shows that changing $x_0$ would only affect the norm in the RHS of Theorem \ref{thm:barron_1993_1}
+at most by a factor of two, i.e. $\Gamma_C(X, x_0) \subset \Gamma_{2C}(X, x_1)$.
+Therefore, we continue the proof with $x_0 = 0$.
+
+\textbf{Step 1} (\textit{Represent $f$ via Inverse Fourier Transform}): From the assumption,
+and the fact that $f$ is real-valued ($X \in \mathbb{R}^d \to \mathbb{R}$),
+the real number part can be written as:
+
+Note that with polar decomposition $F(\omega) = e^{i\theta(\omega)} \cdot \abs{F(\omega)}$ where $\theta(\omega) \in \mathbb{R}$ denote the magnitude decomposition.
+
+\begin{align}
+    f(x) - f(0) 
+    &= \Re \int (e^{i\inp{\omega}{x}} - e^{i\inp{\omega}{0}}) e^{i\theta(\omega)} \cdot F(\omega) d\omega \\
+    &= \int \Big(\cos(\inp{\omega}{x} + \theta(\omega)) - \cos(\theta(\omega))\Big)  
+    F(\omega) d\omega \\
+    &=  \int \frac{C_{f,X}}{\abs{\omega}_{X, 0}}\Big(\cos(\inp{\omega}{x} + \theta(\omega)) - \cos(\theta(\omega))\Big) d\mu_g \\
+    &= \int g(x, \omega) d\mu_g \label{eq:barron_fouier_int}
+\end{align}
+
+$C_{f,X}$ is a constant defined with $f$ and 
+$X$: $C_{f,X} = \int_{\mathbb{R}^d} \abs{\omega}_{X, 0} \cdot \abs{F(\omega)} d\omega \leq C$
+and $\mu_g$ is a probability distribution
+$d\mu_g = \abs{\omega}_{X,0}/C_{f,X}\abs{F(\omega)} d\omega$ and 
+
+\begin{equation}
+    g(x, \omega) = \frac{C_{f,X}}{\abs{\omega}_{X, 0}}\Big(\cos(\inp{\omega}{x} + \theta(\omega)) - \cos(\theta(\omega))\Big)
+\end{equation}
+
+The integral form in (\ref{eq:barron_fouier_int}) shows that $f(x) - f(0)$
+can be represented as an infinite convex combinaiton of functions in the 
+class
+
+\begin{equation}
+    G_{cos} = \Bigg\{\frac{\abs{\gamma}}{\abs{\omega}_{X, 0}}\Big(\cos(\inp{\omega}{x} + b) - \cos(b)\Big): \omega \not= 0, \abs{\gamma} \leq C, b \in \mathbb{R} \Bigg\}
+\end{equation}
+
+\textbf{Step 2} (\textit{$G_{cos}$ is in the closure of the convex hull of $G_{\phi}$}):
+It is sufficient to check $g(z), z = (\omega/\abs{\omega}_{X,0})x$ on $[-1, 1]$ for some $\omega$. 
+As $g(z)$ is a uniformly continuous sinusoidal function on $[-1, 1]$, it can be 
+uniformly approximately by piecewise constant step function. 
+
+Restricting $g(z)$ on $[0, 1]$, for a partition 
+${0 \leq p_1 \leq p_2 \leq \cdots \leq p_k = 1}$, define
+
+\begin{align}
+    g_{k,+}(z) = \sum_{i=1}^{k-1} \Big(g(p_i) - g(p_{i-1})\Big) \cdot
+    \stepfunction{z\geq p_i}
+\end{align}
+
+Similarly, we can construct 
+$g_{k,-}(z) = \sum_{i=1}^{k-1} (g(-p_i) - g(-p_{i-1})) \cdot \stepfunction{z\leq -p_i}$,
+adding $g_{k,+}$ and $g_{k,-}$ results in sequence of piecewise step function on $[-1, 1]$
+uniformly close to $g(z)$. We have $g(z) = g_{k,+}+g_{k,-}$, a linear combination
+of step functions (or heaviside function) and the sum of the coefficients is
+bounded by 2C (The sum of coefficients of $g_{k,+}$ is bounded by $C$ as a result of $g$
+bounded derivative, so does $g_{k,-}$ and hence $2C$)
+
+We have $G_{cos} \subset G_{step}$,
+
+\begin{equation}
+    G_{step} = \Bigg\{\Bigg\}
+\end{equation}
+
+\textbf{Step 3} (\textit{Putting it together}): Combining Lemma 1 and 
+Theorem 2 in \cite{barron_universal_1993}, we have that
+
+\newpage
+
+
+
+The class of function purposed in Bar93 is formulated as follow. The    
+
+% On the ability of neural nets to express distributions has some nice notes on Bar93
+% ---------------------------------------------------------------------------- %
+% https://proceedings.neurips.cc/paper/2020/file/2000f6325dfc4fc3201fc45ed01c7a5d-Paper.pdf
+\begin{itemize}
+    \item $\tilde{F}$ may be interpreted as the Fourier distribution of an a continuously differentiable extension of $f$ from $B$ to $\mathbb{R}^d$
+    \item What is the Fourier magnitude and phase decomposition, see \url{https://www.comm.utoronto.ca/~dkundur/course_info/signals/notes/Kundur_FourierMagPhase.pdf}
+    \item What is the integration in (10) w.r.t. ?
+    \item What is the closure of the convex hull of a set?:  see \url{https://ti.inf.ethz.ch/ew/courses/CG13/lecture/Chapter%203.pdf}
+        
+        \quad Similar to idea of distribution, See (14) in \cite{barron_universal_1993}
+    \item Extension of a function
+\end{itemize}
+
+
+\textbf{Fourier Transform of the target function}
+
+\cite[Theorem~2]{barron_neural_1992}: If a function $f$ has a Fourier representation 
+$f(x) = \int e^{i\omega\cdot x} \tilde{f}(\omega) d\omega$ valid for $x in B$, and 
+if $\omega \tilde{f}(\omega)$ is integrable, then the following representation
+holds,
+
+\begin{equation}
+    f(x) = f(0) + \int_{\mathbb{R}^d}\int_0^1 
+    (1_{\alpha \cdot x < -t} - 1_{\alpha \cdot x > t}) \abs{\omega}_B 
+    \sin(t\abs{\omega}_B + \theta_{\omega}) \abs{\tilde{f}(\omega)} d\omega dt
+\end{equation}
+
+\tonote{Questions}
+
+\begin{enumerate}
+    \item Eq. (8) (9) in \cite{barron_universal_1993}, what is the $\tilde{F}(d\omega)$  
+    \item wdym by ``the closure is taken in this metric space''
+    \item 
+\end{enumerate}
+
+
+The basic idea just use the law of large number and the properies of the closure of the convex hull.
+
+Let $B$ be a bounded set in $\mathcal{R}^d$ and $\Gamma_B$ be the set
+of all funciton that has the representaion (Fourier transform)
+
+$\Gamma_{C, B}$ be the set of all funcitons $f$ in $\Gamma_B$ that for some 
+representation, the norm is smaller or equal to C.
+
+This paper is fking gold: https://arxiv.org/pdf/2011.09363.pdf
 
 
 %%% Local Variables: 
