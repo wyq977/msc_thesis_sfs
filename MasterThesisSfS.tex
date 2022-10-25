@@ -99,7 +99,8 @@
 % ******************************************************************************
 % *                                   Theorem                                  *
 % ******************************************************************************
-\newtheorem{definition}{Definition}[subsection]
+% \newtheorem{definition}{Definition}[subsection]
+\newtheorem{definition}{Definition}[chapter]
 \newtheorem{lemma}[definition]{Lemma}
 \newtheorem{theorem}[definition]{Theorem}
 \newtheorem{Coro}[definition]{Corollary}
@@ -116,7 +117,7 @@
 \newcommand{\aatop}[2]{\genfrac{}{}{0pt}{}{#1}{#2}}
 
 %\renewcommand{\theequation}{\arabic{equation}}
-\numberwithin{equation}{subsection}
+% \numberwithin{equation}{subsection}
 
 
 % ******************************************************************************
@@ -131,13 +132,15 @@
 % ******************************************************************************
 \newcommand{\barronnorm}[2]{\left\lVert#1\right\rVert_{\mathcal{B}_#2}}
 \newcommand{\bigO}{\mathcal{O}}
-\newcommand{\stepfunction}[1]{\mathbb{1}_{\{#1\}}}
+\newcommand{\stepfunction}[1]{\mathbf{1}_{\{#1\}}}
 
 % amsmath
-\numberwithin{equation}{section} % using section number in equation number
+% \numberwithin{equation}{section} % using section number in equation number
 \DeclareMathOperator\supp{supp}
-
-\DeclarePairedDelimiterX{\inp}[2]{\langle}{\rangle}{#1, #2} % mathtools
+\newcommand*\interior[1]{\mathring{#1}}
+\newcommand*\closure[1]{\overline{#1}} % (or \bar{#1})
+% replaced by spr in texab
+% \DeclarePairedDelimiterX{\inp}[2]{\langle}{\rangle}{#1, #2} % mathtools
 % [physics] already include abs and norm
 % \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 % \newcommand{\abs}[1]{\lvert#1\rvert}
@@ -227,6 +230,7 @@
 % in a separate `.tex' file and include them here
 
 % \include{tex/Introduction}
+\include{tex/Meetings}
 \include{tex/Chapter1}
 % \include{tex/Chapter...}
 % \include{tex/Summary}

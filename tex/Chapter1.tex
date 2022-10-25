@@ -1,16 +1,32 @@
-\chapter{Barron and Spectral norm}
+\chapter{Approximation Properties}
+
+It has been shown shallow neural networks (even with one hidden layer) has good 
+approximations properties with mild conditions on the activation function. Two
+layer neural network are good approximators in a sense that they can approximate
+any continuous function arbitrarily well ~\cite{cybenkoApproximationSuperpositionsSigmoidal1989}. 
+Despite its important, the theorem \ref{thm:uat} can not provide quantitative 
+information regarding the class or spaces of function created by neural network
+model (the hypothesis space) and also do not provide an bound for the approximation 
+error rate. 
+
+\section{Universal Approximation Theorem}
+
+\begin{theorem}\label{thm:uat}
+    \cite[Theorem 5]{cybenkoApproximationSuperpositionsSigmoidal1989} If the activation $\sigma$ is sigmoidal,
+    then any continuous functions on $[0, 1]^d$ in the can be approximated 
+    uniformly by two layer neural network functions. 
+\end{theorem}
 
 
-It is shown in the \cite{barron_universal_1993} that function with one finite Fourier moment 
+\section{Spectral Norm and Approximation Theorem}
+
+It is shown by \cite{barronUniversalApproximationBounds1993} that functions with finite Fourier moment 
 can be approximated with the superpositions of sigmoidal functions at a rate 
 independent of the dimensionality $d$. In other words, for any functions in said
-space, \textit{Fourier-analytic Barron spaces}, can be approximated
-with a (shallow) neural network at error rate $\bigO(N^{-1})$.
+class,  later defined as \textit{Fourier-analytic Barron spaces}, can be approximated
+with a (shallow) neural network at error rate $\bigO(N^{-1})$ and the error rate is
 
-
-\section{Barron function space and main result}
-
-We formulated the class of functions introduced in \cite{barron_neural_1992, barron_universal_1993} below. 
+We formulated the class of functions introduced in \cite{barronNeuralNetApproximation1992, barronUniversalApproximationBounds1993} below. 
 
 \begin{definition}
     Let $X$ be a bounded set in $\mathbb{R}^d$, a function 
@@ -21,14 +37,14 @@ We formulated the class of functions introduced in \cite{barron_neural_1992, bar
 
     \begin{align}
         &\int_{\mathbb{R}^d} \abs{\omega}_{X, x_0} \cdot \abs{F(\omega)} d\omega < C \\
-        &f(x) = c + \int_{\mathbb{R}^d} (e^{i\inp{x}{\omega}} - e^{i\inp{x_0}{\omega}}) \cdot F(\omega) d\omega
+        &f(x) = c + \int_{\mathbb{R}^d} (e^{i\spr{x}{\omega}} - e^{i\spr{x_0}{\omega}}) \cdot F(\omega) d\omega
     \end{align}
 
-    where $\abs{\omega}_{X, x_0} := \sup_{x\in X}\abs{\inp{\omega}{x - x_0}}$.
+    where $\abs{\omega}_{X, x_0} := \sup_{x\in X}\abs{\spr{\omega}{x - x_0}}$.
     We refer the class of all functions as $\Gamma_C(X, x_0)$.
 \end{definition}
 
-\begin{theorem}\cite[Theorem~1]{barron_universal_1993}\label{thm:barron_1993_1}
+\begin{theorem}\cite[Theorem~1]{barronUniversalApproximationBounds1993}\label{thm:barron_1993_1}
     For every function in $\Gamma_C(X, x_0)$, every sigmoidal function
     $\phi$, every probability measure $\mu$, and every $n \geq 1$,
     there exists a linear combination of sigmoidal function $f_n(x)$ of 
@@ -39,28 +55,28 @@ We formulated the class of functions introduced in \cite{barron_neural_1992, bar
 \end{theorem}
 
 
-\section{Proof}
+\begin{proof}
 
-The main ideas behind the the proof of Theorem \ref{thm:barron_1993_1} is that
-functions with finite Fourier moment belong to the closed convex hull of the
+The main ideas behind the the proof of Theorem \ref{thm:barron_1993_1} is to
+show functions with finite Fourier moment are in the closure of the convex hull of the
 set of half planes and law of large numbers.
 
 \textbf{Step 0} (\textit{Fixing $x_0$}): Changing $x_0$ to $x_1$ 
-affects the norm by a factor of $2$. Let $x_0, x_1 \in X$, and $f$ fulfilling
-the assumption above, that is $f \in \Gamma_C(X, x_0)$. 
-For any $\omega \in \mathbb{R}^d$, we have
+affects the norm, at most, by a factor of $2$.
+Let $x_0, x_1 \in X$, and $f$ fulfilling the assumption above, that is $f \in \Gamma_C(X, x_0)$. 
+For any $\omega \in \mathbb{R}^d$, given $x_0, x_1$, we have
 
 \begin{equation}
-    \abs{\omega}_{X, x_1} = \abs{\inp{\omega}{x-x_1}} \leq \abs{\inp{\omega}{x-x_0}} + \abs{\inp{\omega}{x_0-x_1}} \leq 2\abs{\omega}_{X, x_1}
+    \abs{\omega}_{X, x_0} = \sup_{x\in X}\abs{\spr{\omega}{x-x_1}} \leq \sup_{x\in X}\abs{\spr{\omega}{x-x_0}} + \abs{\spr{\omega}{x_0-x_1}} \leq 2\abs{\omega}_{X, x_1}
 \end{equation}
 
 Thus we have $\int_{\mathbb{R}^d} \abs{\omega}_{X, x_0} \cdot \abs{F(\omega)} d\omega < 2C$.
-If we have $\tilde{c} = c + \int_{\mathbb{R}^d} (e^{\inp{\omega}{x_0}} - e^{\inp{\omega}{x_1}}) d\omega$, 
-then $f(x) = \tilde{c} + \int_{\mathbb{R}^d} (e^{i\inp{x}{\omega}} - e^{i\inp{x_1}{\omega}})$ with $\tilde{c} \leq 2C$.
+If we have $\tilde{c} = c + \int_{\mathbb{R}^d} (e^{\spr{\omega}{x_0}} - e^{\spr{\omega}{x_1}}) d\omega$, 
+then $f(x) = \tilde{c} + \int_{\mathbb{R}^d} (e^{i\spr{x}{\omega}} - e^{i\spr{x_1}{\omega}})$ with $\tilde{c} \leq 2C$.
 
 This shows that changing $x_0$ would only affect the norm in the RHS of Theorem \ref{thm:barron_1993_1}
 at most by a factor of two, i.e. $\Gamma_C(X, x_0) \subset \Gamma_{2C}(X, x_1)$.
-Therefore, we continue the proof with $x_0 = 0$.
+Therefore, we continue the proof assuming $x_0 = 0$ for simplicity.
 
 \textbf{Step 1} (\textit{Represent $f$ via Inverse Fourier Transform}): From the assumption,
 and the fact that $f$ is real-valued ($X \in \mathbb{R}^d \to \mathbb{R}$),
@@ -70,32 +86,40 @@ Note that with polar decomposition $F(\omega) = e^{i\theta(\omega)} \cdot \abs{F
 
 \begin{align}
     f(x) - f(0) 
-    &= \Re \int (e^{i\inp{\omega}{x}} - e^{i\inp{\omega}{0}}) e^{i\theta(\omega)} \cdot F(\omega) d\omega \\
-    &= \int \Big(\cos(\inp{\omega}{x} + \theta(\omega)) - \cos(\theta(\omega))\Big)  
+    &= \Re \int (e^{i\spr{\omega}{x}} - e^{i\spr{\omega}{0}}) e^{i\theta(\omega)} \cdot F(\omega) d\omega \\
+    &= \int_{\Omega}\Big(\cos(\spr{\omega}{x} + \theta(\omega)) - \cos(\theta(\omega))\Big)  
     F(\omega) d\omega \\
-    &=  \int \frac{C_{f,X}}{\abs{\omega}_{X, 0}}\Big(\cos(\inp{\omega}{x} + \theta(\omega)) - \cos(\theta(\omega))\Big) d\mu_g \\
-    &= \int g(x, \omega) d\mu_g \label{eq:barron_fouier_int}
+    &= \int_{\Omega} \frac{C_{f,X}}{\abs{\omega}_{X, 0}}\Big(\cos(\spr{\omega}{x} + \theta(\omega)) - \cos(\theta(\omega))\Big) d\mu_g \\
+    &= \int_{\Omega} g(x, \omega) d\mu_g \label{eq:barron_fouier_int}
 \end{align}
 
 $C_{f,X}$ is a constant defined with $f$ and 
 $X$: $C_{f,X} = \int_{\mathbb{R}^d} \abs{\omega}_{X, 0} \cdot \abs{F(\omega)} d\omega \leq C$
 and $\mu_g$ is a probability distribution
-$d\mu_g = \abs{\omega}_{X,0}/C_{f,X}\abs{F(\omega)} d\omega$ and 
+$d\mu_g = \abs{\omega}_{X,0}/C_{f,X}\abs{F(\omega)} d\omega$, the integral is evaluated on
+$\Omega = \{\omega \in \mathcal{R}^d: \omega \not = 0\}$ and
 
 \begin{equation}
-    g(x, \omega) = \frac{C_{f,X}}{\abs{\omega}_{X, 0}}\Big(\cos(\inp{\omega}{x} + \theta(\omega)) - \cos(\theta(\omega))\Big)
+    g(x, \omega) = \frac{C_{f,X}}{\abs{\omega}_{X, 0}}\Big(\cos(\spr{\omega}{x} + \theta(\omega)) - \cos(\theta(\omega))\Big)
 \end{equation}
 
+\textbf{Step 2} (\textit{$f(x) - f(0)$ is in the closure of the convex hull of $G_{cos}$}) 
 The integral form in (\ref{eq:barron_fouier_int}) shows that $f(x) - f(0)$
-can be represented as an infinite convex combinaiton of functions in the 
+can be represented as an infinite convex combination of functions in the 
 class
 
 \begin{equation}
-    G_{cos} = \Bigg\{\frac{\abs{\gamma}}{\abs{\omega}_{X, 0}}\Big(\cos(\inp{\omega}{x} + b) - \cos(b)\Big): \omega \not= 0, \abs{\gamma} \leq C, b \in \mathbb{R} \Bigg\}
+    G_{cos} = \Bigg\{\frac{\abs{\gamma}}{\abs{\omega}_{X, 0}}\Big(\cos(\spr{\omega}{x} + b) - \cos(b)\Big): \omega \not= 0, \abs{\gamma} \leq C, b \in \mathbb{R} \Bigg\}
 \end{equation}
 
-\textbf{Step 2} (\textit{$G_{cos}$ is in the closure of the convex hull of $G_{\phi}$}):
-It is sufficient to check $g(z), z = (\omega/\abs{\omega}_{X,0})x$ on $[-1, 1]$ for some $\omega$. 
+Suppose we have drawn $n$ samples ($\{\omega_i, i = 1,\dots, n\}$) from $\mu_g$, the 
+expected norm in $L_2(\mu_g, X)$ converges to zero as $n \to \infty$ by $L_2$ law 
+of large numbers. Therefore, there exist a sequence of convex combination
+in $G_{cos}$ that converges to $f(x) - f(0)$ in $L_2$.
+
+
+\textbf{Step 3} (\textit{$G_{cos}$ is in the closure of the convex hull of $G_{step}$}):
+It is sufficient to check $g(z), z = \alpha x, \alpha = \omega/\abs{\omega}_{X,0}$ on $[-1, 1]$ for some $\omega$. 
 As $g(z)$ is a uniformly continuous sinusoidal function on $[-1, 1]$, it can be 
 uniformly approximately by piecewise constant step function. 
 
@@ -109,72 +133,70 @@ ${0 \leq p_1 \leq p_2 \leq \cdots \leq p_k = 1}$, define
 
 Similarly, we can construct 
 $g_{k,-}(z) = \sum_{i=1}^{k-1} (g(-p_i) - g(-p_{i-1})) \cdot \stepfunction{z\leq -p_i}$,
-adding $g_{k,+}$ and $g_{k,-}$ results in sequence of piecewise step function on $[-1, 1]$
+results in a sequence of piecewise step function on $[-1, 1]$
 uniformly close to $g(z)$. We have $g(z) = g_{k,+}+g_{k,-}$, a linear combination
-of step functions (or heaviside function) and the sum of the coefficients is
-bounded by 2C (The sum of coefficients of $g_{k,+}$ is bounded by $C$ as a result of $g$
-bounded derivative, so does $g_{k,-}$ and hence $2C$)
+of step function (or heaviside function) and the sum of the coefficients is
+bounded by 2C (The sum of coefficients of $g_{k,+}$ is bounded by $C$ as a result of the
+derivative of $g$ bounded by $C$, so does $g_{k,-}$ and hence $2C$).
 
-We have $G_{cos} \subset G_{step}$,
+We can see that functions $g(z)$ are in the closure of the convex hull of the step functions (by Lemma 1 in \cite{barronUniversalApproximationBounds1993})
 
+By substituting $z = \omega/\abs{\omega}_{X, 0} x$, we have $G_{cos} \subset G_{step}$,
 \begin{equation}
-    G_{step} = \Bigg\{\Bigg\}
+    G_{step} = \Bigg\{ \gamma\stepfunction{\alpha x-t}: \abs{\gamma} \leq 2C, \abs{t} \leq 1, \abs{\alpha}_{X} = 1\Bigg\}
 \end{equation}
 
-\textbf{Step 3} (\textit{Putting it together}): Combining Lemma 1 and 
-Theorem 2 in \cite{barron_universal_1993}, we have that
+\textbf{Step 4} (\textit{Closure of $G_{\phi}$}) 
+There exists a sequence of sigmoidal function $\phi(\abs{c}(\alpha x - t))$, as $\abs{c} \to \infty$,
+it converges to step functions pointwise (except at points where $\alpha x - t = 0$).
+If we introduce a measure $\mu$ that has zero measure at those points, 
+previous statement on $G_{cos} \subset G^{\mu}_{step}$ still holds on 
+$\{\abs{t} \leq 1: \alpha x - t \not=0\}$ give a particular $\alpha$.
+We subsequently have convergence in $L_2(\mu, X)$ by dominated convergence theorem, 
+which implies that functions in $G^{\mu}_{step} \subset G_{\phi}$.
+
+Finally we have the following relationship since the closure of a convex set is also convex.
+
+\begin{equation*}
+    \Gamma_{X, x_0} \subset \closure{G_{cos}} \subset \closure{G_{step}} \subset \closure{G_{\phi}}
+\end{equation*}
+
+\cite[\textit{Lemma~1}]{barronUniversalApproximationBounds1993}: If $f$ is in the closure of the convex hull of a set $G$ in a Hibert space
+with norm $\norm{\cdot}$ and every function $g \in G$ is bounded by some constant $C_G$. Then for every $N \geq 1$,
+and every constant $C' > C_g^2 - \norm{f}^2$, there is a sequence $\{f_i, i = 1, \dots, N\}$ in 
+the convex hull in $G$ such that:
+\begin{equation}
+    \norm{f - f_N}^2 \leq \frac{C'}{n}
+\end{equation}
+
+$f_N = \sum_{i=1}^N \lambda_i \cdot f_i, \quad \sum_{i=1}^N \lambda_i = 1$
+
+% Lemma 1 in \cite{barronUniversalApproximationBounds1993} showed that function in a closure of the convex hull of
+% a set in a Hilbert space can be approximated with a sequence of functions from such closure and the norm between
+% the function and the sequences $\{f_i, i = 1, \dots, N\}$ are bounded in a magnitude of $\bigO(N^{-1})$.
+
+As shown above that function $f(x) - f(0)$ are in the closure of the convex hull of $G_{\phi}$ where
+$\norm{g} \leq (2C)^2$ for every $g \in G_{\phi}$. 
+For any choice of $C' > (2C)^2 - \norm{f(x) - f(0)}^2$,
+we have the $L_2$ norm of the approximation error is bounded.
+% Suppose we restrict $t$ t
+
+% Suppose we now restrict $t$ to the continuity point induced by measure $\mu$ in 
+% We can check that the functions in $G_{step}$ 
+% are in the closure of the convex hull of 
+
+% \textbf{Step 3} (\textit{Putting it together}): We can further show $G_{cos}$ are in the class of
+% sigmoidal functions. 
+
+% Theorem 2 in \cite{barronUniversalApproximationBounds1993}, we have that
+
+\end{proof}
 
 \newpage
 
 
 
 The class of function purposed in Bar93 is formulated as follow. The    
-
-% On the ability of neural nets to express distributions has some nice notes on Bar93
-% ---------------------------------------------------------------------------- %
-% https://proceedings.neurips.cc/paper/2020/file/2000f6325dfc4fc3201fc45ed01c7a5d-Paper.pdf
-\begin{itemize}
-    \item $\tilde{F}$ may be interpreted as the Fourier distribution of an a continuously differentiable extension of $f$ from $B$ to $\mathbb{R}^d$
-    \item What is the Fourier magnitude and phase decomposition, see \url{https://www.comm.utoronto.ca/~dkundur/course_info/signals/notes/Kundur_FourierMagPhase.pdf}
-    \item What is the integration in (10) w.r.t. ?
-    \item What is the closure of the convex hull of a set?:  see \url{https://ti.inf.ethz.ch/ew/courses/CG13/lecture/Chapter%203.pdf}
-        
-        \quad Similar to idea of distribution, See (14) in \cite{barron_universal_1993}
-    \item Extension of a function
-\end{itemize}
-
-
-\textbf{Fourier Transform of the target function}
-
-\cite[Theorem~2]{barron_neural_1992}: If a function $f$ has a Fourier representation 
-$f(x) = \int e^{i\omega\cdot x} \tilde{f}(\omega) d\omega$ valid for $x in B$, and 
-if $\omega \tilde{f}(\omega)$ is integrable, then the following representation
-holds,
-
-\begin{equation}
-    f(x) = f(0) + \int_{\mathbb{R}^d}\int_0^1 
-    (1_{\alpha \cdot x < -t} - 1_{\alpha \cdot x > t}) \abs{\omega}_B 
-    \sin(t\abs{\omega}_B + \theta_{\omega}) \abs{\tilde{f}(\omega)} d\omega dt
-\end{equation}
-
-\tonote{Questions}
-
-\begin{enumerate}
-    \item Eq. (8) (9) in \cite{barron_universal_1993}, what is the $\tilde{F}(d\omega)$  
-    \item wdym by ``the closure is taken in this metric space''
-    \item 
-\end{enumerate}
-
-
-The basic idea just use the law of large number and the properies of the closure of the convex hull.
-
-Let $B$ be a bounded set in $\mathcal{R}^d$ and $\Gamma_B$ be the set
-of all funciton that has the representaion (Fourier transform)
-
-$\Gamma_{C, B}$ be the set of all funcitons $f$ in $\Gamma_B$ that for some 
-representation, the norm is smaller or equal to C.
-
-This paper is fking gold: https://arxiv.org/pdf/2011.09363.pdf
 
 
 %%% Local Variables: 

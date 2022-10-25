@@ -1,0 +1,50 @@
+\chapter{Meetings Log}
+
+\section{25.10.2022}
+
+\subsection{Questions Asked}
+
+\textbf{Problems with Implicit or Explicit Regularization in ~\cite{ePrioriEstimatesPopulation2019}}
+The problem is w.r.t. to the explicit regularization by considering the
+so-called path norm with parameter $\lambda$. If it's just 2NN with GD or SGD,
+assuming random init., then it should be implicit regularization by the
+\textit{intrinsic} properties of 2NN structure or the optimizers.
+
+\textbf{Why it might not have been possible to use inequaility from Empirical process to prove the main theorem in ~\cite{barronUniversalApproximationBounds1993}}
+Assuming we are following the idea of the proof in original paper, considering the 
+space $G_{step}$ is actually a lot bigger. Instead of discussing the VC of spaces of half planes
+it's talking about the convex hall of all the half planes or step functions so the inequality 
+may not be suited.
+
+\textbf{``Induced by measure $\mu$''}
+This is talking about $x \in \mathcal{R}^d$ with measure $\mu$ 
+(whether it's finite or infinite? Les or just a measure: Not known) \
+and hence the transformation $z = \alpha x \in [0, 1]$ has a another measure (?)
+
+\textbf{Difference between the representation theorem and direct approximation theorem ~\cite{parhiBanachSpaceRepresenter2021}}
+The representation theorem involves a map from $\mathcal{R}^N$ to $\mathcal{R}$, which is simply 
+the loss functions (where $N$ is actually refering the number of points or sample size)
+Its statement is that such optimization problem would have a solution that is 
+in the \textbf{\textit{exact}} form of so called Barron function with a measure in 
+$\Omega = \{\text{space of the parameters}\}$
+
+On the other hand, Inverse or Direct approximation theorem is more about:
+if a $f$ in said space, then it can be represented with a finite width (how large is also important, but more related to the rate)
+of 2NN with a more or less ``good'' error.
+
+\textbf{Why would later in 2016 2018 paper, they focus on the different $s$ in the spectral norm and its rate}
+with $s$ increase, the class of functions become smaller. (\tonote{why}) 
+Are they trying to get a smaller near optimal rate?
+
+\subsection{Unsolved}
+
+\begin{itemize}
+    \item Still unsure about the $T_{\alpha}$ induced by the measure
+    \item Need to gather all the rates
+    \item But first, need to check whethere they are all talking about approximation rates
+\end{itemize}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "MasterThesisSfS"
+%%% End: 
