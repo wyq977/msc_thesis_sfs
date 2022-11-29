@@ -1,45 +1,78 @@
-\chapter{Approximation Properties}
+\chapter{The Approximation Properties of Two-Layer Neural Networks}
 
-In this chapter, we will introduce some basic concepts about  
-artificial artificial neural networks with an emphasis on the 
-two-layer neural networks. We will present the 
+In this chapter, we will introduce some basic concepts about artificial
+artificial neural networks with an emphasis on the two-layer neural networks
+(2NN). Firstly, we will define the 2NN model and the problem setup. In section
+\ref{sec:uat}, we will state the result of the universal approximation theorem.
+Later in section \ref{sec:spectral_norm} and \ref{sec:barron_norm}, we formally
+introduce the function spaces associated with 2NN, along with the definition of
+\textit{spectral norm} by \cite{barronUniversalApproximationBounds1993} and the
+\textit{Barron norm} by \cite{eBarronSpaceFlowinduced2021}. Despite the term
+``Barron space'' and ``Barron norm'' has been coined and mentioned earlier, the
+notion of different Barron spaces and their relationship have not been made
+obvious. To avoid confusion, we here borrow the terminology adopted by
+\cite{carageaNeuralNetworkApproximation2022}: we refer the spaces associated
+with the spectral norm as the \textit{Fourier-analytic Barron spaces} and the
+spaces defined using the Barron norm as the \textit{infinite-width Barron
+spaces} as it essentially consist of ``infinitely wide'' neural networks (with
+some restrictions on the parameters). Finally, the relationship (mainly
+inclusion) between the Fourier-analytic Barron spaces and the infinite-width
+Barron spaces is examined in section \ref{sec:diff_barron_spaces}. The aim of
+this chapter is to provide a concise summary of various well-known results
+concerning the approximation properties of 2NN and we recommend work by
+\cite{eMathematicalUnderstandingNeural2020,bernerModernMathematicsDeep2021} for
+a comprehensive introduction.
 
-It has been shown that shallow neural network model (even with one hidden layer) has good approximations properties with mild conditions on the activation function. Two layer neural network are good approximators in a sense that they can approximate
-any continuous function arbitrarily well ~\cite{cybenkoApproximationSuperpositionsSigmoidal1989}. 
-Despite its importance, the theorem \ref{thm:uat} can not provide quantitative 
-information regarding the class or spaces of function created by neural network
-model (the hypothesis space) and also do not provide an bound for the approximation 
-error rate. 
+% classical Barron space, or the Fourier-analytic Barron space
+
+% infinitely wide
+
+% infinite-width Barron spaces.
 
 \section{Universal Approximation Theorem}
+\label{sec:uat}
+
+It has been shown that shallow neural networks (even with one hidden layer) have
+good approximation properties with mild conditions on the activation function.
+Two-layer neural network are good approximators in a sense that they can
+approximate any continuous function arbitrarily well by
+\cite{cybenkoApproximationSuperpositionsSigmoidal1989}. Despite its importance,
+the theorem \ref{thm:uat} can not provide quantitative information regarding
+the`' class or spaces of function created by neural network model (the
+hypothesis space) and also do not provide an bound for the approximation error
+rate.
 
 \begin{theorem}\label{thm:uat}
-    \cite[Theorem 5]{cybenkoApproximationSuperpositionsSigmoidal1989} If the activation $\sigma$ is sigmoidal,
-    then any continuous functions on $[0, 1]^d$ in the can be approximated 
-    uniformly by two layer neural network functions. 
+    \cite[Theorem 5]{cybenkoApproximationSuperpositionsSigmoidal1989}
+    If the activation $\sigma$ is sigmoidal, then any continuous functions on
+    $[0, 1]^d$ in the can be approximated uniformly by two layer neural network
+    functions.
 \end{theorem}
 
 
-\section{Spectral Norm and Approximation Theorem}
+\section{Spectral Norm and Fourier-analytic Barron spaces}
+\label{sec:spectral_norm}
 
-It is shown by \cite{barronUniversalApproximationBounds1993} that functions with finite Fourier moment 
-can be approximated with the superpositions of sigmoidal functions at a rate 
-independent of the dimensionality $d$. In other words, for any functions in said
-class,  later defined as \textit{Fourier-analytic Barron spaces}, can be approximated
-with a (shallow) neural network at error rate $\bigO(N^{-1})$ and the error rate is
+It is shown by \cite{barronUniversalApproximationBounds1993} that functions with
+finite Fourier moment can be approximated with the superpositions of sigmoidal
+functions at a rate independent of the dimensionality $d$. In other words, for
+any functions in said class,  later defined as \textit{Fourier-analytic Barron
+    spaces}, can be approximated with a (shallow) neural network at error rate
+$\bigO(N^{-1})$ and the error rate is
 
-We formulated the class of functions introduced in \cite{barronNeuralNetApproximation1992, barronUniversalApproximationBounds1993} below. 
+We formulated the class of functions introduced in
+\cite{barronNeuralNetApproximation1992, barronUniversalApproximationBounds1993}
+below.
 
 \begin{definition}
-    Let $X$ be a bounded set in $\mathbb{R}^d$, a function 
-    $f: X \to \mathbb{R}$ is said to be in
-    \textit{Barron class} with constant $C > 0$, if there
-    are $x_0$ in $X$ and $c \in [-C, C]$ and a measurable function
-    $F: \mathbb{R}^d \to \mathbb{C}$ satisfying:
+    Let $X$ be a bounded set in $\mathbb{R}^d$, a function $f: X \to \mathbb{R}$
+    is said to be in \textit{Barron class} with constant $C > 0$, if there are
+    $x_0$ in $X$ and $c \in [-C, C]$ and a measurable function $F: \mathbb{R}^d
+        \to \mathbb{C}$ satisfying:
 
     \begin{align}
-        &\int_{\mathbb{R}^d} \abs{\omega}_{X, x_0} \cdot \abs{F(\omega)} d\omega < C \\
-        &f(x) = c + \int_{\mathbb{R}^d} (e^{i\spr{x}{\omega}} - e^{i\spr{x_0}{\omega}}) \cdot F(\omega) d\omega
+         & \int_{\mathbb{R}^d} \abs{\omega}_{X, x_0} \cdot \abs{F(\omega)} d\omega < C                            \\
+         & f(x) = c + \int_{\mathbb{R}^d} (e^{i\spr{x}{\omega}} - e^{i\spr{x_0}{\omega}}) \cdot F(\omega) d\omega
     \end{align}
 
     where $\abs{\omega}_{X, x_0} := \sup_{x\in X}\abs{\spr{\omega}{x - x_0}}$.
@@ -47,10 +80,9 @@ We formulated the class of functions introduced in \cite{barronNeuralNetApproxim
 \end{definition}
 
 \begin{theorem}\cite[Theorem~1]{barronUniversalApproximationBounds1993}\label{thm:barron_1993_1}
-    For every function in $\Gamma_C(X, x_0)$, every sigmoidal function
-    $\phi$, every probability measure $\mu$, and every $n \geq 1$,
-    there exists a linear combination of sigmoidal function $f_n(x)$ of 
-    the form, such that
+    For every function in $\Gamma_C(X, x_0)$, every sigmoidal function $\phi$,
+    every probability measure $\mu$, and every $n \geq 1$, there exists a linear
+    combination of sigmoidal function $f_n(x)$ of the form, such that
     \begin{equation}
         \int_X(f(x) - f_n(x))^2 \mu(dx) \leq \frac{(2C)^2}{n}
     \end{equation}
@@ -59,182 +91,205 @@ We formulated the class of functions introduced in \cite{barronNeuralNetApproxim
 
 \begin{proof}
 
-The main ideas behind the the proof of Theorem \ref{thm:barron_1993_1} is to
-show functions with finite Fourier moment are in the closure of the convex hull of the
-set of half planes and law of large numbers.
+    The main ideas behind the the proof of Theorem \ref{thm:barron_1993_1} is to
+    show functions with finite Fourier moment are in the closure of the convex
+    hull of the set of half planes and law of large numbers.
 
-\textbf{Step 0} (\textit{Fixing $x_0$}): Changing $x_0$ to $x_1$ 
-affects the norm, at most, by a factor of $2$.
-Let $x_0, x_1 \in X$, and $f$ fulfilling the assumption above, that is $f \in \Gamma_C(X, x_0)$. 
-For any $\omega \in \mathbb{R}^d$, given $x_0, x_1$, we have
+    \textbf{Step 0} (\textit{Fixing $x_0$}): Changing $x_0$ to $x_1$ affects the
+    norm, at most, by a factor of $2$. Let $x_0, x_1 \in X$, and $f$ fulfilling
+    the assumption above, that is $f \in \Gamma_C(X, x_0)$. For any $\omega \in
+        \mathbb{R}^d$, given $x_0, x_1$, we have
 
-\begin{equation}
-    \abs{\omega}_{X, x_0} = \sup_{x\in X}\abs{\spr{\omega}{x-x_1}} \leq \sup_{x\in X}\abs{\spr{\omega}{x-x_0}} + \abs{\spr{\omega}{x_0-x_1}} \leq 2\abs{\omega}_{X, x_1}
-\end{equation}
+    \begin{equation}
+        \abs{\omega}_{X, x_0} = \sup_{x\in X}\abs{\spr{\omega}{x-x_1}} \leq \sup_{x\in X}\abs{\spr{\omega}{x-x_0}} + \abs{\spr{\omega}{x_0-x_1}} \leq 2\abs{\omega}_{X, x_1}
+    \end{equation}
 
-Thus we have $\int_{\mathbb{R}^d} \abs{\omega}_{X, x_0} \cdot \abs{F(\omega)} d\omega < 2C$.
-If we have $\tilde{c} = c + \int_{\mathbb{R}^d} (e^{\spr{\omega}{x_0}} - e^{\spr{\omega}{x_1}}) d\omega$, 
-then $f(x) = \tilde{c} + \int_{\mathbb{R}^d} (e^{i\spr{x}{\omega}} - e^{i\spr{x_1}{\omega}})$ with $\tilde{c} \leq 2C$.
+    Thus we have $\int_{\mathbb{R}^d} \abs{\omega}_{X, x_0} \cdot
+        \abs{F(\omega)} d\omega < 2C$. If we have $\tilde{c} = c +
+        \int_{\mathbb{R}^d} (e^{\spr{\omega}{x_0}} - e^{\spr{\omega}{x_1}})
+        d\omega$, then $f(x) = \tilde{c} + \int_{\mathbb{R}^d} (e^{i\spr{x}{\omega}}
+        - e^{i\spr{x_1}{\omega}})$ with $\tilde{c} \leq 2C$.
 
-This shows that changing $x_0$ would only affect the norm in the RHS of Theorem \ref{thm:barron_1993_1}
-at most by a factor of two, i.e. $\Gamma_C(X, x_0) \subset \Gamma_{2C}(X, x_1)$.
-Therefore, we continue the proof assuming $x_0 = 0$ for simplicity.
+    This shows that changing $x_0$ would only affect the norm in the RHS of
+    Theorem \ref{thm:barron_1993_1} at most by a factor of two, i.e.
+    $\Gamma_C(X, x_0) \subset \Gamma_{2C}(X, x_1)$. Therefore, we continue the
+    proof assuming $x_0 = 0$ for simplicity.
 
-\textbf{Step 1} (\textit{Represent $f$ via Inverse Fourier Transform}): From the assumption,
-and the fact that $f$ is real-valued ($X \in \mathbb{R}^d \to \mathbb{R}$),
-the real number part can be written as:
+    \textbf{Step 1} (\textit{Represent $f$ via Inverse Fourier Transform}): From
+    the assumption, and the fact that $f$ is real-valued ($X \in \mathbb{R}^d
+        \to \mathbb{R}$), the real number part can be written as:
 
-Note that with polar decomposition $F(\omega) = e^{i\theta(\omega)} \cdot \abs{F(\omega)}$ where $\theta(\omega) \in \mathbb{R}$ denote the magnitude decomposition.
+    Note that with polar decomposition $F(\omega) = e^{i\theta(\omega)} \cdot
+        \abs{F(\omega)}$ where $\theta(\omega) \in \mathbb{R}$ denote the magnitude
+    decomposition.
 
-\begin{align}
-    f(x) - f(0) 
-    &= \Re \int (e^{i\spr{\omega}{x}} - e^{i\spr{\omega}{0}}) e^{i\theta(\omega)} \cdot F(\omega) d\omega \\
-    &= \int_{\Omega}\Big(\cos(\spr{\omega}{x} + \theta(\omega)) - \cos(\theta(\omega))\Big)  
-    F(\omega) d\omega \\
-    &= \int_{\Omega} \frac{C_{f,X}}{\abs{\omega}_{X, 0}}\Big(\cos(\spr{\omega}{x} + \theta(\omega)) - \cos(\theta(\omega))\Big) d\mu_g \\
-    &= \int_{\Omega} g(x, \omega) d\mu_g \label{eq:barron_fouier_int}
-\end{align}
+    \begin{align}
+        f(x) - f(0)
+         & = \Re \int (e^{i\spr{\omega}{x}} - e^{i\spr{\omega}{0}}) e^{i\theta(\omega)} \cdot F(\omega) d\omega                              \\
+         & = \int_{\Omega}\Big(\cos(\spr{\omega}{x} + \theta(\omega)) - \cos(\theta(\omega))\Big)
+        F(\omega) d\omega                                                                                                                    \\
+         & = \int_{\Omega} \frac{C_{f,X}}{\abs{\omega}_{X, 0}}\Big(\cos(\spr{\omega}{x} + \theta(\omega)) - \cos(\theta(\omega))\Big) d\mu_g \\
+         & = \int_{\Omega} g(x, \omega) d\mu_g \label{eq:barron_fouier_int}
+    \end{align}
 
-$C_{f,X}$ is a constant defined with $f$ and 
-$X$: $C_{f,X} = \int_{\mathbb{R}^d} \abs{\omega}_{X, 0} \cdot \abs{F(\omega)} d\omega \leq C$
-and $\mu_g$ is a probability distribution
-$d\mu_g = \abs{\omega}_{X,0}/C_{f,X}\abs{F(\omega)} d\omega$, the integral is evaluated on
-$\Omega = \{\omega \in \mathcal{R}^d: \omega \not = 0\}$ and
+    $C_{f,X}$ is a constant defined with $f$ and $X$: $C_{f,X} =
+        \int_{\mathbb{R}^d} \abs{\omega}_{X, 0} \cdot \abs{F(\omega)} d\omega \leq
+        C$ and $\mu_g$ is a probability distribution $d\mu_g =
+        \abs{\omega}_{X,0}/C_{f,X}\abs{F(\omega)} d\omega$, the integral is
+    evaluated on $\Omega = \{\omega \in \mathcal{R}^d: \omega \not = 0\}$ and
 
-\begin{equation}
-    g(x, \omega) = \frac{C_{f,X}}{\abs{\omega}_{X, 0}}\Big(\cos(\spr{\omega}{x} + \theta(\omega)) - \cos(\theta(\omega))\Big)
-\end{equation}
+    \begin{equation}
+        g(x, \omega) = \frac{C_{f,X}}{\abs{\omega}_{X, 0}}\Big(\cos(\spr{\omega}{x} + \theta(\omega)) - \cos(\theta(\omega))\Big)
+    \end{equation}
 
-\textbf{Step 2} (\textit{$f(x) - f(0)$ is in the closure of the convex hull of $G_{cos}$}) 
-The integral form in (\ref{eq:barron_fouier_int}) shows that $f(x) - f(0)$
-can be represented as an infinite convex combination of functions in the 
-class
+    \textbf{Step 2} (\textit{$f(x) - f(0)$ is in the closure of the convex hull
+        of $G_{cos}$}) The integral form in (\ref{eq:barron_fouier_int}) shows that
+    $f(x) - f(0)$ can be represented as an infinite convex combination of
+    functions in the class
 
-\begin{equation}
-    G_{cos} = \Bigg\{\frac{\abs{\gamma}}{\abs{\omega}_{X, 0}}\Big(\cos(\spr{\omega}{x} + b) - \cos(b)\Big): \omega \not= 0, \abs{\gamma} \leq C, b \in \mathbb{R} \Bigg\}
-\end{equation}
+    \begin{equation}
+        G_{cos} = \Bigg\{\frac{\abs{\gamma}}{\abs{\omega}_{X, 0}}\Big(\cos(\spr{\omega}{x} + b) - \cos(b)\Big): \omega \not= 0, \abs{\gamma} \leq C, b \in \mathbb{R} \Bigg\}
+    \end{equation}
 
-Suppose we have drawn $n$ samples ($\{\omega_i, i = 1,\dots, n\}$) from $\mu_g$, the 
-expected norm in $L_2(\mu_g, X)$ converges to zero as $n \to \infty$ by $L_2$ law 
-of large numbers. Therefore, there exist a sequence of convex combination
-in $G_{cos}$ that converges to $f(x) - f(0)$ in $L_2$.
+    Suppose we have drawn $n$ samples ($\{\omega_i, i = 1,\dots, n\}$) from
+    $\mu_g$, the expected norm in $L_2(\mu_g, X)$ converges to zero as $n \to
+        \infty$ by $L_2$ law of large numbers. Therefore, there exist a sequence of
+    convex combination in $G_{cos}$ that converges to $f(x) - f(0)$ in $L_2$.
 
 
-\textbf{Step 3} (\textit{$G_{cos}$ is in the closure of the convex hull of $G_{step}$}):
-It is sufficient to check $g(z), z = \alpha x, \alpha = \omega/\abs{\omega}_{X,0}$ on $[-1, 1]$ for some $\omega$. 
-As $g(z)$ is a uniformly continuous sinusoidal function on $[-1, 1]$, it can be 
-uniformly approximately by piecewise constant step function. 
+    \textbf{Step 3} (\textit{$G_{cos}$ is in the closure of the convex hull of
+        $G_{step}$}): It is sufficient to check $g(z), z = \alpha x, \alpha =
+        \omega/\abs{\omega}_{X,0}$ on $[-1, 1]$ for some $\omega$. As $g(z)$ is a
+    uniformly continuous sinusoidal function on $[-1, 1]$, it can be uniformly
+    approximately by piecewise constant step function.
 
-Restricting $g(z)$ on $[0, 1]$, for a partition 
-${0 \leq p_1 \leq p_2 \leq \cdots \leq p_k = 1}$, define
+    Restricting $g(z)$ on $[0, 1]$, for a partition ${0 \leq p_1 \leq p_2 \leq
+                \cdots \leq p_k = 1}$, define
 
-\begin{align}
-    g_{k,+}(z) = \sum_{i=1}^{k-1} \Big(g(p_i) - g(p_{i-1})\Big) \cdot
-    \stepfunction{z\geq p_i}
-\end{align}
+    \begin{align}
+        g_{k,+}(z) = \sum_{i=1}^{k-1} \Big(g(p_i) - g(p_{i-1})\Big) \cdot
+        \stepfunction{z\geq p_i}
+    \end{align}
 
-Similarly, we can construct 
-$g_{k,-}(z) = \sum_{i=1}^{k-1} (g(-p_i) - g(-p_{i-1})) \cdot \stepfunction{z\leq -p_i}$,
-results in a sequence of piecewise step function on $[-1, 1]$
-uniformly close to $g(z)$. We have $g(z) = g_{k,+}+g_{k,-}$, a linear combination
-of step function (or heaviside function) and the sum of the coefficients is
-bounded by 2C (The sum of coefficients of $g_{k,+}$ is bounded by $C$ as a result of the
-derivative of $g$ bounded by $C$, so does $g_{k,-}$ and hence $2C$).
+    Similarly, we can construct $g_{k,-}(z) = \sum_{i=1}^{k-1} (g(-p_i) -
+        g(-p_{i-1})) \cdot \stepfunction{z\leq -p_i}$, results in a sequence of
+    piecewise step function on $[-1, 1]$ uniformly close to $g(z)$. We have
+    $g(z) = g_{k,+}+g_{k,-}$, a linear combination of step function (or
+    heaviside function) and the sum of the coefficients is bounded by 2C (The
+    sum of coefficients of $g_{k,+}$ is bounded by $C$ as a result of the
+    derivative of $g$ bounded by $C$, so does $g_{k,-}$ and hence $2C$).
 
-We can see that functions $g(z)$ are in the closure of the convex hull of the step functions (by Lemma 1 in \cite{barronUniversalApproximationBounds1993})
+    We can see that functions $g(z)$ are in the closure of the convex hull of
+    the step functions (by Lemma 1 in
+    \cite{barronUniversalApproximationBounds1993})
 
-By substituting $z = \omega/\abs{\omega}_{X, 0} x$, we have $G_{cos} \subset G_{step}$,
-\begin{equation}
-    G_{step} = \Bigg\{ \gamma\stepfunction{\alpha x-t}: \abs{\gamma} \leq 2C, \abs{t} \leq 1, \abs{\alpha}_{X} = 1\Bigg\}
-\end{equation}
+    By substituting $z = \omega/\abs{\omega}_{X, 0} x$, we have $G_{cos} \subset
+        G_{step}$,
+    \begin{equation}
+        G_{step} = \Bigg\{ \gamma\stepfunction{\alpha x-t}: \abs{\gamma} \leq 2C, \abs{t} \leq 1, \abs{\alpha}_{X} = 1\Bigg\}
+    \end{equation}
 
-\textbf{Step 4} (\textit{Closure of $G_{\phi}$}) 
-There exists a sequence of sigmoidal function $\phi(\abs{c}(\alpha x - t))$, as $\abs{c} \to \infty$,
-it converges to step functions pointwise (except at points where $\alpha x - t = 0$).
-If we introduce a measure $\mu$ that has zero measure at those points, 
-previous statement on $G_{cos} \subset G^{\mu}_{step}$ still holds on 
-$\{\abs{t} \leq 1: \alpha x - t \not=0\}$ give a particular $\alpha$.
-We subsequently have convergence in $L_2(\mu, X)$ by dominated convergence theorem, 
-which implies that functions in $G^{\mu}_{step} \subset G_{\phi}$.
+    \textbf{Step 4} (\textit{Closure of $G_{\phi}$}) There exists a sequence of
+    sigmoidal function $\phi(\abs{c}(\alpha x - t))$, as $\abs{c} \to \infty$,
+    it converges to step functions pointwise (except at points where $\alpha x -
+        t = 0$). If we introduce a measure $\mu$ that has zero measure at those
+    points, previous statement on $G_{cos} \subset G^{\mu}_{step}$ still holds
+    on $\{\abs{t} \leq 1: \alpha x - t \not=0\}$ give a particular $\alpha$. We
+    subsequently have convergence in $L_2(\mu, X)$ by dominated convergence
+    theorem, which implies that functions in $G^{\mu}_{step} \subset G_{\phi}$.
 
-Finally we have the following relationship since the closure of a convex set is also convex.
+    Finally we have the following relationship since the closure of a convex set
+    is also convex.
 
-\begin{equation*}
-    \Gamma_{X, x_0} \subset \closure{G_{cos}} \subset \closure{G_{step}} \subset \closure{G_{\phi}}
-\end{equation*}
+    \begin{equation*}
+        \Gamma_{X, x_0} \subset \closure{G_{cos}} \subset \closure{G_{step}} \subset \closure{G_{\phi}}
+    \end{equation*}
 
-\cite[\textit{Lemma~1}]{barronUniversalApproximationBounds1993}: If $f$ is in the closure of the convex hull of a set $G$ in a Hibert space
-with norm $\norm{\cdot}$ and every function $g \in G$ is bounded by some constant $C_G$. Then for every $N \geq 1$,
-and every constant $C' > C_g^2 - \norm{f}^2$, there is a sequence $\{f_i, i = 1, \dots, N\}$ in 
-the convex hull in $G$ such that:
-\begin{equation}
-    \norm{f - f_N}^2 \leq \frac{C'}{n}
-\end{equation}
+    \cite[\textit{Lemma~1}]{barronUniversalApproximationBounds1993}: If $f$ is
+    in the closure of the convex hull of a set $G$ in a Hibert space with norm
+    $\norm{\cdot}$ and every function $g \in G$ is bounded by some constant
+    $C_G$. Then for every $N \geq 1$, and every constant $C' > C_g^2 -
+        \norm{f}^2$, there is a sequence $\{f_i, i = 1, \dots, N\}$ in the convex
+    hull in $G$ such that:
+    \begin{equation}
+        \norm{f - f_N}^2 \leq \frac{C'}{n}
+    \end{equation}
 
-$f_N = \sum_{i=1}^N \lambda_i \cdot f_i, \quad \sum_{i=1}^N \lambda_i = 1$
+    $f_N = \sum_{i=1}^N \lambda_i \cdot f_i, \quad \sum_{i=1}^N \lambda_i = 1$
 
-% Lemma 1 in \cite{barronUniversalApproximationBounds1993} showed that function in a closure of the convex hull of
-% a set in a Hilbert space can be approximated with a sequence of functions from such closure and the norm between
-% the function and the sequences $\{f_i, i = 1, \dots, N\}$ are bounded in a magnitude of $\bigO(N^{-1})$.
+    % Lemma 1 in \cite{barronUniversalApproximationBounds1993} showed that
+    % function in a closure of the convex hull of a set in a Hilbert space can
+    % be approximated with a sequence of functions from such closure and the
+    % norm between the function and the sequences $\{f_i, i = 1, \dots, N\}$ are
+    % bounded in a magnitude of $\bigO(N^{-1})$.
 
-As shown above that function $f(x) - f(0)$ are in the closure of the convex hull of $G_{\phi}$ where
-$\norm{g} \leq (2C)^2$ for every $g \in G_{\phi}$. 
-For any choice of $C' > (2C)^2 - \norm{f(x) - f(0)}^2$,
-we have the $L_2$ norm of the approximation error is bounded.
-% Suppose we restrict $t$ t
+    As shown above that function $f(x) - f(0)$ are in the closure of the convex
+    hull of $G_{\phi}$ where $\norm{g} \leq (2C)^2$ for every $g \in G_{\phi}$.
+    For any choice of $C' > (2C)^2 - \norm{f(x) - f(0)}^2$, we have the $L_2$
+    norm of the approximation error is bounded.
+    % Suppose we restrict $t$ t
 
-% Suppose we now restrict $t$ to the continuity point induced by measure $\mu$ in 
-% We can check that the functions in $G_{step}$ 
-% are in the closure of the convex hull of 
+    % Suppose we now restrict $t$ to the continuity point induced by measure
+    % $\mu$ in We can check that the functions in $G_{step}$ are in the closure
+    % of the convex hull of 
 
-% \textbf{Step 3} (\textit{Putting it together}): We can further show $G_{cos}$ are in the class of
-% sigmoidal functions. 
+    % \textbf{Step 3} (\textit{Putting it together}): We can further show
+    % $G_{cos}$ are in the class of sigmoidal functions. 
 
-% Theorem 2 in \cite{barronUniversalApproximationBounds1993}, we have that
+    % Theorem 2 in \cite{barronUniversalApproximationBounds1993}, we have that
 
 \end{proof}
 
 \newpage
 
-\section{Definition of Barron Spaces and Barron Norm}
+\section{Barron Norm and infinite-width Barron spaces}
+\label{sec:barron_norm}
 
-Here in the section introduce the definition of Barron space and its properties. It should be noted that the term ``Barron space'' was coined
-by \cite{ePrioriEstimatesPopulation2019} to honor Prof. Andrew Barron's
+Here in the section introduce the definition of Barron space and its properties.
+It should be noted that the term ``Barron space'' was coined by
+\cite{ePrioriEstimatesPopulation2019} to honor Prof. Andrew Barron's
 contribution in the understanding of neural nets.
 
-For a function $f: \mathcal{X} \subset \mathbb{R}^d \to \mathbb{R}$, we consider those that admit the following integral representation:
+For a function $f: \mathcal{X} \subset \mathbb{R}^d \to \mathbb{R}$, we consider
+those that admit the following integral representation:
 
 \begin{equation}\label{eq:barron_represent}
-    f(\mathbf{x}) = \int_{\Omega} a \sigma(\mathbf{b}^T\mathbf{x} + c) \rho(da, d\mathbf{b}, dc), \quad \mathbf{x} \in \mathcal{X} 
+    f(\mathbf{x}) = \int_{\Omega} a \sigma(\mathbf{b}^T\mathbf{x} + c) \rho(da, d\mathbf{b}, dc), \quad \mathbf{x} \in \mathcal{X}
 \end{equation}
 
-where $\rho$ is a probability distribution on $(\Omega, \Sigma_\Omega)$, $\Omega = \mathbb{R}^1 \times \mathbb{R}^d \times \mathbb{R}^1$ and $\sigma(\cdot) = \max\{\cdot, 0\}$ is the ReLU activation function.
+where $\rho$ is a probability distribution on $(\Omega, \Sigma_\Omega)$, $\Omega
+    = \mathbb{R}^1 \times \mathbb{R}^d \times \mathbb{R}^1$ and $\sigma(\cdot) =
+    \max\{\cdot, 0\}$ is the ReLU activation function.
 
-The representation can be seen as a continuum analogy of the 2NN with $m$ hidden nodes:
+The representation can be seen as a continuum analogy of the 2NN with $m$ hidden
+nodes:
 
 \begin{equation}
     f_m(\mathbf{x}, \Theta) := \frac{1}{m} \sum_{j=1}^m a_j \sigma(\mathbf{b}^T\mathbf{x} + c_j), \quad \Theta = \{(a_j, \mathbf{b}_j, c_j), \ j = 1, \dots, m\}
 \end{equation}
 
-\begin{definition}[Barron norm] For functions that admit representation \eqref{eq:barron_represent}, its Barron norm is defined as \cite{eBarronSpaceFlowinduced2021}: 
+\begin{definition}[Barron norm] For functions that admit representation
+    \eqref{eq:barron_represent}, its Barron norm is defined as
+    \cite{eBarronSpaceFlowinduced2021}:
     \begin{equation}\label{eq:barron_norm}
         \barronnorm{f}{p} := \inf_{\rho} \Big(\ERWi{\rho}{\abs{a}^p (\norm{\mathbf{b}}_1 + \abs{c})^p}\Big)^{1/p}, \quad 1 \leq p \leq +\infty
     \end{equation}
-    % where 
-    % \begin{equation*}
-    %     \Theta_f = \left\{ (a, \pi) \mid f(x) = \int_{space} a(w) \sigma(\langle w, x \rangle)\dd{\pi(w)} \right\}.
+    % where \begin{equation*} \Theta_f = \left\{ (a, \pi) \mid f(x) =
+    % \int_{space} a(w) \sigma(\langle w, x \rangle)\dd{\pi(w)} \right\}.
     % \end{equation*}
 \end{definition}
 
-The infimum is taken over all probability distribution where \eqref{eq:barron_represent} holds ($\rho$ is not unique) for all
-$\mathbf{x} \in \mathcal{X}$. When $p = + \infty$, the Barron norm becomes:
+The infimum is taken over all probability distribution where
+\eqref{eq:barron_represent} holds ($\rho$ is not unique) for all $\mathbf{x} \in
+    \mathcal{X}$. When $p = + \infty$, the Barron norm becomes:
 
 \begin{equation}
     \inf_{\rho} \max_{a, \mathbf{b}, c \in \supp(\rho)} \abs{a} (\norm{\mathbf{b}}_1 + \abs{c})
 \end{equation}
 
-Barron spaces are denoted by $\mathcal{B}_p$ and defined as the set of \textit{}{continuous} functions
-that admit representation in \eqref{eq:barron_represent} with finite Barron norm.
+Barron spaces are denoted by $\mathcal{B}_p$ and defined as the set of
+\textit{}{continuous} functions that admit representation in
+\eqref{eq:barron_represent} with finite Barron norm.
 
 By the definition of Barron norm, it is easy to see that:
 
@@ -247,87 +302,109 @@ By the definition of Barron norm, it is easy to see that:
 
 The idea is similar to the inclusion of $L_p$, $L_q$ space.
 
-    Applying Hölder's inequality, for any $1 \leq p \leq q < \infty$
+Applying Hölder's inequality, for any $1 \leq p \leq q < \infty$
 
-    \begin{align*}
-        \int \abs{a}^p (\norm{\mathbf{b}}_1 + \abs{c})^p d\rho
-        &= \int \abs{a}^p (\norm{\mathbf{b}}_1 + \abs{c})^p \cdot 1 d\rho \\
-        &\leq \Big(\int \abs{a}^{pq/p} (\norm{\mathbf{b}}_1 + \abs{c})^{pq/p} d\rho \Big)^{p/q} \Big(\int d\rho\Big)^{1-p/q} \\
-        &= \Big(\int \abs{a}^q (\norm{\mathbf{b}}_1 + \abs{c})^q d\rho \Big)^{p/q} \Big(\int d\rho\Big)^{1-p/q} 
-    \end{align*}
+\begin{align*}
+    \int \abs{a}^p (\norm{\mathbf{b}}_1 + \abs{c})^p d\rho
+     & = \int \abs{a}^p (\norm{\mathbf{b}}_1 + \abs{c})^p \cdot 1 d\rho                                                    \\
+     & \leq \Big(\int \abs{a}^{pq/p} (\norm{\mathbf{b}}_1 + \abs{c})^{pq/p} d\rho \Big)^{p/q} \Big(\int d\rho\Big)^{1-p/q} \\
+     & = \Big(\int \abs{a}^q (\norm{\mathbf{b}}_1 + \abs{c})^q d\rho \Big)^{p/q} \Big(\int d\rho\Big)^{1-p/q}
+\end{align*}
 
-Therefore we have the inclusion $\mathcal{B}_{q} \subset \mathcal{B}_p$
-for $1 \leq p \leq q < \infty$. \tonote{Not sure how to justify for the case $+\infty$}
+Therefore we have the inclusion $\mathcal{B}_{q} \subset \mathcal{B}_p$ for $1
+    \leq p \leq q < \infty$. \tonote{Not sure how to justify for the case $+\infty$}
 
-However, the reverse also holds in the class of ReLU functions so we have $\mathcal{B}_{\infty} = 
-\mathcal{B}_p$, $\barronnorm{\cdot}{\infty} = \barronnorm{\cdot}{p}$  for all $1 \leq p \leq +\infty$.
+However, the reverse also holds in the class of ReLU functions so we have
+$\mathcal{B}_{\infty} = \mathcal{B}_p$, $\barronnorm{\cdot}{\infty} =
+    \barronnorm{\cdot}{p}$  for all $1 \leq p \leq +\infty$.
 
-\begin{lemma}\label{lamma:equivalence_barron_space} ~\cite[Prop. 10]{eBarronSpaceFlowinduced2021}
-    For any $f \in \mathcal{B}_1$, $f \,\text{also}\, \in \mathcal{B}_{\infty}$ and 
-    $\barronnorm{f}{\infty} = \barronnorm{f}{p}$ and 
-    hence $ \mathcal{B}_{\infty} = \cdots = \mathcal{B}_{2} = \mathcal{B}_1$ when $\sigma(\cdot)$ 
-    is ReLU function.
+\begin{lemma}\label{lamma:equivalence_barron_space} ~\cite[Prop.
+        10]{eBarronSpaceFlowinduced2021} For any $f \in \mathcal{B}_1$, $f
+        \,\text{also}\, \in \mathcal{B}_{\infty}$ and $\barronnorm{f}{\infty} =
+        \barronnorm{f}{p}$ and hence $ \mathcal{B}_{\infty} = \cdots =
+        \mathcal{B}_{2} = \mathcal{B}_1$ when $\sigma(\cdot)$ is ReLU function.
 \end{lemma}
 
 \begin{proof}
-    As $f \in \mathcal{B}_1$,  there exist 
-    a probability distribution $\rho$ on $(\Omega, \Sigma_\Omega)$ satisfying the integral form in \eqref{eq:barron_represent}.
+    As $f \in \mathcal{B}_1$,  there exist a probability distribution $\rho$ on
+    $(\Omega, \Sigma_\Omega)$ satisfying the integral form in
+    \eqref{eq:barron_represent}.
 
-    For any $\epsilon > 0$, from the definition of Barron norm \eqref{eq:barron_norm}:
+    For any $\epsilon > 0$, from the definition of Barron norm
+    \eqref{eq:barron_norm}:
+
     \begin{equation}
         \ERWi{\rho}{\abs{a}(\norm{\mathbf{b}}_1 + \abs{c})} \leq \barronnorm{f}{1} + \epsilon
     \end{equation}
 
     \tonote{Why would this inequality hold? Why do you have to restrict A}
 
-    The key point here is to construct a probability measure and then 
+    The key point here is to construct a probability measure and then
 
-    Here we construct two measure $\rho_+$ and $\rho_-$ on satisfying 
+    Here we construct two measure $\rho_+$ and $\rho_-$ on satisfying
     \begin{equation*}
         \ERWi{\rho}{\abs{a}(\norm{\mathbf{b}}_1 + \abs{c})}
     \end{equation*}
-    
-    
+
+
     where $\Lambda = \{(\mathbf{b}, c): \norm{\mathbf{b}}_1 + \abs{c} = 1\}$
 \end{proof}
 
 \section{Direct and Inverse Approximation Theorems}
 
 \begin{theorem} [Direct Approximation]
-    For any function $f \in \mathcal{B}$ and $m > 0$, there exists a two-layer neural network
-    $f_m = f(\mathbf{x}, \Theta) = \frac{1}{m}\sum_{k=1}^m a_k \sigma(\mathbf{b}_k^T \mathbf(x) + c_k)$. 
-    $\Theta$ is the set of parameters $\Theta = \{(a_k, \mathbf{b}, c_k), k=1,\dots,m\}$ such that
+    For any function $f \in \mathcal{B}$ and $m > 0$, there exists a two-layer
+    neural network $f_m = f(\mathbf{x}, \Theta) = \frac{1}{m}\sum_{k=1}^m a_k
+        \sigma(\mathbf{b}_k^T \mathbf(x) + c_k)$. $\Theta$ is the set of parameters
+    $\Theta = \{(a_k, \mathbf{b}, c_k), k=1,\dots,m\}$ such that
     \begin{equation*}
         \norm{f - f_m}^2 \leq \frac{3\norm{f}_{\mathcal{B}}^2}{m}
     \end{equation*}
 
-    Furthuermore, we have 
+    Furthuermore, we have
     \begin{equation}
-        \norm{\Theta}_{path} := \frac{1}{m} \sum_{k=1}^m \abs{a_k} (\norm{\mathbf{b}_k}_1 + \abs{c_k}) 
+        \norm{\Theta}_{path} := \frac{1}{m} \sum_{k=1}^m \abs{a_k} (\norm{\mathbf{b}_k}_1 + \abs{c_k})
         \leq 3\norm{f}_{\mathcal{B}}
-        \end{equation}
+    \end{equation}
 \end{theorem}
 
-The $\norm{\Theta}_{path}$ is the per-unit norm controll
-for 2NN defined in \cite{neyshaburNormBasedCapacityControl2015}. \tonote{add sth about the convexity}
+The $\norm{\Theta}_{path}$ is the per-unit norm controll for 2NN defined in
+\cite{neyshaburNormBasedCapacityControl2015}. \tonote{add sth about the
+    convexity}
 
 \section{Difference and Connection Between Different Barron Spaces}
+\label{sec:diff_barron_spaces}
 
-In the literature, ``Barron spaces'' have been defined differently \cite{eBanachSpacesAssociated2020, ePrioriEstimatesPopulation2019}. To avoid confusion, we adopted the definition from \TOCITE(Barron Class 2022), we refer the class of functions with finite Fourier moments as \textit{Fourier-analytic Barron spaces} and \textit{infinite-width Barron spaces} with ReLU activation function. In \cite{ePrioriEstimatesPopulation2019, eBarronSpaceFlowinduced2021}, a connection between $\mathcal{B}_{\infty}$ and the function with finite second Fourier moment was stated using results \cite{klusowskiRiskBoundsHighdimensional2018}. In the section, we will make a more formal clarification.
 
-We denote \textit{infinite-width Barron spaces} by $\mathcal{B}_p$ ($1 \leq p \leq +\infty$) and the class of \textit{Fourier-analytic Barron spaces} by $\mathcal{B}_{\mathcal{F}, s}$ ($s \geq 1$)
+In the literature, ``Barron spaces'' have been defined differently
+\cite{eBanachSpacesAssociated2020, ePrioriEstimatesPopulation2019}. To avoid
+confusion, we adopted the definition from \TOCITE(Barron Class 2022), we refer
+the class of functions with finite Fourier moments as \textit{Fourier-analytic
+    Barron spaces} and \textit{infinite-width Barron spaces} with ReLU activation
+function. In \cite{ePrioriEstimatesPopulation2019, eBarronSpaceFlowinduced2021},
+a connection between $\mathcal{B}_{\infty}$ and the function with finite second
+Fourier moment was stated using results
+\cite{klusowskiRiskBoundsHighdimensional2018}. In the section, we will make a
+more formal clarification.
 
-We firstly define the \textit{Fourier-anlytic norm}, $v_{f, s}$ $s \geq 1$, for function $f$ that has a Fourier representation:
+We denote \textit{infinite-width Barron spaces} by $\mathcal{B}_p$ ($1 \leq p
+    \leq +\infty$) and the class of \textit{Fourier-analytic Barron spaces} by
+$\mathcal{B}_{\mathcal{F}, s}$ ($s \geq 1$)
+
+We firstly define the \textit{Fourier-anlytic norm}, $v_{f, s}$ $s \geq 1$, for
+function $f$ that has a Fourier representation:
 \begin{align}
-    f(x) &= \int_{\mathbb{R}^d} e^{i\spr{x}{\omega}} F(\omega) d\omega \label{eq:fourier_rep} \\
-    v_{f, s} &= \int_{\mathbb{R}^d} \norm{\omega}_1^s \cdot \abs{F(\omega)} d\omega \label{eq:fourier_norm}
+    f(x)     & = \int_{\mathbb{R}^d} e^{i\spr{x}{\omega}} F(\omega) d\omega \label{eq:fourier_rep}           \\
+    v_{f, s} & = \int_{\mathbb{R}^d} \norm{\omega}_1^s \cdot \abs{F(\omega)} d\omega \label{eq:fourier_norm}
 \end{align}
 
-Considering the set of all Borel probability measures of $\Omega = (\mathbb{R}^1 \times \mathbb{R}^d \times \mathbb{R}^1)$ (denoted by $\mathcal{P}_d$), given a nonempty bounded subset $U \subset \mathbb{R}^d$
+Considering the set of all Borel probability measures of $\Omega = (\mathbb{R}^1
+    \times \mathbb{R}^d \times \mathbb{R}^1)$ (denoted by $\mathcal{P}_d$), given a
+nonempty bounded subset $U \subset \mathbb{R}^d$
 
 \begin{align*}
-    \mathcal{B}_{p}(U) &:= \left\{f: U \to \mathbb{R} \mid \exists\, \rho \in \mathcal{P}_d, \barronnorm{f}{p} < \infty \, \text{and $f$ is in the form \eqref{eq:barron_represent}}\right\} \\
-    \mathcal{B}_{\mathcal{F}, s}(U) &:= \left\{f: U \to \mathbb{R} \mid \exists\, \rho \in \mathcal{P}_d, v_{f, s} < \infty \, \text{and $f$ is in the form \eqref{eq:fourier_rep}}\right\}
+    \mathcal{B}_{p}(U)              & := \left\{f: U \to \mathbb{R} \mid \exists\, \rho \in \mathcal{P}_d, \barronnorm{f}{p} < \infty \, \text{and $f$ is in the form \eqref{eq:barron_represent}}\right\} \\
+    \mathcal{B}_{\mathcal{F}, s}(U) & := \left\{f: U \to \mathbb{R} \mid \exists\, \rho \in \mathcal{P}_d, v_{f, s} < \infty \, \text{and $f$ is in the form \eqref{eq:fourier_rep}}\right\}
 \end{align*}
 
 
@@ -337,19 +414,25 @@ It has been shown in \TOCITE that:
 \end{equation*}
 
 \begin{proof}
-    
+
 \end{proof}
 
-It has been discussed in earlier section that we have the equivalence of Barron norm and hence Barron spaces for $1 \leq p\leq +\infty$ (see \eqref{eq:barron_fouier_int}) with ReLU as activation funciton.
+It has been discussed in earlier section that we have the equivalence of Barron
+norm and hence Barron spaces for $1 \leq p\leq +\infty$ (see
+\eqref{eq:barron_fouier_int}) with ReLU as activation funciton.
 
-In other words, combined with the fact that $\mathcal{B}_{\infty} = \mathcal{B}_p$, we can say that
-the class of functions where $f$ admits a Fourier representation with finite second moment ($v_{f, 2} < \infty$) are well ``contained'' inside the \textit{infinite-width Barron spaces}. 
-However, $\mathcal{B}_{\mathcal{F}, 1}(U)$ still encapsulates a boarder class of functions.
+In other words, combined with the fact that $\mathcal{B}_{\infty} =
+    \mathcal{B}_p$, we can say that the class of functions where $f$ admits a
+Fourier representation with finite second moment ($v_{f, 2} < \infty$) are well
+``contained'' inside the \textit{infinite-width Barron spaces}. However,
+$\mathcal{B}_{\mathcal{F}, 1}(U)$ still encapsulates a boarder class of
+functions.
 
-\begin{lemma}~\TOCITE(Proposition 7.4 {Barron class 2022})
-    Let $U \subset \mathbb{R}^d$ be bounded and have nonempty interior.
-    For $s>0$, if $\mathcal{B}_{\mathcal{F},s}(U) \subset \mathcal{B}_{1}(U)$, then $s \geq 2$. In particular 
-    $\mathcal{B}_{\mathcal{F},1}(U) \not\subset \mathcal{B}_{1}(U)$
+\begin{lemma}~\TOCITE(Proposition 7.4 {Barron class 2022}) Let $U \subset
+        \mathbb{R}^d$ be bounded and have nonempty interior. For $s>0$, if
+    $\mathcal{B}_{\mathcal{F},s}(U) \subset \mathcal{B}_{1}(U)$, then $s \geq
+        2$. In particular $\mathcal{B}_{\mathcal{F},1}(U) \not\subset
+        \mathcal{B}_{1}(U)$
 \end{lemma}
 
 
@@ -361,38 +444,36 @@ S
 
 % For simplicity, data are of the form $\{(X_i, Y_i)\}_{i=1}^n$ from a
 
-% For functions $f$ in the class $\mathcal{F}: [-1, 1]^d \to \mathcal{R}$, the minimax risk is:
+% For functions $f$ in the class $\mathcal{F}: [-1, 1]^d \to \mathcal{R}$, the
+% minimax risk is:
 
-% \begin{equation}
-%     R_{n,d} := \inf_{\hat{f}} \sup_{f\in \mathcal{F}} \ERW{\norm{f - \hat{f}}^2}
-% \end{equation}
+% \begin{equation} R_{n,d} := \inf_{\hat{f}} \sup_{f\in \mathcal{F}}
+%     \ERW{\norm{f - \hat{f}}^2} \end{equation}
 
-% It has been shown in \TOCITE(Barron Minimax paper) that the minimax lower bound for 
-% neural nets is of order $\bigO(\log{d}/n)$ to some fractional power
+% It has been shown in \TOCITE(Barron Minimax paper) that the minimax lower
+% bound for neural nets is of order $\bigO(\log{d}/n)$ to some fractional power
 % when $d$ is of larger order than $n$.
- 
+
 % \section{Risk Bounds for }
 
-% {\itshape
-% Firstly, I need to understand the difference between approximation rates and estimation of population risk.
+% {\itshape Firstly, I need to understand the difference between approximation
+% rates and estimation of population risk.
 
-% There exists a vast dictionary of definitions with similar wordings but the context is hughly different.
+% There exists a vast dictionary of definitions with similar wordings but the
+% context is hughly different.
 
 % e.g. What's the estimate of the population risk? In my understanding,
 
-% $f^* - f_m$ where $f_m$ is the best solution in such hypothesis class is the approximation rates
+% $f^* - f_m$ where $f_m$ is the best solution in such hypothesis class is the
+% approximation rates
 
 % It should be that Population risk is w.r.t. a particular loss function?}
 
-% \begin{equation}
-%     f(x) = \sum_{i=1}^m a_i \phi (\spr{\mathbf{w_i}}{x})
-% \end{equation}
+% \begin{equation} f(x) = \sum_{i=1}^m a_i \phi (\spr{\mathbf{w_i}}{x})
+%     \end{equation}
 
 
 
 
 
-%%% Local Variables: 
-%%% mode: latex
-%%% TeX-master: "MasterThesisSfS"
-%%% End: 
+%%% Local Variables: %% mode: latex %% TeX-master: "MasterThesisSfS" %% End: 
