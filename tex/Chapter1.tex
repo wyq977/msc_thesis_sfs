@@ -1,10 +1,12 @@
 \chapter{Approximation Properties}
 
-It has been shown shallow neural networks (even with one hidden layer) has good 
-approximations properties with mild conditions on the activation function. Two
-layer neural network are good approximators in a sense that they can approximate
+In this chapter, we will introduce some basic concepts about  
+artificial artificial neural networks with an emphasis on the 
+two-layer neural networks. We will present the 
+
+It has been shown that shallow neural network model (even with one hidden layer) has good approximations properties with mild conditions on the activation function. Two layer neural network are good approximators in a sense that they can approximate
 any continuous function arbitrarily well ~\cite{cybenkoApproximationSuperpositionsSigmoidal1989}. 
-Despite its important, the theorem \ref{thm:uat} can not provide quantitative 
+Despite its importance, the theorem \ref{thm:uat} can not provide quantitative 
 information regarding the class or spaces of function created by neural network
 model (the hypothesis space) and also do not provide an bound for the approximation 
 error rate. 
@@ -194,9 +196,200 @@ we have the $L_2$ norm of the approximation error is bounded.
 
 \newpage
 
+\section{Definition of Barron Spaces and Barron Norm}
+
+Here in the section introduce the definition of Barron space and its properties. It should be noted that the term ``Barron space'' was coined
+by \cite{ePrioriEstimatesPopulation2019} to honor Prof. Andrew Barron's
+contribution in the understanding of neural nets.
+
+For a function $f: \mathcal{X} \subset \mathbb{R}^d \to \mathbb{R}$, we consider those that admit the following integral representation:
+
+\begin{equation}\label{eq:barron_represent}
+    f(\mathbf{x}) = \int_{\Omega} a \sigma(\mathbf{b}^T\mathbf{x} + c) \rho(da, d\mathbf{b}, dc), \quad \mathbf{x} \in \mathcal{X} 
+\end{equation}
+
+where $\rho$ is a probability distribution on $(\Omega, \Sigma_\Omega)$, $\Omega = \mathbb{R}^1 \times \mathbb{R}^d \times \mathbb{R}^1$ and $\sigma(\cdot) = \max\{\cdot, 0\}$ is the ReLU activation function.
+
+The representation can be seen as a continuum analogy of the 2NN with $m$ hidden nodes:
+
+\begin{equation}
+    f_m(\mathbf{x}, \Theta) := \frac{1}{m} \sum_{j=1}^m a_j \sigma(\mathbf{b}^T\mathbf{x} + c_j), \quad \Theta = \{(a_j, \mathbf{b}_j, c_j), \ j = 1, \dots, m\}
+\end{equation}
+
+\begin{definition}[Barron norm] For functions that admit representation \eqref{eq:barron_represent}, its Barron norm is defined as \cite{eBarronSpaceFlowinduced2021}: 
+    \begin{equation}\label{eq:barron_norm}
+        \barronnorm{f}{p} := \inf_{\rho} \Big(\ERWi{\rho}{\abs{a}^p (\norm{\mathbf{b}}_1 + \abs{c})^p}\Big)^{1/p}, \quad 1 \leq p \leq +\infty
+    \end{equation}
+    % where 
+    % \begin{equation*}
+    %     \Theta_f = \left\{ (a, \pi) \mid f(x) = \int_{space} a(w) \sigma(\langle w, x \rangle)\dd{\pi(w)} \right\}.
+    % \end{equation*}
+\end{definition}
+
+The infimum is taken over all probability distribution where \eqref{eq:barron_represent} holds ($\rho$ is not unique) for all
+$\mathbf{x} \in \mathcal{X}$. When $p = + \infty$, the Barron norm becomes:
+
+\begin{equation}
+    \inf_{\rho} \max_{a, \mathbf{b}, c \in \supp(\rho)} \abs{a} (\norm{\mathbf{b}}_1 + \abs{c})
+\end{equation}
+
+Barron spaces are denoted by $\mathcal{B}_p$ and defined as the set of \textit{}{continuous} functions
+that admit representation in \eqref{eq:barron_represent} with finite Barron norm.
+
+By the definition of Barron norm, it is easy to see that:
+
+\begin{equation}
+    \mathcal{B}_{\infty} \subset \cdots \subset \mathcal{B}_{2} \subset \mathcal{B}_1
+\end{equation}
+
+% https://ocw.mit.edu/courses/18-125-measure-and-integration-fall-2003/6f21af6c40de1eccd70349bd3a3b0095_18125_lec17.pdf
 
 
-The class of function purposed in Bar93 is formulated as follow. The    
+The idea is similar to the inclusion of $L_p$, $L_q$ space.
+
+    Applying Hölder's inequality, for any $1 \leq p \leq q < \infty$
+
+    \begin{align*}
+        \int \abs{a}^p (\norm{\mathbf{b}}_1 + \abs{c})^p d\rho
+        &= \int \abs{a}^p (\norm{\mathbf{b}}_1 + \abs{c})^p \cdot 1 d\rho \\
+        &\leq \Big(\int \abs{a}^{pq/p} (\norm{\mathbf{b}}_1 + \abs{c})^{pq/p} d\rho \Big)^{p/q} \Big(\int d\rho\Big)^{1-p/q} \\
+        &= \Big(\int \abs{a}^q (\norm{\mathbf{b}}_1 + \abs{c})^q d\rho \Big)^{p/q} \Big(\int d\rho\Big)^{1-p/q} 
+    \end{align*}
+
+Therefore we have the inclusion $\mathcal{B}_{q} \subset \mathcal{B}_p$
+for $1 \leq p \leq q < \infty$. \tonote{Not sure how to justify for the case $+\infty$}
+
+However, the reverse also holds in the class of ReLU functions so we have $\mathcal{B}_{\infty} = 
+\mathcal{B}_p$, $\barronnorm{\cdot}{\infty} = \barronnorm{\cdot}{p}$  for all $1 \leq p \leq +\infty$.
+
+\begin{lemma}\label{lamma:equivalence_barron_space} ~\cite[Prop. 10]{eBarronSpaceFlowinduced2021}
+    For any $f \in \mathcal{B}_1$, $f \,\text{also}\, \in \mathcal{B}_{\infty}$ and 
+    $\barronnorm{f}{\infty} = \barronnorm{f}{p}$ and 
+    hence $ \mathcal{B}_{\infty} = \cdots = \mathcal{B}_{2} = \mathcal{B}_1$ when $\sigma(\cdot)$ 
+    is ReLU function.
+\end{lemma}
+
+\begin{proof}
+    As $f \in \mathcal{B}_1$,  there exist 
+    a probability distribution $\rho$ on $(\Omega, \Sigma_\Omega)$ satisfying the integral form in \eqref{eq:barron_represent}.
+
+    For any $\epsilon > 0$, from the definition of Barron norm \eqref{eq:barron_norm}:
+    \begin{equation}
+        \ERWi{\rho}{\abs{a}(\norm{\mathbf{b}}_1 + \abs{c})} \leq \barronnorm{f}{1} + \epsilon
+    \end{equation}
+
+    \tonote{Why would this inequality hold? Why do you have to restrict A}
+
+    The key point here is to construct a probability measure and then 
+
+    Here we construct two measure $\rho_+$ and $\rho_-$ on satisfying 
+    \begin{equation*}
+        \ERWi{\rho}{\abs{a}(\norm{\mathbf{b}}_1 + \abs{c})}
+    \end{equation*}
+    
+    
+    where $\Lambda = \{(\mathbf{b}, c): \norm{\mathbf{b}}_1 + \abs{c} = 1\}$
+\end{proof}
+
+\section{Direct and Inverse Approximation Theorems}
+
+\begin{theorem} [Direct Approximation]
+    For any function $f \in \mathcal{B}$ and $m > 0$, there exists a two-layer neural network
+    $f_m = f(\mathbf{x}, \Theta) = \frac{1}{m}\sum_{k=1}^m a_k \sigma(\mathbf{b}_k^T \mathbf(x) + c_k)$. 
+    $\Theta$ is the set of parameters $\Theta = \{(a_k, \mathbf{b}, c_k), k=1,\dots,m\}$ such that
+    \begin{equation*}
+        \norm{f - f_m}^2 \leq \frac{3\norm{f}_{\mathcal{B}}^2}{m}
+    \end{equation*}
+
+    Furthuermore, we have 
+    \begin{equation}
+        \norm{\Theta}_{path} := \frac{1}{m} \sum_{k=1}^m \abs{a_k} (\norm{\mathbf{b}_k}_1 + \abs{c_k}) 
+        \leq 3\norm{f}_{\mathcal{B}}
+        \end{equation}
+\end{theorem}
+
+The $\norm{\Theta}_{path}$ is the per-unit norm controll
+for 2NN defined in \cite{neyshaburNormBasedCapacityControl2015}. \tonote{add sth about the convexity}
+
+\section{Difference and Connection Between Different Barron Spaces}
+
+In the literature, ``Barron spaces'' have been defined differently \cite{eBanachSpacesAssociated2020, ePrioriEstimatesPopulation2019}. To avoid confusion, we adopted the definition from \TOCITE(Barron Class 2022), we refer the class of functions with finite Fourier moments as \textit{Fourier-analytic Barron spaces} and \textit{infinite-width Barron spaces} with ReLU activation function. In \cite{ePrioriEstimatesPopulation2019, eBarronSpaceFlowinduced2021}, a connection between $\mathcal{B}_{\infty}$ and the function with finite second Fourier moment was stated using results \cite{klusowskiRiskBoundsHighdimensional2018}. In the section, we will make a more formal clarification.
+
+We denote \textit{infinite-width Barron spaces} by $\mathcal{B}_p$ ($1 \leq p \leq +\infty$) and the class of \textit{Fourier-analytic Barron spaces} by $\mathcal{B}_{\mathcal{F}, s}$ ($s \geq 1$)
+
+We firstly define the \textit{Fourier-anlytic norm}, $v_{f, s}$ $s \geq 1$, for function $f$ that has a Fourier representation:
+\begin{align}
+    f(x) &= \int_{\mathbb{R}^d} e^{i\spr{x}{\omega}} F(\omega) d\omega \label{eq:fourier_rep} \\
+    v_{f, s} &= \int_{\mathbb{R}^d} \norm{\omega}_1^s \cdot \abs{F(\omega)} d\omega \label{eq:fourier_norm}
+\end{align}
+
+Considering the set of all Borel probability measures of $\Omega = (\mathbb{R}^1 \times \mathbb{R}^d \times \mathbb{R}^1)$ (denoted by $\mathcal{P}_d$), given a nonempty bounded subset $U \subset \mathbb{R}^d$
+
+\begin{align*}
+    \mathcal{B}_{p}(U) &:= \left\{f: U \to \mathbb{R} \mid \exists\, \rho \in \mathcal{P}_d, \barronnorm{f}{p} < \infty \, \text{and $f$ is in the form \eqref{eq:barron_represent}}\right\} \\
+    \mathcal{B}_{\mathcal{F}, s}(U) &:= \left\{f: U \to \mathbb{R} \mid \exists\, \rho \in \mathcal{P}_d, v_{f, s} < \infty \, \text{and $f$ is in the form \eqref{eq:fourier_rep}}\right\}
+\end{align*}
+
+
+It has been shown in \TOCITE that:
+\begin{equation*}
+    \mathcal{B}_{\mathcal{F},2}(U) \subset \mathcal{B}_{1}(U)
+\end{equation*}
+
+\begin{proof}
+    
+\end{proof}
+
+It has been discussed in earlier section that we have the equivalence of Barron norm and hence Barron spaces for $1 \leq p\leq +\infty$ (see \eqref{eq:barron_fouier_int}) with ReLU as activation funciton.
+
+In other words, combined with the fact that $\mathcal{B}_{\infty} = \mathcal{B}_p$, we can say that
+the class of functions where $f$ admits a Fourier representation with finite second moment ($v_{f, 2} < \infty$) are well ``contained'' inside the \textit{infinite-width Barron spaces}. 
+However, $\mathcal{B}_{\mathcal{F}, 1}(U)$ still encapsulates a boarder class of functions.
+
+\begin{lemma}~\TOCITE(Proposition 7.4 {Barron class 2022})
+    Let $U \subset \mathbb{R}^d$ be bounded and have nonempty interior.
+    For $s>0$, if $\mathcal{B}_{\mathcal{F},s}(U) \subset \mathcal{B}_{1}(U)$, then $s \geq 2$. In particular 
+    $\mathcal{B}_{\mathcal{F},1}(U) \not\subset \mathcal{B}_{1}(U)$
+\end{lemma}
+
+
+S
+
+
+
+% \section{Minimax Lower Bounds for Two Neural Network Model}
+
+% For simplicity, data are of the form $\{(X_i, Y_i)\}_{i=1}^n$ from a
+
+% For functions $f$ in the class $\mathcal{F}: [-1, 1]^d \to \mathcal{R}$, the minimax risk is:
+
+% \begin{equation}
+%     R_{n,d} := \inf_{\hat{f}} \sup_{f\in \mathcal{F}} \ERW{\norm{f - \hat{f}}^2}
+% \end{equation}
+
+% It has been shown in \TOCITE(Barron Minimax paper) that the minimax lower bound for 
+% neural nets is of order $\bigO(\log{d}/n)$ to some fractional power
+% when $d$ is of larger order than $n$.
+ 
+% \section{Risk Bounds for }
+
+% {\itshape
+% Firstly, I need to understand the difference between approximation rates and estimation of population risk.
+
+% There exists a vast dictionary of definitions with similar wordings but the context is hughly different.
+
+% e.g. What's the estimate of the population risk? In my understanding,
+
+% $f^* - f_m$ where $f_m$ is the best solution in such hypothesis class is the approximation rates
+
+% It should be that Population risk is w.r.t. a particular loss function?}
+
+% \begin{equation}
+%     f(x) = \sum_{i=1}^m a_i \phi (\spr{\mathbf{w_i}}{x})
+% \end{equation}
+
+
+
 
 
 %%% Local Variables: 

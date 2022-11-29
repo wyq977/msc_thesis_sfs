@@ -44,6 +44,140 @@ Are they trying to get a smaller near optimal rate?
     \item But first, need to check whethere they are all talking about approximation rates
 \end{itemize}
 
+
+\section{01.11.2022}
+
+\subsection{Question asked}
+
+\textbf{Difference in Notation of Barron norm by E in 2 papers}
+
+In \cite{ePrioriEstimatesPopulation2019}, function has the integral representation form like:
+
+\begin{equation*}
+    f(x) = \int_{\mathbb{S}^d} a(w) \sigma(\spr{w}{x}) d\pi(x)
+\end{equation*}
+
+and the norm for Barron $p$, $\Theta_f$ is the function spaces with the above representation
+
+\begin{equation*}
+    \gamma_p(f) := \inf_{(a, \pi \in \Theta_f)} (\int_{\mathbb{S}^d} \abs{a(w)} d\pi(x))^{1/p}
+\end{equation*}
+
+No idea why $\mathbb{S}^d$ need to be defined: $\mathbb{S}^d = \{w \mid \norm{w}_1 = 1\}$
+
+The connection with Barron Spectral Norm (Fourier norm):
+\begin{equation*}
+    \gamma_{\infty}(f) := \sup_{w\in \mathbf{S}^d} \abs{a(w)} \lesssim \int_{\mathbf{S}^d} \norm{\omega}_1^2 \abs{\hat{f}(\omega)} d\omega
+\end{equation*}
+
+While in \cite{eBarronSpaceFlowinduced2021}, the integral representation:
+\begin{equation*}
+    f(x) = \int_{\Omega} a \sigma(\mathbf{b}^T\mathbf{x} + c) \rho(da, db, dc)
+\end{equation*}
+
+And the Barron norm
+\begin{align*}
+    \barronnorm{f}{p} = \inf_{\rho} (\ERWi{\rho}{\abs{a}^p(\norm{\mathbf{b}}_1 + \abs{c}^p)})^{1/p} \\
+    \barronnorm{f}{\infty} = \inf_{\rho} \max_{(a,\mathbf{b},c \in \supp{\rho})} \abs{a}(\norm{\mathbf{b}}_1 + \abs{c})
+\end{align*}
+
+What's the support of $\rho$ with $\rho$ being the measure in the integral representation?
+
+Whats the $a(w)$ in the first version
+
+\textbf{What's the difference between the rate ?}
+
+\textbf{\cite{parhiRoleNeuralNetwork2020}}
+
+\textbf{\cite{heissHowImplicitRegularization2021}}
+
+\newpage
+
+\section{23.11.2022}
+
+{\small bar is the complex conjugation}
+
+\textbf{Outline for Intro/Pre-requisite:}
+\begin{itemize}
+    \item Note on measure theory
+    \item spline theorey, spline regression
+    \item Integral transform, mostly on Fourier Transform, Parseval’s Theorem \\
+    Mainly on $v_{f,s}$ or $C_{f,s}$, the norm of frequency vector weighted by Fourier magnitude distribution. \\
+    Fourier moment and the smoothness of the functions with couter-example
+    \item The idea of random sampling strategy in the analysis (heavily used in Barron)
+    \item Covering number/net, VC-dim (cardinality-Based) (used in some proofs),
+    \item \tonote{Parameterized dictionary of in-finite dim}
+    \item Risk bound (Estimation)
+    \item ERM ?
+\end{itemize}
+
+
+\textbf{Outline for the approximation properties}
+\begin{itemize}
+    \item Universal approximation theorem by Cybenko, Hornik
+    \item Approximation rate/bounds with finite
+    \begin{itemize}
+        \item Approximation theorem
+        \item Different Risk bounds, in \cite{barronApproximationEstimationBounds1994, klusowskiRiskBoundsHighdimensional2018}
+        \item Properties of Barron functions and good functions (finite Fourier moments)
+    \end{itemize}
+    \item Finite Fourier-analytic norm
+    \begin{itemize}
+        \item Approximation bound (1/m) Estimation bound (log n  md/n )
+        \item Risk bounds for different penalized estimator \\
+        1994 (Complexity penalty) 2018 (pen and find a universal c) \\
+        $\ERW{\norm{T\hat{f} - f^*}^2} \leq c \inf\{\norm{f - f^*}^2 + \ERW{pen_n(f)/n]}\}$
+    \end{itemize}
+    \item Infinite-width Barron norm \\
+    Inverse and Direct approximation theorem \\
+    Risk bound with path norm \tonote{Should it be in explicit section?}
+    \item Relationship with spaces that arise from the norms above mentioned (inclusion )
+\end{itemize}
+
+\textbf{Outline for explicit regularization}
+
+\textbf{Outline for implicit regularization}
+\begin{itemize}
+    \item Showcase of implicit works, empirical evidence/experiments \\
+    ``Let us add here that it was shown in [44] that functions of the form (1.3) arise naturally as the solutions of appropriately regularized learning problems.''
+    \item connection with smoothing spline regression by Nowak
+    \item smoothing spline regression solution (with early stopping)
+    \item Is the path norm also implicit?
+    \item weight decay, ..., etc.
+\end{itemize}
+
+
+\newpage
+$d$: input data dimension
+
+$m$: number of parameters (number of nodes in this case)
+
+$n$: number of sample
+
+Here we are talking about the distance between the function and the 
+penalized least sqaures estimator (in Barron's paper) or greedily obtained.
+
+
+If the function f has a Fourier representation, then the spectral norm
+$v_{f, s} = \int \norm{\omega}_1^s \tilde{f}(\omega) d\omega$
+
+1. $\bigO(\frac{v_{f,1}^2}{m}) + \bigO(\frac{md}{n})\log{n}$ by \cite[Theorem 3/4]{barronApproximationEstimationBounds1994}
+
+Assumption: 
+
+Regularization:
+
+2. a spectral norm times $\bigO((\frac{\log{d}}{n})^{1/3})$ by \cite[Theorem 1]{klusowskiRiskBoundsHighdimensional2018}
+
+Approximation results: for function $f$ with finite $v_{f,2}$ or $v_{f_3}$, there exists 2NN, bounded by $\frac{v_{f,2}^2}{m}$ and $\frac{v_{f,3}^2}{m}$ 
+
+Assumption: 
+
+Regularization/Penalty:
+
+3. 
+
+
 %%% Local Variables: 
 %%% mode: latex
 %%% TeX-master: "MasterThesisSfS"
