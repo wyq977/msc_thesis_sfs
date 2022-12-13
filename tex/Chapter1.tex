@@ -286,7 +286,7 @@ Naturally, we would like to extend the findings with tighter restriction on the
 smoothness at a cost of smaller hypothesis space.
 
 We start with the defining the \textit{Fourier-anlytic norm}, $v_{f, s}\, s \geq
-1$, for function $f$ that has a Fourier representation:
+    1$, for function $f$ that has a Fourier representation:
 \begin{align}
     f(x)     & = \int_{\mathbb{R}^d} e^{i\spr{x}{\omega}} F(\omega) d\omega \label{eq:fourier_rep}           \\
     v_{f, s} & = \int_{\mathbb{R}^d} \norm{\omega}_1^s \cdot \abs{F(\omega)} d\omega \label{eq:fourier_norm}
@@ -297,13 +297,13 @@ We start with the defining the \textit{Fourier-anlytic norm}, $v_{f, s}\, s \geq
     Consider the class of function on $\mathbb{R}^d$ for which there is a
     Fourier representation of the form above. If $v_{f, 2}$ is finite, there
     exists a two-layer ReLU neural network $f_m$ of $m$ nodes $f_m(\mathbf{x})
-    = \sum_{i=1}^m a_i \sigma(\mathbf{b_i}^T\mathbf{x} + c_i)$ with $\norm{b_i}
-    = 1$ and $\abs{c_i}\leq 1$ such that
+        = \sum_{i=1}^m a_i \sigma(\mathbf{b_i}^T\mathbf{x} + c_i)$ with $\norm{b_i}
+        = 1$ and $\abs{c_i}\leq 1$ such that
     \begin{equation}
-        \norm{f 
-        - \mathbf{x} \cdot \nabla f(0) 
-        - f(0)
-        - f_m}^2 \leq \frac{16 v_{f, 2}^2}{m}
+        \norm{f
+            - \mathbf{x} \cdot \nabla f(0)
+            - f(0)
+            - f_m}^2 \leq \frac{16 v_{f, 2}^2}{m}
     \end{equation}
 \end{theorem}
 
@@ -321,7 +321,7 @@ about? This is taken from \cite{klusowskiApproximationCombinationsReLU2018}.
     \end{equation}
 
     with $a_i \in [-1,1], \norm{\mathbf{b}_i}_1 = 1, a_0 = f(0), \mathbf{b}_0^T
-    = \nabla f(0), v < 2v_{f,2}$ such that
+        = \nabla f(0), v < 2v_{f,2}$ such that
 
     % Let $D = \[-1, 1\]^d$, target function $f$ has a Fourier representation as 
     % above with finite $v_{f, 2}$. There exists a $f_m$ 
@@ -330,11 +330,11 @@ about? This is taken from \cite{klusowskiApproximationCombinationsReLU2018}.
         \sup_{\mathbf{x} \in D} \abs{f(x) - f_m(x)} \leq c v_{f,2} \sqrt{d+\log{m}} \, m^{-1/2-1/d}
     \end{equation}
 
-    for some universal $c > 0$. 
+    for some universal $c > 0$.
 \end{theorem}
 
 Similar bound are also attained with stronger assumption on functions'
-smoothness via $v_{f,s}$. 
+smoothness via $v_{f,s}$.
 
 \begin{theorem}\label{thm:appr_f3} Consider the class of function on
     $\mathbb{R}^d$ for which there is a Fourier representation of the form
@@ -343,25 +343,25 @@ smoothness via $v_{f,s}$.
     $f_m(\mathbf{x}) = \sum_{i=1}^m a_i \sigma(\mathbf{b_i}^T\mathbf{x} + c_i)$
     with $\norm{b_i} = 1$ and $\abs{c_i}\leq 1$ such that
     \begin{equation}
-        \norm{f 
-        - \mathbf{x}^T H_f(0) \mathbf{x}/2 
-        - \mathbf{x} \cdot \nabla f(0) 
-        - f(0) 
-        - f_m}^2 \leq \frac{16 v_{f, 3}^2}{m}
+        \norm{f
+            - \mathbf{x}^T H_f(0) \mathbf{x}/2
+            - \mathbf{x} \cdot \nabla f(0)
+            - f(0)
+            - f_m}^2 \leq \frac{16 v_{f, 3}^2}{m}
     \end{equation}
 
     where $H_f(0)$ is the Hessian of $f$ at the point zero.
 \end{theorem}
 
 \begin{theorem}
-    Similar to the settings above. $f$ with finite $v_{f,3}$. There exists a 
+    Similar to the settings above. $f$ with finite $v_{f,3}$. There exists a
     $f_m$:
     \begin{equation}
         f_m(x) = a_0 + \mathbf{b}_0^T \mathbf{x} + \mathbf{x}^T A_0 \mathbf{x}+ \frac{v}{m} \sum_{i=1}^m a_i \sigma(\mathbf{b}_i^T\mathbf{x} + c_i)
     \end{equation}
 
     with $a_i \in [-1,1], \norm{\mathbf{b}_i}_1 = 1, a_0 = f(0), \mathbf{b}_0^T
-    = \nabla f(0), A_0 = \nabla\nabla^T f(0), v < 2v_{f,3}$ such that
+        = \nabla f(0), A_0 = \nabla\nabla^T f(0), v < 2v_{f,3}$ such that
 
     \begin{equation}
         \sup_{\mathbf{x} \in D} \abs{f(x) - f_m(x)} \leq c v_{f,3} \sqrt{d+\log{m}} \, m^{-1/2-1/d}
@@ -369,7 +369,7 @@ smoothness via $v_{f,s}$.
 
     for some universal $c > 0$. Furthermore, if the $a_i$ are restricted to
     $\{-1, 1\}$, the upper bound is of order $v_{f,3} \sqrt{d} \,
-    m^{-1/2-1/(d+2)}$
+        m^{-1/2-1/(d+2)}$
 \end{theorem}
 
 % Considering the set of all Borel probability measures of $\Omega = (\mathbb{R}^1
@@ -422,7 +422,7 @@ nodes:
 \end{definition}
 
 The infimum is taken over all probability distribution where
-\eqref{eq:barron_represent} holds ($\rho$ is not unique) for all $\mathbf{x} \in
+\eqref{eq:barron_represent} holds (\tonote{why} $\rho$ is not unique) for all $\mathbf{x} \in
     \mathcal{X}$. When $p = + \infty$, the Barron norm becomes:
 
 \begin{equation}
@@ -456,12 +456,14 @@ Applying Hölder's inequality, for any $1 \leq p \leq q < \infty$
 Therefore we have the inclusion $\mathcal{B}_{q} \subset \mathcal{B}_p$ for $1
     \leq p \leq q < \infty$. \tonote{Not sure how to justify for the case $+\infty$}
 
-However, the reverse also holds in the class of ReLU functions so we have
+As the reverse also holds in the class of ReLU functions,  we have
 $\mathcal{B}_{\infty} = \mathcal{B}_p$, $\barronnorm{\cdot}{\infty} =
     \barronnorm{\cdot}{p}$  for all $1 \leq p \leq +\infty$.
 
-\begin{lemma}\label{lamma:equivalence_barron_space} ~\cite[Prop.
-        10]{eBarronSpaceFlowinduced2021} For any $f \in \mathcal{B}_1$, $f
+% ~\cite[Proposition 1]{eBarronSpaceFlowinduced2021}
+\begin{lemma}\label{lamma:equivalence_barron_space}
+
+    For any $f \in \mathcal{B}_1$, $f
         \,\text{also}\, \in \mathcal{B}_{\infty}$ and $\barronnorm{f}{\infty} =
         \barronnorm{f}{p}$ and hence $ \mathcal{B}_{\infty} = \cdots =
         \mathcal{B}_{2} = \mathcal{B}_1$ when $\sigma(\cdot)$ is ReLU function.
@@ -503,14 +505,14 @@ $\mathcal{B}_{\infty} = \mathcal{B}_p$, $\barronnorm{\cdot}{\infty} =
         \norm{f - f_m}^2 \leq \frac{3\norm{f}_{\mathcal{B}}^2}{m}
     \end{equation*}
 
-    Furthuermore, we have
+    Furthermore, we have
     \begin{equation}
         \norm{\Theta}_{path} := \frac{1}{m} \sum_{k=1}^m \abs{a_k} (\norm{\mathbf{b}_k}_1 + \abs{c_k})
         \leq 3\norm{f}_{\mathcal{B}}
     \end{equation}
 \end{theorem}
 
-The $\norm{\Theta}_{path}$ is the per-unit norm controll for 2NN defined in
+The $\norm{\Theta}_{path}$ is the per-unit norm control for 2NN defined in
 \cite{neyshaburNormBasedCapacityControl2015}. \tonote{add sth about the
     convexity}
 
@@ -518,52 +520,80 @@ The $\norm{\Theta}_{path}$ is the per-unit norm controll for 2NN defined in
 \label{sec:diff_barron_spaces}
 
 
-In the literature, ``Barron spaces'' have been defined differently
-\cite{eBanachSpacesAssociated2020, ePrioriEstimatesPopulation2019}. To avoid
-confusion, we adopted the definition from \TOCITE(Barron Class 2022), we refer
-the class of functions with finite Fourier moments as \textit{Fourier-analytic
-    Barron spaces} and \textit{infinite-width Barron spaces} with ReLU activation
-function. In \cite{ePrioriEstimatesPopulation2019, eBarronSpaceFlowinduced2021},
-a connection between $\mathcal{B}_{\infty}$ and the function with finite second
-Fourier moment was stated using results
-\cite{klusowskiRiskBoundsHighdimensional2018}. In the section, we will make a
-more formal clarification.
+As mentioned in the beginning of the chapter, we will start with the definition
+of the different Barron spaces, namely the \textit{Fourier-analytic Barron
+    spaces} and the \textit{infinite-width Barron spaces}. Although some
+relationship between these spaces has been examined and understood partially in
+\cite{eBarronSpaceFlowinduced2021,eMathematicalUnderstandingNeural2020}  and we
+hope to clarify this problem in this section.
 
-We denote \textit{infinite-width Barron spaces} by $\mathcal{B}_p$ ($1 \leq p
-    \leq +\infty$) and the class of \textit{Fourier-analytic Barron spaces} by
-$\mathcal{B}_{\mathcal{F}, s}$ ($s \geq 1$)
+% todo: change of word
 
+Firstly, we denote the set of all Borel probability measures on $\Omega = \R
+    \times \R^d \times \R$ by $\mathcal{P}_d$.
 
+Given a non-empty set $U \subset \R^d$, let us write
 
-It has been shown in \TOCITE that:
-\begin{equation*}
-    \mathcal{B}_{\mathcal{F},2}(U) \subset \mathcal{B}_{1}(U)
-\end{equation*}
+\begin{align*}
+    \mathcal{B}_{H}(U) :=
+     & \{f: U \to \R: \exists\: \mu \in \mathcal{P}_d, \int_{\Omega} \abs{a} d\mu(a, b, c) < \infty                           \\
+     & \:\text{and}\: \forall x \in U, f(x) = a (b \cdot x + c)_+ d\mu(a, b, c) \}                                            \\
+    \mathcal{B}_{ReLU}(U) :=
+     & \{f: U \to \R: \exists\: \mu \in \mathcal{P}_d, \int_{\Omega} \abs{a} \cdot (\abs{b} + \abs{c}) d\mu(a, b, c) < \infty \\
+     & \:\text{and}\: \forall x \in U, f(x) = a \sigma(b \cdot x + c) d\mu(a, b, c) \}                                          \\
+    \mathcal{B}_{\mathcal{F},s}(U) :=
+     & \{f: U \to \R: \exists\: F: \R^d \to \mathbb{C} \text{Fourier norm} < \infty                                           \\
+     & \:\text{and}\: \forall x \in U, f(x) \text{has a Fourier representation} \}                                            \\
+\end{align*}
+
+As shown in section \ref{sec:barron_norm}, $\mathcal{B}_{ReLU}(U)$ is the Barron
+space ($\mathcal{B}_1$) defined above and we can see that the differences
+between the $\mathcal{B}_{ReLU}(U)$ and $\mathcal{B}_{H}(U)$ are the activation
+function and the respective norm.
+
+We state the following known properties from the literature.
+
+% hookrightarrow or subset
+\begin{lemma}
+    Give a non-empty subset $U$ from $\R^d$, the following relationship holds:
+
+    1) $\mathcal{B}_{ReLU}(U) \subset \mathcal{B}_{H}(U)$
+
+    2) $\mathcal{B}_{\mathcal{F}, 1}(U) \subset \mathcal{B}_H(U)$
+
+    3) $\mathcal{B}_{\mathcal{F}, 2}(U) \subset \mathcal{B}_{ReLU}(U)$
+\end{lemma}
+
 
 \begin{proof}
 
 \end{proof}
 
-It has been discussed in earlier section that we have the equivalence of Barron
-norm and hence Barron spaces for $1 \leq p\leq +\infty$ (see
-\eqref{eq:barron_fouier_int}) with ReLU as activation funciton.
+\begin{remark}
+    It has been discussed in earlier section that we have the equivalence of
+    Barron norm and hence Barron spaces for $1 \leq p\leq +\infty$ (see
+    \eqref{eq:barron_fouier_int}) with ReLU as activation function.
 
-In other words, combined with the fact that $\mathcal{B}_{\infty} =
-    \mathcal{B}_p$, we can say that the class of functions where $f$ admits a
-Fourier representation with finite second moment ($v_{f, 2} < \infty$) are well
-``contained'' inside the \textit{infinite-width Barron spaces}. However,
-$\mathcal{B}_{\mathcal{F}, 1}(U)$ still encapsulates a boarder class of
-functions.
+    In other words, combined with the fact that $\mathcal{B}_{\infty} =
+        \mathcal{B}_p$, we can say that the class of functions where $f$ admits
+        a Fourier representation with finite second moment ($v_{f, 2} < \infty$)
+        are well ``contained'' inside the \textit{infinite-width Barron spaces}.
+        However, $\mathcal{B}_{\mathcal{F}, 1}(U)$ still encapsulates a boarder
+        class of functions.
+\end{remark}
 
-\begin{lemma}~\TOCITE(Proposition 7.4 {Barron class 2022}) Let $U \subset
-        \mathbb{R}^d$ be bounded and have nonempty interior. For $s>0$, if
-    $\mathcal{B}_{\mathcal{F},s}(U) \subset \mathcal{B}_{1}(U)$, then $s \geq
-        2$. In particular $\mathcal{B}_{\mathcal{F},1}(U) \not\subset
+
+\begin{lemma}~\cite[Proposition 7.4]{carageaNeuralNetworkApproximation2022}
+
+    Let $U \subset \mathbb{R}^d$ be bounded and have nonempty interior. For
+    $s>0$, if $\mathcal{B}_{\mathcal{F},s}(U) \subset \mathcal{B}_{1}(U)$, then
+    $s \geq 2$. In particular $\mathcal{B}_{\mathcal{F},1}(U) \not\subset
         \mathcal{B}_{1}(U)$
 \end{lemma}
 
+\begin{proof}
 
-S
+\end{proof}
 
 
 
