@@ -2,24 +2,25 @@
 
 In this chapter, we will introduce some basic concepts about artificial
 artificial neural networks with an emphasis on the two-layer neural networks
-(2NN). Firstly, we will define the 2NN model and the problem setup. In section
-\ref{sec:uat}, we will state the result of the universal approximation theorem.
-Later in section \ref{sec:spectral_norm} and \ref{sec:barron_norm}, we formally
-introduce the function spaces associated with 2NN, along with the definition of
-the \textit{spectral norm} by \cite{barronUniversalApproximationBounds1993} and
-the \textit{Barron norm} by \cite{eBarronSpaceFlowinduced2021}. Despite the term
-``Barron space'' and ``Barron norm'' has been coined and mentioned earlier, the
-notion of different Barron spaces and their relationship have not been made
-obvious. To avoid confusion, we here borrow the terminology adopted by
+(\gls{2nn}). Firstly, we will define the 2NN model and the problem setup. In
+section \ref{sec:uat}, we will state the result of the universal approximation
+theorem. Later in section \ref{sec:spectral_norm} and \ref{sec:barron_norm}, we
+formally introduce the function spaces associated with 2NN, along with the
+definition of the \textit{spectral norm} by
+\cite{barronUniversalApproximationBounds1993} and the \textit{Barron norm} by
+\cite{eBarronSpaceFlowinduced2021}. Despite the term ``Barron space'' and
+``Barron norm'' has been coined and mentioned earlier, the notion of different
+Barron spaces and their relationship have not been made obvious. To avoid
+confusion, we here borrow the terminology adopted by
 \cite{carageaNeuralNetworkApproximation2022}: we refer the spaces associated
 with the spectral norm as the \textit{Fourier-analytic Barron spaces} and the
 spaces defined using the Barron norm as the \textit{infinite-width Barron
-    spaces} as it essentially consist of ``infinitely wide'' neural networks (with
+spaces} as it essentially consist of ``infinitely wide'' neural networks (with
 some restrictions on the parameters). Finally, the relationship (mainly
 inclusion) between the Fourier-analytic Barron spaces and the infinite-width
 Barron spaces is examined in section \ref{sec:diff_barron_spaces}. The aim of
 this chapter is to provide a concise summary of various well-known results
-concerning the approximation properties of 2NN and we recommend work by
+concerning the approximation properties of \ and we recommend work by
 \cite{eMathematicalUnderstandingNeural2020,bernerModernMathematicsDeep2021} for
 a comprehensive introduction.
 
@@ -30,6 +31,35 @@ a comprehensive introduction.
 % infinite-width Barron spaces.
 
 
+\section{Feed-forward Neural Networks and Two-Layer Neural Networks}
+
+This section begins with a brief introduction on \textit{feed-forward neural
+networks} and subsequently concentrate on the special case of fully connected
+networks. Although most targeted applications are utilizing other architecture,
+e.g. recurrent neural network \TOCITE, fully connected feed-forward neural
+networks allows researchers to connect the trade-off between model complexity
+and approximation efficiency conveniently.
+
+A feed-forward neural network $\mathcal{N}$ is a class of artificial neural
+network (\gls{ann}) equipped with a directed acyclic graph (\gls{dag}),
+$\mathcal{G} = (\mathcal{V}, \mathcal{E})$. The associated graph $\mathcal{G}$
+is the \textit{architecture} of $\mathcal{N}$ represented by a finite collection
+of vertices \footnotes{
+    Nodes, neurons are used interchanably for the vertices and we refer to the 
+    vertices as nodes.
+}
+$\mathcal{V}$ and a finite set of edges $\mathcal{E}$. If we
+represent the input and output layer by $\mathcal{I, O}$, we have the following
+basic properties:
+
+\begin{itemize}
+    \item A activation function $\sigma$ is associated with each $v \in \mathcal{V} \setminus \mathcal{I}$ 
+    \item A scalar $w$ is associated with each $e \in \mathcal{E}$
+\end{itemize}
+
+
+The number of trainable parameters are determined by the weights and the bias of
+$\mathcal{G}$. 
 
 
 \section{Universal Approximation Theorem}
