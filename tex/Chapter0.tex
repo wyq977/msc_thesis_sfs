@@ -48,13 +48,35 @@ What is the teacher-student model
 
 \section{Approximation and estimation scheme}
 
-
 Here they author prove the CoD is overcome by a factor of $1/m$
 https://arxiv.org/pdf/2205.14421.pdf
 
-Approxmation of functions in Ko space https://arxiv.org/pdf/2012.05451.pdf
+Approximation of functions in Ko space https://arxiv.org/pdf/2012.05451.pdf
 
-\section{A section on supervised learning and what not}
+\section{Classical approximation spaces}
+
+Here I will need to talk about something like affine or spilne regression as the
+bach paper
+
+Polynomial spaces?
+
+Ko spaces?
+
+Repres thm https://pages.stat.wisc.edu/~wahba/ftp1/wahba.wang.2019submit.pdf
+
+\section{RKHS and kernel regression shit}
+
+I need to briefly go over some kernel regression stuff and talk a bit about its
+connection with NN?
+
+Also on the represnetation results
+
+\subsection{Difference between representation theorem and approximation}
+
+Also on the debate between linking kernel with NN.
+
+
+\section{The setup of supervised learning}
 
 Here I need to answer what is the functions?
 
@@ -144,20 +166,46 @@ rather than a more highly fluctuating function''.
 There have been great efforts in high-dimensional statistics where these ideas
 of smoothing or stabilizing can be incorporated through regularization. These
 include LASSO, ridge regression with a sparsity-inducing norm. Yet, the shallow
-as well as deep neural networks \TOCITE trained with standard algorithms
-(gradient descent based applied to a loss $L$) are able to find functions close
-to $f_{\text{True}}$ without explicit regularization. 
+as well as deep neural networks \cite{neyshaburSearchRealInductive2015,
+maennelGradientDescentQuantizes2018, liLearningOverparameterizedNeural2019,
+kuboImplicitRegularizationOverparameterized2019,
+neyshaburImplicitRegularizationDeep2017} trained with standard algorithms
+(gradient descent based applied to a loss $L$) are able to find solution close
+to $f_{\text{True}}$ without explicit regularization including drop-outs,
+weight-decay or early-stopping. This is referred as \gls{implicit} \footnote{ It
+is also defined as Implicit Bias in \cite{soudryImplicitBiasGradient2022} }.
+\cite{kuboImplicitRegularizationOverparameterized2019} has shown that the
+(stochastic) gradient descent algorithm along with random initialization can
+lead to surprisingly \textit{low} complexity of the over-parameterized networks.
+\cite{maennelGradientDescentQuantizes2018} has shown in 2NN the with small
+randomly initialized weights leads to ``simpler'' functions and
+\cite{maennelGradientDescentQuantizes2018, neyshaburSearchRealInductive2015} has
+empirically shown that the network size in the case of 1 hidden layer does not
+behave as a regularization term (i.e. encourage ``simpler'' functions by the
+predictors). In both setups, increasing the number of nodes results in a lower
+test error and overall more general results even with overfitting with random
+labels in \cite{neyshaburSearchRealInductive2015}. Therefore, a \textit{hidden}
+notion of complexity must be present to account for lower complexity/better
+generalization. Furthermore, this is proven by the phenomenon of training beyond
+zero training loss \TOCITE $L_{\text{train}}$, i.e. the test error and
+generalization improves despite $L_{\text{train}} = 0$.
+
+The paradox of why 
+
+% In applications, the phenomenon of implicit regularization is frequently observed [15, 27, 30, 29, 26, 22, 33]. Nonetheless, the theory behind it is still largely unexplored [26, 22, 33, 27]. 
 
 \section{What Is A Two-Layer Neural Network}
 
 This section begins with a brief introduction on \textit{feed-forward neural
 networks}. Although most targeted applications are utilizing other architectures,
-e.g. recurrent neural network \TOCITE, fully connected feed-forward neural
+e.g. recurrent neural network, fully connected feed-forward neural
 networks allows us to connect the trade-off between model complexity and
 approximation efficiency conveniently.
 
+\subsection{Feed-forward neural network}
+
 A feed-forward neural network $\mathcal{N}$ is a class of artificial neural
-network (\gls{ann}) equipped with a directed acyclic graph (\gls{dag}),
+network (\gls{ann}) equipped with a directed acyclic graph (\gls{dag}), 
 $\mathcal{G} = (\mathcal{V}, \mathcal{E})$. The associated graph $\mathcal{G}$
 is the \textit{architecture} of $\mathcal{N}$ represented by a finite collection
 of vertices \footnote{
@@ -183,7 +231,7 @@ mapping from $\R^d$ to $\R^{d'}$, $d = \abs{\mathcal{I}}, d' =
 by $\mathcal{N}$ is determined by the number of trainable parameters: $\{w_e,
 b_v\}, e \in \mathcal{E}, v \in \mathcal{V} \setminus \mathcal{I}$
 
-\subsection{Fully connected networks}
+\subsection{Fully connected network}
 
 The general definition stated covers virtually all networks architecture
 encountered in practice. In our discussion, we will narrow our focus to a
@@ -214,13 +262,6 @@ width approaches infinity in a shallow network and we will see that even this
 case is fairly complicated even with one or two hidden layers. The other extreme
 would be deep neural networks where the width of the networks are usually fixed
 for simplicity and the depth $L$ is taken to infinity. 
-
-\section{Classical approximation scheme}
-
-Here I will need to talk about something like affine or spilne regression as the
-bach paper
-
-Repres thm https://pages.stat.wisc.edu/~wahba/ftp1/wahba.wang.2019submit.pdf
 
 %%% Local Variables: 
 %%% mode: latex
