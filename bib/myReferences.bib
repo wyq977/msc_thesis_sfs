@@ -12,13 +12,13 @@
   abstract = {The goal of this paper is to characterize function distributions that deep learning can or cannot learn in poly-time. A universality result is proved for SGD-based deep learning and a non-universality result is proved for GD-based deep learning; this also gives a separation between SGD-based deep learning and statistical query algorithms: (1) \{\textbackslash it Deep learning with SGD is efficiently universal.\} Any function distribution that can be learned from samples in poly-time can also be learned by a poly-size neural net trained with SGD on a poly-time initialization with poly-steps, poly-rate and possibly poly-noise. Therefore deep learning provides a universal learning paradigm: it was known that the approximation and estimation errors could be controlled with poly-size neural nets, using ERM that is NP-hard; this new result shows that the optimization error can also be controlled with SGD in poly-time. The picture changes for GD with large enough batches: (2) \{\textbackslash it Result (1) does not hold for GD:\} Neural nets of poly-size trained with GD (full gradients or large enough batches) on any initialization with poly-steps, poly-range and at least poly-noise cannot learn any function distribution that has super-polynomial \{\textbackslash it cross-predictability,\} where the cross-predictability gives a measure of ``average'' function correlation -- relations and distinctions to the statistical dimension are discussed. In particular, GD with these constraints can learn efficiently monomials of degree \$k\$ if and only if \$k\$ is constant. Thus (1) and (2) point to an interesting contrast: SGD is universal even with some poly-noise while full GD or SQ algorithms are not (e.g., parities).},
   archiveprefix = {arXiv},
   keywords = {Computer Science - Computational Complexity,Computer Science - Information Theory,Computer Science - Machine Learning,Statistics - Machine Learning},
-  file = {/home/wyq977/Zotero/storage/TFP9X4RR/Abbe and Sandon - 2020 - Poly-time universality and limitations of deep lea.pdf;/home/wyq977/Zotero/storage/3IJP73A2/2001.html}
+  file = {/Users/wyq977/Zotero/storage/TFP9X4RR/Abbe and Sandon - 2020 - Poly-time universality and limitations of deep lea.pdf;/Users/wyq977/Zotero/storage/3IJP73A2/2001.html}
 }
 
 @misc{andrealorkeCybenkoTheoremCapability,
   title = {Cybenko's {{Theorem}} and the Capability of a Neural Network as Function Approximator},
   author = {{Andrea L\"orke} and {Fabian Schneider} and {Johannes Heck} and {Patrick Nitter}},
-  file = {/home/wyq977/Zotero/storage/KRD4JLDJ/Andrea Lörke et al. - Cybenko’s Theorem and the capability of a neural n.pdf}
+  file = {/Users/wyq977/Zotero/storage/KRD4JLDJ/Andrea Lörke et al. - Cybenko’s Theorem and the capability of a neural n.pdf}
 }
 
 @article{bachBreakingCurseDimensionality2016,
@@ -33,7 +33,24 @@
   abstract = {We consider neural networks with a single hidden layer and non-decreasing homogeneous activa-tion functions like the rectified linear units. By letting the number of hidden units grow unbounded and using classical non-Euclidean regularization tools on the output weights, we provide a detailed theoretical analysis of their generalization performance, with a study of both the approximation and the estimation errors. We show in particular that they are adaptive to unknown underlying linear structures, such as the dependence on the projection of the input variables onto a low-dimensional subspace. Moreover, when using sparsity-inducing norms on the input weights, we show that high-dimensional non-linear variable selection may be achieved, without any strong assumption regarding the data and with a total number of variables potentially exponential in the number of ob-servations. In addition, we provide a simple geometric interpretation to the non-convex problem of addition of a new unit, which is the core potentially hard computational element in the framework of learning from continuously many basis functions. We provide simple conditions for convex relaxations to achieve the same generalization error bounds, even when constant-factor approxi-mations cannot be found (e.g., because it is NP-hard such as for the zero-homogeneous activation function). We were not able to find strong enough convex relaxations and leave open the existence or non-existence of polynomial-time algorithms.},
   archiveprefix = {arXiv},
   keywords = {Computer Science - Machine Learning,Mathematics - Optimization and Control,Mathematics - Statistics Theory},
-  file = {/home/wyq977/Zotero/storage/UG8ZUQH7/Bach - 2016 - Breaking the Curse of Dimensionality with Convex N.pdf;/home/wyq977/Zotero/storage/JYLYQE6U/1412.html}
+  file = {/Users/wyq977/Zotero/storage/UG8ZUQH7/Bach - 2016 - Breaking the Curse of Dimensionality with Convex N.pdf;/Users/wyq977/Zotero/storage/JYLYQE6U/1412.html}
+}
+
+@misc{baHighdimensionalAsymptoticsFeature2022,
+  title = {High-Dimensional {{Asymptotics}} of {{Feature Learning}}: {{How One Gradient Step Improves}} the {{Representation}}},
+  shorttitle = {High-Dimensional {{Asymptotics}} of {{Feature Learning}}},
+  author = {Ba, Jimmy and Erdogdu, Murat A. and Suzuki, Taiji and Wang, Zhichao and Wu, Denny and Yang, Greg},
+  year = {2022},
+  month = may,
+  number = {arXiv:2205.01445},
+  eprint = {2205.01445},
+  eprinttype = {arxiv},
+  primaryclass = {cs, math, stat},
+  publisher = {{arXiv}},
+  abstract = {We study the first gradient descent step on the first-layer parameters \$\textbackslash boldsymbol\{W\}\$ in a two-layer neural network: \$f(\textbackslash boldsymbol\{x\}) = \textbackslash frac\{1\}\{\textbackslash sqrt\{N\}\}\textbackslash boldsymbol\{a\}\^\textbackslash top\textbackslash sigma(\textbackslash boldsymbol\{W\}\^\textbackslash top\textbackslash boldsymbol\{x\})\$, where \$\textbackslash boldsymbol\{W\}\textbackslash in\textbackslash mathbb\{R\}\^\{d\textbackslash times N\}, \textbackslash boldsymbol\{a\}\textbackslash in\textbackslash mathbb\{R\}\^\{N\}\$ are randomly initialized, and the training objective is the empirical MSE loss: \$\textbackslash frac\{1\}\{n\}\textbackslash sum\_\{i=1\}\^n (f(\textbackslash boldsymbol\{x\}\_i)-y\_i)\^2\$. In the proportional asymptotic limit where \$n,d,N\textbackslash to\textbackslash infty\$ at the same rate, and an idealized student-teacher setting, we show that the first gradient update contains a rank-1 "spike", which results in an alignment between the first-layer weights and the linear component of the teacher model \$f\^*\$. To characterize the impact of this alignment, we compute the prediction risk of ridge regression on the conjugate kernel after one gradient step on \$\textbackslash boldsymbol\{W\}\$ with learning rate \$\textbackslash eta\$, when \$f\^*\$ is a single-index model. We consider two scalings of the first step learning rate \$\textbackslash eta\$. For small \$\textbackslash eta\$, we establish a Gaussian equivalence property for the trained feature map, and prove that the learned kernel improves upon the initial random features model, but cannot defeat the best linear model on the input. Whereas for sufficiently large \$\textbackslash eta\$, we prove that for certain \$f\^*\$, the same ridge estimator on trained features can go beyond this "linear regime" and outperform a wide range of random features and rotationally invariant kernels. Our results demonstrate that even one gradient step can lead to a considerable advantage over random features, and highlight the role of learning rate scaling in the initial phase of training.},
+  archiveprefix = {arXiv},
+  keywords = {Computer Science - Machine Learning,Mathematics - Statistics Theory,Statistics - Machine Learning},
+  file = {/Users/wyq977/Zotero/storage/7LXSGTX9/Ba et al. - 2022 - High-dimensional Asymptotics of Feature Learning .pdf;/Users/wyq977/Zotero/storage/JBZQF37D/2205.html}
 }
 
 @article{banerjeeStatistics612Lp,
@@ -41,7 +58,7 @@
   author = {Banerjee, Moulinath},
   pages = {11},
   langid = {english},
-  file = {/home/wyq977/Zotero/storage/LGPVNTG8/Banerjee - Statistics 612 Lp spaces, metrics on spaces of pr.pdf}
+  file = {/Users/wyq977/Zotero/storage/LGPVNTG8/Banerjee - Statistics 612 Lp spaces, metrics on spaces of pr.pdf}
 }
 
 @article{barronApproximationEstimationBounds1994,
@@ -57,7 +74,7 @@
   doi = {10.1007/BF00993164},
   abstract = {For a common class of artificial neural networks, the mean integrated squared error between the estimated network and a target functionf is shown to be bounded by\$\$O\textbackslash left( \{\textbackslash frac\{\{\textbackslash mathop c\textbackslash nolimits\_f\^2 \}\}\{n\}\} \textbackslash right) + O\textbackslash left( \{\textbackslash frac\{\{nd\}\}\{N\}\textbackslash log  N\} \textbackslash right)\$\$wheren is the number of nodes,d is the input dimension of the function,N is the number of training observations, andCfis the first absolute moment of the Fourier magnitude distribution off. The two contributions to this total risk are the approximation error and the estimation error. Approximation error refers to the distance between the target function and the closest neural network function of a given architecture and estimation error refers to the distance between this ideal network function and an estimated network function. Withn {$\sim$} Cf(N/(d logN))1/2 nodes, the order of the bound on the mean integrated squared error is optimized to beO(Cf((d/N) logN)1/2). The bound demonstrates surprisingly favorable properties of network estimation compared to traditional series and nonparametric curve estimation techniques in the case thatd is moderately large. Similar bounds are obtained when the number of nodesn is not preselected as a function ofCf(which is generally not knowna priori), but rather the number of nodes is optimized from the observed data by the use of a complexity regularization or minimum description length criterion. The analysis involves Fourier techniques for the approximation error, metric entropy considerations for the estimation error, and a calculation of the index of resolvability of minimum complexity estimation of the family of networks.},
   langid = {english},
-  file = {/home/wyq977/Zotero/storage/CS2MZZXX/Barron - 1994 - Approximation and estimation bounds for artificial.pdf}
+  file = {/Users/wyq977/Zotero/storage/CS2MZZXX/Barron - 1994 - Approximation and estimation bounds for artificial.pdf}
 }
 
 @article{barronApproximationEstimationHighDimensional2018,
@@ -72,7 +89,7 @@
   abstract = {It has been experimentally observed in recent years that multi-layer artificial neural networks have a surprising ability to generalize, even when trained with far more parameters than observations. Is there a theoretical basis for this? The best available bounds on their metric entropy and associated complexity measures are essentially linear in the number of parameters, which is inadequate to explain this phenomenon. Here we examine the statistical risk (mean squared predictive error) of multi-layer networks with \$\textbackslash ell\^1\$-type controls on their parameters and with ramp activation functions (also called lower-rectified linear units). In this setting, the risk is shown to be upper bounded by \$[(L\^3 \textbackslash log d)/n]\^\{1/2\}\$, where \$d\$ is the input dimension to each layer, \$L\$ is the number of layers, and \$n\$ is the sample size. In this way, the input dimension can be much larger than the sample size and the estimator can still be accurate, provided the target function has such \$\textbackslash ell\^1\$ controls and that the sample size is at least moderately large compared to \$L\^3\textbackslash log d\$. The heart of the analysis is the development of a sampling strategy that demonstrates the accuracy of a sparse covering of deep ramp networks. Lower bounds show that the identified risk is close to being optimal.},
   archiveprefix = {arXiv},
   keywords = {Computer Science - Machine Learning,Statistics - Machine Learning},
-  file = {/home/wyq977/Zotero/storage/LQAQTE5L/Barron and Klusowski - 2018 - Approximation and Estimation for High-Dimensional .pdf;/home/wyq977/Zotero/storage/2DXPA558/1809.html}
+  file = {/Users/wyq977/Zotero/storage/LQAQTE5L/Barron and Klusowski - 2018 - Approximation and Estimation for High-Dimensional .pdf;/Users/wyq977/Zotero/storage/2DXPA558/1809.html}
 }
 
 @inproceedings{barronNeuralNetApproximation1992,
@@ -82,7 +99,7 @@
   year = {1992},
   volume = {1},
   pages = {69--72},
-  file = {/home/wyq977/Zotero/storage/FS6I4UR9/neural net approximation.pdf}
+  file = {/Users/wyq977/Zotero/storage/FS6I4UR9/neural net approximation.pdf}
 }
 
 @article{barronUniversalApproximationBounds1993,
@@ -98,7 +115,7 @@
   doi = {10.1109/18.256500},
   abstract = {Approximation properties of a class of artificial neural networks are established. It is shown that feedforward networks with one layer of sigmoidal nonlinearities achieve integrated squared error of order O(1/n), where n is the number of nodes. The approximated function is assumed to have a bound on the first moment of the magnitude distribution of the Fourier transform. The nonlinear parameters associated with the sigmoidal nodes, as well as the parameters of linear combination, are adjusted in the approximation. In contrast, it is shown that for series expansions with n terms, in which only the parameters of linear combination are adjusted, the integrated squared approximation error cannot be made smaller than order 1/n/sup 2/d/ uniformly for functions satisfying the same smoothness assumption, where d is the dimension of the input to the function. For the class of functions examined, the approximation rate and the parsimony of the parameterization of the networks are shown to be advantageous in high-dimensional settings.{$<>$}},
   keywords = {Approximation error,Artificial neural networks,Feedforward neural networks,Feeds,Fourier transforms,Information theory,Linear approximation,Neural networks,Statistical distributions,Statistics},
-  file = {/home/wyq977/Zotero/storage/3E86QZQI/Barron - 1993 - Universal approximation bounds for superpositions .pdf;/home/wyq977/Zotero/storage/8TLMAXBS/256500.html}
+  file = {/Users/wyq977/Zotero/storage/3E86QZQI/Barron - 1993 - Universal approximation bounds for superpositions .pdf;/Users/wyq977/Zotero/storage/8TLMAXBS/256500.html}
 }
 
 @article{bartlettLocalRademacherComplexities2005,
@@ -116,13 +133,67 @@
   abstract = {We propose new bounds on the error of learning algorithms in terms of a data-dependent notion of complexity. The estimates we establish give optimal rates and are based on a local and empirical version of Rademacher averages, in the sense that the Rademacher averages are computed from the data, on a subset of functions with small empirical error. We present some applications to classification and prediction with convex function classes, and with kernel classes in particular.},
   archiveprefix = {arXiv},
   keywords = {62G08; 68Q32 (Primary),Mathematics - Statistics Theory},
-  file = {/home/wyq977/Zotero/storage/EZ98ZI5Q/Bartlett et al. - 2005 - Local Rademacher complexities.pdf;/home/wyq977/Zotero/storage/BUSDCDE9/0508275.html}
+  file = {/Users/wyq977/Zotero/storage/EZ98ZI5Q/Bartlett et al. - 2005 - Local Rademacher complexities.pdf;/Users/wyq977/Zotero/storage/BUSDCDE9/0508275.html}
+}
+
+@article{beckMachineLearningApproximation2019,
+  title = {Machine Learning Approximation Algorithms for High-Dimensional Fully Nonlinear Partial Differential Equations and Second-Order Backward Stochastic Differential Equations},
+  author = {Beck, Christian and E, Weinan and Jentzen, Arnulf},
+  year = {2019},
+  month = aug,
+  journal = {Journal of Nonlinear Science},
+  volume = {29},
+  number = {4},
+  eprint = {1709.05963},
+  eprinttype = {arxiv},
+  primaryclass = {cs, math, stat},
+  pages = {1563--1619},
+  issn = {0938-8974, 1432-1467},
+  doi = {10.1007/s00332-018-9525-3},
+  abstract = {High-dimensional partial differential equations (PDE) appear in a number of models from the financial industry, such as in derivative pricing models, credit valuation adjustment (CVA) models, or portfolio optimization models. The PDEs in such applications are high-dimensional as the dimension corresponds to the number of financial assets in a portfolio. Moreover, such PDEs are often fully nonlinear due to the need to incorporate certain nonlinear phenomena in the model such as default risks, transaction costs, volatility uncertainty (Knightian uncertainty), or trading constraints in the model. Such high-dimensional fully nonlinear PDEs are exceedingly difficult to solve as the computational effort for standard approximation methods grows exponentially with the dimension. In this work we propose a new method for solving high-dimensional fully nonlinear second-order PDEs. Our method can in particular be used to sample from high-dimensional nonlinear expectations. The method is based on (i) a connection between fully nonlinear second-order PDEs and second-order backward stochastic differential equations (2BSDEs), (ii) a merged formulation of the PDE and the 2BSDE problem, (iii) a temporal forward discretization of the 2BSDE and a spatial approximation via deep neural nets, and (iv) a stochastic gradient descent-type optimization procedure. Numerical results obtained using \$\{\textbackslash rm T\{\textbackslash small ENSOR\}F\{\textbackslash small LOW\}\}\$ in \$\{\textbackslash rm P\{\textbackslash small YTHON\}\}\$ illustrate the efficiency and the accuracy of the method in the cases of a \$100\$-dimensional Black-Scholes-Barenblatt equation, a \$100\$-dimensional Hamilton-Jacobi-Bellman equation, and a nonlinear expectation of a \$ 100 \$-dimensional \$ G \$-Brownian motion.},
+  archiveprefix = {arXiv},
+  keywords = {65C99; 65M99; 60H30; 65-05,Computer Science - Machine Learning,Computer Science - Neural and Evolutionary Computing,Mathematics - Numerical Analysis,Mathematics - Probability,Statistics - Machine Learning},
+  file = {/Users/wyq977/Zotero/storage/WU6A94MY/Beck et al. - 2019 - Machine learning approximation algorithms for high.pdf;/Users/wyq977/Zotero/storage/ZACTA8VF/1709.html}
+}
+
+@article{beckSolvingKolmogorovPDE2021,
+  title = {Solving the {{Kolmogorov PDE}} by Means of Deep Learning},
+  author = {Beck, Christian and Becker, Sebastian and Grohs, Philipp and Jaafari, Nor and Jentzen, Arnulf},
+  year = {2021},
+  month = sep,
+  journal = {Journal of Scientific Computing},
+  volume = {88},
+  number = {3},
+  eprint = {1806.00421},
+  eprinttype = {arxiv},
+  primaryclass = {cs, math, stat},
+  pages = {73},
+  issn = {0885-7474, 1573-7691},
+  doi = {10.1007/s10915-021-01590-0},
+  abstract = {Stochastic differential equations (SDEs) and the Kolmogorov partial differential equations (PDEs) associated to them have been widely used in models from engineering, finance, and the natural sciences. In particular, SDEs and Kolmogorov PDEs, respectively, are highly employed in models for the approximative pricing of financial derivatives. Kolmogorov PDEs and SDEs, respectively, can typically not be solved explicitly and it has been and still is an active topic of research to design and analyze numerical methods which are able to approximately solve Kolmogorov PDEs and SDEs, respectively. Nearly all approximation methods for Kolmogorov PDEs in the literature suffer under the curse of dimensionality or only provide approximations of the solution of the PDE at a single fixed space-time point. In this paper we derive and propose a numerical approximation method which aims to overcome both of the above mentioned drawbacks and intends to deliver a numerical approximation of the Kolmogorov PDE on an entire region \$[a,b]\^d\$ without suffering from the curse of dimensionality. Numerical results on examples including the heat equation, the Black-Scholes model, the stochastic Lorenz equation, and the Heston model suggest that the proposed approximation algorithm is quite effective in high dimensions in terms of both accuracy and speed.},
+  archiveprefix = {arXiv},
+  keywords = {65C99; 65M99; 60H30,Computer Science - Machine Learning,Mathematics - Numerical Analysis,Mathematics - Probability,Statistics - Machine Learning},
+  file = {/Users/wyq977/Zotero/storage/KT9LFFTQ/Beck et al. - 2021 - Solving the Kolmogorov PDE by means of deep learni.pdf;/Users/wyq977/Zotero/storage/WFQNWNLC/1806.html}
+}
+
+@article{bellmanTheoryDynamicProgramming1952,
+  title = {On the {{Theory}} of {{Dynamic Programming}}},
+  author = {Bellman, Richard},
+  year = {1952},
+  month = aug,
+  journal = {Proceedings of the National Academy of Sciences},
+  volume = {38},
+  number = {8},
+  pages = {716--719},
+  publisher = {{Proceedings of the National Academy of Sciences}},
+  doi = {10.1073/pnas.38.8.716},
+  file = {/Users/wyq977/Zotero/storage/CKT8EZZN/Bellman - 1952 - On the Theory of Dynamic Programming.pdf}
 }
 
 @misc{berlindRademacherComplexity,
   title = {Rademacher {{Complexity}}},
   author = {Berlind, Chris},
-  file = {/home/wyq977/Zotero/storage/V5J72EJI/Berlind - Rademacher Complexity.pdf}
+  file = {/Users/wyq977/Zotero/storage/V5J72EJI/Berlind - Rademacher Complexity.pdf}
 }
 
 @misc{bernerModernMathematicsDeep2021,
@@ -139,7 +210,7 @@
   abstract = {We describe the new field of mathematical analysis of deep learning. This field emerged around a list of research questions that were not answered within the classical framework of learning theory. These questions concern: the outstanding generalization power of overparametrized neural networks, the role of depth in deep architectures, the apparent absence of the curse of dimensionality, the surprisingly successful optimization performance despite the non-convexity of the problem, understanding what features are learned, why deep architectures perform exceptionally well in physical problems, and which fine aspects of an architecture affect the behavior of a learning task in which way. We present an overview of modern approaches that yield partial answers to these questions. For selected approaches, we describe the main ideas in more detail.},
   archiveprefix = {arXiv},
   keywords = {Computer Science - Machine Learning,Statistics - Machine Learning},
-  file = {/home/wyq977/Zotero/storage/FT3STUMW/Berner et al. - 2021 - The Modern Mathematics of Deep Learning.pdf}
+  file = {/Users/wyq977/Zotero/storage/FT3STUMW/Berner et al. - 2021 - The Modern Mathematics of Deep Learning.pdf}
 }
 
 @misc{carageaNeuralNetworkApproximation2022,
@@ -155,7 +226,7 @@
   abstract = {We prove bounds for the approximation and estimation of certain binary classification functions using ReLU neural networks. Our estimation bounds provide a priori performance guarantees for empirical risk minimization using networks of a suitable size, depending on the number of training samples available. The obtained approximation and estimation rates are independent of the dimension of the input, showing that the curse of dimensionality can be overcome in this setting; in fact, the input dimension only enters in the form of a polynomial factor. Regarding the regularity of the target classification function, we assume the interfaces between the different classes to be locally of Barron-type. We complement our results by studying the relations between various Barron-type spaces that have been proposed in the literature. These spaces differ substantially more from each other than the current literature suggests.},
   archiveprefix = {arXiv},
   keywords = {68T07; 41A25; 41A46; 42B35; 46E15,Mathematics - Functional Analysis,Statistics - Machine Learning},
-  file = {/home/wyq977/Zotero/storage/2UZ24WB4/Caragea et al. - 2022 - Neural network approximation and estimation of cla.pdf}
+  file = {/Users/wyq977/Zotero/storage/2UZ24WB4/Caragea et al. - 2022 - Neural network approximation and estimation of cla.pdf}
 }
 
 @article{cybenkoApproximationSuperpositionsSigmoidal1989,
@@ -172,7 +243,39 @@
   abstract = {In this paper we demonstrate that finite linear combinations of compositions of a fixed, univariate function and a set of affine functionals can uniformly approximate any continuous function ofn real variables with support in the unit hypercube; only mild conditions are imposed on the univariate function. Our results settle an open question about representability in the class of single hidden layer neural networks. In particular, we show that arbitrary decision regions can be arbitrarily well approximated by continuous feedforward neural networks with only a single internal, hidden layer and any continuous sigmoidal nonlinearity. The paper discusses approximation properties of other possible types of nonlinearities that might be implemented by artificial neural networks.},
   langid = {english},
   keywords = {Approximation,Completeness,Neural networks},
-  file = {/home/wyq977/Zotero/storage/BBT8674Z/Cybenko - 1989 - Approximation by superpositions of a sigmoidal fun.pdf}
+  file = {/Users/wyq977/Zotero/storage/BBT8674Z/Cybenko - 1989 - Approximation by superpositions of a sigmoidal fun.pdf}
+}
+
+@misc{dehoopConvergenceRatesLearning2022,
+  title = {Convergence {{Rates}} for {{Learning Linear Operators}} from {{Noisy Data}}},
+  author = {{de Hoop}, Maarten V. and Kovachki, Nikola B. and Nelsen, Nicholas H. and Stuart, Andrew M.},
+  year = {2022},
+  month = nov,
+  number = {arXiv:2108.12515},
+  eprint = {2108.12515},
+  eprinttype = {arxiv},
+  primaryclass = {cs, math, stat},
+  publisher = {{arXiv}},
+  doi = {10.48550/arXiv.2108.12515},
+  abstract = {This paper studies the learning of linear operators between infinite-dimensional Hilbert spaces. The training data comprises pairs of random input vectors in a Hilbert space and their noisy images under an unknown self-adjoint linear operator. Assuming that the operator is diagonalizable in a known basis, this work solves the equivalent inverse problem of estimating the operator's eigenvalues given the data. Adopting a Bayesian approach, the theoretical analysis establishes posterior contraction rates in the infinite data limit with Gaussian priors that are not directly linked to the forward map of the inverse problem. The main results also include learning-theoretic generalization error guarantees for a wide range of distribution shifts. These convergence rates quantify the effects of data smoothness and true eigenvalue decay or growth, for compact or unbounded operators, respectively, on sample complexity. Numerical evidence supports the theory in diagonal and non-diagonal settings.},
+  archiveprefix = {arXiv},
+  keywords = {62G20; 62C10; 68T05; 47A62,Computer Science - Machine Learning,Mathematics - Statistics Theory,Statistics - Machine Learning,Statistics - Methodology},
+  file = {/Users/wyq977/Zotero/storage/RFD3AJA5/de Hoop et al. - 2022 - Convergence Rates for Learning Linear Operators fr.pdf;/Users/wyq977/Zotero/storage/Q7PJJS7R/2108.html}
+}
+
+@article{devoreNeuralNetworkApproximation2021,
+  title = {Neural Network Approximation},
+  author = {DeVore, Ronald and Hanin, Boris and Petrova, Guergana},
+  year = {2021},
+  month = may,
+  journal = {Acta Numerica},
+  volume = {30},
+  pages = {327--444},
+  issn = {0962-4929, 1474-0508},
+  doi = {10.1017/S0962492921000052},
+  abstract = {Neural networks (NNs) are the method of choice for building learning algorithms. They are now being investigated for other numerical tasks such as solving high-dimensional partial differential equations. Their popularity stems from their empirical success on several challenging learning problems (computer chess/Go, autonomous navigation, face recognition). However, most scholars agree that a convincing theoretical explanation for this success is still lacking. Since these applications revolve around approximating an unknown function from data observations, part of the answer must involve the ability of NNs to produce accurate approximations.                            This article surveys the known approximation properties of the outputs of NNs with the aim of uncovering the properties that are not present in the more traditional methods of approximation used in numerical analysis, such as approximations using polynomials, wavelets, rational functions and splines. Comparisons are made with traditional approximation methods from the viewpoint of rate distortion,               i.e.               error versus the number of parameters used to create the approximant. Another major component in the analysis of numerical approximation is the computational time needed to construct the approximation, and this in turn is intimately connected with the stability of the approximation algorithm. So the stability of numerical approximation using NNs is a large part of the analysis put forward.                                         The survey, for the most part, is concerned with NNs using the popular ReLU activation function. In this case the outputs of the NNs are piecewise linear functions on rather complicated partitions of the domain of               f               into cells that are convex polytopes. When the architecture of the NN is fixed and the parameters are allowed to vary, the set of output functions of the NN is a parametrized nonlinear manifold. It is shown that this manifold has certain space-filling properties leading to an increased ability to approximate (better rate distortion) but at the expense of numerical stability. The space filling creates the challenge to the numerical method of finding best or good parameter choices when trying to approximate.},
+  langid = {english},
+  file = {/Users/wyq977/Zotero/storage/6JZAHZF3/DeVore et al. - 2021 - Neural network approximation.pdf}
 }
 
 @article{donohoHighDimensionalDataAnalysis,
@@ -181,7 +284,7 @@
   pages = {33},
   abstract = {The coming century is surely the century of data. A combination of blind faith and serious purpose makes our society invest massively in the collection and processing of data of all kinds, on scales unimaginable until recently. Hyperspectral Imagery, Internet Portals, Financial tick-by-tick data, and DNA Microarrays are just a few of the betterknown sources, feeding data in torrential streams into scientific and business databases worldwide.},
   langid = {english},
-  file = {/home/wyq977/Zotero/storage/D8EA2V7Z/Donoho - High-Dimensional Data Analysis The Curses and Ble.pdf}
+  file = {/Users/wyq977/Zotero/storage/D8EA2V7Z/Donoho - High-Dimensional Data Analysis The Curses and Ble.pdf}
 }
 
 @inproceedings{donohoHighdimensionalDataAnalysis2000,
@@ -191,7 +294,7 @@
   author = {Donoho, David L.},
   year = {2000},
   abstract = {The coming century is surely the century of data. A combination of blind faith and serious purpose makes our society invest massively in the collection and processing of data of all kinds, on scales unimaginable until recently. Hyperspectral Imagery, Internet Portals, Financial tick-by-tick data, and DNA Microarrays are just a few of the betterknown sources, feeding data in torrential streams into scientific and business databases worldwide. In traditional statistical data analysis, we think of observations of instances of particular phenomena (e.g. instance {$\leftrightarrow$} human being), these observations being a vector of values we measured on several variables (e.g. blood pressure, weight, height,...). In traditional statistical methodology, we assumed many observations and a few, wellchosen variables. The trend today is towards more observations but even more so, to radically larger numbers of variables \textendash{} voracious, automatic, systematic collection of hyper-informative detail about each observed instance. We are seeing examples where the observations gathered on individual instances are curves, or spectra, or images, or},
-  file = {/home/wyq977/Zotero/storage/2ZMTH9W7/Donoho - 2000 - High-dimensional data analysis The curses and ble.pdf;/home/wyq977/Zotero/storage/WNWD6BNM/summary.html}
+  file = {/Users/wyq977/Zotero/storage/2ZMTH9W7/Donoho - 2000 - High-dimensional data analysis The curses and ble.pdf;/Users/wyq977/Zotero/storage/WNWD6BNM/summary.html}
 }
 
 @article{eBanachSpacesAssociated2020,
@@ -207,7 +310,7 @@
   abstract = {We develop Banach spaces for ReLU neural networks of finite depth \$L\$ and infinite width. The spaces contain all finite fully connected \$L\$-layer networks and their \$L\^2\$-limiting objects under bounds on the natural path-norm. Under this norm, the unit ball in the space for \$L\$-layer networks has low Rademacher complexity and thus favorable generalization properties. Functions in these spaces can be approximated by multi-layer neural networks with dimension-independent convergence rates. The key to this work is a new way of representing functions in some form of expectations, motivated by multi-layer neural networks. This representation allows us to define a new class of continuous models for machine learning. We show that the gradient flow defined this way is the natural continuous analog of the gradient descent dynamics for the associated multi-layer neural networks. We show that the path-norm increases at most polynomially under this continuous gradient flow dynamics.},
   archiveprefix = {arXiv},
   keywords = {68T07; 46E15; 26B35; 26B40,Computer Science - Machine Learning,Mathematics - Functional Analysis,Statistics - Machine Learning},
-  file = {/home/wyq977/Zotero/storage/U5TPALKY/E and Wojtowytsch - 2020 - On the Banach spaces associated with multi-layer R.pdf;/home/wyq977/Zotero/storage/TZFI8HDC/2007.html}
+  file = {/Users/wyq977/Zotero/storage/U5TPALKY/E and Wojtowytsch - 2020 - On the Banach spaces associated with multi-layer R.pdf;/Users/wyq977/Zotero/storage/TZFI8HDC/2007.html}
 }
 
 @article{eBarronSpaceFlowinduced2021,
@@ -223,7 +326,7 @@
   archiveprefix = {arXiv},
   langid = {english},
   keywords = {Computer Science - Machine Learning,Mathematics - Probability,Statistics - Machine Learning},
-  file = {/home/wyq977/Zotero/storage/QHIFWQDB/E et al. - 2021 - The Barron Space and the Flow-induced Function Spa.pdf}
+  file = {/Users/wyq977/Zotero/storage/QHIFWQDB/E et al. - 2021 - The Barron Space and the Flow-induced Function Spa.pdf}
 }
 
 @article{eComparativeAnalysisOptimization2020,
@@ -243,7 +346,45 @@
   abstract = {A fairly comprehensive analysis is presented for the gradient descent dynamics for training two-layer neural network models in the situation when the parameters in both layers are updated. General initialization schemes as well as general regimes for the network width and training data size are considered. In the over-parametrized regime, it is shown that gradient descent dynamics can achieve zero training loss exponentially fast regardless of the quality of the labels. In addition, it is proved that throughout the training process the functions represented by the neural network model are uniformly close to that of a kernel method. For general values of the network width and training data size, sharp estimates of the generalization error is established for target functions in the appropriate reproducing kernel Hilbert space.},
   archiveprefix = {arXiv},
   keywords = {41A99; 49M99,Computer Science - Machine Learning,Mathematics - Optimization and Control,Statistics - Machine Learning},
-  file = {/home/wyq977/Zotero/storage/YYTDVG9F/E et al. - 2020 - A Comparative Analysis of the Optimization and Gen.pdf;/home/wyq977/Zotero/storage/ZEDVPGKA/1904.html}
+  file = {/Users/wyq977/Zotero/storage/YYTDVG9F/E et al. - 2020 - A Comparative Analysis of the Optimization and Gen.pdf;/Users/wyq977/Zotero/storage/ZEDVPGKA/1904.html}
+}
+
+@article{eDeepLearningbasedNumerical2017,
+  title = {Deep Learning-Based Numerical Methods for High-Dimensional Parabolic Partial Differential Equations and Backward Stochastic Differential Equations},
+  author = {E, Weinan and Han, Jiequn and Jentzen, Arnulf},
+  year = {2017},
+  month = dec,
+  journal = {Communications in Mathematics and Statistics},
+  volume = {5},
+  number = {4},
+  eprint = {1706.04702},
+  eprinttype = {arxiv},
+  primaryclass = {cs, math, stat},
+  pages = {349--380},
+  issn = {2194-6701, 2194-671X},
+  doi = {10.1007/s40304-017-0117-6},
+  abstract = {We propose a new algorithm for solving parabolic partial differential equations (PDEs) and backward stochastic differential equations (BSDEs) in high dimension, by making an analogy between the BSDE and reinforcement learning with the gradient of the solution playing the role of the policy function, and the loss function given by the error between the prescribed terminal condition and the solution of the BSDE. The policy function is then approximated by a neural network, as is done in deep reinforcement learning. Numerical results using TensorFlow illustrate the efficiency and accuracy of the proposed algorithms for several 100-dimensional nonlinear PDEs from physics and finance such as the Allen-Cahn equation, the Hamilton-Jacobi-Bellman equation, and a nonlinear pricing model for financial derivatives.},
+  archiveprefix = {arXiv},
+  keywords = {65M75; 60H35; 65C30,Computer Science - Machine Learning,Computer Science - Neural and Evolutionary Computing,Mathematics - Numerical Analysis,Mathematics - Probability,Statistics - Machine Learning},
+  file = {/Users/wyq977/Zotero/storage/92JTS92C/E et al. - 2017 - Deep learning-based numerical methods for high-dim.pdf;/Users/wyq977/Zotero/storage/FS3ZTWVM/1706.html}
+}
+
+@misc{eDeepRitzMethod2017,
+  title = {The {{Deep Ritz}} Method: {{A}} Deep Learning-Based Numerical Algorithm for Solving Variational Problems},
+  shorttitle = {The {{Deep Ritz}} Method},
+  author = {E, Weinan and Yu, Bing},
+  year = {2017},
+  month = sep,
+  number = {arXiv:1710.00211},
+  eprint = {1710.00211},
+  eprinttype = {arxiv},
+  primaryclass = {cs, stat},
+  publisher = {{arXiv}},
+  doi = {10.48550/arXiv.1710.00211},
+  abstract = {We propose a deep learning based method, the Deep Ritz Method, for numerically solving variational problems, particularly the ones that arise from partial differential equations. The Deep Ritz method is naturally nonlinear, naturally adaptive and has the potential to work in rather high dimensions. The framework is quite simple and fits well with the stochastic gradient descent method used in deep learning. We illustrate the method on several problems including some eigenvalue problems.},
+  archiveprefix = {arXiv},
+  keywords = {35Q68,Computer Science - Machine Learning,Statistics - Machine Learning},
+  file = {/Users/wyq977/Zotero/storage/F4886SFW/E and Yu - 2017 - The Deep Ritz method A deep learning-based numeri.pdf;/Users/wyq977/Zotero/storage/H9E2EFXR/1710.html}
 }
 
 @article{eMathematicalUnderstandingNeural2020,
@@ -259,7 +400,7 @@
   abstract = {The purpose of this article is to review the achievements made in the last few years towards the understanding of the reasons behind the success and subtleties of neural network-based machine learning. In the tradition of good old applied mathematics, we will not only give attention to rigorous mathematical results, but also the insight we have gained from careful numerical experiments as well as the analysis of simplified models. Along the way, we also list the open problems which we believe to be the most important topics for further study. This is not a complete overview over this quickly moving field, but we hope to provide a perspective which may be helpful especially to new researchers in the area.},
   archiveprefix = {arXiv},
   keywords = {68T07 (primary); 26B40; 41A30; 35Q68,Computer Science - Machine Learning,Mathematics - Numerical Analysis,Statistics - Machine Learning},
-  file = {/home/wyq977/Zotero/storage/JVSZJFM4/E et al. - 2020 - Towards a Mathematical Understanding of Neural Net.pdf;/home/wyq977/Zotero/storage/NQP5W5AR/2009.html}
+  file = {/Users/wyq977/Zotero/storage/JVSZJFM4/E et al. - 2020 - Towards a Mathematical Understanding of Neural Net.pdf;/Users/wyq977/Zotero/storage/NQP5W5AR/2009.html}
 }
 
 @article{eObservationsPartialDifferential2020,
@@ -275,10 +416,25 @@
   archiveprefix = {arXiv},
   langid = {english},
   keywords = {68T07; 35C15; 65M80,Computer Science - Machine Learning,Mathematics - Analysis of PDEs},
-  file = {/home/wyq977/Zotero/storage/LUFYJVBI/E and Wojtowytsch - 2020 - Some observations on partial differential equation.pdf}
+  file = {/Users/wyq977/Zotero/storage/LUFYJVBI/E and Wojtowytsch - 2020 - Some observations on partial differential equation.pdf}
 }
 
 @article{ePrioriEstimatesPopulation2019,
+  title = {A {{Priori Estimates}} of the {{Population Risk}} for {{Residual Networks}}},
+  author = {E, Weinan and Ma, Chao and Wang, Qingcan},
+  year = {2019},
+  month = may,
+  journal = {arXiv:1903.02154 [cs, stat]},
+  eprint = {1903.02154},
+  eprinttype = {arxiv},
+  primaryclass = {cs, stat},
+  abstract = {Optimal a priori estimates are derived for the population risk, also known as the generalization error, of a regularized residual network model. An important part of the regularized model is the usage of a new path norm, called the weighted path norm, as the regularization term. The weighted path norm treats the skip connections and the nonlinearities differently so that paths with more nonlinearities are regularized by larger weights. The error estimates are a priori in the sense that the estimates depend only on the target function, not on the parameters obtained in the training process. The estimates are optimal, in a high dimensional setting, in the sense that both the bound for the approximation and estimation errors are comparable to the Monte Carlo error rates. A crucial step in the proof is to establish an optimal bound for the Rademacher complexity of the residual networks. Comparisons are made with existing norm-based generalization error bounds.},
+  archiveprefix = {arXiv},
+  keywords = {Computer Science - Machine Learning,Statistics - Machine Learning},
+  file = {/Users/wyq977/Zotero/storage/ZFYMGJVC/E et al. - 2019 - A Priori Estimates of the Population Risk for Resi.pdf;/Users/wyq977/Zotero/storage/WJ3ZNUL8/1903.html}
+}
+
+@article{ePrioriEstimatesPopulation2019a,
   title = {A {{Priori Estimates}} of the {{Population Risk}} for {{Two-layer Neural Networks}}},
   author = {E, Weinan and Ma, Chao and Wu, Lei},
   year = {2019},
@@ -293,22 +449,7 @@
   abstract = {New estimates for the population risk are established for two-layer neural networks. These estimates are nearly optimal in the sense that the error rates scale in the same way as the Monte Carlo error rates. They are equally effective in the over-parametrized regime when the network size is much larger than the size of the dataset. These new estimates are a priori in nature in the sense that the bounds depend only on some norms of the underlying functions to be fitted, not the parameters in the model, in contrast with most existing results which are a posteriori in nature. Using these a priori estimates, we provide a perspective for understanding why two-layer neural networks perform better than the related kernel methods.},
   archiveprefix = {arXiv},
   keywords = {41A46; 41A63; 62J02; 65D05,Computer Science - Machine Learning,Mathematics - Statistics Theory,Statistics - Machine Learning},
-  file = {/home/wyq977/Zotero/storage/2SMQ4IAB/E et al. - 2019 - A Priori Estimates of the Population Risk for Two-.pdf;/home/wyq977/Zotero/storage/89W733GF/1810.html}
-}
-
-@article{ePrioriEstimatesPopulation2019a,
-  title = {A {{Priori Estimates}} of the {{Population Risk}} for {{Residual Networks}}},
-  author = {E, Weinan and Ma, Chao and Wang, Qingcan},
-  year = {2019},
-  month = may,
-  journal = {arXiv:1903.02154 [cs, stat]},
-  eprint = {1903.02154},
-  eprinttype = {arxiv},
-  primaryclass = {cs, stat},
-  abstract = {Optimal a priori estimates are derived for the population risk, also known as the generalization error, of a regularized residual network model. An important part of the regularized model is the usage of a new path norm, called the weighted path norm, as the regularization term. The weighted path norm treats the skip connections and the nonlinearities differently so that paths with more nonlinearities are regularized by larger weights. The error estimates are a priori in the sense that the estimates depend only on the target function, not on the parameters obtained in the training process. The estimates are optimal, in a high dimensional setting, in the sense that both the bound for the approximation and estimation errors are comparable to the Monte Carlo error rates. A crucial step in the proof is to establish an optimal bound for the Rademacher complexity of the residual networks. Comparisons are made with existing norm-based generalization error bounds.},
-  archiveprefix = {arXiv},
-  keywords = {Computer Science - Machine Learning,Statistics - Machine Learning},
-  file = {/home/wyq977/Zotero/storage/ZFYMGJVC/E et al. - 2019 - A Priori Estimates of the Population Risk for Resi.pdf;/home/wyq977/Zotero/storage/WJ3ZNUL8/1903.html}
+  file = {/Users/wyq977/Zotero/storage/2SMQ4IAB/E et al. - 2019 - A Priori Estimates of the Population Risk for Two-.pdf;/Users/wyq977/Zotero/storage/89W733GF/1810.html}
 }
 
 @article{eRepresentationFormulasPointwise2020,
@@ -323,7 +464,25 @@
   abstract = {We study the natural function space for infinitely wide two-layer neural networks and establish different representation formulae. In two cases, we describe the space explicitly up to isomorphism. Using a convenient representation, we study the pointwise properties of two-layer networks and show that functions whose singular set is fractal or curved (for example distance functions from smooth submanifolds) cannot be represented by infinitely wide two-layer networks with finite path-norm.},
   archiveprefix = {arXiv},
   keywords = {68T07; 46E15; 26B35; 26B40,Computer Science - Machine Learning,Mathematics - Analysis of PDEs,Mathematics - Functional Analysis,Statistics - Machine Learning},
-  file = {/home/wyq977/Zotero/storage/3ACSK94A/E and Wojtowytsch - 2020 - Representation formulas and pointwise properties f.pdf;/home/wyq977/Zotero/storage/FYRRN8LS/2006.html}
+  file = {/Users/wyq977/Zotero/storage/3ACSK94A/E and Wojtowytsch - 2020 - Representation formulas and pointwise properties f.pdf;/Users/wyq977/Zotero/storage/FYRRN8LS/2006.html}
+}
+
+@article{gaoENTROPYABSOLUTECONVEX2004,
+  title = {{{ENTROPY OF ABSOLUTE CONVEX HULLS IN HILBERT SPACES}}},
+  author = {Gao, Fuchang},
+  year = {2004},
+  month = jul,
+  journal = {Bulletin of the London Mathematical Society},
+  volume = {36},
+  number = {4},
+  pages = {460--468},
+  publisher = {{Cambridge University Press}},
+  issn = {1469-2120, 0024-6093},
+  doi = {10.1112/S0024609304003121},
+  abstract = {The metric entropy of absolute convex hulls of sets in Hilbert spaces is studied for the general case when the metric entropy of the sets is arbitrary. Under some regularity assumptions, the results are sharp.},
+  langid = {english},
+  keywords = {41A46 (primary),60G15 (secondary)},
+  file = {/Users/wyq977/Zotero/storage/5X6KDQVF/Gao - 2004 - ENTROPY OF ABSOLUTE CONVEX HULLS IN HILBERT SPACES.pdf}
 }
 
 @article{halabiCombinatorialPenaltiesWhich2018,
@@ -340,7 +499,7 @@
   archiveprefix = {arXiv},
   langid = {english},
   keywords = {Computer Science - Machine Learning,Statistics - Machine Learning},
-  file = {/home/wyq977/Zotero/storage/AYM3T5MW/Halabi et al. - 2018 - Combinatorial Penalties Which structures are pres.pdf}
+  file = {/Users/wyq977/Zotero/storage/AYM3T5MW/Halabi et al. - 2018 - Combinatorial Penalties Which structures are pres.pdf}
 }
 
 @article{hanClassDimensionalityfreeMetrics2021,
@@ -355,7 +514,7 @@
   abstract = {This paper concerns the convergence of empirical measures in high dimensions. We propose a new class of metrics and show that under such metrics, the convergence is free of the curse of dimensionality (CoD). Such a feature is critical for high-dimensional analysis and stands in contrast to classical metrics (\{\textbackslash it e.g.\}, the Wasserstein distance). The proposed metrics originate from the maximum mean discrepancy, which we generalize by proposing specific criteria for selecting test function spaces to guarantee the property of being free of CoD. Therefore, we call this class of metrics the generalized maximum mean discrepancy (GMMD). Examples of the selected test function spaces include the reproducing kernel Hilbert space, Barron space, and flow-induced function spaces. Three applications of the proposed metrics are presented: 1. The convergence of empirical measure in the case of random variables; 2. The convergence of \$n\$-particle system to the solution to McKean-Vlasov stochastic differential equation; 3. The construction of an \$\textbackslash varepsilon\$-Nash equilibrium for a homogeneous \$n\$-player game by its mean-field limit. As a byproduct, we prove that, given a distribution close to the target distribution measured by GMMD and a certain representation of the target distribution, we can generate a distribution close to the target one in terms of the Wasserstein distance and relative entropy. Overall, we show that the proposed class of metrics is a powerful tool to analyze the convergence of empirical measures in high dimensions without CoD.},
   archiveprefix = {arXiv},
   keywords = {60B10; 60E15; 60K35; 91A16; 60H10,Computer Science - Machine Learning,Mathematics - Probability,Statistics - Machine Learning},
-  file = {/home/wyq977/Zotero/storage/Z78ZRZAD/Han et al. - 2021 - A Class of Dimensionality-free Metrics for the Con.pdf;/home/wyq977/Zotero/storage/BTHQW4WR/2104.html}
+  file = {/Users/wyq977/Zotero/storage/Z78ZRZAD/Han et al. - 2021 - A Class of Dimensionality-free Metrics for the Con.pdf;/Users/wyq977/Zotero/storage/BTHQW4WR/2104.html}
 }
 
 @misc{heissHowImplicitRegularization2021,
@@ -369,11 +528,10 @@
   eprinttype = {arxiv},
   primaryclass = {cs, math, stat},
   publisher = {{arXiv}},
-  doi = {10.48550/arXiv.1911.02903},
   abstract = {Today, various forms of neural networks are trained to perform approximation tasks in many fields. However, the estimates obtained are not fully understood on function space. Empirical results suggest that typical training algorithms favor regularized solutions. These observations motivate us to analyze properties of the neural networks found by gradient descent initialized close to zero, that is frequently employed to perform the training task. As a starting point, we consider one dimensional (shallow) ReLU neural networks in which weights are chosen randomly and only the terminal layer is trained. First, we rigorously show that for such networks ridge regularized regression corresponds in function space to regularizing the estimate's second derivative for fairly general loss functionals. For least squares regression, we show that the trained network converges to the smooth spline interpolation of the training data as the number of hidden nodes tends to infinity. Moreover, we derive a correspondence between the early stopped gradient descent and the smoothing spline regression. Our analysis might give valuable insight on the properties of the solutions obtained using gradient descent methods in general settings.},
   archiveprefix = {arXiv},
   keywords = {41Axx; 93Exx; 68T05; 68Q32,Computer Science - Machine Learning,G.3,I.2.6,Mathematics - Numerical Analysis,Statistics - Machine Learning},
-  file = {/home/wyq977/Zotero/storage/RCEQUQ5R/Heiss et al. - 2021 - How Implicit Regularization of ReLU Neural Network.pdf;/home/wyq977/Zotero/storage/F325NW4L/1911.html}
+  file = {/Users/wyq977/Zotero/storage/3Y3V3HZW/Heiss et al. - 2021 - How Implicit Regularization of ReLU Neural Network.pdf;/Users/wyq977/Zotero/storage/PCAW75PE/1911.html}
 }
 
 @article{hornikMultilayerFeedforwardNetworks1989,
@@ -388,7 +546,7 @@
   issn = {08936080},
   doi = {10.1016/0893-6080(89)90020-8},
   langid = {english},
-  file = {/home/wyq977/Zotero/storage/QDN96WDA/Hornik et al. - 1989 - Multilayer feedforward networks are universal appr.pdf}
+  file = {/Users/wyq977/Zotero/storage/QDN96WDA/Hornik et al. - 1989 - Multilayer feedforward networks are universal appr.pdf}
 }
 
 @misc{javanmardAnalysisTwoLayerNeural2019,
@@ -404,7 +562,7 @@
   abstract = {Fitting a function by using linear combinations of a large number \$N\$ of `simple' components is one of the most fruitful ideas in statistical learning. This idea lies at the core of a variety of methods, from two-layer neural networks to kernel regression, to boosting. In general, the resulting risk minimization problem is non-convex and is solved by gradient descent or its variants. Unfortunately, little is known about global convergence properties of these approaches. Here we consider the problem of learning a concave function \$f\$ on a compact convex domain \$\textbackslash Omega\textbackslash subseteq \{\textbackslash mathbb R\}\^d\$, using linear combinations of `bump-like' components (neurons). The parameters to be fitted are the centers of \$N\$ bumps, and the resulting empirical risk minimization problem is highly non-convex. We prove that, in the limit in which the number of neurons diverges, the evolution of gradient descent converges to a Wasserstein gradient flow in the space of probability distributions over \$\textbackslash Omega\$. Further, when the bump width \$\textbackslash delta\$ tends to \$0\$, this gradient flow has a limit which is a viscous porous medium equation. Remarkably, the cost function optimized by this gradient flow exhibits a special property known as displacement convexity, which implies exponential convergence rates for \$N\textbackslash to\textbackslash infty\$, \$\textbackslash delta\textbackslash to 0\$. Surprisingly, this asymptotic theory appears to capture well the behavior for moderate values of \$\textbackslash delta, N\$. Explaining this phenomenon, and understanding the dependence on \$\textbackslash delta,N\$ in a quantitative manner remains an outstanding challenge.},
   archiveprefix = {arXiv},
   keywords = {Computer Science - Machine Learning,Mathematics - Statistics Theory},
-  file = {/home/wyq977/Zotero/storage/C3G32MF3/Javanmard et al. - 2019 - Analysis of a Two-Layer Neural Network via Displac.pdf;/home/wyq977/Zotero/storage/5LPAB7AJ/1901.html}
+  file = {/Users/wyq977/Zotero/storage/C3G32MF3/Javanmard et al. - 2019 - Analysis of a Two-Layer Neural Network via Displac.pdf;/Users/wyq977/Zotero/storage/5LPAB7AJ/1901.html}
 }
 
 @misc{jinLogicalFallacyDetection2022,
@@ -420,7 +578,7 @@
   abstract = {Reasoning is central to human intelligence. However, fallacious arguments are common, and some exacerbate problems such as spreading misinformation about climate change. In this paper, we propose the task of logical fallacy detection, and provide a new dataset (Logic) of logical fallacies generally found in text, together with an additional challenge set for detecting logical fallacies in climate change claims (LogicClimate). Detecting logical fallacies is a hard problem as the model must understand the underlying logical structure of the argument. We find that existing pretrained large language models perform poorly on this task. In contrast, we show that a simple structure-aware classifier outperforms the best language model by 5.46\% on Logic and 4.51\% on LogicClimate. We encourage future work to explore this task as (a) it can serve as a new reasoning challenge for language models, and (b) it can have potential applications in tackling the spread of misinformation. Our dataset and code are available at https://github.com/causalNLP/logical-fallacy.},
   archiveprefix = {arXiv},
   keywords = {Computer Science - Artificial Intelligence,Computer Science - Computation and Language,Computer Science - Computers and Society,Computer Science - Logic in Computer Science,Computer Science - Machine Learning},
-  file = {/home/wyq977/Zotero/storage/NW2KRTX2/Jin et al. - 2022 - Logical Fallacy Detection.pdf;/home/wyq977/Zotero/storage/2G4E3GGE/2202.html}
+  file = {/Users/wyq977/Zotero/storage/NW2KRTX2/Jin et al. - 2022 - Logical Fallacy Detection.pdf;/Users/wyq977/Zotero/storage/2G4E3GGE/2202.html}
 }
 
 @article{klusowskiApproximationCombinationsReLU2018,
@@ -435,7 +593,7 @@
   abstract = {We establish \$ L\^\{\textbackslash infty\} \$ and \$ L\^2 \$ error bounds for functions of many variables that are approximated by linear combinations of ReLU (rectified linear unit) and squared ReLU ridge functions with \$ \textbackslash ell\^1 \$ and \$ \textbackslash ell\^0 \$ controls on their inner and outer parameters. With the squared ReLU ridge function, we show that the \$ L\^2 \$ approximation error is inversely proportional to the inner layer \$ \textbackslash ell\^0 \$ sparsity and it need only be sublinear in the outer layer \$ \textbackslash ell\^0 \$ sparsity. Our constructions are obtained using a variant of the Jones-Barron probabilistic method, which can be interpreted as either stratified sampling with proportionate allocation or two-stage cluster sampling. We also provide companion error lower bounds that reveal near optimality of our constructions. Despite the sparsity assumptions, we showcase the richness and flexibility of these ridge combinations by defining a large family of functions, in terms of certain spectral conditions, that are particularly well approximated by them.},
   archiveprefix = {arXiv},
   keywords = {62M45; 41A15,Mathematics - Statistics Theory,Statistics - Machine Learning},
-  file = {/home/wyq977/Zotero/storage/IJ275KKA/Klusowski and Barron - 2018 - Approximation by Combinations of ReLU and Squared .pdf;/home/wyq977/Zotero/storage/SC7P9V4P/1607.html}
+  file = {/Users/wyq977/Zotero/storage/IJ275KKA/Klusowski and Barron - 2018 - Approximation by Combinations of ReLU and Squared .pdf;/Users/wyq977/Zotero/storage/SC7P9V4P/1607.html}
 }
 
 @misc{klusowskiMinimaxLowerBounds2017,
@@ -452,7 +610,7 @@
   abstract = {Estimation of functions of \$ d \$ variables is considered using ridge combinations of the form \$ \textbackslash textstyle\textbackslash sum\_\{k=1\}\^m c\_\{1,k\} \textbackslash phi(\textbackslash textstyle\textbackslash sum\_\{j=1\}\^d c\_\{0,j,k\}x\_j-b\_k) \$ where the activation function \$ \textbackslash phi \$ is a function with bounded value and derivative. These include single-hidden layer neural networks, polynomials, and sinusoidal models. From a sample of size \$ n \$ of possibly noisy values at random sites \$ X \textbackslash in B = [-1,1]\^d \$, the minimax mean square error is examined for functions in the closure of the \$ \textbackslash ell\_1 \$ hull of ridge functions with activation \$ \textbackslash phi \$. It is shown to be of order \$ d/n \$ to a fractional power (when \$ d \$ is of smaller order than \$ n \$), and to be of order \$ (\textbackslash log d)/n \$ to a fractional power (when \$ d \$ is of larger order than \$ n \$). Dependence on constraints \$ v\_0 \$ and \$ v\_1 \$ on the \$ \textbackslash ell\_1 \$ norms of inner parameter \$ c\_0 \$ and outer parameter \$ c\_1 \$, respectively, is also examined. Also, lower and upper bounds on the fractional power are given. The heart of the analysis is development of information-theoretic packing numbers for these classes of functions.},
   archiveprefix = {arXiv},
   keywords = {62J02; 62G08; 68T05,Computer Science - Machine Learning,Statistics - Machine Learning},
-  file = {/home/wyq977/Zotero/storage/94MED2BL/Klusowski and Barron - 2017 - Minimax Lower Bounds for Ridge Combinations Includ.pdf;/home/wyq977/Zotero/storage/8HILZQCG/1702.html}
+  file = {/Users/wyq977/Zotero/storage/94MED2BL/Klusowski and Barron - 2017 - Minimax Lower Bounds for Ridge Combinations Includ.pdf;/Users/wyq977/Zotero/storage/8HILZQCG/1702.html}
 }
 
 @misc{klusowskiRiskBoundsHighdimensional2018,
@@ -469,7 +627,7 @@
   abstract = {Let \$ f\^\{\textbackslash star\} \$ be a function on \$ \textbackslash mathbb\{R\}\^d \$ with an assumption of a spectral norm \$ v\_\{f\^\{\textbackslash star\}\} \$. For various noise settings, we show that \$ \textbackslash mathbb\{E\}\textbackslash |\textbackslash hat\{f\} - f\^\{\textbackslash star\} \textbackslash |\^2 \textbackslash leq \textbackslash left(v\^4\_\{f\^\{\textbackslash star\}\}\textbackslash frac\{\textbackslash log d\}\{n\}\textbackslash right)\^\{1/3\} \$, where \$ n \$ is the sample size and \$ \textbackslash hat\{f\} \$ is either a penalized least squares estimator or a greedily obtained version of such using linear combinations of sinusoidal, sigmoidal, ramp, ramp-squared or other smooth ridge functions. The candidate fits may be chosen from a continuum of functions, thus avoiding the rigidity of discretizations of the parameter space. On the other hand, if the candidate fits are chosen from a discretization, we show that \$ \textbackslash mathbb\{E\}\textbackslash |\textbackslash hat\{f\} - f\^\{\textbackslash star\} \textbackslash |\^2 \textbackslash leq \textbackslash left(v\^3\_\{f\^\{\textbackslash star\}\}\textbackslash frac\{\textbackslash log d\}\{n\}\textbackslash right)\^\{2/5\} \$. This work bridges non-linear and non-parametric function estimation and includes single-hidden layer nets. Unlike past theory for such settings, our bound shows that the risk is small even when the input dimension \$ d \$ of an infinite-dimensional parameterized dictionary is much larger than the available sample size. When the dimension is larger than the cube root of the sample size, this quantity is seen to improve the more familiar risk bound of \$ v\_\{f\^\{\textbackslash star\}\}\textbackslash left(\textbackslash frac\{d\textbackslash log (n/d)\}\{n\}\textbackslash right)\^\{1/2\} \$, also investigated here.},
   archiveprefix = {arXiv},
   keywords = {62J02; 62G08; 68T05,Mathematics - Statistics Theory,Statistics - Machine Learning},
-  file = {/home/wyq977/Zotero/storage/TX578AW9/Klusowski and Barron - 2018 - Risk Bounds for High-dimensional Ridge Function Co.pdf;/home/wyq977/Zotero/storage/M3XEZFAK/1607.html}
+  file = {/Users/wyq977/Zotero/storage/TX578AW9/Klusowski and Barron - 2018 - Risk Bounds for High-dimensional Ridge Function Co.pdf;/Users/wyq977/Zotero/storage/M3XEZFAK/1607.html}
 }
 
 @article{klusowskiRiskBoundsHighdimensional2018a,
@@ -484,7 +642,7 @@
   abstract = {Let \$ f\^\{\textbackslash star\} \$ be a function on \$ \textbackslash mathbb\{R\}\^d \$ with an assumption of a spectral norm \$ v\_\{f\^\{\textbackslash star\}\} \$. For various noise settings, we show that \$ \textbackslash mathbb\{E\}\textbackslash |\textbackslash hat\{f\} - f\^\{\textbackslash star\} \textbackslash |\^2 \textbackslash leq \textbackslash left(v\^4\_\{f\^\{\textbackslash star\}\}\textbackslash frac\{\textbackslash log d\}\{n\}\textbackslash right)\^\{1/3\} \$, where \$ n \$ is the sample size and \$ \textbackslash hat\{f\} \$ is either a penalized least squares estimator or a greedily obtained version of such using linear combinations of sinusoidal, sigmoidal, ramp, ramp-squared or other smooth ridge functions. The candidate fits may be chosen from a continuum of functions, thus avoiding the rigidity of discretizations of the parameter space. On the other hand, if the candidate fits are chosen from a discretization, we show that \$ \textbackslash mathbb\{E\}\textbackslash |\textbackslash hat\{f\} - f\^\{\textbackslash star\} \textbackslash |\^2 \textbackslash leq \textbackslash left(v\^3\_\{f\^\{\textbackslash star\}\}\textbackslash frac\{\textbackslash log d\}\{n\}\textbackslash right)\^\{2/5\} \$. This work bridges non-linear and non-parametric function estimation and includes single-hidden layer nets. Unlike past theory for such settings, our bound shows that the risk is small even when the input dimension \$ d \$ of an infinite-dimensional parameterized dictionary is much larger than the available sample size. When the dimension is larger than the cube root of the sample size, this quantity is seen to improve the more familiar risk bound of \$ v\_\{f\^\{\textbackslash star\}\}\textbackslash left(\textbackslash frac\{d\textbackslash log (n/d)\}\{n\}\textbackslash right)\^\{1/2\} \$, also investigated here.},
   archiveprefix = {arXiv},
   keywords = {62J02; 62G08; 68T05,Mathematics - Statistics Theory,Statistics - Machine Learning},
-  file = {/home/wyq977/Zotero/storage/IBSSFDVL/Klusowski and Barron - 2018 - Risk Bounds for High-dimensional Ridge Function Co.pdf;/home/wyq977/Zotero/storage/SGBT65GT/1607.html}
+  file = {/Users/wyq977/Zotero/storage/IBSSFDVL/Klusowski and Barron - 2018 - Risk Bounds for High-dimensional Ridge Function Co.pdf;/Users/wyq977/Zotero/storage/SGBT65GT/1607.html}
 }
 
 @article{kundurMagnitudePhase,
@@ -492,7 +650,25 @@
   author = {Kundur, Professor Deepa},
   pages = {5},
   langid = {english},
-  file = {/home/wyq977/Zotero/storage/IXES29C2/Kundur - Magnitude and Phase.pdf}
+  file = {/Users/wyq977/Zotero/storage/IXES29C2/Kundur - Magnitude and Phase.pdf}
+}
+
+@misc{lanthalerErrorEstimatesDeepOnets2022,
+  title = {Error Estimates for {{DeepOnets}}: {{A}} Deep Learning Framework in Infinite Dimensions},
+  shorttitle = {Error Estimates for {{DeepOnets}}},
+  author = {Lanthaler, Samuel and Mishra, Siddhartha and Karniadakis, George Em},
+  year = {2022},
+  month = jan,
+  number = {arXiv:2102.09618},
+  eprint = {2102.09618},
+  eprinttype = {arxiv},
+  primaryclass = {cs, math},
+  publisher = {{arXiv}},
+  doi = {10.48550/arXiv.2102.09618},
+  abstract = {DeepONets have recently been proposed as a framework for learning nonlinear operators mapping between infinite dimensional Banach spaces. We analyze DeepONets and prove estimates on the resulting approximation and generalization errors. In particular, we extend the universal approximation property of DeepONets to include measurable mappings in non-compact spaces. By a decomposition of the error into encoding, approximation and reconstruction errors, we prove both lower and upper bounds on the total error, relating it to the spectral decay properties of the covariance operators, associated with the underlying measures. We derive almost optimal error bounds with very general affine reconstructors and with random sensor locations as well as bounds on the generalization error, using covering number arguments. We illustrate our general framework with four prototypical examples of nonlinear operators, namely those arising in a nonlinear forced ODE, an elliptic PDE with variable coefficients and nonlinear parabolic and hyperbolic PDEs. While the approximation of arbitrary Lipschitz operators by DeepONets to accuracy \$\textbackslash epsilon\$ is argued to suffer from a "curse of dimensionality" (requiring a neural networks of exponential size in \$1/\textbackslash epsilon\$), in contrast, for all the above concrete examples of interest, we rigorously prove that DeepONets can break this curse of dimensionality (achieving accuracy \$\textbackslash epsilon\$ with neural networks of size that can grow algebraically in \$1/\textbackslash epsilon\$). Thus, we demonstrate the efficient approximation of a potentially large class of operators with this machine learning framework.},
+  archiveprefix = {arXiv},
+  keywords = {Mathematics - Numerical Analysis},
+  file = {/Users/wyq977/Zotero/storage/DZ8YVDNJ/Lanthaler et al. - 2022 - Error estimates for DeepOnets A deep learning fra.pdf;/Users/wyq977/Zotero/storage/TBPFFKEM/2102.html}
 }
 
 @misc{leeAbilityNeuralNets2021,
@@ -508,7 +684,7 @@
   abstract = {Deep neural nets have caused a revolution in many classification tasks. A related ongoing revolution -- also theoretically not understood -- concerns their ability to serve as generative models for complicated types of data such as images and texts. These models are trained using ideas like variational autoencoders and Generative Adversarial Networks. We take a first cut at explaining the expressivity of multilayer nets by giving a sufficient criterion for a function to be approximable by a neural network with \$n\$ hidden layers. A key ingredient is Barron's Theorem \textbackslash cite\{Barron1993\}, which gives a Fourier criterion for approximability of a function by a neural network with 1 hidden layer. We show that a composition of \$n\$ functions which satisfy certain Fourier conditions ("Barron functions") can be approximated by a \$n+1\$-layer neural network. For probability distributions, this translates into a criterion for a probability distribution to be approximable in Wasserstein distance -- a natural metric on probability distributions -- by a neural network applied to a fixed base distribution (e.g., multivariate gaussian). Building up recent lower bound work, we also give an example function that shows that composition of Barron functions is more expressive than Barron functions alone.},
   archiveprefix = {arXiv},
   keywords = {Computer Science - Machine Learning},
-  file = {/home/wyq977/Zotero/storage/KECHNJ2C/Lee et al. - 2021 - On the ability of neural nets to express distribut.pdf;/home/wyq977/Zotero/storage/5Y5HSIEL/1702.html}
+  file = {/Users/wyq977/Zotero/storage/KECHNJ2C/Lee et al. - 2021 - On the ability of neural nets to express distribut.pdf;/Users/wyq977/Zotero/storage/5Y5HSIEL/1702.html}
 }
 
 @article{liangJustInterpolateKernel2019,
@@ -526,22 +702,41 @@
   archiveprefix = {arXiv},
   langid = {english},
   keywords = {Computer Science - Machine Learning,Mathematics - Statistics Theory,Statistics - Machine Learning},
-  file = {/home/wyq977/Zotero/storage/YMXK5Y2T/Liang and Rakhlin - 2019 - Just Interpolate Kernel Ridgeless Regression Ca.pdf}
+  file = {/Users/wyq977/Zotero/storage/YMXK5Y2T/Liang and Rakhlin - 2019 - Just Interpolate Kernel Ridgeless Regression Ca.pdf}
 }
 
-@article{liComplexityMeasuresNeural2020,
+@misc{liComplexityMeasuresNeural2020,
   title = {Complexity {{Measures}} for {{Neural Networks}} with {{General Activation Functions Using Path-based Norms}}},
   author = {Li, Zhong and Ma, Chao and Wu, Lei},
   year = {2020},
   month = sep,
-  journal = {arXiv:2009.06132 [cs, stat]},
+  number = {arXiv:2009.06132},
   eprint = {2009.06132},
   eprinttype = {arxiv},
   primaryclass = {cs, stat},
+  publisher = {{arXiv}},
+  doi = {10.48550/arXiv.2009.06132},
   abstract = {A simple approach is proposed to obtain complexity controls for neural networks with general activation functions. The approach is motivated by approximating the general activation functions with one-dimensional ReLU networks, which reduces the problem to the complexity controls of ReLU networks. Specifically, we consider two-layer networks and deep residual networks, for which path-based norms are derived to control complexities. We also provide preliminary analyses of the function spaces induced by these norms and a priori estimates of the corresponding regularized estimators.},
   archiveprefix = {arXiv},
   keywords = {Computer Science - Machine Learning,Statistics - Machine Learning},
-  file = {/home/wyq977/Zotero/storage/ZI4KLY69/Li et al. - 2020 - Complexity Measures for Neural Networks with Gener.pdf;/home/wyq977/Zotero/storage/IJHPA2EL/2009.html}
+  file = {/Users/wyq977/Zotero/storage/WHHAPTWP/Li et al. - 2020 - Complexity Measures for Neural Networks with Gener.pdf;/Users/wyq977/Zotero/storage/LLCGZPVP/2009.html}
+}
+
+@misc{liuDeepNonparametricEstimation2022,
+  title = {Deep {{Nonparametric Estimation}} of {{Operators}} between {{Infinite Dimensional Spaces}}},
+  author = {Liu, Hao and Yang, Haizhao and Chen, Minshuo and Zhao, Tuo and Liao, Wenjing},
+  year = {2022},
+  month = jan,
+  number = {arXiv:2201.00217},
+  eprint = {2201.00217},
+  eprinttype = {arxiv},
+  primaryclass = {cs, stat},
+  publisher = {{arXiv}},
+  doi = {10.48550/arXiv.2201.00217},
+  abstract = {Learning operators between infinitely dimensional spaces is an important learning task arising in wide applications in machine learning, imaging science, mathematical modeling and simulations, etc. This paper studies the nonparametric estimation of Lipschitz operators using deep neural networks. Non-asymptotic upper bounds are derived for the generalization error of the empirical risk minimizer over a properly chosen network class. Under the assumption that the target operator exhibits a low dimensional structure, our error bounds decay as the training sample size increases, with an attractive fast rate depending on the intrinsic dimension in our estimation. Our assumptions cover most scenarios in real applications and our results give rise to fast rates by exploiting low dimensional structures of data in operator estimation. We also investigate the influence of network structures (e.g., network width, depth, and sparsity) on the generalization error of the neural network estimator and propose a general suggestion on the choice of network structures to maximize the learning efficiency quantitatively.},
+  archiveprefix = {arXiv},
+  keywords = {Computer Science - Machine Learning,Statistics - Machine Learning},
+  file = {/Users/wyq977/Zotero/storage/4UXME46X/Liu et al. - 2022 - Deep Nonparametric Estimation of Operators between.pdf;/Users/wyq977/Zotero/storage/IACSJ2W4/2201.html}
 }
 
 @article{liUnprecedentedGenomicDiversity2015,
@@ -558,7 +753,7 @@
   pmcid = {PMC4384744},
   pmid = {25633976},
   keywords = {Animals,arthropods,Arthropods,Biodiversity,evolution,Evolution; Molecular,Genome,infectious disease,microbiology,negative-sense,phylogeny,Phylogeny,RNA virus,RNA Viruses,segmentation,viruses},
-  file = {/home/wyq977/Zotero/storage/B34W32VX/Li et al. - 2015 - Unprecedented genomic diversity of RNA viruses in .pdf}
+  file = {/Users/wyq977/Zotero/storage/B34W32VX/Li et al. - 2015 - Unprecedented genomic diversity of RNA viruses in .pdf}
 }
 
 @misc{maFunctionSpaceTheory2020,
@@ -566,7 +761,7 @@
   author = {Ma, Chao},
   year = {2020},
   langid = {english},
-  file = {/home/wyq977/Zotero/storage/TB6UJM4G/Ma - A Function Space Theory and Generalization Error E.pdf}
+  file = {/Users/wyq977/Zotero/storage/TB6UJM4G/Ma - A Function Space Theory and Generalization Error E.pdf}
 }
 
 @phdthesis{meiComputationalStatisticalTheories2020,
@@ -577,7 +772,7 @@
   abstract = {Deep learning methods operate in regimes that defy the traditional computational and statistical mindsets. Despite the non-convexity of empirical risks and the huge complexity of neural network architectures, stochastic gradient algorithms can often find an approximate global minimizer of the training loss and achieve small generalization error on test data. In recent years, an important research direction is to theoretically explain these observed optimization efficiency and generalization efficacy of neural network systems. This thesis tries to tackle these challenges in the model of two-layers neural networks, by analyzing its computational and statistical properties in various scaling limits. On the computational aspects, we introduce two competing theories for neural network dynamics: the mean field theory and the tangent kernel theory. These two theories characterize training dynamics of neural networks in different regimes that exhibit different behaviors. In the mean field framework, the training dynamics, in the large neuron limit, is captured by a particular non-linear partial differential equation. This characterization allows us to prove global convergence of the dynamics in certain scenarios. Comparatively, the tangent kernel theory characterizes the same dynamics in a different scaling limit and provides global convergence guarantees in more general scenarios. On the statistical aspects, we study the generalization properties of neural networks trained in the two regimes as described above. We first show that, in the high dimensional limit, neural tangent kernels are no better than polynomial regression, while neural networks trained in the mean field regime can potentially perform better. Next, we study more carefully the random features model, which is equivalent to a two-layers neural network in the kernel regime. We compute the precise asymptotics of its test error in the high dimensional limit and confirm that it exhibits an interesting double-descent curve that was observed in experiments},
   collaborator = {Stanford University},
   school = {Stanford University},
-  file = {/home/wyq977/Zotero/storage/E2MABAX4/Mei et al. - 2020 - Computational and statistical theories for large-s.pdf}
+  file = {/Users/wyq977/Zotero/storage/E2MABAX4/Mei et al. - 2020 - Computational and statistical theories for large-s.pdf}
 }
 
 @article{montanariOneLectureTwolayer2018,
@@ -588,7 +783,23 @@
   pages = {10},
   abstract = {Notes for a lecture at the Carg`ese Summer School `Statistical Physics and Machine Learning Back Together,' August 21, 2018.},
   langid = {english},
-  file = {/home/wyq977/Zotero/storage/B84VZ8A5/Montanari - One lecture on two-layer neural networks.pdf}
+  file = {/Users/wyq977/Zotero/storage/B84VZ8A5/Montanari - One lecture on two-layer neural networks.pdf}
+}
+
+@misc{mousavi-hosseiniNeuralNetworksEfficiently2022,
+  title = {Neural {{Networks Efficiently Learn Low-Dimensional Representations}} with {{SGD}}},
+  author = {{Mousavi-Hosseini}, Alireza and Park, Sejun and Girotti, Manuela and Mitliagkas, Ioannis and Erdogdu, Murat A.},
+  year = {2022},
+  month = sep,
+  number = {arXiv:2209.14863},
+  eprint = {2209.14863},
+  eprinttype = {arxiv},
+  primaryclass = {cs, stat},
+  publisher = {{arXiv}},
+  abstract = {We study the problem of training a two-layer neural network (NN) of arbitrary width using stochastic gradient descent (SGD) where the input \$\textbackslash boldsymbol\{x\}\textbackslash in \textbackslash mathbb\{R\}\^d\$ is Gaussian and the target \$y \textbackslash in \textbackslash mathbb\{R\}\$ follows a multiple-index model, i.e., \$y=g(\textbackslash langle\textbackslash boldsymbol\{u\_1\},\textbackslash boldsymbol\{x\}\textbackslash rangle,...,\textbackslash langle\textbackslash boldsymbol\{u\_k\},\textbackslash boldsymbol\{x\}\textbackslash rangle)\$ with a noisy link function \$g\$. We prove that the first-layer weights of the NN converge to the \$k\$-dimensional principal subspace spanned by the vectors \$\textbackslash boldsymbol\{u\_1\},...,\textbackslash boldsymbol\{u\_k\}\$ of the true model, when online SGD with weight decay is used for training. This phenomenon has several important consequences when \$k \textbackslash ll d\$. First, by employing uniform convergence on this smaller subspace, we establish a generalization error bound of \$\textbackslash mathcal\{O\}(\textbackslash sqrt\{\{kd\}/\{T\}\})\$ after \$T\$ iterations of SGD, which is independent of the width of the NN. We further demonstrate that, SGD-trained ReLU NNs can learn a single-index target of the form \$y=f(\textbackslash langle\textbackslash boldsymbol\{u\},\textbackslash boldsymbol\{x\}\textbackslash rangle) + \textbackslash epsilon\$ by recovering the principal direction, with a sample complexity linear in \$d\$ (up to log factors), where \$f\$ is a monotonic function with at most polynomial growth, and \$\textbackslash epsilon\$ is the noise. This is in contrast to the known \$d\^\{\textbackslash Omega(p)\}\$ sample requirement to learn any degree \$p\$ polynomial in the kernel regime, and it shows that NNs trained with SGD can outperform the neural tangent kernel at initialization. Finally, we also provide compressibility guarantees for NNs using the approximate low-rank structure produced by SGD.},
+  archiveprefix = {arXiv},
+  keywords = {Computer Science - Machine Learning,Statistics - Machine Learning},
+  file = {/Users/wyq977/Zotero/storage/RIR53HDJ/Mousavi-Hosseini et al. - 2022 - Neural Networks Efficiently Learn Low-Dimensional .pdf;/Users/wyq977/Zotero/storage/VPHLRTY4/2209.html}
 }
 
 @misc{neyshaburImplicitRegularizationDeep2017,
@@ -604,7 +815,7 @@
   abstract = {In an attempt to better understand generalization in deep learning, we study several possible explanations. We show that implicit regularization induced by the optimization method is playing a key role in generalization and success of deep learning models. Motivated by this view, we study how different complexity measures can ensure generalization and explain how optimization algorithms can implicitly regularize complexity measures. We empirically investigate the ability of these measures to explain different observed phenomena in deep learning. We further study the invariances in neural networks, suggest complexity measures and optimization algorithms that have similar invariances to those in neural networks and evaluate them on a number of learning tasks.},
   archiveprefix = {arXiv},
   keywords = {Computer Science - Machine Learning},
-  file = {/home/wyq977/Zotero/storage/9WB6TY4D/Neyshabur - 2017 - Implicit Regularization in Deep Learning.pdf;/home/wyq977/Zotero/storage/7286XC2I/1709.html}
+  file = {/Users/wyq977/Zotero/storage/9WB6TY4D/Neyshabur - 2017 - Implicit Regularization in Deep Learning.pdf;/Users/wyq977/Zotero/storage/7286XC2I/1709.html}
 }
 
 @article{neyshaburNormBasedCapacityControl2015,
@@ -619,7 +830,7 @@
   abstract = {We investigate the capacity, convexity and characterization of a general family of norm-constrained feed-forward networks.},
   archiveprefix = {arXiv},
   keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning,Computer Science - Neural and Evolutionary Computing,Statistics - Machine Learning},
-  file = {/home/wyq977/Zotero/storage/H47XLQHN/Neyshabur et al. - 2015 - Norm-Based Capacity Control in Neural Networks.pdf;/home/wyq977/Zotero/storage/ATQ32VYT/1503.html}
+  file = {/Users/wyq977/Zotero/storage/H47XLQHN/Neyshabur et al. - 2015 - Norm-Based Capacity Control in Neural Networks.pdf;/Users/wyq977/Zotero/storage/ATQ32VYT/1503.html}
 }
 
 @article{oymakNearOptimalBoundsBinary2015,
@@ -635,7 +846,7 @@
   archiveprefix = {arXiv},
   langid = {english},
   keywords = {Computer Science - Data Structures and Algorithms,Computer Science - Machine Learning,Mathematics - Functional Analysis},
-  file = {/home/wyq977/Zotero/storage/GTN638CU/Oymak and Recht - 2015 - Near-Optimal Bounds for Binary Embeddings of Arbit.pdf}
+  file = {/Users/wyq977/Zotero/storage/GTN638CU/Oymak and Recht - 2015 - Near-Optimal Bounds for Binary Embeddings of Arbit.pdf}
 }
 
 @misc{parhiBanachSpaceRepresenter2021,
@@ -652,7 +863,7 @@
   abstract = {We develop a variational framework to understand the properties of the functions learned by neural networks fit to data. We propose and study a family of continuous-domain linear inverse problems with total variation-like regularization in the Radon domain subject to data fitting constraints. We derive a representer theorem showing that finite-width, single-hidden layer neural networks are solutions to these inverse problems. We draw on many techniques from variational spline theory and so we propose the notion of polynomial ridge splines, which correspond to single-hidden layer neural networks with truncated power functions as the activation function. The representer theorem is reminiscent of the classical reproducing kernel Hilbert space representer theorem, but we show that the neural network problem is posed over a non-Hilbertian Banach space. While the learning problems are posed in the continuous-domain, similar to kernel methods, the problems can be recast as finite-dimensional neural network training problems. These neural network training problems have regularizers which are related to the well-known weight decay and path-norm regularizers. Thus, our result gives insight into functional characteristics of trained neural networks and also into the design neural network regularizers. We also show that these regularizers promote neural network solutions with desirable generalization properties.},
   archiveprefix = {arXiv},
   keywords = {Computer Science - Machine Learning,Statistics - Machine Learning},
-  file = {/home/wyq977/Zotero/storage/TRTMDXUH/Parhi and Nowak - 2021 - Banach Space Representer Theorems for Neural Netwo.pdf;/home/wyq977/Zotero/storage/7C9YN4MA/2006.html}
+  file = {/Users/wyq977/Zotero/storage/TRTMDXUH/Parhi and Nowak - 2021 - Banach Space Representer Theorems for Neural Netwo.pdf;/Users/wyq977/Zotero/storage/7C9YN4MA/2006.html}
 }
 
 @article{parhiRoleNeuralNetwork2020,
@@ -670,7 +881,7 @@
   abstract = {A wide variety of activation functions have been proposed for neural networks. The Rectified Linear Unit (ReLU) is especially popular today. There are many practical reasons that motivate the use of the ReLU. This paper provides new theoretical characterizations that support the use of the ReLU, its variants such as the leaky ReLU, as well as other activation functions in the case of univariate, single-hidden layer feedforward neural networks. Our results also explain the importance of commonly used strategies in the design and training of neural networks such as "weight decay" and "path-norm" regularization, and provide a new justification for the use of "skip connections" in network architectures. These new insights are obtained through the lens of spline theory. In particular, we show how neural network training problems are related to infinite-dimensional optimizations posed over Banach spaces of functions whose solutions are well-known to be fractional and polynomial splines, where the particular Banach space (which controls the order of the spline) depends on the choice of activation function.},
   archiveprefix = {arXiv},
   keywords = {Computer Science - Machine Learning,Statistics - Machine Learning},
-  file = {/home/wyq977/Zotero/storage/2QLXE6X7/Parhi and Nowak - 2020 - The Role of Neural Network Activation Functions.pdf;/home/wyq977/Zotero/storage/8JCZB47V/1910.html}
+  file = {/Users/wyq977/Zotero/storage/2QLXE6X7/Parhi and Nowak - 2020 - The Role of Neural Network Activation Functions.pdf;/Users/wyq977/Zotero/storage/8JCZB47V/1910.html}
 }
 
 @article{parhiWhatKindsFunctions2022,
@@ -691,7 +902,24 @@
   abstract = {We develop a variational framework to understand the properties of functions learned by fitting deep neural networks with rectified linear unit activations to data. We propose a new function space, which is reminiscent of classical bounded variation-type spaces, that captures the compositional structure associated with deep neural networks. We derive a representer theorem showing that deep ReLU networks are solutions to regularized data fitting problems over functions from this space. The function space consists of compositions of functions from the Banach spaces of second-order bounded variation in the Radon domain. These are Banach spaces with sparsity-promoting norms, giving insight into the role of sparsity in deep neural networks. The neural network solutions have skip connections and rank bounded weight matrices, providing new theoretical support for these common architectural choices. The variational problem we study can be recast as a finite-dimensional neural network training problem with regularization schemes related to the notions of weight decay and path-norm regularization. Finally, our analysis builds on techniques from variational spline theory, providing new connections between deep neural networks and splines.},
   archiveprefix = {arXiv},
   keywords = {Computer Science - Machine Learning,Statistics - Machine Learning},
-  file = {/home/wyq977/Zotero/storage/TIK3K2PG/Parhi and Nowak - 2022 - What Kinds of Functions do Deep Neural Networks Le.pdf;/home/wyq977/Zotero/storage/ZSDU6IU2/2105.html}
+  file = {/Users/wyq977/Zotero/storage/TIK3K2PG/Parhi and Nowak - 2022 - What Kinds of Functions do Deep Neural Networks Le.pdf;/Users/wyq977/Zotero/storage/ZSDU6IU2/2105.html}
+}
+
+@misc{poggioWhyWhenCan2017,
+  title = {Why and {{When Can Deep}} -- but {{Not Shallow}} -- {{Networks Avoid}} the {{Curse}} of {{Dimensionality}}: A {{Review}}},
+  shorttitle = {Why and {{When Can Deep}} -- but {{Not Shallow}} -- {{Networks Avoid}} the {{Curse}} of {{Dimensionality}}},
+  author = {Poggio, Tomaso and Mhaskar, Hrushikesh and Rosasco, Lorenzo and Miranda, Brando and Liao, Qianli},
+  year = {2017},
+  month = feb,
+  number = {arXiv:1611.00740},
+  eprint = {1611.00740},
+  eprinttype = {arxiv},
+  primaryclass = {cs},
+  publisher = {{arXiv}},
+  abstract = {The paper characterizes classes of functions for which deep learning can be exponentially better than shallow learning. Deep convolutional networks are a special case of these conditions, though weight sharing is not the main reason for their exponential advantage.},
+  archiveprefix = {arXiv},
+  keywords = {Computer Science - Machine Learning},
+  file = {/Users/wyq977/Zotero/storage/HKDCVAMJ/Poggio et al. - 2017 - Why and When Can Deep -- but Not Shallow -- Networ.pdf;/Users/wyq977/Zotero/storage/25WCT3XT/1611.html}
 }
 
 @inproceedings{rahimiUniformApproximationFunctions2008,
@@ -707,7 +935,7 @@
   abstract = {Random networks of nonlinear functions have a long history of empirical success in function fitting but few theoretical guarantees. In this paper, using techniques from probability on Banach Spaces, we analyze a specific architecture of random nonlinearities, provide L{$\infty$} and L2 error bounds for approximating functions in Reproducing Kernel Hilbert Spaces, and discuss scenarios when these expansions are dense in the continuous functions. We discuss connections between these random nonlinear networks and popular machine learning algorithms and show experimentally that these networks provide competitive performance at far lower computational cost on large-scale pattern recognition tasks.},
   isbn = {978-1-4244-2925-7},
   langid = {english},
-  file = {/home/wyq977/Zotero/storage/WQALQ84F/Rahimi and Recht - 2008 - Uniform approximation of functions with random bas.pdf}
+  file = {/Users/wyq977/Zotero/storage/WQALQ84F/Rahimi and Recht - 2008 - Uniform approximation of functions with random bas.pdf}
 }
 
 @article{schmidt-hieberNonparametricRegressionUsing2020,
@@ -723,7 +951,7 @@
   abstract = {Consider the multivariate nonparametric regression model. It is shown that estimators based on sparsely connected deep neural networks with ReLU activation function and properly chosen network architecture achieve the minimax rates of convergence (up to \$\textbackslash log n\$-factors) under a general composition assumption on the regression function. The framework includes many well-studied structural constraints such as (generalized) additive models. While there is a lot of flexibility in the network architecture, the tuning parameter is the sparsity of the network. Specifically, we consider large networks with number of potential network parameters exceeding the sample size. The analysis gives some insights into why multilayer feedforward neural networks perform well in practice. Interestingly, for ReLU activation function the depth (number of layers) of the neural network architectures plays an important role and our theory suggests that for nonparametric regression, scaling the network depth with the sample size is natural. It is also shown that under the composition assumption wavelet estimators can only achieve suboptimal rates.},
   archiveprefix = {arXiv},
   keywords = {62G08,Computer Science - Machine Learning,Mathematics - Statistics Theory,Statistics - Machine Learning},
-  file = {/home/wyq977/Zotero/storage/ETB8XX9L/Schmidt-Hieber - 2020 - Nonparametric regression using deep neural network.pdf;/home/wyq977/Zotero/storage/GX95FRWR/1708.html}
+  file = {/Users/wyq977/Zotero/storage/ETB8XX9L/Schmidt-Hieber - 2020 - Nonparametric regression using deep neural network.pdf;/Users/wyq977/Zotero/storage/GX95FRWR/1708.html}
 }
 
 @book{shalev-shwartzUnderstandingMachineLearning2014,
@@ -738,7 +966,22 @@
   langid = {english},
   lccn = {Q325.5 .S475 2014},
   keywords = {Algorithms,COMPUTERS / Computer Vision \& Pattern Recognition,Machine learning},
-  file = {/home/wyq977/Zotero/storage/TFGV6SZI/Shalev-Shwartz and Ben-David - 2014 - Understanding machine learning from theory to alg.pdf}
+  file = {/Users/wyq977/Zotero/storage/TFGV6SZI/Shalev-Shwartz and Ben-David - 2014 - Understanding machine learning from theory to alg.pdf}
+}
+
+@book{shalev-shwartzUnderstandingMachineLearning2014a,
+  title = {Understanding {{Machine Learning}}: {{From Theory}} to {{Algorithms}}},
+  shorttitle = {Understanding {{Machine Learning}}},
+  author = {{Shalev-Shwartz}, Shai and {Ben-David}, Shai},
+  year = {2014},
+  month = may,
+  edition = {First},
+  publisher = {{Cambridge University Press}},
+  doi = {10.1017/CBO9781107298019},
+  abstract = {Machine learning is one of the fastest growing areas of computer science, with far-reaching applications. The aim of this textbook is to introduce machine learning, and the algorithmic paradigms it offers, in a principled way. The book provides a theoretical account of the fundamentals underlying machine learning and the mathematical derivations that transform these principles into practical algorithms. Following a presentation of the basics, the book covers a wide array of central topics unaddressed by previous textbooks. These include a discussion of the computational complexity of learning and the concepts of convexity and stability; important algorithmic paradigms including stochastic gradient descent, neural networks, and structured output learning; and emerging theoretical concepts such as the PAC-Bayes approach and compression-based bounds. Designed for advanced undergraduates or beginning graduates, the text makes the fundamentals and algorithms of machine learning accessible to students and non-expert readers in statistics, computer science, mathematics and engineering.},
+  isbn = {978-1-107-05713-5 978-1-107-29801-9},
+  langid = {english},
+  file = {/Users/wyq977/Zotero/storage/3SA6SB2J/Shalev-Shwartz and Ben-David - 2014 - Understanding Machine Learning From Theory to Alg.pdf}
 }
 
 @article{starlingTargetedSmoothBayesian2020,
@@ -755,7 +998,24 @@
   archiveprefix = {arXiv},
   langid = {english},
   keywords = {Statistics - Applications},
-  file = {/home/wyq977/Zotero/storage/7D9WEMZL/Starling et al. - 2020 - Targeted Smooth Bayesian Causal Forests An analys.pdf}
+  file = {/Users/wyq977/Zotero/storage/7D9WEMZL/Starling et al. - 2020 - Targeted Smooth Bayesian Causal Forests An analys.pdf}
+}
+
+@incollection{wahbaRepresenterTheorem2019,
+  title = {Representer {{Theorem}}},
+  booktitle = {Wiley {{StatsRef}}: {{Statistics Reference Online}}},
+  author = {Wahba, Grace and Wang, Yuedong},
+  editor = {Balakrishnan, N. and Colton, Theodore and Everitt, Brian and Piegorsch, Walter and Ruggeri, Fabrizio and Teugels, Jozef L.},
+  year = {2019},
+  month = nov,
+  edition = {First},
+  pages = {1--11},
+  publisher = {{Wiley}},
+  doi = {10.1002/9781118445112.stat08200},
+  abstract = {The representer theorem plays an outsized role in a large class of learning problems. It provides a means to reduce infinite dimensional optimization problems to tractable finite dimensional ones. This article reviews the representer theorem for various learning problems under the reproducing kernel Hilbert spaces framework. We present solutions to the penalized least squares and penalized likelihood for nonparametric regression, and support vector machines for classification as a solution to the penalized hinge loss. We discuss extensions of the representer theorem for regression with functional data.},
+  isbn = {978-1-118-44511-2},
+  langid = {english},
+  file = {/Users/wyq977/Zotero/storage/2UNJLD59/Wahba and Wang - 2019 - Representer Theorem.pdf}
 }
 
 @article{wangDebiasedInferenceTreatment,
@@ -764,12 +1024,12 @@
   pages = {14},
   abstract = {This article concerns the potential bias in statistical inference on treatment effects when a large number of covariates are present in a linear or partially linear model. While the estimation bias in an under-fitted model is well understood, we address a lesser-known bias that arises from an over-fitted model. The overfitting bias can be eliminated through data splitting at the cost of statistical efficiency, and we show that smoothing over random data splits can be pursued to mitigate the efficiency loss. We also discuss some of the existing methods for debiased inference and provide insights into their intrinsic bias-variance trade-off, which leads to an improvement in bias controls. Under appropriate conditions, we show that the proposed estimators for the treatment effects are asymptotically normal and their variances can be well estimated. We discuss the pros and cons of various methods both theoretically and empirically, and show that the proposed methods are valuable options in post-selection inference. Supplementary materials for this article are available online.},
   langid = {english},
-  file = {/home/wyq977/Zotero/storage/QZGGM2TR/Wang et al. - Debiased Inference on Treatment Effect in a High-D.pdf}
+  file = {/Users/wyq977/Zotero/storage/QZGGM2TR/Wang et al. - Debiased Inference on Treatment Effect in a High-D.pdf}
 }
 
 @phdthesis{wuUnderstandingWhenKernel,
   title = {Understanding {{When Kernel Ridgeless Regression Works}}},
   author = {Wu, Mingqi},
   langid = {english},
-  file = {/home/wyq977/Zotero/storage/9ISXLHQA/Wu - Understanding When Kernel Ridgeless Regression Wor.pdf}
+  file = {/Users/wyq977/Zotero/storage/9ISXLHQA/Wu - Understanding When Kernel Ridgeless Regression Wor.pdf}
 }
