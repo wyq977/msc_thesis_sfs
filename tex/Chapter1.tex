@@ -1,8 +1,5 @@
 \chapter{The Approximation Properties of Two-Layer Neural Networks}
 
-It also holds for the nowadays more popular ReLU activation function since
-$\sigma(z+1) - \sigma(z)$ is sigmoidal.
-
 In this chapter, we will introduce some basic concepts about artificial
 artificial neural networks with an emphasis on the two-layer neural networks
 (\gls{2nn}). Firstly, we will define the 2NN model and the problem setup. In
@@ -33,7 +30,7 @@ a comprehensive introduction.
 
 % infinite-width Barron spaces.
 
-sparsity-inducing norm ? in bach 2017 paper.
+% sparsity-inducing norm ? in bach 2017 paper.
 
 
 \section{Universal Approximation Theorem}
@@ -41,41 +38,23 @@ sparsity-inducing norm ? in bach 2017 paper.
 
 In general, neural networks, even 2NN with one hidden layer, are universal
 approximators, which means any continuous functions on a compact set up to a
-arbitrary precision under some mild restrictions\TOCITE. We will discuss these
-conditions and compare to those to the classical representation theorems such poly
+arbitrary precision under some mild restrictions on the activation functions
+$\sigma$ and the number of nodes are allow to grow arbitrarily. The condition on
+$\sigma$ is formally stated in
+~\cite{cybenkoApproximationSuperpositionsSigmoidal1989}. Despite its obvious
+importance, one can not benefit much as it can not provide enough quantitative
+information in realist applications.
 
-? what is the difference between the representation theorem and the Approximation theorem ??
+% We will state the the universal approximation theorem that the finite linear
+% combinations of sigmoidal functions (sum of the functions of the form
+% (\eqref{def:sigmoidal})) are dense in the space of continuous functions. This
+% approximation result holds for any continuous sigmoidal functions.
+
 % function on a compact set up to arbitrary precision [Cyb89, Fun89, HSW89,
-% LLPS93].
-% modern mathematics of deep learning
-
-
-
-Let $f_m(\mathbf{x}, \Theta)$ be the parameterized family of two-layer neural
-networks of $m$ nodes that which map input vector $\mathbf{x}$ of dimension $d$.
-
-\begin{equation}
-    f_m(\mathbf{x}, \Theta) = \sum_{i=1}^m a_i \sigma(\mathbf{b_i}^T\mathbf{x} + c_i)
-\end{equation}
-
-where $\Theta = (a_1, \mathbf{b}_1, c_1, \dots, a_m, \mathbf{b}_m, c_m)$ denotes
-all the parameters (the total number of parameters is $(d+2)m + 1$). We will
-consider the hypothesis spaces where the activation functions $\sigma$ is ReLU
-\footnote{\tonote{The choice of activation function is important for
-        infinite-width Barron spaces}}.
-
-%  homogeneity
-
-It has been shown that shallow neural networks (even with one hidden layer) have
-good approximation properties with mild conditions on the activation function.
-2NNs are good approximators in a sense that they can approximate any continuous
-function arbitrarily well by
-\cite{cybenkoApproximationSuperpositionsSigmoidal1989}. Despite its importance,
-the theorem \ref{thm:uat} do not provide quantitative information regarding the
-approximation error.
+% LLPS93]. modern mathematics of deep learning
 
 \begin{definition}[sigmoidal function]\label{def:sigmoidal}
-    We stated a function $\sigma$ is \textit{sigmoidal} if
+    A function $\sigma$ is \textit{sigmoidal} if
     \begin{equation}
         \sigma(t) =
         \begin{cases}
@@ -85,13 +64,69 @@ approximation error.
     \end{equation}
 \end{definition}
 
-\begin{theorem}\label{thm:uat}
-    \cite[Theorem 5]{cybenkoApproximationSuperpositionsSigmoidal1989}
-    If the activation $\sigma$ is sigmoidal as defined in Def. $\ref{def:sigmoidal}$, then any continuous functions on
-    $[0, 1]^d$ in the can be approximated uniformly by two layer neural network
-    networks.
+\subsection*{Notations and setup}
+
+Let $I_d = [0,1]^d$ denote the $d$-dimensional unit cube, and the space of
+continuous functions over $I_d$ is denoted by $C(I_d)$. We denote the supremum
+norm of a function $f \in C(I_d)$ by $\norm{f}_{\infty}$ and we use $M(I_d)$ to
+denote the space of finite, signed regular Borel measures, i.e. $\mu(A) \in \R$
+for all Borel sets $A \in I_d$ and $\mu(\emptyset)= 0$. We refer readers to
+\cite{rudinFunctionalAnalysis1991, rudinRealComplexAnalysis1987} for a detailed
+presentation of functional construction used and we include some basic materials
+in Appendix \ref{app:function_measure}.
+
+Let $h(x)$ be the sums of the form:
+
+\begin{equation*}\label{eq:sum_sigma}
+    h(x) = \sum_{j=1}^m a_j \sigma(b_j\tr x + c_j)),
+\end{equation*}
+
+where $a_j, c_j \in \R$ and $b_j \in \R^d$.
+ 
+The main contribution of the theorem is the statement on the conditions of
+$\sigma$ when the above finite linear combinations $h(x)$ are dense with respect
+to the supremum norm $\norm{\cdot}_{\infty}$.
+
+\begin{theorem}[Universal Approximation Theorem]
+    \label{thm:uat}
+    If the activation $\sigma$ is sigmoidal as defined in Def.
+    $\ref{def:sigmoidal}$, then any functions $f \in C(I_d)$ in the can be
+    approximated uniformly by two layer neural network networks.
 \end{theorem}
 
+
+The main structure of  the proof is followed:
+\begin{enumerate}
+    \item any finite sums of the form \eqref{eq:sum_sigma} with a
+    \hyperref[def:dis_func]{discriminatory function} are dense in $C(I_d)$ with
+    respective to the supremum norm 
+    \item show that any bounded sigmoidal functions are discriminatory.
+\end{enumerate}
+
+\begin{definition}[Discriminatory function]
+    \label{def:dis_func}
+    A function $\sigma$ is \textbf{discriminatory} if for a measure $\mu \in
+    M(I_d)$
+    \begin{equation}
+        \int_{I_d} \sigma(b\tr x + c) \,d\mu(x) = 0
+    \end{equation}
+    for all $b \in \R^d$ and $c \in \R$ implies $\mu = 0$
+\end{definition}
+
+% Let $f_m(\mathbf{x}, \Theta)$ be the parameterized family of 2NN defined above
+% of $m$ nodes that which map input vector $\mathbf{x}$ of dimension $d$.
+
+% \begin{equation}
+%     f_m(\mathbf{x}, \Theta) = \sum_{i=1}^m a_i \sigma(\mathbf{b_i}^T\mathbf{x} + c_i)
+% \end{equation}
+
+% where $\Theta = (a_1, \mathbf{b}_1, c_1, \dots, a_m, \mathbf{b}_m, c_m)$ denotes
+% all the parameters (the total number of parameters is $(d+2)m + 1$). We will
+% consider the hypothesis spaces where the activation functions $\sigma$ is ReLU
+% \footnote{\tonote{The choice of activation function is important for
+%         infinite-width Barron spaces}}.
+
+%  homogeneity
 
 \section{Add a section for F transform}
 
