@@ -167,17 +167,27 @@ Now it remains to show that sigmoidal functions are discriminatory.
 \end{lemma}
 
 \begin{proof}
-    Let $\sigma: \R \to \R$ be a sigmoidal function and $\mu \in M(I_d)$. Assume
-    that the $\sigma$ is discriminatory with measure $\mu$ as in Def.
-    \ref{def:dis_func} we need to show that the measure $\mu = 0$.
 
-    Fixed a $b_0 \in \R^d\setminus\{0\}$. Note that we have
+    \textbf{Step 0} \textit{(Assume discriminatory and construct pointwise
+    convergence function)}: Let $\sigma: \R \to \R$ be a sigmoidal function
+    w.r.t. $\mu \in M(I_d)$. Assume that the $\sigma$ is discriminatory with
+    measure $\mu$ as in Def. \ref{def:dis_func}, we need to show that the measure
+    $\mu = 0$.
+
+    Fix a arbitrary $b_0 \in \R^d$ and define $\sigma_{\lambda}(x) :=
+    \sigma(\lambda (b\tr x + c) + \varphi)$. Then, for any $c, \lambda, \varphi
+    \in \R$ we have
     \begin{equation}
-        \label{eq:uat_lebesgue_conv}
-        \int_{I_d} \sigma(\lambda b\tr x + c) \,d\mu(x) = 0 \quad \forall \lambda, c \in \R
+        \sigma_{\lambda}(x)
+        = \begin{cases}
+            \to 1, \quad &\for b\tr x + c > 0 \quad \text{as}\, \lambda \to +\infty \\
+            \to 0, \quad &\for b\tr x + c < 0 \quad \text{as}\, \lambda \to -\infty \\
+            \sigma(\varphi), \quad &\for b\tr x + c = 0, \quad\forall \lambda
+        \end{cases}
     \end{equation}
 
-    For any $b, \varphi \in \R$, let us define function $\gamma: I_d \to \R$
+    Therefore, the functions $\sigma_{\lambda}$ converges to a function
+    $\gamma(x): I_d \to \R$
     \begin{equation}
         \gamma(x) = 
         \begin{cases}
@@ -186,8 +196,35 @@ Now it remains to show that sigmoidal functions are discriminatory.
             \sigma(\varphi), \quad &\for b\tr x + c = 0
         \end{cases}
     \end{equation}
-    where $\sigma_{\lambda}(x)$ is set to $\sigma(\lambda(b\tr x + c) + \varphi)$.
+    pointwise as $\lambda \to + \infty$.
+    
+    Let $\Pi_{b_0,c}$ denote the hyperplane, $H_{b_0, c}$ denote the
+    half-space as below 
+    \begin{align}
+        \Pi_{b_0,c} &= \{x\in\R^d \mid b_0\tr x + c = 0\} \\
+        H_{b_0, c}  &= \{x\in\R^d \mid b_0\tr x + c > 0\}.
+    \end{align}
+    for a fixed $b_0 \in \R^d$ and all $c \in \R$.
+    
+    By the Lebesgue Convergence Theorem, we have
+    \begin{align*}
+        \sigma(\varphi) \mu(\Pi_{b_0, c}) + \mu (H_{b_0, c})
+        &= \int_{I_d} \gamma(x) \,d\mu(x) \\
+        &= \int_{I_d} \lim_{\lambda\to\infty} \sigma_{\lambda}(x)\,d\mu(x) \\
+        &= \lim_{\lambda\to\infty} \int_{I_d} \sigma_{\lambda}(x)\,d\mu(x) = 0
+    \end{align*}
+    for all $\lambda, \varphi \in \R$.
 
+    Thanks to the function $\sigma$ being sigmoidal, $\lim_{\varphi\to +\infty}
+    \sigma(\varphi)= 1$ and $\lim_{\varphi\to -\infty} \sigma(\varphi)=0$
+    \begin{equation}
+        \mu(\Pi_{b_0, c}) = 0 \quad \text{and} \quad \mu (H_{b_0, c}) = 0 
+        \quad \forall c\in\R
+    \end{equation}
+    
+    We would like to show that the measure of all half-planes being zero implies
+    that the measure $\mu$ must be zero.
+    
     The function $\sigma_{\lambda}$ converges pointwise to $\gamma$ as $\lambda
     \to \infty$. Since $\sigma$ is bounded by assumption:
     $\abs{\sigma_{\lambda}(x) \leq \norm{\sigma}_{\infty} \leq \infty}$ for all
@@ -199,16 +236,13 @@ Now it remains to show that sigmoidal functions are discriminatory.
         = \lim_{\lambda\to\infty} \int_{I_d} \sigma_{\lambda}{x} \,d\mu(x).
     \end{equation}
 
-    We denote the hyperplane by $\Pi_{b,c}$:
-    \begin{equation}
-        \Pi_{b,c} = \{x\in\R^d \mid b\tr x + c = 0\}
-    \end{equation}
-    and let $H_{b_0, c}$ be the half-space defined as:
-    \begin{equation}
-        H_{y_0, c} = \{x\in\R^d \mid b\tr x + c > 0\}.
-    \end{equation}
 
-    Combining the 
+    \textbf{Step 1} \textit{(Construct a signed measure)}:
+
+    \textbf{Step 2} \textit{(Define a linear functional $L$ and show $L = 0$ on
+    with $\mu$)} Combining the 
+
+    \textbf{Step 3} \textit{(Tidy up)}
 
 \end{proof}
 
