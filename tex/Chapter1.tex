@@ -95,9 +95,9 @@ dense with respect to the supremum norm $\norm{\cdot}_{\infty}$.
 
 \begin{theorem}[Universal Approximation Theorem]
     \label{thm:uat}
-    If the activation $\sigma$ is sigmoidal as defined in Def.
-    $\ref{def:sigmoidal}$, then any functions $f \in C(I_d)$ in the can be
-    approximated uniformly by two layer neural network networks.
+    If $\sigma$ is sigmoidal as defined in Def. $\ref{def:sigmoidal}$, then any
+    function $f \in C(I_d)$ be approximated uniformly well by a finite linear
+    combination of the form \eqref{eq:sum_sigma}.
 \end{theorem}
 
 
@@ -125,35 +125,39 @@ with $\norm{\cdot}_{\infty}$.
 
 \begin{theorem}
     Let $\sigma: \R \to \R$ be a
-    continuous\hyperref[def:dis_func]{discriminatory function}. The finite sums
+    continuous \hyperref[def:dis_func]{discriminatory function}, the finite sums
     of the form \eqref{eq:sum_sigma} are dense in the space $(C(I_d),
     \norm{\cdot}_{\infty})$. In other words, for any $\epsilon > 0$ and any
-    function $f \in C(I_d)$, there is a sum $h(x)$ of the above form, where
+    $f \in C(I_d)$, there exists a sum $h(x)$ of the above form, where
     \begin{equation}
-        \norm{f(x) - h(x)}_{\infty} < \epsilon \quad \forall x \in I_d
+        \norm{f(x) - h(x)}_{\infty} < \epsilon \quad \forall x \in I_d.
     \end{equation}
 \end{theorem}
 
 \begin{proof}
-    Let $G$ be the set of functions of \eqref{eq:sum_sigma} and $G$ is a linear
-    subspace of $C(I_d)$. We claim that the closure of $G$, $\closure{G}$, is
-    all of $C(I_d)$.
+    Let $G(\sigma) := \spn(\{\sigma(b\tr x + c): b \in \R^d, c \in \R \})$ be
+    the linear span for every $b\in\R^d, c\in\R$. $G(\sigma)$ clearly is a
+    linear subspace of $C(I_d)$. We claim that the closure of $G(\sigma)$,
+    $\closure{G(\sigma)}$, is all of $C(I_d)$.
 
-    Assuming the contradiction that $\closure{G} \not= C(I_d)$ and there is a
-    bounded linear functional $L$ on $C(I_d)$ such that $L(G) = L(\closure{G}) =
-    0$ by the Hahn-Banach Theorem.
+    We continue the proof by contradiction. Assuming $\closure{G(\sigma)}$ is
+    not $C(I_d)$, then there is a bounded linear functional $L$ on $C(I_d)$ such
+    that $L\equiv 0$ on $C(I_d)$ and $L(G(\sigma)) = L(\closure{G(\sigma)}) = 0$
+    by the Hahn-Banach Theorem \ref{thm:hahn_banach_2}.
 
     By the \hyperref[thm:riesz_rep]{Riesz Representation Theorem}, there is a
-    unique $\mu \in M(I_d)$ such that
+    unique $\mu \in M(I_d)$ for this $L$ such that
     \begin{equation}
         L(f) = \int_{I_d} f(x) \,d\mu(x) \quad \forall f \in C(I_d)
     \end{equation}
-    Because $L = 0$ on $G$, we have
+
+    Since $L$ is zero on $G(\sigma)$, we must have for all $b$ and $c$ that
     \begin{equation}
-        L() = \int_{I_d} \,d\mu(x) = \int_{I_d} \sigma(b\tr x + c) \,d\mu(x) = 0
+        \int_{I_d} \sigma(b\tr x + c) \,d\mu(x) = 0
     \end{equation}
-    for all $b \in \R^d$ and $c \in \R$. This implies $\mu = 0$ and $L = 0$
-    since $\sigma$ is discriminatory. 
+
+    However, the condition that $\sigma$ is discriminatory implies $\mu = 0$ and
+    hence subspace $G(\sigma)$ must be dense in $C(I_d)$.
 \end{proof}
 
 Now it remains to show that sigmoidal functions are discriminatory.
@@ -161,6 +165,52 @@ Now it remains to show that sigmoidal functions are discriminatory.
 \begin{lemma}
     Any bounded, measurable sigmoidal function is discriminatory.
 \end{lemma}
+
+\begin{proof}
+    Let $\sigma: \R \to \R$ be a sigmoidal function and $\mu \in M(I_d)$. Assume
+    that the $\sigma$ is discriminatory with measure $\mu$ as in Def.
+    \ref{def:dis_func} we need to show that the measure $\mu = 0$.
+
+    Fixed a $b_0 \in \R^d\setminus\{0\}$. Note that we have
+    \begin{equation}
+        \label{eq:uat_lebesgue_conv}
+        \int_{I_d} \sigma(\lambda b\tr x + c) \,d\mu(x) = 0 \quad \forall \lambda, c \in \R
+    \end{equation}
+
+    For any $b, \varphi \in \R$, let us define function $\gamma: I_d \to \R$
+    \begin{equation}
+        \gamma(x) = 
+        \begin{cases}
+            1,               \quad &\for b\tr x + c > 0 \\
+            0,               \quad &\for b\tr x + c < 0 \\
+            \sigma(\varphi), \quad &\for b\tr x + c = 0
+        \end{cases}
+    \end{equation}
+    where $\sigma_{\lambda}(x)$ is set to $\sigma(\lambda(b\tr x + c) + \varphi)$.
+
+    The function $\sigma_{\lambda}$ converges pointwise to $\gamma$ as $\lambda
+    \to \infty$. Since $\sigma$ is bounded by assumption:
+    $\abs{\sigma_{\lambda}(x) \leq \norm{\sigma}_{\infty} \leq \infty}$ for all
+    $\lambda \in \R$ and all $x \in I_d$. By the Lebesgue bounded convergence
+    theorem,
+    \begin{equation}
+        \int_{I_d} \gamma \,d\mu 
+        = \int_{I_d} \lim_{\lambda\to\infty} \sigma_{\lambda}(x) \,d\mu(x)
+        = \lim_{\lambda\to\infty} \int_{I_d} \sigma_{\lambda}{x} \,d\mu(x).
+    \end{equation}
+
+    We denote the hyperplane by $\Pi_{b,c}$:
+    \begin{equation}
+        \Pi_{b,c} = \{x\in\R^d \mid b\tr x + c = 0\}
+    \end{equation}
+    and let $H_{b_0, c}$ be the half-space defined as:
+    \begin{equation}
+        H_{y_0, c} = \{x\in\R^d \mid b\tr x + c > 0\}.
+    \end{equation}
+
+    Combining the 
+
+\end{proof}
 
 % Let $f_m(\mathbf{x}, \Theta)$ be the parameterized family of 2NN defined above
 % of $m$ nodes that which map input vector $\mathbf{x}$ of dimension $d$.

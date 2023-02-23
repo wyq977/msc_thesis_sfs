@@ -57,20 +57,43 @@ A linear functional $T$ is \textit{bounded} if and only if there exists a $\lamb
    that $T(x) = 0$ for all $x \in X$ while $F(x_0) \not= 0$
 \end{theorem}
 
-\begin{theorem}
+% https://www.imsc.res.in/~kesh/hahn.pdf
+
+\begin{corollary}[Consequence II of Hahn-Banach Theorem]
    \label{thm:hahn_banach_2}
-   Let $(X, \norm{\cdot}_{X})$ be a subspace of $(Y, \norm{\cdot}_{Y})$. Suppose
-   every bounded linear functional $T: Y \to \R$, with $F(x) = 0$ for all $x \in
-   X$, is identically zero on $Y$. Then $X$ is dense in $Y$.
+   Let $X$ be subspace of a normed linear space $Y$. Assume $\closure{X}$, the
+   closure of $X$, is not $Y$. Then there exists a bounded linear functional $L$
+   on $Y$ such that $L \not\equiv 0$ and $L(x) = 0$ for all $x \in X$. Suppose
+   every bounded functional $L$ on $Y$ is identically zero on $Y$. Then $X$ is
+   dense in $Y$.
+\end{corollary}
+
+\begin{theorem}[Riesz Representation Theorem]
+   \cite[Theorem 6.19, p. 130]{rudinRealComplexAnalysis1987}
+   \label{thm:riesz_rep}
+
+   If $X$ is a locally compact Hausdorff space, then every bounded linear
+   functional $L$ on the the space of all continuous functions on $X$, $C(X)$,
+   is represented by a unique regular complex Borel measure $\mu$
+   \begin{equation*}
+      L(f) = \int_{X} f(x) \,d\mu(x), \quad \forall f \in C(X).
+   \end{equation*}
+   Moreover, the norm of $L$ is the total variation of $\mu$:
+   \begin{equation}
+      \norm{L} = \abs{\mu}(X)
+   \end{equation}
 \end{theorem}
 
-\begin{theorem}[Riesz Representation Theorem~\cite{rudinFunctionalAnalysis1991}]
-   \label{thm:riesz_rep}
-   For every bounded linear functional $L$ on $C(I_n)$, there exists a unique
-   signed regular Borel measure $\mu$ such that:
-   \begin{equation*}
-      L(f) = \int_{I_n} f(x) d\mu(x), \quad \forall f \in C(I_n).
-   \end{equation*}
+\begin{theorem}[Lesbegue Bounded Convergence Theorem]
+   Let $f_n$ be a sequence of uniformly bounded functions for all $n \in \Nat$
+   that satisfy
+   \begin{equation}
+      \lim_{n\to\infty} f_n(x) = f(x), \quad \text{pointwise}
+   \end{equation}
+   Then, 
+   \begin{equation}
+      \lim_{n\to\infty}\int f_n \,d\mu = \int \lim_{n\to\infty} f_n \,d\mu = \int f \,d\mu
+   \end{equation}
 \end{theorem}
 
 \section{Measure Theory}
