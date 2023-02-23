@@ -218,29 +218,44 @@ Now it remains to show that sigmoidal functions are discriminatory.
     Thanks to the function $\sigma$ being sigmoidal, $\lim_{\varphi\to +\infty}
     \sigma(\varphi)= 1$ and $\lim_{\varphi\to -\infty} \sigma(\varphi)=0$
     \begin{equation}
+        \label{eq:disc_1}
         \mu(\Pi_{b_0, c}) = 0 \quad \text{and} \quad \mu (H_{b_0, c}) = 0 
         \quad \forall c\in\R
     \end{equation}
     
     We would like to show that the measure of all half-planes being zero implies
-    that the measure $\mu$ must be zero.
+    that the measure $\mu$ must be zero. If $\mu$ is a positive Borel measure,
+    this would be trivial by \eqref{eq:disc_1} but $\mu$ here is a signed
+    measure.
     
-    The function $\sigma_{\lambda}$ converges pointwise to $\gamma$ as $\lambda
-    \to \infty$. Since $\sigma$ is bounded by assumption:
-    $\abs{\sigma_{\lambda}(x) \leq \norm{\sigma}_{\infty} \leq \infty}$ for all
-    $\lambda \in \R$ and all $x \in I_d$. By the Lebesgue bounded convergence
-    theorem,
+    \textbf{Step 1} \textit{(Construct a signed measure)}: Let $\phi$ be a
+    finite signed, Borel measure on $\R$
     \begin{equation}
-        \int_{I_d} \gamma \,d\mu 
-        = \int_{I_d} \lim_{\lambda\to\infty} \sigma_{\lambda}(x) \,d\mu(x)
-        = \lim_{\lambda\to\infty} \int_{I_d} \sigma_{\lambda}{x} \,d\mu(x).
+        \phi(A) = \mu(\{x \in I_d: b_o\tr x \in A\}) \quad \forall A \in \R.
     \end{equation}
 
+    By construction, we have
+    \begin{align}
+        \forall a < b \in \R, \quad \phi((a,b)) 
+        &= \phi((a,\infty)) - \phi([b, \infty)) \\
+        &= \mu(\{x \in I_d: b_o\tr x > a\}) \\
+        &\quad- \Big(
+                \mu(\{x \in I_d: b_o\tr x > b\})
+                + \mu(\{x \in I_d: b_o\tr x = b\})
+                \Big) \\
+        &= \mu(H_{b_0, -a}) - (\mu(H_{b_0, -b}) + \mu(\Pi_{b_0, -b})) \\
+        &= 0 - 0 = 0
+    \end{align}
+    thus $\phi(A) = 0$ for all Borel sets $A \in \R$.
 
-    \textbf{Step 1} \textit{(Construct a signed measure)}:
-
+    % Show a bounded linear functional is zero on such measure
     \textbf{Step 2} \textit{(Define a linear functional $L$ and show $L = 0$ on
-    with $\mu$)} Combining the 
+    with $\mu$)}: Let $L: L^{\infty}(\R) \to \R$ be a bounded linear functional
+    and $L^{\infty}(\R)$ denotes the space of all measurable bounded functions.
+    For a function $h \in L^{\infty}(\R)$, we define $L$:
+    \begin{equation}
+        L(h) = \int_{I_d} h(b\tr)\,d\mu(x)
+    \end{equation}
 
     \textbf{Step 3} \textit{(Tidy up)}
 
