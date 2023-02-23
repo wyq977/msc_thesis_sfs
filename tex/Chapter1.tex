@@ -68,24 +68,30 @@ information in realist applications.
 
 Let $I_d = [0,1]^d$ denote the $d$-dimensional unit cube, and the space of
 continuous functions over $I_d$ is denoted by $C(I_d)$. We denote the supremum
-norm of a function $f \in C(I_d)$ by $\norm{f}_{\infty}$ and we use $M(I_d)$ to
-denote the space of finite, signed regular Borel measures, i.e. $\mu(A) \in \R$
-for all Borel sets $A \in I_d$ and $\mu(\emptyset)= 0$. We refer readers to
-\cite{rudinFunctionalAnalysis1991, rudinRealComplexAnalysis1987} for a detailed
-presentation of functional construction used and we include some basic materials
-in Appendix \ref{app:function_measure}.
+norm of a function $f \in C(I_d)$ by $\norm{f}_{\infty}$ 
+\begin{equation}
+    \norm{f}_{\infty} = \sup_{x\in I_d} \abs{f(x)}.
+\end{equation}
+We use $M(I_d)$ to denote the space of finite, signed regular Borel measures,
+i.e. $\mu(A) \in \R$ for all Borel sets $A \in I_d$ and $\mu(\emptyset)= 0$. We
+refer readers to \cite{rudinFunctionalAnalysis1991,
+rudinRealComplexAnalysis1987} for a detailed presentation of functional
+construction used and we include some basic materials in Appendix
+\ref{app:function_measure}.
 
 Let $h(x)$ be the sums of the form:
 
-\begin{equation*}\label{eq:sum_sigma}
+\begin{equation}
+    \label{eq:sum_sigma}
     h(x) = \sum_{j=1}^m a_j \sigma(b_j\tr x + c_j)),
-\end{equation*}
+\end{equation}
 
-where $a_j, c_j \in \R$ and $b_j \in \R^d$.
+where $a_j, c_j \in \R$ and $b_j \in \R^d$ and $\sigma$ is a univariate function
+from $\R$ to $\R$.
  
-The main contribution of the theorem is the statement on the conditions of
-$\sigma$ when the above finite linear combinations $h(x)$ are dense with respect
-to the supremum norm $\norm{\cdot}_{\infty}$.
+The main contribution of approximation theorem is the statement on the
+conditions of $\sigma$ when the above finite linear combinations $h(x)$ are
+dense with respect to the supremum norm $\norm{\cdot}_{\infty}$.
 
 \begin{theorem}[Universal Approximation Theorem]
     \label{thm:uat}
@@ -95,11 +101,11 @@ to the supremum norm $\norm{\cdot}_{\infty}$.
 \end{theorem}
 
 
-The main structure of  the proof is followed:
+The main structure of the proof is followed:
 \begin{enumerate}
     \item any finite sums of the form \eqref{eq:sum_sigma} with a
-    \hyperref[def:dis_func]{discriminatory function} are dense in $C(I_d)$ with
-    respective to the supremum norm 
+    \hyperref[def:dis_func]{discriminatory function} $\sigma$ are dense in
+    $C(I_d)$ with respective to the supremum norm.
     \item show that any bounded sigmoidal functions are discriminatory.
 \end{enumerate}
 
@@ -112,6 +118,49 @@ The main structure of  the proof is followed:
     \end{equation}
     for all $b \in \R^d$ and $c \in \R$ implies $\mu = 0$
 \end{definition}
+
+We can now state that the linear span or the finite linear combinations of
+continuous discriminatory functions are dense in the space of $C(I_d)$ equipped
+with $\norm{\cdot}_{\infty}$.
+
+\begin{theorem}
+    Let $\sigma: \R \to \R$ be a
+    continuous\hyperref[def:dis_func]{discriminatory function}. The finite sums
+    of the form \eqref{eq:sum_sigma} are dense in the space $(C(I_d),
+    \norm{\cdot}_{\infty})$. In other words, for any $\epsilon > 0$ and any
+    function $f \in C(I_d)$, there is a sum $h(x)$ of the above form, where
+    \begin{equation}
+        \norm{f(x) - h(x)}_{\infty} < \epsilon \quad \forall x \in I_d
+    \end{equation}
+\end{theorem}
+
+\begin{proof}
+    Let $G$ be the set of functions of \eqref{eq:sum_sigma} and $G$ is a linear
+    subspace of $C(I_d)$. We claim that the closure of $G$, $\closure{G}$, is
+    all of $C(I_d)$.
+
+    Assuming the contradiction that $\closure{G} \not= C(I_d)$ and there is a
+    bounded linear functional $L$ on $C(I_d)$ such that $L(G) = L(\closure{G}) =
+    0$ by the Hahn-Banach Theorem.
+
+    By the \hyperref[thm:riesz_rep]{Riesz Representation Theorem}, there is a
+    unique $\mu \in M(I_d)$ such that
+    \begin{equation}
+        L(f) = \int_{I_d} f(x) \,d\mu(x) \quad \forall f \in C(I_d)
+    \end{equation}
+    Because $L = 0$ on $G$, we have
+    \begin{equation}
+        L() = \int_{I_d} \,d\mu(x) = \int_{I_d} \sigma(b\tr x + c) \,d\mu(x) = 0
+    \end{equation}
+    for all $b \in \R^d$ and $c \in \R$. This implies $\mu = 0$ and $L = 0$
+    since $\sigma$ is discriminatory. 
+\end{proof}
+
+Now it remains to show that sigmoidal functions are discriminatory.
+
+\begin{lemma}
+    Any bounded, measurable sigmoidal function is discriminatory.
+\end{lemma}
 
 % Let $f_m(\mathbf{x}, \Theta)$ be the parameterized family of 2NN defined above
 % of $m$ nodes that which map input vector $\mathbf{x}$ of dimension $d$.

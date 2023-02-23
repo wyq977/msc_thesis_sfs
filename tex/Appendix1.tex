@@ -49,7 +49,23 @@ A linear functional $T$ is \textit{bounded} if and only if there exists a $\lamb
    \R)$.
 \end{definition}
 
+\begin{theorem}[Hahn-Banach Theorem 1]
+   \label{thm:hahn_banach_1}
+   Let $(X, \norm{\cdot}_{X})$ be a subspace of $(Y, \norm{\cdot}_{Y})$ and $x_0
+   \in X$. $x_0$ is in the closure $\closure{X}$ of $X$ if and only if there is
+   no bounded linear functional $T: Y \to \R$ on $(Y, \norm{\cdot}_{Y})$ such
+   that $T(x) = 0$ for all $x \in X$ while $F(x_0) \not= 0$
+\end{theorem}
+
+\begin{theorem}
+   \label{thm:hahn_banach_2}
+   Let $(X, \norm{\cdot}_{X})$ be a subspace of $(Y, \norm{\cdot}_{Y})$. Suppose
+   every bounded linear functional $T: Y \to \R$, with $F(x) = 0$ for all $x \in
+   X$, is identically zero on $Y$. Then $X$ is dense in $Y$.
+\end{theorem}
+
 \begin{theorem}[Riesz Representation Theorem~\cite{rudinFunctionalAnalysis1991}]
+   \label{thm:riesz_rep}
    For every bounded linear functional $L$ on $C(I_n)$, there exists a unique
    signed regular Borel measure $\mu$ such that:
    \begin{equation*}
