@@ -47,17 +47,19 @@
 \usepackage{color}           % to allow coloring in code listings
 \usepackage{listings}        % include code
 
+\usepackage{glossaries}     % for abbreviations
+\makeglossaries
+% https://www.dickimaw-books.com/faq.php?itemlabel=nosection
+\renewcommand{\glossarysection}[2][]{}
+
+% numbers in mathbb
+\usepackage[bb=dsserif]{mathalpha}
+
 % Optional argument
 % \usepackage{mathrsfs}       % \mathscr
 % grafics shown as boxes --> faster compilation
 % \usepackage[draft]{graphicx}
 % \usepackage{physics}        % for derivative conflict with trace
-
-\usepackage{glossaries}     % for abbreviations
-\makeglossaries
-
-% https://www.dickimaw-books.com/faq.php?itemlabel=nosection
-\renewcommand{\glossarysection}[2][]{} 
 
 
 % ******************************************************************************
@@ -140,11 +142,11 @@
 % ******************************************************************************
 \newcommand{\barronnorm}[2]{\left\lVert#1\right\rVert_{\mathcal{B}_#2}}
 \newcommand{\bigO}{\mathcal{O}}
-\newcommand{\stepfunction}[1]{\mathbf{1}_{\{#1\}}}
+\newcommand{\stepfunction}[1]{\mathbb{1}_{#1}}
 
 % amsmath
 % \numberwithin{equation}{section} % using section number in equation number
-\DeclareMathOperator\supp{supp}
+\DeclareMathOperator{\supp}{supp}
 \DeclareMathOperator{\spn}{span} % span already defined ??
 \newcommand*\interior[1]{\mathring{#1}}
 \newcommand*\closure[1]{\overline{#1}} % (or \bar{#1})

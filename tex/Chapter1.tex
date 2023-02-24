@@ -169,31 +169,30 @@ Now it remains to show that sigmoidal functions are discriminatory.
 \begin{proof}
 
     \textbf{Step 0} \textit{(Assume discriminatory and construct pointwise
-    convergence function)}: Let $\sigma: \R \to \R$ be a sigmoidal function
-    w.r.t. $\mu \in M(I_d)$. Assume that the $\sigma$ is discriminatory with
-    measure $\mu$ as in Def. \ref{def:dis_func}, we need to show that the measure
-    $\mu = 0$.
+    convergence function)}: Let $\sigma: \R \to \R$ be a sigmoidal function.
+    Assume that the $\sigma$ is discriminatory with a measure $\mu \in M(I_d)$
+    as in Def. \ref{def:dis_func}, we need to show that the measure $\mu = 0$.
 
-    Fix a arbitrary $b_0 \in \R^d$ and define $\sigma_{\lambda}(x) :=
-    \sigma(\lambda (b\tr x + c) + \varphi)$. Then, for any $c, \lambda, \varphi
-    \in \R$ we have
+    Fix a arbitrary $b_0 \in \R^d\setminus \{0\}$ and define
+    $\sigma_{\lambda}(x) := \sigma(\lambda (b_0\tr x + c) + \varphi)$. Then, for
+    any $c, \lambda, \varphi \in \R$ we have
     \begin{equation}
         \sigma_{\lambda}(x)
         = \begin{cases}
-            \to 1, \quad &\for b\tr x + c > 0 \quad \text{as}\, \lambda \to +\infty \\
-            \to 0, \quad &\for b\tr x + c < 0 \quad \text{as}\, \lambda \to -\infty \\
-            \sigma(\varphi), \quad &\for b\tr x + c = 0, \quad\forall \lambda
+            \to 1, \quad &\for b_0\tr x + c > 0 \quad \text{as}\, \lambda \to +\infty \\
+            \to 0, \quad &\for b_0\tr x + c < 0 \quad \text{as}\, \lambda \to -\infty \\
+            \sigma(\varphi), \quad &\for b_0\tr x + c = 0, \quad\forall \lambda \in \R
         \end{cases}
     \end{equation}
 
-    Therefore, the functions $\sigma_{\lambda}$ converges to a function
-    $\gamma(x): I_d \to \R$
+    Therefore, the functions $\sigma_{\lambda}$ converges pointwise to a
+    function $\gamma(x): I_d \to \R$
     \begin{equation}
         \gamma(x) = 
         \begin{cases}
-            1,               \quad &\for b\tr x + c > 0 \\
-            0,               \quad &\for b\tr x + c < 0 \\
-            \sigma(\varphi), \quad &\for b\tr x + c = 0
+            1,               \quad &\for b_0\tr x + c > 0 \\
+            0,               \quad &\for b_0\tr x + c < 0 \\
+            \sigma(\varphi), \quad &\for b_0\tr x + c = 0
         \end{cases}
     \end{equation}
     pointwise as $\lambda \to + \infty$.
@@ -204,7 +203,7 @@ Now it remains to show that sigmoidal functions are discriminatory.
         \Pi_{b_0,c} &= \{x\in\R^d \mid b_0\tr x + c = 0\} \\
         H_{b_0, c}  &= \{x\in\R^d \mid b_0\tr x + c > 0\}.
     \end{align}
-    for a fixed $b_0 \in \R^d$ and all $c \in \R$.
+    for all $c \in \R$.
     
     By the Lebesgue Convergence Theorem, we have
     \begin{align*}
@@ -222,6 +221,9 @@ Now it remains to show that sigmoidal functions are discriminatory.
         \mu(\Pi_{b_0, c}) = 0 \quad \text{and} \quad \mu (H_{b_0, c}) = 0 
         \quad \forall c\in\R
     \end{equation}
+
+    This in turns implies $\mu(I_d) = 0$ as we can choose $c$ sufficiently
+    large.
     
     We would like to show that the measure of all half-planes being zero implies
     that the measure $\mu$ must be zero. If $\mu$ is a positive Borel measure,
@@ -231,7 +233,8 @@ Now it remains to show that sigmoidal functions are discriminatory.
     \textbf{Step 1} \textit{(Construct a signed measure)}: Let $\phi$ be a
     finite signed, Borel measure on $\R$
     \begin{equation}
-        \phi(A) = \mu(\{x \in I_d: b_o\tr x \in A\}) \quad \forall A \in \R.
+        \label{eq:disc_2}
+        \phi(A) = \mu(\{x \in I_d: b_o\tr x \in A\}) \quad \forall A \subseteq \R.
     \end{equation}
 
     By construction, we have
@@ -246,18 +249,89 @@ Now it remains to show that sigmoidal functions are discriminatory.
         &= \mu(H_{b_0, -a}) - (\mu(H_{b_0, -b}) + \mu(\Pi_{b_0, -b})) \\
         &= 0 - 0 = 0
     \end{align}
-    thus $\phi(A) = 0$ for all Borel sets $A \in \R$.
+    therefore $\phi(A) = 0$ for all Borel sets $A \subseteq \R$.
 
     % Show a bounded linear functional is zero on such measure
     \textbf{Step 2} \textit{(Define a linear functional $L$ and show $L = 0$ on
-    with $\mu$)}: Let $L: L^{\infty}(\R) \to \R$ be a bounded linear functional
-    and $L^{\infty}(\R)$ denotes the space of all measurable bounded functions.
-    For a function $h \in L^{\infty}(\R)$, we define $L$:
+    with $\mu$)}: Let $L^{\infty}(\R)$ denote the set of all measurable bounded
+    functions. For a function $h \in L^{\infty}(\R)$, we define a functional $L:
+    L^{\infty}(\R) \to \R$:
     \begin{equation}
-        L(h) = \int_{I_d} h(b\tr)\,d\mu(x)
+        L(h) = \int_{I_d} h(b\tr x)\,d\mu(x).
     \end{equation}
 
-    \textbf{Step 3} \textit{(Tidy up)}
+    $L$ is linear because for all $\alpha, \beta \in \R, \text{ and } g, h \in
+    L^{\infty}(\R)$
+    \begin{align}
+        L(\alpha g + \beta h)
+        &= \int_{I_d} (\alpha g + \beta h) (b_0\tr x) \,d\mu(x) \\
+        &= \int_{I_d} (\alpha g(b_0\tr x) + \beta h (b_0\tr x)) \, d\mu(x) \\
+        &= \alpha \int_{I_d} g(b_0\tr x) \,d\mu(x) + \beta \int_{I_d} h(b_0\tr x) \,d\mu(x) \\
+        &= \alpha F(g) + \beta L(h)
+    \end{align}
+
+    Now we look at the indicator function for all Borel sets of $\R$:
+    $\stepfunction{A}(x)$
+    \begin{equation}
+        \stepfunction{A}(x) =
+        \begin{cases}
+            1, \quad \text{ if } x \in A \\
+            0, \quad \text{ otherwise}
+        \end{cases}
+    \end{equation}
+
+     Note that
+    $\stepfunction{A} \in L^{\infty}(\R)$, with \eqref{eq:disc_2} we have 
+
+    \begin{equation}
+        L(\stepfunction{A}) = \int_{I_d} \stepfunction{A}(b_0\tr x)\,d\mu(x)
+        = \mu(\{ x\in I_d: b_0\tr x\in A \}) = \phi(A) = 0
+    \end{equation}
+    for all Borel sets $A \subseteq \R$.
+
+    Since $L$ is a linear functional, then for finite sum of functions of the
+    form (simple functions):
+    \begin{equation}
+        \label{eq:simple_function}
+        s_n(x) = \sum_{j=1}^{n} a_j \stepfunction{A_j}(x)
+    \end{equation}
+    is zero for all $n\in\Nat$ where $a_j \in \R$ and ${A_j} \subseteq \R$ are
+    measurable and pairwise disjoint sets of $\R$. Since the simple functions
+    \eqref{eq:simple_function} are dense in $L^{\infty}(\R)$, then for a
+    function $h \in L^{\infty}(\R)$, there exists a sequence of function $s_n$
+    converges pointwise to $h$ for all $n \in \Nat$ and $x \in \R$. We have
+    \begin{align}
+        L(h) &= \int_{I_d} h(b_0\tr x) \,d\mu(x) 
+             = \int_{I_d} \lim_{n\to\infty} s_n(b_0\tr x) \,d\mu(x) \\
+             &= \lim_{n\to\infty} \int_{I_d} s_n(b_0\tr x) \,d\mu(x)
+             = \lim_{n\to\infty} L(s_n)
+             = 0
+    \end{align}
+    where the limit in the integral is moved outside by the Lebesgue convergence
+    theorem.
+
+    \textbf{Step 3} \textit{(Tidy up)}: Since the sine and cosine functions are
+    in $L^{\infty}(\R)$ and for a bounded measurable function $h('x) =
+    e^{ib_0\tr x} = \cos(b_0\tr x) + i \sin(b_0\tr x)$ we have
+    \begin{equation}
+        L(h') = \int_{I_d} h'(b_0\tr x) \,d\mu(x) 
+              = \int_{I_d} \cos(b_0\tr x) + i \sin(b_0\tr x) \,d\mu(x)
+              = 0
+    \end{equation}
+    because $L(\cos) = L(\sin) = 0$ for all $b_0$.
+
+    \begin{lemma}
+        if $\mu$ is a signed finite Borel measure on $\R^d$ such that the Fourier
+        transform of $\mu$
+        \begin{equation}
+            \hat{\mu}(u) = \int_{\R^d} e^{-iu\tr x} \,\mu(x) = 0,  
+        \end{equation}
+        for all $x\in\R^d$, then $\mu = 0$ for all measurable sets of $\R^d$.
+    \end{lemma}
+
+    As we have chosen $b_0$ arbitrarily from $\R^d \setminus \{0\}$, we can see
+    the $\mu = 0$ as the Fourier transform of $\mu$ is zero. Combined with the
+    fact that $\mu(I_d) = 0$, we have shown $\sigma$ is discriminatory.
 
 \end{proof}
 
@@ -284,10 +358,10 @@ Now it remains to show that sigmoidal functions are discriminatory.
 It is shown by \cite{barronUniversalApproximationBounds1993} that functions with
 finite Fourier moment can be approximated with the superpositions of sigmoidal
 functions at a rate independent of the dimensionality $d$. In other words, for
-any functions in said class can be approximated with a (shallow) neural network
-at error rate $\bigO(m^{-1} \cdot C)$ where $m$ is the number of nodes in the
-the single hidden layer and $C$ is some constant dependent on the smoothness of
-the target function.
+any functions in that class can be approximated with a 2NN at an error rate of
+$\bigO(m^{-1} \cdot C)$ where $m$ is the number of nodes in the the single
+hidden layer and $C$ is some constant dependent only the smoothness of the
+target function.
 
 We formulated the class of functions introduced in
 \cite{barronNeuralNetApproximation1992, barronUniversalApproximationBounds1993}
