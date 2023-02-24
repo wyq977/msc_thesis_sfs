@@ -54,12 +54,12 @@ information in realist applications.
 % LLPS93]. modern mathematics of deep learning
 
 \begin{definition}[sigmoidal function]\label{def:sigmoidal}
-    A function $\sigma$ is \textit{sigmoidal} if
+    A function $\sigma$ is \textbf{sigmoidal} if
     \begin{equation}
         \sigma(t) =
         \begin{cases}
             1 & \text{as} \quad t \to +\infty \\
-            0 & \text{as} \quad t \to -\infty
+            0 & \text{as} \quad t \to -\infty.
         \end{cases}
     \end{equation}
 \end{definition}
@@ -559,8 +559,11 @@ has a integrable Fourier distribution, as well as finite first moment.
 Naturally, we would like to extend the findings with tighter restriction on the
 smoothness at a cost of smaller hypothesis space.
 
-We start with the defining the \textit{Fourier-anlytic norm}, $v_{f, s}\, s \geq
-    1$, for function $f$ that has a Fourier representation:
+We start with the defining the \textit{Fourier-anlytic norm}, $v_{f, s}\,
+s\geq1$, for function $f$ that has a Fourier representation:
+
+
+
 \begin{align}
     f(x)     & = \int_{\mathbb{R}^d} e^{i\spr{x}{\omega}} F(\omega) d\omega \label{eq:fourier_rep}           \\
     v_{f, s} & = \int_{\mathbb{R}^d} \norm{\omega}_1^s \cdot \abs{F(\omega)} d\omega \label{eq:fourier_norm}
