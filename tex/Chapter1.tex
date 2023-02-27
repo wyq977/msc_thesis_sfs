@@ -37,13 +37,13 @@ a comprehensive introduction.
 \label{sec:uat}
 
 In general, neural networks, even 2NN with one hidden layer, are universal
-approximators, which means any continuous functions on a compact set up to a
-arbitrary precision under some mild restrictions on the activation functions
-$\sigma$ and the number of nodes are allow to grow arbitrarily. The condition on
-$\sigma$ is formally stated in
+approximators, which means any continuous functions on a compact set can be
+approximated up to a arbitrary precision under some mild restrictions on the
+activation functions $\sigma$ and the number of nodes are allow to grow
+arbitrarily. The condition on $\sigma$ is formally stated in
 ~\cite{cybenkoApproximationSuperpositionsSigmoidal1989}. Despite its obvious
 importance, one can not benefit much as it can not provide enough quantitative
-information in realist applications.
+information in realist applications. Nevertheless, we will state the main theorem, the univariate approximation theorem in this section.
 
 % We will state the the universal approximation theorem that the finite linear
 % combinations of sigmoidal functions (sum of the functions of the form
@@ -91,7 +91,9 @@ from $\R$ to $\R$.
  
 The main contribution of approximation theorem is the statement on the
 conditions of $\sigma$ when the above finite linear combinations $h(x)$ are
-dense with respect to the supremum norm $\norm{\cdot}_{\infty}$.
+dense with respect to the supremum norm $\norm{\cdot}_{\infty}$. It should also
+be noted that there is no restriction for the number of combinations, i.e. the
+nodes of the 2NN and hence the parameter space.
 
 \begin{theorem}[Universal Approximation Theorem]
     \label{thm:uat}
@@ -222,8 +224,7 @@ Now it remains to show that sigmoidal functions are discriminatory.
         \quad \forall c\in\R
     \end{equation}
 
-    This in turns implies $\mu(I_d) = 0$ as we can choose $c$ sufficiently
-    large.
+    This in turns implies $\mu(I_d) = 0$ as we can choose $c$ arbitrarily large.
     
     We would like to show that the measure of all half-planes being zero implies
     that the measure $\mu$ must be zero. If $\mu$ is a positive Borel measure,
@@ -252,23 +253,23 @@ Now it remains to show that sigmoidal functions are discriminatory.
     therefore $\phi(A) = 0$ for all Borel sets $A \subseteq \R$.
 
     % Show a bounded linear functional is zero on such measure
-    \textbf{Step 2} \textit{(Define a linear functional $L$ and show $L = 0$ on
-    with $\mu$)}: Let $L^{\infty}(\R)$ denote the set of all measurable bounded
-    functions. For a function $h \in L^{\infty}(\R)$, we define a functional $L:
-    L^{\infty}(\R) \to \R$:
+    \textbf{Step 2} \textit{(Define a linear functional $L$}: Let
+    $L^{\infty}(\R)$ denote the set of all measurable bounded functions. For a
+    function $h \in L^{\infty}(\R)$, we define a functional $L: L^{\infty}(\R)
+    \to \R$:
     \begin{equation}
         L(h) = \int_{I_d} h(b\tr x)\,d\mu(x).
     \end{equation}
 
     $L$ is linear because for all $\alpha, \beta \in \R, \text{ and } g, h \in
     L^{\infty}(\R)$
-    \begin{align}
+    \begin{align*}
         L(\alpha g + \beta h)
         &= \int_{I_d} (\alpha g + \beta h) (b_0\tr x) \,d\mu(x) \\
         &= \int_{I_d} (\alpha g(b_0\tr x) + \beta h (b_0\tr x)) \, d\mu(x) \\
         &= \alpha \int_{I_d} g(b_0\tr x) \,d\mu(x) + \beta \int_{I_d} h(b_0\tr x) \,d\mu(x) \\
         &= \alpha F(g) + \beta L(h)
-    \end{align}
+    \end{align*}
 
     Now we look at the indicator function for all Borel sets of $\R$:
     $\stepfunction{A}(x)$
@@ -350,28 +351,82 @@ Now it remains to show that sigmoidal functions are discriminatory.
 
 %  homogeneity
 
-\section{Add a section for F transform}
+\subsection{Uniform Approximation Theorem For Classification Problem}
+
+In this section, we will discuss the implications of Theorem \ref{thm:uat} for
+classification problems. It should be noted that the decision function defined
+below is not continuous on $I_d$ and we would like to check whether such
+classification problem can also be well understood as the regression problem.
+
+\begin{definition}[Decision function]
+    Let $\{P_1, \dots, P_k\}$ be a partition of $I_d$ where each partition $P_j$
+    are pairwise disjoint nonempty Borel sets, i.e. $P_j \not= \emptyset$ and
+    $\bigcup_{j=1}^k P_j = I_d$. $f$ is a decision function for $I_d$ of the
+    form
+    \begin{equation}
+        f: I_d \to \{1, \dots, k\}
+    \end{equation}
+    where $f(x) = j$ for $x \in P_j$. 
+\end{definition}
+
+\begin{theorem}
+    \label{thm:uat_clas}
+    Let $\sigma$ be a continuous sigmoidal function and $f$ be the decision
+    function for any finite, measurable partition of $I_d$. Let $\phi$ be a
+    Borel measure on $I_d$ and $\phi(I_d) = 1$. Then for any $\epsilon>0$, there
+    exists a finite sum of the form
+    \begin{equation}
+        G(x) = \sum_{j=1}^{m} a_j \sigma(b_j\tr x + c_j)
+    \end{equation}
+    and a set $D\subset I_d$, such that the measure of the set $D$, $\phi(D) \geq 1 - \epsilon$ and
+    \begin{equation}
+        \sup_{x\in D}\abs{G(x) - f(x)} < \epsilon
+    \end{equation}
+\end{theorem}
+
+The theorem \eqref{thm:uat_clas} is a anoloy of the UAT and the proof is
+straightforward using Lusin's Theorem \eqref{thm:lusin}.
+
+\begin{proof}
+    By Lusin's Theorem \eqref{thm:lusin}, there exists a continuous function $g
+    \in C(I_d)$ such that $\phi(\{x\in I_d \mid f(x) \not= g(x)\}) < \epsilon$.
+    Now we have a continuous $g$ and we are able to a find a sum of the form
+    above satisfying $\abs{G(x) - g(x)} < \epsilon$ by Theorem \eqref{thm:uat}
+    for all $x\in I_d$. Let set $D = \{x\in I_d \mid f(x) = g(x)\}$ and we have
+    $\phi(D) \geq 1 - \epsilon$. Then for $x\in D$, we have
+    \begin{equation}
+        \sup_{x\in D}\abs{G(x)-f(x)} = \sup_{x\in D}\abs{G(x) - g(x)} < \epsilon 
+        \quad \forall x\in D.
+    \end{equation}
+\end{proof}
+
+The above result shows that the total measure of the misclassified points can be made arbitrarily small.
+
 
 \section{Spectral Norm and Fourier-analytic Barron spaces}
 \label{sec:spectral_norm}
 
 It is shown by \cite{barronUniversalApproximationBounds1993} that functions with
 finite Fourier moment can be approximated with the superpositions of sigmoidal
-functions at a rate independent of the dimensionality $d$. In other words, for
-any functions in that class can be approximated with a 2NN at an error rate of
-$\bigO(m^{-1} \cdot C)$ where $m$ is the number of nodes in the the single
-hidden layer and $C$ is some constant dependent only the smoothness of the
-target function.
+functions at a rate independent of the dimensionality $d$ with some restriction
+on the smoothness of the functions, In other words, any functions in that class
+can be approximated with a 2NN at an error rate of $\bigO(m^{-1} \cdot C)$ where
+$m$ is the number of nodes in the the single hidden layer and $C$ is some
+constant dependent \textit{only} the smoothness of the target function. Even the
+convergence rate itself is independent of dimension (i.e. the dimensionality of
+input vector $X$), the constant $C$ could be dimension-dependent as the Fourier
+transform is used here. We will discuss one renowed model class introduced by
+Andrew \cite{barronUniversalApproximationBounds1993}.
 
-We formulated the class of functions introduced in
+To begin with, we formulated the class of functions introduced in
 \cite{barronNeuralNetApproximation1992, barronUniversalApproximationBounds1993}
 below.
 
 \begin{definition}
     Let $X$ be a bounded set in $\mathbb{R}^d$, a function $f: X \to \mathbb{R}$
-    is said to be in \textit{Barron class} with constant $C > 0$, if there are
-    $x_0$ in $X$ and $c \in [-C, C]$ and a measurable function $F: \mathbb{R}^d
-        \to \mathbb{C}$ satisfying:
+    is said to be in \textit{Barron class} with constant $C > 0$, if there is a
+    $x_0$ in $X$ and $c \in [-C, C]$ and a measurable function $f: \mathbb{R}^d
+    \to \mathbb{C}$ satisfying:
 
     \begin{align}
          & \int_{\mathbb{R}^d} \abs{\omega}_{X, x_0} \cdot \abs{F(\omega)} d\omega < C                            \\
@@ -543,6 +598,89 @@ below.
 
 \end{proof}
 
+% \section{Approximation in $L_2(\Omega)$}
+
+% \section{Approximation in $L_2([0,1])$}
+
+% \section{Add a section for F transform}
+
+\section{Placeholder}
+
+In this section, we formally define the model class defined through the
+\textit{spectral norm}. We will discuss whether the conditions on activation
+function $\sigma$ can be relaxed. 
+
+In this section, we provide the main setup concerning the model classes for
+which 2NN approximation is particularly effective. We will discuss one renowed
+model class introduced by Andrew Barron
+~\cite{barronUniversalApproximationBounds1993}. 
+
+\begin{definition}[Spectral norm]
+    \label{def:spectral_norm}
+    if a function $f: \R^d \to \R$ admits a Fourier representation
+    \begin{equation}
+        f(x) = \int_{\R^d} e^{ix \cdot \omega} \fourier{f}(\omega) \,d\omega
+    \end{equation}
+    then for any $s \geq 1 \in \Nat$, the spectral norm $v_{f,s}$ is defined as
+    \begin{equation}
+        v_{f,s} = \int_{\R^d} \norm{\omega}_1^2 \abs{\fourier{f}(\omega)} \,d\omega
+    \end{equation}
+\end{definition}
+
+
+\subsection{Approximation in $L_{\infty}$ with bounded weights}
+
+We start with the main result when the approximation with 2NN with $m$ nodes and 
+the parameters bounded in $L_1$.
+
+\begin{theorem}
+    Suppose $f$ admits a Fourier representation and the spectral norm of order
+    $2$ is finite, i.e.
+    \begin{equation}
+        v_{f,2} = \int_{\R^d} \norm{\omega}_1^s \abs{\fourier{f}(\omega)} 
+        d\omega < \infty.
+    \end{equation}
+    There exists a ReLU 2NN of the form
+    \begin{equation}
+        f_m(x) = f(0) + \nabla f(0) \cdot x + v \cdot 
+        \frac{1}{m} \sum_{j=1}^m a_j \sigma(b_j\tr x + c_j)
+    \end{equation}
+    with $a_j\in[-1,1]$, $\norm{b_j}_1 = 1$, $c_j\in[0,1]$ and $v \leq
+    2v_{f,2}$ such that
+    \begin{equation}
+        \sup_{\mathbf{x} \in D} \abs{f(x) - f_m(x)} \leq c v_{f,2} \sqrt{d+\log{m}} \, m^{-1/2-1/d}
+    \end{equation}
+
+    for some universal $c > 0$.
+\end{theorem}
+
+\begin{theorem}
+    Suppose $f$ admits a Fourier representation and the spectral norm of order
+    $3$ is finite, i.e.
+    \begin{equation}
+        v_{f,3} = \int_{\R^d} \norm{\omega}_1^3 \abs{\fourier{f}(\omega)} 
+        d\omega < \infty.
+    \end{equation}
+    There exists a 2NN of the form with squared ReLU activation function
+    \begin{equation}
+        f_m(x) = f(0) + \nabla f(0) \cdot x + v \cdot 
+        \frac{1}{m} \sum_{j=1}^m a_j \sigma(b_j\tr x + c_j)
+    \end{equation}
+    with $a_j\in[-1,1]$, $\norm{b_j}_1 = 1$, $c_j\in[0,1]$ and $v \leq
+    2v_{f,2}$ such that
+    \begin{equation}
+        \sup_{\mathbf{x} \in D} \abs{f(x) - f_m(x)} \leq 
+        c v_{f,3} \sqrt{d} m^{-1/2-1/d}
+    \end{equation}
+
+    for some universal $c > 0$.
+\end{theorem}
+
+\section*{Approximation in $L_2$ with bounded weights}
+
+
+\section{Bounded weights}
+
 % A smoothness property of the function to be approximated is expressed in terms
 % of its Fourier representation. In particular, an average of the norm of the
 % frequency vector weighted by the Fourier magnitude distribution is used to
@@ -561,8 +699,6 @@ smoothness at a cost of smaller hypothesis space.
 
 We start with the defining the \textit{Fourier-anlytic norm}, $v_{f, s}\,
 s\geq1$, for function $f$ that has a Fourier representation:
-
-
 
 \begin{align}
     f(x)     & = \int_{\mathbb{R}^d} e^{i\spr{x}{\omega}} F(\omega) d\omega \label{eq:fourier_rep}           \\
@@ -669,29 +805,32 @@ It should be noted that the term ``Barron space'' was coined by
 \cite{ePrioriEstimatesPopulation2019} to honor Prof. Andrew Barron's
 contribution in the understanding of neural nets.
 
-For a function $f: \mathcal{X} \subset \mathbb{R}^d \to \mathbb{R}$, we consider
-those that admit the following integral representation:
+For a function $f: X \subset \mathbb{R}^d \to \mathbb{R}$, we consider those
+that admit the following integral representation:
 
 \begin{equation}\label{eq:barron_represent}
-    f(\mathbf{x}) = \int_{\Omega} a \sigma(\mathbf{b}^T\mathbf{x} + c) \rho(da, d\mathbf{b}, dc), \quad \mathbf{x} \in \mathcal{X}
+    f(x) = \int_{\Omega} a \sigma(b\tr x + c) \mu(da, db, dc), \quad x \in X
 \end{equation}
 
-where $\rho$ is a probability distribution on $(\Omega, \Sigma_\Omega)$, $\Omega
-    = \mathbb{R}^1 \times \mathbb{R}^d \times \mathbb{R}^1$ and $\sigma(\cdot) =
-    \max\{\cdot, 0\}$ is the ReLU activation function.
+where $\mu$ is a probability distribution on $(\Omega, \Sigma_\Omega)$, $\Omega
+= \mathbb{R}^1 \times \mathbb{R}^d \times \mathbb{R}^1$ and $\Sigma_\Omega$ is
+a Borel $\sigma$-algebra on $\Omega$ and $\sigma(\cdot) = \max\{\cdot, 0\}$ is
+the ReLU activation function.
 
-The representation can be seen as a continuum analogy of the 2NN with $m$ hidden
-nodes:
+This representation can be seen as a continuum analogy of the 2NN with $m$
+hidden nodes:
 
 \begin{equation}
-    f_m(\mathbf{x}, \Theta) := \frac{1}{m} \sum_{j=1}^m a_j \sigma(\mathbf{b}^T\mathbf{x} + c_j), \quad \Theta = \{(a_j, \mathbf{b}_j, c_j), \ j = 1, \dots, m\}
+    f_m(x, \Theta) := \frac{1}{m} \sum_{j=1}^m a_j \sigma(b\tr x + c_j), \quad \Theta = \{(a_j, b_j, c_j), \ j = 1, \dots, m\}
 \end{equation}
 
 \begin{definition}[Barron norm] For functions that admit representation
     \eqref{eq:barron_represent}, its Barron norm is defined as
     \cite{eBarronSpaceFlowinduced2021}:
     \begin{equation}\label{eq:barron_norm}
-        \barronnorm{f}{p} := \inf_{\rho} \Big(\ERWi{\rho}{\abs{a}^p (\norm{\mathbf{b}}_1 + \abs{c})^p}\Big)^{1/p}, \quad 1 \leq p \leq +\infty
+        \barronnorm{f}{p} := \inf_{\rho} \Big(\ERWi{\mu}{\abs{a}^p 
+        (\norm{b}_1 + \abs{c})^p}\Big)^{1/p},
+        \quad 1 \leq p \leq +\infty
     \end{equation}
     % where \begin{equation*} \Theta_f = \left\{ (a, \pi) \mid f(x) =
     % \int_{space} a(w) \sigma(\langle w, x \rangle)\dd{\pi(w)} \right\}.
@@ -703,7 +842,7 @@ The infimum is taken over all probability distribution where
     \mathcal{X}$. When $p = + \infty$, the Barron norm becomes:
 
 \begin{equation}
-    \inf_{\rho} \max_{a, \mathbf{b}, c \in \supp(\rho)} \abs{a} (\norm{\mathbf{b}}_1 + \abs{c})
+    \inf_{\rho} \max_{a, b, c \in \supp(\rho)} \abs{a} (\norm{b}_1 + \abs{c})
 \end{equation}
 
 Barron spaces are denoted by $\mathcal{B}_p$ and defined as the set of
@@ -718,6 +857,7 @@ By the definition of Barron norm, it is easy to see that:
 
 % https://ocw.mit.edu/courses/18-125-measure-and-integration-fall-2003/6f21af6c40de1eccd70349bd3a3b0095_18125_lec17.pdf
 
+\begin{proof}
 
 The idea is similar to the inclusion of $L_p$, $L_q$ space.
 
@@ -732,6 +872,7 @@ Applying Hölder's inequality, for any $1 \leq p \leq q < \infty$
 
 Therefore we have the inclusion $\mathcal{B}_{q} \subset \mathcal{B}_p$ for $1
     \leq p \leq q < \infty$. \tonote{Not sure how to justify for the case $+\infty$}
+\end{proof}
 
 As the reverse also holds in the class of ReLU functions,  we have
 $\mathcal{B}_{\infty} = \mathcal{B}_p$, $\barronnorm{\cdot}{\infty} =
@@ -804,35 +945,49 @@ relationship between these spaces has been examined and understood partially in
 \cite{eBarronSpaceFlowinduced2021,eMathematicalUnderstandingNeural2020}  and we
 hope to clarify this problem in this section.
 
-% todo: change of word
-
 Firstly, we denote the set of all Borel probability measures on $\Omega = \R
-    \times \R^d \times \R$ by $\mathcal{P}_d$.
+\times \R^d \times \R$ by $\mathcal{P}_d$ and we write functions that admits the
+integral form below
+\begin{equation}
+    \mu_{\sigma}(x) := \int_{\omega} a\sigma(b\tr x + c) \,d\mu(a,b,c), \quad
+    \forall x \in \R^d
+\end{equation}
 
-Given a non-empty set $U \subset \R^d$, let us write
+Given a nonempty set $U \subset \R^d$, we write
 
 \begin{align*}
     \mathcal{B}_{H}(U) :=
-     & \{f: U \to \R: \exists\: \mu \in \mathcal{P}_d, \int_{\Omega} \abs{a} d\mu(a, b, c) < \infty                           \\
-     & \:\text{and}\: \forall x \in U, f(x) = a (b \cdot x + c)_+ d\mu(a, b, c) \}                                            \\
+     & \{f: U \to \R: \exists\: \mu \in \mathcal{P}_d, \norm{\mu}_H \infty 
+    \:\text{and}\: \forall x \in U, f(x) = \mu_{H}(x) \} \\
     \mathcal{B}_{ReLU}(U) :=
-     & \{f: U \to \R: \exists\: \mu \in \mathcal{P}_d, \int_{\Omega} \abs{a} \cdot (\abs{b} + \abs{c}) d\mu(a, b, c) < \infty \\
-     & \:\text{and}\: \forall x \in U, f(x) = a \sigma(b \cdot x + c) d\mu(a, b, c) \}                                          \\
+    & \{f: U \to \R: \exists\: \mu \in \mathcal{P}_d, \norm{\mu}_{ReLU} < \infty
+    \:\text{and}\: \forall x \in U, f(x) = \mu_{ReLU}(x) \} \\
     \mathcal{B}_{\mathcal{F},s}(U) :=
-     & \{f: U \to \R: \exists\: F: \R^d \to \mathbb{C} \text{Fourier norm} < \infty                                           \\
-     & \:\text{and}\: \forall x \in U, f(x) \text{has a Fourier representation} \}                                            \\
+    & \{f: U \to \R: \exists\: F: \R^d \to \mathbb{C}, v_{f,s} < \infty 
+    \:\text{and}\: \forall x \in U, 
+    f(x) = \int_{\R^d} e^{ix \cdot \omega} \fourier{f}(\omega) \,d\omega \} \\
 \end{align*}
 
+where
+\begin{align*}
+    \norm{\mu}_H      &:= \int_{\Omega} \abs{a}\,d\mu(a,b,c) \\
+    \norm{\mu}_{ReLU} &:= \int_{\Omega} \abs{a} (\abs{b} + \abs{c})\,d\mu(a,b,c) \\ 
+\end{align*}
+and the $v_{f,s}$ is the spectral norm \eqref{def:spectral_norm}.
+
 As shown in section \ref{sec:barron_norm}, $\mathcal{B}_{ReLU}(U)$ is the Barron
-space ($\mathcal{B}_1$) defined above and we can see that the differences
-between the $\mathcal{B}_{ReLU}(U)$ and $\mathcal{B}_{H}(U)$ are the activation
-function and the respective norm.
+space ($\mathcal{B}_1$) defined above and the norms on these spaces are given by 
+
+\begin{align*}
+    \norm{f}_{\mathcal{B}_H} &= \inf_{\mu \in \mathcal{P}_d} \norm{\mu}_{ReLU} \\
+    \norm{f}_{\mathcal{B}_{ReLU}} &= \inf_{\mu \in \mathcal{P}_d} \norm{\mu}_{ReLU}
+\end{align*}
 
 We state the following known properties from the literature.
 
 % hookrightarrow or subset
 \begin{lemma}
-    Give a non-empty subset $U$ from $\R^d$, the following relationship holds:
+    Give a nonempty subset $U$ from $\R^d$, the following relationships holds:
 
     1) $\mathcal{B}_{ReLU}(U) \subset \mathcal{B}_{H}(U)$
 

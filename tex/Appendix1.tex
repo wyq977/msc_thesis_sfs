@@ -96,12 +96,28 @@ A linear functional $T$ is \textit{bounded} if and only if there exists a $\lamb
    \end{equation}
 \end{theorem}
 
+\begin{theorem}[Lusin's Theorem]
+   \label{thm:lusin}
+   Let $X$ be a locally compact Hausdorff space, let $\mu$ be a Radon measure on
+   $X$ and $f$ is a measurable function $f: X \to \R$. Suppose that there is a
+   set $A \subseteq X$ with finite measure such that $f(x)=0$ if $x\not\in A$.
+   Then for every $\epsilon >0$, there exists a compactly supported continuous
+   function $g: X \to \R$ with $\norm{g}_{infty} \leq \norm{f}_{\infty}$ such that
+   \begin{equation}
+      \mu(\{ x\in X \mid f(x) \not= g(x) \}) < \epsilon
+   \end{equation}
+\end{theorem}
+
 \section{Measure Theory}
 
 We assume familiarity with notions such as measures, $\sigma$-algebra, \dots
 
 \begin{definition}[Signed Borel measure]
    A 
+\end{definition}
+
+\begin{definition}[Radon measure]
+   a Borel measure that is finite on all compact sets   
 \end{definition}
 
 \begin{definition}[Measurable function]
