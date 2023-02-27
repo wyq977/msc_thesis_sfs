@@ -940,10 +940,11 @@ The $\norm{\Theta}_{path}$ is the per-unit norm control for 2NN defined in
 
 As mentioned in the beginning of the chapter, we will start with the definition
 of the different Barron spaces, namely the \textit{Fourier-analytic Barron
-    spaces} and the \textit{infinite-width Barron spaces}. Although some
-relationship between these spaces has been examined and understood partially in
-\cite{eBarronSpaceFlowinduced2021,eMathematicalUnderstandingNeural2020}  and we
-hope to clarify this problem in this section.
+spaces} and the \textit{infinite-width Barron spaces}. Although some
+relationships between these spaces has been examined and understood partially in
+\cite{eBarronSpaceFlowinduced2021,eMathematicalUnderstandingNeural2020}, we hope
+to clarify this problem in this section inspirerd by the work from
+\cite{carageaNeuralNetworkApproximation2022}.
 
 Firstly, we denote the set of all Borel probability measures on $\Omega = \R
 \times \R^d \times \R$ by $\mathcal{P}_d$ and we write functions that admits the
@@ -953,11 +954,11 @@ integral form below
     \forall x \in \R^d
 \end{equation}
 
-Given a nonempty set $U \subset \R^d$, we write
+Given a nonempty, bounded set $U \subset \R^d$, we write
 
 \begin{align*}
     \mathcal{B}_{H}(U) :=
-     & \{f: U \to \R: \exists\: \mu \in \mathcal{P}_d, \norm{\mu}_H \infty 
+    & \{f: U \to \R: \exists\: \mu \in \mathcal{P}_d, \norm{\mu}_H \infty 
     \:\text{and}\: \forall x \in U, f(x) = \mu_{H}(x) \} \\
     \mathcal{B}_{ReLU}(U) :=
     & \{f: U \to \R: \exists\: \mu \in \mathcal{P}_d, \norm{\mu}_{ReLU} < \infty
@@ -987,7 +988,7 @@ We state the following known properties from the literature.
 
 % hookrightarrow or subset
 \begin{lemma}
-    Give a nonempty subset $U$ from $\R^d$, the following relationships holds:
+    Give a nonempty bounded subset $U$ from $\R^d$, the following relationships holds:
 
     1) $\mathcal{B}_{ReLU}(U) \subset \mathcal{B}_{H}(U)$
 
@@ -998,6 +999,64 @@ We state the following known properties from the literature.
 
 
 \begin{proof}
+
+\textbf{1):} 
+As shown in weinan, functions in the $\mathcal{B}_{ReLU}$ i.e. Barron space are
+Lipschitz.
+
+Firstly, we aim to connect ReLU and the indicator function through integral.
+
+\begin{equation}
+    \sigma(x) = \int_0^C H(y- t) \,dt \quad \forall y \in \R 
+\end{equation}
+
+For all function $f \in \mathcal{B}_{ReLU}$. Let $\beta_{b,c} = \abs{b} +
+\abs{c}$ for any $b\in\R^d, c\in\R$ and we now have $\abs{b\tr x + c} \leq
+\beta_{b,c}$. Thanks to the positive homogeneity of ReLU function
+$\sigma$, $\sigma(\lambda x) = \lambda \sigma(x)$ for $x \in \R$.
+
+For a measure $\mu \in \mathcal{P}_d$ and all $x \in U$
+\begin{align*}
+    \mu_{ReLU}(x) 
+    &= \int_{\Omega} a \sigma(b\tr x + c )\,d(a,b,c) \\
+    &= \int_{\Omega} \beta_{b,c} \sigma(\frac{b}{\beta_{b,c}}\tr x + \frac{c}{\beta_{b,c}}) \,d\mu(a,b,c) \\
+    &= \int_{\Omega} \int_0^C a \beta_{b,c} H(\frac{b}{\beta_{b,c}}\tr x + \frac{c}{\beta_{b,c}} -t)\,dt\,d\mu(a,b,c) \\
+    &= \int_{\Omega} a H(b\tr x + c') \,d\nu(a,b,c') = \nu H(x)
+\end{align*}
+where $\nu$ is the pushforward of the measure $\mu \otimes \lambda$ and
+$\lambda$ is the Lebesgue measure on $[0, C]$
+
+\begin{equation}
+    T: \Omega \times [0,C] \to \Omega, \quad 
+    ((a,b,c), t) \mapsto
+    (a\beta_{b,c}, \frac{b}{\beta_{b,c}}, \frac{c}{\beta_{b,c}} - t )
+\end{equation}
+
+We have 
+\begin{equation}
+    \norm{\nu}_H = \int_{\Omega} \abs{a}\,d\mu(a,b,c) 
+    = \int_{\Omega}\int_0^C 
+\end{equation}
+
+Therefore, it shows that 
+\begin{equation}
+    \norm{f}_{\mathcal{B}_H} \leq C \norm{f}_{\mathcal{B}_{ReLU}} < \infty
+\end{equation}
+
+
+\textbf{2):} This is an direct consequence of \cite[Theorem
+2]{barronNeuralNetApproximation1992} and we include the proof for completeness.
+
+\begin{theorem}
+    Let a function $f: X \to \R$ that admit a Fourier representation with finite
+    $v_{f,1}$ than it can be represented
+    \begin{equation}
+        f(x) = f(0) + \int_{\R^d}\int_0^1 
+        (\stepfunction{\{\alpha\tr x < -t\}} - \stepfunction{\{\alpha\tr x < -t\}})
+    \end{equation}
+\end{theorem}
+
+\textbf{3):} 
 
 \end{proof}
 
