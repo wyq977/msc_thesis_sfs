@@ -816,23 +816,27 @@ improved to $\bigO(m^{\frac{1}{2} - \frac{1}{2d}})$
     \label{thm:improve_barron}
     
     Let $X$ be bounded set on $\R^d$. Let $f: X \to \R$ be a function and $V$ be
-    the set of functions whose spectral Barron seminorm is finite, i.e. $V =
-    \{f: X\to\R : \specseminorm{f}{1} < \infty\}$. Then there exists a finite
-    linear combination of the form for before-mentioned $f \in V$
+    the set of functions whose spectral Barron seminorm is finite
+    \begin{equation}
+        V =\{f: X\to\R : \specseminorm{f}{1} < \infty \text{ and } \forall x\in X,
+        f(x) = \int_{\R^d} e^{ix\omega}\fourier{f}(\omega)\,d\omega\}.
+    \end{equation}
+    Then there exists a finite linear combination of the form for any $f \in V$
     \begin{equation}
         f_m(x) = \sum_{j=1}^m a_j \stepfunction{b_j\tr x + c_j} \quad 
-            a_j, c_j \in \R, b_j \in \R^d
+            a_j, c_j \in \R, b_j \in \R^d, m > 0
     \end{equation}
     such that 
     \begin{equation}
         \norm{f(x) - f_m(x)}_{q} \leq C m^{-\frac{1}{2} - \frac{1}{q \cdot d}}
         \quad 1 \leq q < \infty
     \end{equation}
-    where $C$ is a constant dependent only $q$ and the  $\stepfunction{}$.
+    where $C$ is a constant dependent only $q$ and the Heaviside function
+    $\stepfunction{}$.
 \end{theorem}
 
 % In some literature, V is represented as the dictionary
-\tonote{use which notation?? for dictionary}
+\tonote{use which notation for dictionary}
 
 \begin{proof}
     We know that the. We need to get a estimate of the dictionary 
@@ -842,7 +846,7 @@ improved to $\bigO(m^{\frac{1}{2} - \frac{1}{2d}})$
 \end{proof}
 
 Note that this theorem does not cover the case $q = \infty$. However,
-\cite{barronUniversalApproximationBounds1993} has already showed that $f$ are
+\cite{barronUniversalApproximationBounds1993} has already showed that $f\in V$ are
 dense w.r.t. supremum norm ($\norm{f - f_m}_{\infty} = \bigO(m^{-1/2})$), which
 implies $\norm{f-f_m}_{q}$ for all $L_q, q<\infty$.
 
