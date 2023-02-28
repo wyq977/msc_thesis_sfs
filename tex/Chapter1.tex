@@ -423,6 +423,7 @@ To begin with, we formulated the class of functions introduced in
 below.
 
 \begin{definition}
+    \label{def:fourier_class}
     Let $X$ be a bounded set in $\mathbb{R}^d$, a function $f: X \to \mathbb{R}$
     is said to be in \textit{Barron class} with constant $C > 0$, if there is a
     $x_0$ in $X$ and $c \in [-C, C]$ and a measurable function $f: \mathbb{R}^d
@@ -433,8 +434,9 @@ below.
          & f(x) = c + \int_{\mathbb{R}^d} (e^{i\spr{x}{\omega}} - e^{i\spr{x_0}{\omega}}) \cdot F(\omega) d\omega
     \end{align}
 
-    where $\abs{\omega}_{X, x_0} := \sup_{x\in X}\abs{\spr{\omega}{x - x_0}}$.
-    We refer the class of all functions as $\Gamma_C(X, x_0)$.
+    where $\abs{\omega}_{X, x_0} := \sup_{x\in X}\abs{\spr{\omega}{x - x_0}}$
+    and we denote by $\abs{\omega}_X$ when $x_0 = 0$ for simplicity. We refer
+    the class of all functions as $\Gamma_C(X, x_0)$.
 \end{definition}
 
 \begin{theorem}\cite[Theorem~1]{barronUniversalApproximationBounds1993}\label{thm:barron_1993_1}
@@ -1000,31 +1002,40 @@ We state the following known properties from the literature.
 
 \begin{proof}
 
-\textbf{1):} 
-As shown in weinan, functions in the $\mathcal{B}_{ReLU}$ i.e. Barron space are
-Lipschitz.
+% As shown in weinan, functions in the $\mathcal{B}_{ReLU}$ i.e. Barron space, are
+% Lipschitz.
 
-Firstly, we aim to connect ReLU and the indicator function through integral.
+% https://math.stackexchange.com/questions/2319301/why-must-bounded-sets-be-contained-within-a-closed-ball
+\textbf{1):} 
+Firstly, we try to connect ReLU and the indicator function through integral. As
+the set $U$ is nonempty and bounded in $\R^d$, this implies that there exists a
+a open ball with a radius $r > 0$ whose closure contains $U$ such that
+\begin{equation}
+    U \subset \closure{B_r(x)}
+\end{equation}
+for some $x \in \R^d$. Assume that $U \subset \closure{B_r(0)}$. Let $C:=1+r$
+and then we have:
 
 \begin{equation}
     \sigma(x) = \int_0^C H(y- t) \,dt \quad \forall y \in \R 
 \end{equation}
 
 For all function $f \in \mathcal{B}_{ReLU}$. Let $\beta_{b,c} = \abs{b} +
-\abs{c}$ for any $b\in\R^d, c\in\R$ and we now have $\abs{b\tr x + c} \leq
-\beta_{b,c}$. Thanks to the positive homogeneity of ReLU function
-$\sigma$, $\sigma(\lambda x) = \lambda \sigma(x)$ for $x \in \R$.
+\abs{c}$ for any $b\in\R^d, c\in\R$ and note that $\abs{b\tr x + c} \leq C
+\beta_{b,c}$. Thanks to the positive homogeneity of ReLU function $\sigma$,
+$\sigma(\lambda x) = \lambda \sigma(x)$ for $x \in \R$.
 
 For a measure $\mu \in \mathcal{P}_d$ and all $x \in U$
 \begin{align*}
     \mu_{ReLU}(x) 
     &= \int_{\Omega} a \sigma(b\tr x + c )\,d(a,b,c) \\
-    &= \int_{\Omega} \beta_{b,c} \sigma(\frac{b}{\beta_{b,c}}\tr x + \frac{c}{\beta_{b,c}}) \,d\mu(a,b,c) \\
-    &= \int_{\Omega} \int_0^C a \beta_{b,c} H(\frac{b}{\beta_{b,c}}\tr x + \frac{c}{\beta_{b,c}} -t)\,dt\,d\mu(a,b,c) \\
-    &= \int_{\Omega} a H(b\tr x + c') \,d\nu(a,b,c') = \nu H(x)
+    &= \int_{\Omega} \beta_{b,c} \sigma(\frac{b\tr}{\beta_{b,c}}\ x + \frac{c}{\beta_{b,c}}) \,d\mu(a,b,c) \\
+    &= \int_{\Omega} \int_0^C a \beta_{b,c} H(\frac{b\tr}{\beta_{b,c}}\tr x + \frac{c}{\beta_{b,c}} -t)\,dt\,d\mu
+    (a,b,c) \quad \text{(Fubini's Theorem)}\\
+    &= \int_{\Omega} a H(b\tr x + c') \,d\nu(a,b,c') = \nu_H(x)
 \end{align*}
 where $\nu$ is the pushforward of the measure $\mu \otimes \lambda$ and
-$\lambda$ is the Lebesgue measure on $[0, C]$
+$\lambda$ is the Lebesgue measure on $[0, C]$.
 
 \begin{equation}
     T: \Omega \times [0,C] \to \Omega, \quad 
@@ -1038,23 +1049,76 @@ We have
     = \int_{\Omega}\int_0^C 
 \end{equation}
 
-Therefore, it shows that 
+Therefore, it shows that for any function $f \in \norm{f}_{\mathcal{B}_H}$
 \begin{equation}
     \norm{f}_{\mathcal{B}_H} \leq C \norm{f}_{\mathcal{B}_{ReLU}} < \infty
 \end{equation}
-
+hence the inclusion holds.
 
 \textbf{2):} This is an direct consequence of \cite[Theorem
 2]{barronNeuralNetApproximation1992} and we include the proof for completeness.
 
 \begin{theorem}
-    Let a function $f: X \to \R$ that admit a Fourier representation with finite
-    $v_{f,1}$ than it can be represented
+    Let $f$ be a function that admits a Fourier representation with finite
+    spectral norm of order $1$, i.e.
     \begin{equation}
-        f(x) = f(0) + \int_{\R^d}\int_0^1 
-        (\stepfunction{\{\alpha\tr x < -t\}} - \stepfunction{\{\alpha\tr x < -t\}})
+        v_{f,1} < \infty
+    \end{equation}
+    then $f(x) - f(0)$ can be expressed as an infinite convex combination of
+    indicator multiplied by a constant
+    \begin{equation}
+        f(x) - f(0) = \int_{\R^d}\int_0^1 (
+            \stepfunction{} - \stepfunction{}
+        ) \,d\omega\,dt
     \end{equation}
 \end{theorem}
+
+By Fourier transform, note that
+\begin{equation}
+    f(x) - f(0) = \int (e^{i\omega x} - 1) \fourier{f}(\omega)\,d\omega
+\end{equation}
+
+We also have
+\begin{equation}
+    e^{iz} - 1 =
+    \begin{cases}
+        i \int_0^c \stepfunction{\{z>u\}} e^{iu} \,du \quad
+            &\text{ when } z \in [0,c] \\
+        -i \int_0^c \stepfunction{\{z<-u\}} e^{iu} \,du \quad
+            &\text{ when } z \in [c,0] 
+    \end{cases}
+\end{equation}
+
+It follows that
+\begin{equation}
+    e^{iz} - 1 = i \int_0^c (
+        \stepfunction{\{z>u\}} - \stepfunction{\{z<-u\}}  
+    )
+    e^{iu} \,du 
+\end{equation}
+
+Integrating when $z = \omega x$ and $c=\abs{\omega}_{[0,1]}$ defined in
+\eqref{def:fourier_class} gives
+\begin{equation}
+    f(x) -f(0) = i\int_{\R^d} (\int_0^{c} (
+        \stepfunction{\{\omega x>u\}} - \stepfunction{\{\omega x<-u\}}
+    ) e^{iu}\,du)
+    \fourier{f}(\omega)\,d\omega
+\end{equation}
+
+Only taking the real part of the LHS and RHS and integrating using Fubini's theorem
+\begin{equation}
+    f(x) = f(0) + \int_{\R^d} \int_0^1 (
+        \stepfunction{\{\omega x<-t\}} - \stepfunction{\{\omega x>t\}}
+    ) \abs{\omega} \sin(t\omega + \theta_{\omega})
+    \fourier{f}(\omega)\,d\omega\,d\omega
+\end{equation}
+
+A similar argument as the proof in \tonote{proof of Fourier} is employed here
+where the ``drawing'' parameters from the distribution shows that the $f(x) -
+f(0)$ is the closure of the convex hull of finite linear combinations.
+
+Hence we show the inclusion in 2).
 
 \textbf{3):} 
 
