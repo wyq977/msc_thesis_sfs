@@ -427,6 +427,8 @@ To avoid confusion, we will only use two definitions:
     \item infinite-width Barron spaces
 \end{itemize}
 
+\subsection{Fourier-analytic spaces}
+
 Firstly, we define the smoothness constraint via the \textit{spectral norm}.
 
 % should be L1 norm of \omega
@@ -445,6 +447,10 @@ Firstly, we define the smoothness constraint via the \textit{spectral norm}.
     \end{equation}
 \end{definition}
 
+The notion of Barron spectral norm was first introduced in
+~\cite{siegelApproximationRatesNeural2021} as it is more convenient compared to
+the seminorm give by \cite{barronUniversalApproximationBounds1993}.
+
 \begin{definition}[Barron spectral seminorm]
     \label{def:spectral_seminorm}
     Under the set of of Definition \ref{def:spectral_norm}, the Barron spectral
@@ -455,9 +461,136 @@ Firstly, we define the smoothness constraint via the \textit{spectral norm}.
     \end{equation}
 \end{definition}
 
-\subsection{Fourier-analytic spaces}
+The index or coefficients $s \in \Nat$ is referred as the smoothness index in
+\cite{siegelHighOrderApproximationRates2021} and it is easy to see that as $s$
+increases, the functions with finite $\specnorm{f}{s}$ ($\specseminorm{f}{s}$,
+resp.) is smoother. Therefore the model class of higher smoothness index $s$ is
+expected to ``shrink'' in terms of the complexity. In the coming sections, we
+will provide a accurate statement of the improved approximation error rates with
+a depiction of the intricacies inherent in these spaces.
+
 
 \subsection{infinite-width Barron spaces}
+\label{sec:barron_norm}
+
+This section introduces the definition of infinite-width Barron space and its
+elementary properties. It should be noted that the term ``Barron space'' was
+coined by \cite{ePrioriEstimatesPopulation2019} to honor Prof. Andrew Barron's
+contribution in the understanding of neural nets.
+
+\tonote{Is $X$ nonempty and bounded?}
+
+For a function $f: X \subset \mathbb{R}^d \to \mathbb{R}$, we consider those
+that admit the following integral representation:
+
+\begin{equation}
+    \label{eq:barron_represent}
+    f(x) = \int_{\Omega} a \sigma(b\tr x + c) \mu(da, db, dc), \quad x \in X
+\end{equation}
+
+where $\mu$ is a probability distribution on $(\Omega, \Sigma_\Omega)$, $\Omega
+= \mathbb{R}^1 \times \mathbb{R}^d \times \mathbb{R}^1$ and $\Sigma_\Omega$ is
+a Borel $\sigma$-algebra on $\Omega$ and $\sigma(\cdot) = \max\{\cdot, 0\}$ is
+the ReLU activation function.
+
+This representation can be seen as a continuum analogy of the 2NN with $m$
+hidden nodes:
+
+\begin{equation}
+    f_m(x, \Theta) := \frac{1}{m} 
+    \sum_{j=1}^m a_j 
+        \sigma(b\tr x + c_j), 
+    \quad \Theta = \{(a_j, b_j, c_j), \ j = 1, \dots, m\}
+\end{equation}
+
+\begin{definition}[Barron norm] For functions that admit representation
+    \eqref{eq:barron_represent}, its Barron norm is defined as
+    \cite{eBarronSpaceFlowinduced2021}:
+    \begin{equation}\label{eq:barron_norm}
+        \barronnorm{f}{p} := \inf_{\rho} \Big(\ERWi{\mu}{\abs{a}^p 
+        (\norm{b}_1 + \abs{c})^p}\Big)^{1/p},
+        \quad 1 \leq p \leq +\infty
+    \end{equation}
+    % where \begin{equation*} \Theta_f = \left\{ (a, \pi) \mid f(x) =
+    % \int_{space} a(w) \sigma(\langle w, x \rangle)\dd{\pi(w)} \right\}.
+    % \end{equation*}
+\end{definition}
+
+The infimum is taken over all probability distribution where
+\eqref{eq:barron_represent} holds (\tonote{why} $\rho$ is not unique) for all
+$\mathbf{x} \in X$. When $p = + \infty$, the Barron norm reads
+
+\begin{equation}
+    \inf_{\rho} \max_{a, b, c \in \supp(\rho)} \abs{a} (\norm{b}_1 + \abs{c})
+\end{equation}
+
+Barron spaces are denoted by $\mathcal{B}_p$ and defined as the set of
+\textit{}{continuous} functions that admit representation in
+\eqref{eq:barron_represent} with finite Barron norm.
+
+By the definition of Barron norm, it is easy to see that
+
+\begin{equation}
+    \mathcal{B}_{\infty} \subset \cdots \subset \mathcal{B}_{2} \subset \mathcal{B}_1
+\end{equation}
+
+% https://ocw.mit.edu/courses/18-125-measure-and-integration-fall-2003/6f21af6c40de1eccd70349bd3a3b0095_18125_lec17.pdf
+
+\begin{proof}
+
+The idea is similar to the inclusion of $L_p$, $L_q$ space.
+
+Applying Hölder's inequality, for any $1 \leq p \leq q < \infty$
+
+\begin{align*}
+    \int \abs{a}^p (\norm{\mathbf{b}}_1 + \abs{c})^p d\rho
+     & = \int \abs{a}^p (\norm{\mathbf{b}}_1 + \abs{c})^p \cdot 1 d\rho                                                    \\
+     & \leq \Big(\int \abs{a}^{pq/p} (\norm{\mathbf{b}}_1 + \abs{c})^{pq/p} d\rho \Big)^{p/q} \Big(\int d\rho\Big)^{1-p/q} \\
+     & = \Big(\int \abs{a}^q (\norm{\mathbf{b}}_1 + \abs{c})^q d\rho \Big)^{p/q} \Big(\int d\rho\Big)^{1-p/q}
+\end{align*}
+
+Therefore we have the inclusion $\mathcal{B}_{q} \subset \mathcal{B}_p$ for $1
+    \leq p \leq q < \infty$. \tonote{Not sure how to justify for the case $+\infty$}
+\end{proof}
+
+As the reverse also holds in the class of ReLU functions,  we have
+$\mathcal{B}_{\infty} = \mathcal{B}_p$, $\barronnorm{\cdot}{\infty} =
+    \barronnorm{\cdot}{p}$  for all $1 \leq p \leq +\infty$.
+
+% ~\cite[Proposition 1]{eBarronSpaceFlowinduced2021}
+\begin{lemma}
+    \label{lamma:equivalence_barron_space}
+
+    For any $f \in \mathcal{B}_1$, $f
+        \,\text{also}\, \in \mathcal{B}_{\infty}$ and $\barronnorm{f}{\infty} =
+        \barronnorm{f}{p}$ and hence $ \mathcal{B}_{\infty} = \cdots =
+        \mathcal{B}_{2} = \mathcal{B}_1$ when $\sigma(\cdot)$ is ReLU function.
+\end{lemma}
+
+\begin{proof}
+    As $f \in \mathcal{B}_1$,  there exist a probability distribution $\rho$ on
+    $(\Omega, \Sigma_\Omega)$ satisfying the integral form in
+    \eqref{eq:barron_represent}.
+
+    For any $\epsilon > 0$, from the definition of Barron norm
+    \eqref{eq:barron_norm}:
+
+    \begin{equation}
+        \ERWi{\rho}{\abs{a}(\norm{b}_1 + \abs{c})} \leq \barronnorm{f}{1} + \epsilon
+    \end{equation}
+
+    \tonote{Why would this inequality hold? Why do you have to restrict A}
+
+    The key point here is to construct a probability measure and then
+
+    Here we construct two measure $\rho_+$ and $\rho_-$ on satisfying
+    \begin{equation*}
+        \ERWi{\rho}{\abs{a}(\norm{\mathbf{b}}_1 + \abs{c})}
+    \end{equation*}
+
+
+    where $\Lambda = \{(\mathbf{b}, c): \norm{\mathbf{b}}_1 + \abs{c} = 1\}$
+\end{proof}
 
 
 \section{Funcitons with Finte First Fourier Moment}
@@ -468,8 +601,8 @@ finite Fourier moment can be approximated with the superpositions of sigmoidal
 functions at a rate independent of the dimensionality $d$ with some restriction
 on the smoothness of the functions, In other words, any functions in that class
 can be approximated with a 2NN at an error rate of $\bigO(m^{-1} \cdot C)$ where
-$m$ is the number of nodes in the the single hidden layer and $C$ is some
-constant dependent \textit{only} the smoothness of the target function. Even the
+$m$ is the number of nodes in the the single hidden layer and $C$ is a constant
+dependent \textit{only} the smoothness of the target function. Even the
 convergence rate itself is independent of dimension (i.e. the dimensionality of
 input vector $X$), the constant $C$ could be dimension-dependent as the Fourier
 transform is imposed here and the terms of derivatives might grow exponentially
@@ -661,13 +794,76 @@ below.
 
 \end{proof}
 
+
+
+\subsection{Improved rate with Heaviside activation function}
+
+Here, \cite{makovozRandomApproximantsNeural1996} showed that the error can be
+improved to $\bigO(m^{\frac{1}{2} - \frac{1}{2d}})$
+
+\begin{definition}[Heaviside function\footnote{also called unit step function}]
+    \begin{equation}
+        \stepfunction{t} := 
+        \begin{cases}
+            1 \quad \text{ and } t \geq 0,\\
+            0 \quad \text{ and } t < 0.
+        \end{cases}
+    \end{equation}
+\end{definition}
+
+
+\begin{theorem}\cite[Theorem 3]{makovozRandomApproximantsNeural1996}
+    \label{thm:improve_barron}
+    
+    Let $X$ be bounded set on $\R^d$. Let $f: X \to \R$ be a function and $V$ be
+    the set of functions whose spectral Barron seminorm is finite, i.e. $V =
+    \{f: X\to\R : \specseminorm{f}{1} < \infty\}$. Then there exists a finite
+    linear combination of the form for before-mentioned $f \in V$
+    \begin{equation}
+        f_m(x) = \sum_{j=1}^m a_j \stepfunction{b_j\tr x + c_j} \quad 
+            a_j, c_j \in \R, b_j \in \R^d
+    \end{equation}
+    such that 
+    \begin{equation}
+        \norm{f(x) - f_m(x)}_{q} \leq C m^{-\frac{1}{2} - \frac{1}{q \cdot d}}
+        \quad 1 \leq q < \infty
+    \end{equation}
+    where $C$ is a constant dependent only $q$ and the  $\stepfunction{}$.
+\end{theorem}
+
+% In some literature, V is represented as the dictionary
+\tonote{use which notation?? for dictionary}
+
+\begin{proof}
+    We know that the. We need to get a estimate of the dictionary 
+
+    We obtained a O net for the dictionary in L2 
+
+\end{proof}
+
+Note that this theorem does not cover the case $q = \infty$. However,
+\cite{barronUniversalApproximationBounds1993} has already showed that $f$ are
+dense w.r.t. supremum norm ($\norm{f - f_m}_{\infty} = \bigO(m^{-1/2})$), which
+implies $\norm{f-f_m}_{q}$ for all $L_q, q<\infty$.
+
+As the dimensionality $d$ increases, this rate approaches to the original rate
+and therefore this theorem is significant for low dimensionality. The above
+conclusion can be extended to more general bounded sigmoidal functions. It is
+easy to check $\stepfunction{\lambda t} \to \sigma(t)$ as $\lambda \to \infty$
+and $\stepfunction{\lambda t} \to \sigma{t}$ as $\lambda \to -\infty$. On a
+closed interval $[-u, u]$ on $\R$, note that the difference $\sigma(t) -
+\stepfunction{\lambda t}$ is still bounded everywhere. Therefore, we can see
+that distance between a bounded sigmoidal function and Heaviside function can be
+made arbitrarily small on the space $\lp{p}(\R, \mu)$.
+
+
 % \section{Approximation in $L_2(\Omega)$}
 
 % \section{Approximation in $L_2([0,1])$}
 
 % \section{Add a section for F transform}
 
-\section{Approximation in Fourier-analytic Barron spaces with Bounded Weights}
+\section{Improved approximation in Fourier-analytic Barron spaces}
 
 
 % A smoothness property of the function to be approximated is expressed in terms
@@ -685,10 +881,9 @@ In the previous section, the smoothness of a function is expressed through its
 ``fluctuating'' of is a function $f$ is measured by the an mean of the norm of
 the frequency vector weighted by the Fourier magnitude distribution. Naturally,
 we would like to extend the findings with tighter restriction on the smoothness
-at a cost of smaller hypothesis space which we define later in section
-\ref{sec:diff_barron_spaces}. Tighter rates of approximation is made possible
-with stricter conditions on the spectral norms while bounding the parameter
-$b\in\R^d$ as in \TOCITE w.r.t. $L_1$ norm or $L_2$ norm.
+and ideally improve on the $\bigO(m^{-1})$. Tighter rates of approximation is
+made possible with stricter conditions on the Barron spectral norm while
+bounding the parameter $b\in\R^d$ as in \TOCITE w.r.t. $L_1$ norm or $L_2$ norm. 
 
 % We will discuss whether the conditions on activation function $\sigma$ can be
 % relaxed. 
@@ -773,121 +968,6 @@ the parameters bounded in $L_1$.
 
 
 \newpage
-
-\section{Barron Norm and infinite-width Barron spaces}
-\label{sec:barron_norm}
-
-Here in the section introduce the definition of Barron space and its properties.
-It should be noted that the term ``Barron space'' was coined by
-\cite{ePrioriEstimatesPopulation2019} to honor Prof. Andrew Barron's
-contribution in the understanding of neural nets.
-
-For a function $f: X \subset \mathbb{R}^d \to \mathbb{R}$, we consider those
-that admit the following integral representation:
-
-\begin{equation}\label{eq:barron_represent}
-    f(x) = \int_{\Omega} a \sigma(b\tr x + c) \mu(da, db, dc), \quad x \in X
-\end{equation}
-
-where $\mu$ is a probability distribution on $(\Omega, \Sigma_\Omega)$, $\Omega
-= \mathbb{R}^1 \times \mathbb{R}^d \times \mathbb{R}^1$ and $\Sigma_\Omega$ is
-a Borel $\sigma$-algebra on $\Omega$ and $\sigma(\cdot) = \max\{\cdot, 0\}$ is
-the ReLU activation function.
-
-This representation can be seen as a continuum analogy of the 2NN with $m$
-hidden nodes:
-
-\begin{equation}
-    f_m(x, \Theta) := \frac{1}{m} \sum_{j=1}^m a_j \sigma(b\tr x + c_j), \quad \Theta = \{(a_j, b_j, c_j), \ j = 1, \dots, m\}
-\end{equation}
-
-\begin{definition}[Barron norm] For functions that admit representation
-    \eqref{eq:barron_represent}, its Barron norm is defined as
-    \cite{eBarronSpaceFlowinduced2021}:
-    \begin{equation}\label{eq:barron_norm}
-        \barronnorm{f}{p} := \inf_{\rho} \Big(\ERWi{\mu}{\abs{a}^p 
-        (\norm{b}_1 + \abs{c})^p}\Big)^{1/p},
-        \quad 1 \leq p \leq +\infty
-    \end{equation}
-    % where \begin{equation*} \Theta_f = \left\{ (a, \pi) \mid f(x) =
-    % \int_{space} a(w) \sigma(\langle w, x \rangle)\dd{\pi(w)} \right\}.
-    % \end{equation*}
-\end{definition}
-
-The infimum is taken over all probability distribution where
-\eqref{eq:barron_represent} holds (\tonote{why} $\rho$ is not unique) for all $\mathbf{x} \in
-    \mathcal{X}$. When $p = + \infty$, the Barron norm becomes:
-
-\begin{equation}
-    \inf_{\rho} \max_{a, b, c \in \supp(\rho)} \abs{a} (\norm{b}_1 + \abs{c})
-\end{equation}
-
-Barron spaces are denoted by $\mathcal{B}_p$ and defined as the set of
-\textit{}{continuous} functions that admit representation in
-\eqref{eq:barron_represent} with finite Barron norm.
-
-By the definition of Barron norm, it is easy to see that:
-
-\begin{equation}
-    \mathcal{B}_{\infty} \subset \cdots \subset \mathcal{B}_{2} \subset \mathcal{B}_1
-\end{equation}
-
-% https://ocw.mit.edu/courses/18-125-measure-and-integration-fall-2003/6f21af6c40de1eccd70349bd3a3b0095_18125_lec17.pdf
-
-\begin{proof}
-
-The idea is similar to the inclusion of $L_p$, $L_q$ space.
-
-Applying Hölder's inequality, for any $1 \leq p \leq q < \infty$
-
-\begin{align*}
-    \int \abs{a}^p (\norm{\mathbf{b}}_1 + \abs{c})^p d\rho
-     & = \int \abs{a}^p (\norm{\mathbf{b}}_1 + \abs{c})^p \cdot 1 d\rho                                                    \\
-     & \leq \Big(\int \abs{a}^{pq/p} (\norm{\mathbf{b}}_1 + \abs{c})^{pq/p} d\rho \Big)^{p/q} \Big(\int d\rho\Big)^{1-p/q} \\
-     & = \Big(\int \abs{a}^q (\norm{\mathbf{b}}_1 + \abs{c})^q d\rho \Big)^{p/q} \Big(\int d\rho\Big)^{1-p/q}
-\end{align*}
-
-Therefore we have the inclusion $\mathcal{B}_{q} \subset \mathcal{B}_p$ for $1
-    \leq p \leq q < \infty$. \tonote{Not sure how to justify for the case $+\infty$}
-\end{proof}
-
-As the reverse also holds in the class of ReLU functions,  we have
-$\mathcal{B}_{\infty} = \mathcal{B}_p$, $\barronnorm{\cdot}{\infty} =
-    \barronnorm{\cdot}{p}$  for all $1 \leq p \leq +\infty$.
-
-% ~\cite[Proposition 1]{eBarronSpaceFlowinduced2021}
-\begin{lemma}\label{lamma:equivalence_barron_space}
-
-    For any $f \in \mathcal{B}_1$, $f
-        \,\text{also}\, \in \mathcal{B}_{\infty}$ and $\barronnorm{f}{\infty} =
-        \barronnorm{f}{p}$ and hence $ \mathcal{B}_{\infty} = \cdots =
-        \mathcal{B}_{2} = \mathcal{B}_1$ when $\sigma(\cdot)$ is ReLU function.
-\end{lemma}
-
-\begin{proof}
-    As $f \in \mathcal{B}_1$,  there exist a probability distribution $\rho$ on
-    $(\Omega, \Sigma_\Omega)$ satisfying the integral form in
-    \eqref{eq:barron_represent}.
-
-    For any $\epsilon > 0$, from the definition of Barron norm
-    \eqref{eq:barron_norm}:
-
-    \begin{equation}
-        \ERWi{\rho}{\abs{a}(\norm{\mathbf{b}}_1 + \abs{c})} \leq \barronnorm{f}{1} + \epsilon
-    \end{equation}
-
-    \tonote{Why would this inequality hold? Why do you have to restrict A}
-
-    The key point here is to construct a probability measure and then
-
-    Here we construct two measure $\rho_+$ and $\rho_-$ on satisfying
-    \begin{equation*}
-        \ERWi{\rho}{\abs{a}(\norm{\mathbf{b}}_1 + \abs{c})}
-    \end{equation*}
-
-
-    where $\Lambda = \{(\mathbf{b}, c): \norm{\mathbf{b}}_1 + \abs{c} = 1\}$
-\end{proof}
 
 \section{Direct and Inverse Approximation Theorems}
 
