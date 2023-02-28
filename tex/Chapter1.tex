@@ -1,4 +1,4 @@
-\chapter{The Approximation Properties of Two-Layer Neural Networks}
+\chapter{The approximation properties of two-layer neural networks}
 
 In this chapter, we will introduce some basic concepts about artificial
 artificial neural networks with an emphasis on the two-layer neural networks
@@ -24,6 +24,8 @@ concerning the approximation properties of \ and we recommend work by
 \cite{eMathematicalUnderstandingNeural2020,bernerModernMathematicsDeep2021} for
 a comprehensive introduction.
 
+$\lp{2}$
+
 % classical Barron space, or the Fourier-analytic Barron space
 
 % infinitely wide
@@ -33,7 +35,7 @@ a comprehensive introduction.
 % sparsity-inducing norm ? in bach 2017 paper.
 
 
-\section{Universal Approximation Theorem}
+\section{Universal approximation theorem}
 \label{sec:uat}
 
 In general, neural networks, even 2NN with one hidden layer, are universal
@@ -70,6 +72,7 @@ Let $I_d = [0,1]^d$ denote the $d$-dimensional unit cube, and the space of
 continuous functions over $I_d$ is denoted by $C(I_d)$. We denote the supremum
 norm of a function $f \in C(I_d)$ by $\norm{f}_{\infty}$ 
 \begin{equation}
+    \label{def:sup_norm}
     \norm{f}_{\infty} = \sup_{x\in I_d} \abs{f(x)}.
 \end{equation}
 We use $M(I_d)$ to denote the space of finite, signed regular Borel measures,
@@ -351,7 +354,7 @@ Now it remains to show that sigmoidal functions are discriminatory.
 
 %  homogeneity
 
-\subsection{Uniform Approximation Theorem For Classification Problem}
+\subsection{Application to the classification problem}
 
 In this section, we will discuss the implications of Theorem \ref{thm:uat} for
 classification problems. It should be noted that the decision function defined
@@ -402,8 +405,62 @@ straightforward using Lusin's Theorem \eqref{thm:lusin}.
 
 The above result shows that the total measure of the misclassified points can be made arbitrarily small.
 
+\section{Different Barron spaces}
 
-\section{Spectral Norm and Fourier-analytic Barron spaces}
+The notation of Barron spaces is not in consenus within the community and
+different terms have been give to the same model classes. For the function
+spaces in which functions have finite Fourier moments,
+~\cite{xuFiniteNeuronMethod2020} called this model classes \textit{Barron
+spectral spaces} while \cite{carageaNeuralNetworkApproximation2022} refers them
+as \textit{Fourier-analytic Barron space}. For function spaces whose functions
+admit a integral representation (to be defined later) with a ReLU activation
+function, \cite{eBarronSpaceFlowinduced2021} name them simply as \textit{Barron
+spaces} of different orders $p \in \Nat^+ \bigcup\,\{\infty\}$. In some
+literature \TOCITE, these are coined \textit{infinite-width Barron spaces}
+assoicated with different activation functions and in some cases the defnition
+\textit{Classical Barron space} is reserved for those associated with Heaviside
+function.
+
+To avoid confusion, we will only use two definitions:
+\begin{itemize}
+    \item Fourier-analytic spaces
+    \item infinite-width Barron spaces
+\end{itemize}
+
+Firstly, we define the smoothness constraint via the \textit{spectral norm}.
+
+% should be L1 norm of \omega
+\begin{definition}[Barron spectral norm]
+    \label{def:spectral_norm}
+    For any $s \in \Nat$. Suppose a function $f: \R^d \to \R$ admits a Fourier
+    representation
+    \begin{equation}
+        f(x) = \int_{\R^d} e^{ix \cdot \omega} \fourier{f}(\omega) \,d\omega
+    \end{equation}
+    where $\fourier{f}: \R^d \to \mathbb{C}$ is the Fourier transform of $f$,
+    the Barron spectral norm or the spectral norm
+    \begin{equation}
+        \specnorm{f}{s} = \int_{\R^d} (1+\norm{\omega}_1)^s \abs{\fourier{f}(\omega)}
+            \,d\omega
+    \end{equation}
+\end{definition}
+
+\begin{definition}[Barron spectral seminorm]
+    \label{def:spectral_seminorm}
+    Under the set of of Definition \ref{def:spectral_norm}, the Barron spectral
+    seminorm or the spectral seminorm
+    \begin{equation}
+        \specseminorm{f}{s} = \int_{\R^d} \norm{\omega}_1^s \abs{\fourier{f}(\omega)}
+            \,d\omega 
+    \end{equation}
+\end{definition}
+
+\subsection{Fourier-analytic spaces}
+
+\subsection{infinite-width Barron spaces}
+
+
+\section{Funcitons with Finte First Fourier Moment}
 \label{sec:spectral_norm}
 
 It is shown by \cite{barronUniversalApproximationBounds1993} that functions with
@@ -415,8 +472,9 @@ $m$ is the number of nodes in the the single hidden layer and $C$ is some
 constant dependent \textit{only} the smoothness of the target function. Even the
 convergence rate itself is independent of dimension (i.e. the dimensionality of
 input vector $X$), the constant $C$ could be dimension-dependent as the Fourier
-transform is used here. We will discuss one renowed model class introduced by
-Andrew \cite{barronUniversalApproximationBounds1993}.
+transform is imposed here and the terms of derivatives might grow exponentially
+required to make \tonote{?}. We will begin with functions in the model class
+introduced by Prof. Andrew \cite{barronUniversalApproximationBounds1993}.
 
 To begin with, we formulated the class of functions introduced in
 \cite{barronNeuralNetApproximation1992, barronUniversalApproximationBounds1993}
@@ -430,8 +488,8 @@ below.
     \to \mathbb{C}$ satisfying:
 
     \begin{align}
-         & \int_{\mathbb{R}^d} \abs{\omega}_{X, x_0} \cdot \abs{F(\omega)} d\omega < C                            \\
-         & f(x) = c + \int_{\mathbb{R}^d} (e^{i\spr{x}{\omega}} - e^{i\spr{x_0}{\omega}}) \cdot F(\omega) d\omega
+         & \int_{\mathbb{R}^d} \abs{\omega}_{X, x_0} \cdot \abs{\fourier{f}(\omega)} \,d\omega < C                            \\
+         & f(x) = c + \int_{\mathbb{R}^d} (e^{i\spr{x}{\omega}} - e^{i\spr{x_0}{\omega}}) \cdot \fourier{f}(\omega)\,d\omega
     \end{align}
 
     where $\abs{\omega}_{X, x_0} := \sup_{x\in X}\abs{\spr{\omega}{x - x_0}}$
@@ -465,10 +523,11 @@ below.
     \end{equation}
 
     Thus we have $\int_{\mathbb{R}^d} \abs{\omega}_{X, x_0} \cdot
-        \abs{F(\omega)} d\omega < 2C$. If we have $\tilde{c} = c +
+        \abs{\fourier{f}(\omega)} d\omega < 2C$. If we have $\tilde{c} = c +
         \int_{\mathbb{R}^d} (e^{\spr{\omega}{x_0}} - e^{\spr{\omega}{x_1}})
-        d\omega$, then $f(x) = \tilde{c} + \int_{\mathbb{R}^d} (e^{i\spr{x}{\omega}}
-        - e^{i\spr{x_1}{\omega}})$ with $\tilde{c} \leq 2C$.
+        d\omega$, then $f(x) = \tilde{c} + \int_{\mathbb{R}^d}
+        (e^{i\spr{x}{\omega}} - e^{i\spr{x_1}{\omega}})$ with $\tilde{c} \leq
+        2C$.
 
     This shows that changing $x_0$ would only affect the norm in the RHS of
     Theorem \ref{thm:barron_1993_1} at most by a factor of two, i.e.
@@ -479,24 +538,26 @@ below.
     the assumption, and the fact that $f$ is real-valued ($X \in \mathbb{R}^d
         \to \mathbb{R}$), the real number part can be written as:
 
-    Note that with polar decomposition $F(\omega) = e^{i\theta(\omega)} \cdot
-        \abs{F(\omega)}$ where $\theta(\omega) \in \mathbb{R}$ denote the magnitude
-    decomposition.
+    Note that with polar decomposition $\fourier{f}(\omega) =
+        e^{i\theta(\omega)} \cdot \abs{\fourier{f}(\omega)}$ where $\theta(\omega) \in
+        \mathbb{R}$ denote the magnitude decomposition.
 
     \begin{align}
         f(x) - f(0)
-         & = \Re \int (e^{i\spr{\omega}{x}} - e^{i\spr{\omega}{0}}) e^{i\theta(\omega)} \cdot F(\omega) d\omega                              \\
+         & = \Re \int (e^{i\spr{\omega}{x}} - e^{i\spr{\omega}{0}}) e^{i\theta(\omega)} \cdot 
+         \fourier{f}(\omega)\,d\omega                              \\
          & = \int_{\Omega}\Big(\cos(\spr{\omega}{x} + \theta(\omega)) - \cos(\theta(\omega))\Big)
-        F(\omega) d\omega                                                                                                                    \\
-         & = \int_{\Omega} \frac{C_{f,X}}{\abs{\omega}_{X, 0}}\Big(\cos(\spr{\omega}{x} + \theta(\omega)) - \cos(\theta(\omega))\Big) d\mu_g \\
-         & = \int_{\Omega} g(x, \omega) d\mu_g \label{eq:barron_fouier_int}
+         \fourier{f}(\omega)\,d\omega \\
+         & = \int_{\Omega} \frac{C_{f,X}}{\abs{\omega}_{X, 0}}\Big(\cos(\spr{\omega}{x} + \theta
+         (\omega)) - \cos(\theta(\omega))\Big)\,d\mu_g \\
+         & = \int_{\Omega} g(x, \omega)\,d\mu_g \label{eq:barron_fouier_int}
     \end{align}
 
     $C_{f,X}$ is a constant defined with $f$ and $X$: $C_{f,X} =
-        \int_{\mathbb{R}^d} \abs{\omega}_{X, 0} \cdot \abs{F(\omega)} d\omega \leq
+        \int_{\mathbb{R}^d} \abs{\omega}_{X, 0} \cdot \abs{\fourier{f}(\omega)} d\omega \leq
         C$ and $\mu_g$ is a probability distribution $d\mu_g =
-        \abs{\omega}_{X,0}/C_{f,X}\abs{F(\omega)} d\omega$, the integral is
-    evaluated on $\Omega = \{\omega \in \mathcal{R}^d: \omega \not = 0\}$ and
+        \abs{\omega}_{X,0}/C_{f,X}\abs{\fourier{f}(\omega)} d\omega$, the integral is
+    evaluated on $\Omega = \{\omega \in \R^d: \omega \not = 0\}$ and
 
     \begin{equation}
         g(x, \omega) = \frac{C_{f,X}}{\abs{\omega}_{X, 0}}\Big(\cos(\spr{\omega}{x} + \theta(\omega)) - \cos(\theta(\omega))\Big)
@@ -606,29 +667,37 @@ below.
 
 % \section{Add a section for F transform}
 
-\section{Placeholder}
+\section{Approximation in Fourier-analytic Barron spaces with Bounded Weights}
 
-In this section, we formally define the model class defined through the
-\textit{spectral norm}. We will discuss whether the conditions on activation
-function $\sigma$ can be relaxed. 
 
-In this section, we provide the main setup concerning the model classes for
-which 2NN approximation is particularly effective. We will discuss one renowed
-model class introduced by Andrew Barron
-~\cite{barronUniversalApproximationBounds1993}. 
+% A smoothness property of the function to be approximated is expressed in terms
+% of its Fourier representation. In particular, an average of the norm of the
+% frequency vector weighted by the Fourier magnitude distribution is used to
+% measure the extent to which the function oscillates. In this Introduction, the
+% result is presented in the case that the Fourier distribution has a density that
+% is integrable as well as having a finite first moment. Somewhat greater
+% generality is permitted in the theorem stated and proven in Sections III and IV.
 
-\begin{definition}[Spectral norm]
-    \label{def:spectral_norm}
-    if a function $f: \R^d \to \R$ admits a Fourier representation
-    \begin{equation}
-        f(x) = \int_{\R^d} e^{ix \cdot \omega} \fourier{f}(\omega) \,d\omega
-    \end{equation}
-    then for any $s \geq 1 \in \Nat$, the spectral norm $v_{f,s}$ is defined as
-    \begin{equation}
-        v_{f,s} = \int_{\R^d} \norm{\omega}_1^2 \abs{\fourier{f}(\omega)} \,d\omega
-    \end{equation}
-\end{definition}
+% In addition to the smoothness property ensured via the finite first moment,
 
+In the previous section, the smoothness of a function is expressed through its
+\textbf{first} Fourier representation. In particular, how ``oscillating'' or
+``fluctuating'' of is a function $f$ is measured by the an mean of the norm of
+the frequency vector weighted by the Fourier magnitude distribution. Naturally,
+we would like to extend the findings with tighter restriction on the smoothness
+at a cost of smaller hypothesis space which we define later in section
+\ref{sec:diff_barron_spaces}. Tighter rates of approximation is made possible
+with stricter conditions on the spectral norms while bounding the parameter
+$b\in\R^d$ as in \TOCITE w.r.t. $L_1$ norm or $L_2$ norm.
+
+% We will discuss whether the conditions on activation function $\sigma$ can be
+% relaxed. 
+
+In this section, we consider approximation by 2NN with ReLU and squared ReLU as
+activation function
+\begin{equation}
+    \sigma_k(x) = [\max(0, x)]^k, \quad k \in \{1, 2\}
+\end{equation}
 
 \subsection{Approximation in $L_{\infty}$ with bounded weights}
 
@@ -636,13 +705,14 @@ We start with the main result when the approximation with 2NN with $m$ nodes and
 the parameters bounded in $L_1$.
 
 \begin{theorem}
-    Suppose $f$ admits a Fourier representation and the spectral norm of order
-    $2$ is finite, i.e.
+    \label{thm:appro_bound_l1}
+    Let $X = [-1,1]^d$. Suppose $f: X \to \R$ admits a Fourier representation
+    and the spectral norm of order $2$ of $f$ is finite, i.e.
     \begin{equation}
         v_{f,2} = \int_{\R^d} \norm{\omega}_1^s \abs{\fourier{f}(\omega)} 
         d\omega < \infty.
     \end{equation}
-    There exists a ReLU 2NN of the form
+    There exists a 2NN of the form with ReLU activation function $\sigma$
     \begin{equation}
         f_m(x) = f(0) + \nabla f(0) \cdot x + v \cdot 
         \frac{1}{m} \sum_{j=1}^m a_j \sigma(b_j\tr x + c_j)
@@ -650,15 +720,15 @@ the parameters bounded in $L_1$.
     with $a_j\in[-1,1]$, $\norm{b_j}_1 = 1$, $c_j\in[0,1]$ and $v \leq
     2v_{f,2}$ such that
     \begin{equation}
-        \sup_{\mathbf{x} \in D} \abs{f(x) - f_m(x)} \leq c v_{f,2} \sqrt{d+\log{m}} \, m^{-1/2-1/d}
+        \sup_{\mathbf{x} \in D} \norm{f(x) - f_m(x)}_{\infty} \leq c v_{f,2} \sqrt{d+\log{m}} \, m^{-1/2-1/d}
     \end{equation}
 
     for some universal $c > 0$.
 \end{theorem}
 
 \begin{theorem}
-    Suppose $f$ admits a Fourier representation and the spectral norm of order
-    $3$ is finite, i.e.
+    Let $X = [-1,1]^d$. Suppose $f: X \to \R$ admits a Fourier representation
+    and the spectral norm of order $2$ of $f$ is finite, i.e.
     \begin{equation}
         v_{f,3} = \int_{\R^d} \norm{\omega}_1^3 \abs{\fourier{f}(\omega)} 
         d\omega < \infty.
@@ -678,123 +748,28 @@ the parameters bounded in $L_1$.
     for some universal $c > 0$.
 \end{theorem}
 
-\section*{Approximation in $L_2$ with bounded weights}
-
-
-\section{Bounded weights}
-
-% A smoothness property of the function to be approximated is expressed in terms
-% of its Fourier representation. In particular, an average of the norm of the
-% frequency vector weighted by the Fourier magnitude distribution is used to
-% measure the extent to which the function oscillates. In this Introduction, the
-% result is presented in the case that the Fourier distribution has a density that
-% is integrable as well as having a finite first moment. Somewhat greater
-% generality is permitted in the theorem stated and proven in Sections III and IV.
-
-% In addition to the smoothness property ensured via the finite first moment,
-
-In the above result, the approximation error is presented in the case where the
-smoothness of the functions is ensured by the fact that functions in such class
-has a integrable Fourier distribution, as well as finite first moment.
-Naturally, we would like to extend the findings with tighter restriction on the
-smoothness at a cost of smaller hypothesis space.
-
-We start with the defining the \textit{Fourier-anlytic norm}, $v_{f, s}\,
-s\geq1$, for function $f$ that has a Fourier representation:
-
-\begin{align}
-    f(x)     & = \int_{\mathbb{R}^d} e^{i\spr{x}{\omega}} F(\omega) d\omega \label{eq:fourier_rep}           \\
-    v_{f, s} & = \int_{\mathbb{R}^d} \norm{\omega}_1^s \cdot \abs{F(\omega)} d\omega \label{eq:fourier_norm}
-\end{align}
-
-
-\begin{theorem}\label{thm:appr_f2}
-    Consider the class of function on $\mathbb{R}^d$ for which there is a
-    Fourier representation of the form above. If $v_{f, 2}$ is finite, there
-    exists a two-layer ReLU neural network $f_m$ of $m$ nodes $f_m(\mathbf{x})
-        = \sum_{i=1}^m a_i \sigma(\mathbf{b_i}^T\mathbf{x} + c_i)$ with $\norm{b_i}
-        = 1$ and $\abs{c_i}\leq 1$ such that
-    \begin{equation}
-        \norm{f
-            - \mathbf{x} \cdot \nabla f(0)
-            - f(0)
-            - f_m}^2 \leq \frac{16 v_{f, 2}^2}{m}
-    \end{equation}
-\end{theorem}
-
-\textbf{What is the diff between the above and below?}
-
-Other than the norm $\ell^2$, what is the difference and where does the $d$ come
-about? This is taken from \cite{klusowskiApproximationCombinationsReLU2018}.
+\subsection{Approximation in $L_2$ with bounded weights}
 
 \begin{theorem}
-    Consider only the unit ball in $\mathbb{R}^d$, function $f$ that admits a
-    Fourier representation as above with finite $v_{f_2}$. There exists a $f_m$:
-
+    Let $X=[-1,1]^d$. Suppose $f: X \to \R$ is a function that admits an
+    integral representation
     \begin{equation}
-        f_m(x) = a_0 + \mathbf{b}_0^T \mathbf{x} + \frac{v}{m} \sum_{i=1}^m a_i \sigma(\mathbf{b}_i^T\mathbf{x} + c_i)
+        f(x) = v \int \,d\mu(t,a),
     \end{equation}
 
-    with $a_i \in [-1,1], \norm{\mathbf{b}_i}_1 = 1, a_0 = f(0), \mathbf{b}_0^T
-        = \nabla f(0), v < 2v_{f,2}$ such that
-
-    % Let $D = \[-1, 1\]^d$, target function $f$ has a Fourier representation as 
-    % above with finite $v_{f, 2}$. There exists a $f_m$ 
-
-    \begin{equation}
-        \sup_{\mathbf{x} \in D} \abs{f(x) - f_m(x)} \leq c v_{f,2} \sqrt{d+\log{m}} \, m^{-1/2-1/d}
-    \end{equation}
-
-    for some universal $c > 0$.
 \end{theorem}
 
-Similar bound are also attained with stronger assumption on functions'
-smoothness via $v_{f,s}$.
-
-\begin{theorem}\label{thm:appr_f3} Consider the class of function on
-    $\mathbb{R}^d$ for which there is a Fourier representation of the form
-    above. If $v_{f, 3}$ is finite, there exists a two-layer neural network
-    $f_m$ with squared ReLU ridge function as activation function of $m$ nodes
-    $f_m(\mathbf{x}) = \sum_{i=1}^m a_i \sigma(\mathbf{b_i}^T\mathbf{x} + c_i)$
-    with $\norm{b_i} = 1$ and $\abs{c_i}\leq 1$ such that
-    \begin{equation}
-        \norm{f
-            - \mathbf{x}^T H_f(0) \mathbf{x}/2
-            - \mathbf{x} \cdot \nabla f(0)
-            - f(0)
-            - f_m}^2 \leq \frac{16 v_{f, 3}^2}{m}
-    \end{equation}
-
-    where $H_f(0)$ is the Hessian of $f$ at the point zero.
-\end{theorem}
 
 \begin{theorem}
-    Similar to the settings above. $f$ with finite $v_{f,3}$. There exists a
-    $f_m$:
+    Under similar setup as the theorem before, suppose $f$ has a finite spectral
+    norm of order $3$, i.e. $v_{f,3} < \infty$. Then there exists a finite
+    linear combinations of ridge function of the form
     \begin{equation}
-        f_m(x) = a_0 + \mathbf{b}_0^T \mathbf{x} + \mathbf{x}^T A_0 \mathbf{x}+ \frac{v}{m} \sum_{i=1}^m a_i \sigma(\mathbf{b}_i^T\mathbf{x} + c_i)
+        f_{m, b_0}(x) = \frac{v}{m}\sum_{j=1}^m a_j \sigma_{\text{}}(b_j\tr x + c_j)
+        \quad \forall x \in X,
     \end{equation}
 
-    with $a_i \in [-1,1], \norm{\mathbf{b}_i}_1 = 1, a_0 = f(0), \mathbf{b}_0^T
-        = \nabla f(0), A_0 = \nabla\nabla^T f(0), v < 2v_{f,3}$ such that
-
-    \begin{equation}
-        \sup_{\mathbf{x} \in D} \abs{f(x) - f_m(x)} \leq c v_{f,3} \sqrt{d+\log{m}} \, m^{-1/2-1/d}
-    \end{equation}
-
-    for some universal $c > 0$. Furthermore, if the $a_i$ are restricted to
-    $\{-1, 1\}$, the upper bound is of order $v_{f,3} \sqrt{d} \,
-        m^{-1/2-1/(d+2)}$
 \end{theorem}
-
-% Considering the set of all Borel probability measures of $\Omega = (\mathbb{R}^1
-%     \times \mathbb{R}^d \times \mathbb{R}^1)$ (denoted by $\mathcal{P}_d$), given a
-% nonempty bounded subset $U \subset \mathbb{R}^d$
-
-% \begin{align*}
-%     \mathcal{B}_{p}(U)              & := \left\{f: U \to \mathbb{R} \mid \exists\, \rho \in \mathcal{P}_d, \barronnorm{f}{p} < \infty \, \text{and $f$ is in the form \eqref{eq:barron_represent}}\right\} \\
-%     \mathcal{B}_{\mathcal{F}, s}(U) & := \left\{f: U \to \mathbb{R} \mid \exists\, \rho \in \mathcal{P}_d, v_{f, s} < \infty \, \text{and $f$ is in the form \eqref{eq:fourier_rep}}\right\}
-% \end{align*}
 
 
 \newpage

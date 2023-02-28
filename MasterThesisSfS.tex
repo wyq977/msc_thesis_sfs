@@ -140,28 +140,39 @@
 % ******************************************************************************
 % *                        Define your own commands here                       *
 % ******************************************************************************
-\newcommand{\barronnorm}[2]{\left\lVert#1\right\rVert_{\mathcal{B}_#2}}
+\newcommand{\mcal}[1]{\mathcal{#1}}
 \newcommand{\bigO}{\mathcal{O}}
 \newcommand{\stepfunction}[1]{\mathbb{1}_{#1}}
+\newcommand{\bspace}[1]{\mathcal{B}_{#1}}
 \newcommand{\fourier}[1]{\mathcal{F}(#1)}
+\newcommand{\interior}[1]{\mathring{#1}}
+\newcommand{\closure}[1]{\overline{#1}} % (or \bar{#1})
+\newcommand{\lpspace}[2]{\mathcal{L}^{#1}(\mathcal{#2})}
+% when to use Lp
+% https://math.stackexchange.com/questions/109394/notation-l-p-vs-ell-p
+\newcommand{\lp}[1]{\mathcal{L}^{#1}}
 
+% Barron spectral seminorm
+\newcommand{\specseminorm}[2]{ \abs{#1}_{\mathcal{F}, {#2}} }
+% \newcommand{\spec_seminorm}[2]{{\left\| #1 \right\|}_{\mathcal{F}( #1 )}, {#2}}
+% Barron spectral norm
+\newcommand{\specnorm}[2]{ \norm{#1}_{\mathcal{F}, {#2}}}
+% Barron norm
+\newcommand{\barronnorm}[2]{\norm{{#1}}_{\mathcal{B}_{#2}}}
+
+% custom function
+\newcommand{\TOCITE}{\textcolor{blue}{\bf [TO CITE]}}
+\newcommand{\tonote}[1]{\textcolor{red}{(\textit{#1})}}
 % amsmath
 % \numberwithin{equation}{section} % using section number in equation number
 \DeclareMathOperator{\supp}{supp}
 \DeclareMathOperator{\spn}{span} % span already defined ??
-\newcommand*\interior[1]{\mathring{#1}}
-\newcommand*\closure[1]{\overline{#1}} % (or \bar{#1})
 % replaced by spr in texab
 % \DeclarePairedDelimiterX{\inp}[2]{\langle}{\rangle}{#1, #2} % mathtools
 % [physics] already include abs and norm
 % \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 % \newcommand{\abs}[1]{\lvert#1\rvert}
-\newcommand{\lpspace}[2]{\mathcal{L}^{#1}(\mathcal{#2})}
-\newcommand{\lp}[1]{\mathcal{L}^{#1}}
 
-% custom function
-\newcommand{\TOCITE}{\textcolor{blue}{\bf [TO CITE]}}
-\newcommand{\tonote}[1]{\textcolor{red}{(\textit{#1})}}
 
 
 
@@ -218,10 +229,10 @@
 % ******************************************************************************
 \newpage
 \tableofcontents
-\newpage
-\listoffigures
-\newpage
-\listoftables
+% \newpage
+% \listoffigures
+% \newpage
+% \listoftables
 
 %% Notations and glossary (optional)
 \cleardoublepage
