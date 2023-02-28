@@ -966,7 +966,7 @@ Given a nonempty, bounded set $U \subset \R^d$, we write
     & \{f: U \to \R: \exists\: \mu \in \mathcal{P}_d, \norm{\mu}_{ReLU} < \infty
     \:\text{and}\: \forall x \in U, f(x) = \mu_{ReLU}(x) \} \\
     \mathcal{B}_{\mathcal{F},s}(U) :=
-    & \{f: U \to \R: \exists\: F: \R^d \to \mathbb{C}, v_{f,s} < \infty 
+    & \{f: U \to \R: \exists\: \fourier{f}: \R^d \to \mathbb{C}, \norm{f}_{\mathcal{F}, s} < \infty 
     \:\text{and}\: \forall x \in U, 
     f(x) = \int_{\R^d} e^{ix \cdot \omega} \fourier{f}(\omega) \,d\omega \} \\
 \end{align*}
@@ -974,16 +974,23 @@ Given a nonempty, bounded set $U \subset \R^d$, we write
 where
 \begin{align*}
     \norm{\mu}_H      &:= \int_{\Omega} \abs{a}\,d\mu(a,b,c) \\
-    \norm{\mu}_{ReLU} &:= \int_{\Omega} \abs{a} (\abs{b} + \abs{c})\,d\mu(a,b,c) \\ 
+    \norm{\mu}_{ReLU} &:= \int_{\Omega} \abs{a} (\abs{b} + \abs{c})\,d\mu(a,b,c) \\
+    \norm{\fourier{f}}_{\mathcal{F},s} 
+                      &:= \int_{\R^d} (1 + \abs{\omega})^s \abs{\fourier{f}(\omega)}\,d\omega.
 \end{align*}
-and the $v_{f,s}$ is the spectral norm \eqref{def:spectral_norm}.
+It should be noted that the $\norm{\fourier{f}}_{\mathcal{F},s}$ is slightly
+different from the spectral norm \eqref{def:spectral_norm} $v_{f,s}$.
 
 As shown in section \ref{sec:barron_norm}, $\mathcal{B}_{ReLU}(U)$ is the Barron
 space ($\mathcal{B}_1$) defined above and the norms on these spaces are given by 
 
 \begin{align*}
-    \norm{f}_{\mathcal{B}_H} &= \inf_{\mu \in \mathcal{P}_d} \norm{\mu}_{ReLU} \\
-    \norm{f}_{\mathcal{B}_{ReLU}} &= \inf_{\mu \in \mathcal{P}_d} \norm{\mu}_{ReLU}
+    \norm{f}_{\mathcal{B}_H} 
+        &= \inf_{\mu \in \mathcal{P}_d} \norm{\mu}_{H} \\
+    \norm{f}_{\mathcal{B}_{ReLU}} 
+        &= \inf_{\mu \in \mathcal{P}_d} \norm{\mu}_{ReLU} \\
+    \norm{f}_{\mathcal{B}_{\mathcal{F}, s}} 
+        &= \inf_{\mu \in \mathcal{P}_d} \norm{\fourier{f}}_{\mathcal{F},s}
 \end{align*}
 
 We state the following known properties from the literature.
@@ -1120,35 +1127,87 @@ f(0)$ is the closure of the convex hull of finite linear combinations.
 
 Hence we show the inclusion in 2).
 
-\textbf{3):} 
+\textbf{3):} As $U$ is nonempty and bounded subset in $\R^d$, we can fix a point
+$x_0 \in \R^d$ and a radius $r > 0$ such that $U \subset x_0 + [0, r]^d$. Let
+$f$ be a function in $\mathcal{B}_{\mathcal{F},2}$ with norm $v_{f,2}\leq 1$.
+We define two mapping from $\R^d$ to $\mathbb{C}$ $G, H$.
+\begin{align*}
+    G(\omega) &= \frac{1}{2} (\fourier{f}(\omega) 
+                    + \bar{\fourier{f}(-\omega)}) \\
+    H(\omega) &= \frac{1}{r^d} \cdot 
+                    e^{i \frac{x_0\tr}{r} \omega} \cdot 
+                    G(\omega / r)
+\end{align*}
+where $\fourier{f}(\omega)$ is the Fourier transform of $f$.
+
+We calculate their respective norm $G_{\mathcal{F},2} \leq 2$ and
+$H_{\mathcal{F},2} \leq 2r^2$. We then define two functions with $G,H$ being
+their Fourier transform, respectively.
+\begin{align*}
+    g(x) := \int_{\R^d} e^{ix\omega} G(\omega)\,d\omega\\
+    h(x) := \int_{\R^d} e^{ix\omega} h(\omega)\,d\omega\\
+\end{align*}
+and it is easy to see that for all $x \in U$, $f(x)=g(x)=h(\frac{x-x_0}{r})$.
+
+By construction, the spectral norm of $h$ is finite. We have
+$\norm{h}_{\mathcal{B}_{ReLU}}$ is finite with some constant $C_h$ thanks to
+Theorem 9 in \cite{eMathematicalUnderstandingNeural2020}. Therefore, $h(y)$ can
+be represented as the integral form
+\begin{equation}
+    h(y) = \int_{[0,1]^d} a \sigma(b\tr x + c) \,d\mu(sa,b,c) \quad \forall y \in [0,1]^d
+\end{equation}
+where $\mu \in \mathcal{P}_d$ and $\norm{\mu}_{ReLU} \leq C_h$.
+
+Since $y=\frac{x-x_0}{r}$ for all $x\in U$, the results above implies that 
+\begin{equation}
+    f(x) = h(\frac{x-x_0}{r}) \int_{\Omega} a 
+    \sigma(\frac{b\tr x}{r} + c - \frac{b\tr x_0}{r})\,d\mu(a,b,c)
+    = \mu'_{ReLU}(x)
+\end{equation}
+where $\mu'$ is the pushforward of $\mu$ under the map:
+\begin{equation}
+    \Phi: \Omega \to \Omega, (a,b,c) \mapsto (a, \frac{b}{r}, c - \frac{b\tr x_0}{r})
+\end{equation}
+
+We can then calculate $\norm{\mu'}_{ReLU} \leq (1+\norm{x_0}_2)
+\norm{\mu}_{ReLU}$ is smaller than some constant $C$ w.r.t. the choice of
+$d,r,x_0$. Hence $f$ is in $\mathcal{B}_{ReLU}$ with some measure $\mu'$ if $f
+\in \mathcal{B}_{\mathcal{F},2}$ and hence the inclusion
 
 \end{proof}
+
+It has been argued in \cite{eRepresentationFormulasPointwise2020} that
+$\mathcal{B}_{\mathcal{F},1}$ embeds into the $\mathcal{B}_{ReLU}$ but
+\cite{carageaNeuralNetworkApproximation2022} claims that this embedment wrongly
+interpret the results of
+\cite{barronUniversalApproximationBounds1993,barronNeuralNetApproximation1992}.
+We will show next that $\mathcal{B}_{\mathcal{F},1}\not\subseteq
+\mathcal{B}_{ReLU}$. In other words, the original model class proposed by
+\cite{barronNeuralNetApproximation1992} is not \textit{contained} in the novel
+Barron space $\mathcal{B}_{ReLU}$ introduced recently by
+\cite{eBarronSpaceFlowinduced2021}. 
+
+
+\begin{theorem}~\cite[Proposition 7.4]{carageaNeuralNetworkApproximation2022}
+
+    Let $U \subset \mathbb{R}^d$ be bounded and have nonempty interior. For
+    $s>0$, if $\mathcal{B}_{\mathcal{F},s}(U) \subset \mathcal{B}_{1}(U)$, then
+    $s \geq 2$. In particular $\mathcal{B}_{\mathcal{F},1}(U) \not\subset
+        \mathcal{B}_{1}(U)$
+\end{theorem}
 
 \begin{remark}
     It has been discussed in earlier section that we have the equivalence of
     Barron norm and hence Barron spaces for $1 \leq p\leq +\infty$ (see
     \eqref{eq:barron_fouier_int}) with ReLU as activation function.
 
-    In other words, combined with the fact that $\mathcal{B}_{\infty} =
-        \mathcal{B}_p$, we can say that the class of functions where $f$ admits
-        a Fourier representation with finite second moment ($v_{f, 2} < \infty$)
-        are well ``contained'' inside the \textit{infinite-width Barron spaces}.
-        However, $\mathcal{B}_{\mathcal{F}, 1}(U)$ still encapsulates a boarder
-        class of functions.
+    In other words, combined with the fact that
+    $\mathcal{B}_{\infty}=\mathcal{B}_p$, we can say that the class of functions
+    where $f$ admits a Fourier representation with finite second moment ($v_{f,
+    2} < \infty$) are well ``contained'' inside the \textit{infinite-width
+    Barron spaces}. However, $\mathcal{B}_{\mathcal{F}, 1}(U)$ still
+    encapsulates a boarder class of functions.
 \end{remark}
-
-
-\begin{lemma}~\cite[Proposition 7.4]{carageaNeuralNetworkApproximation2022}
-
-    Let $U \subset \mathbb{R}^d$ be bounded and have nonempty interior. For
-    $s>0$, if $\mathcal{B}_{\mathcal{F},s}(U) \subset \mathcal{B}_{1}(U)$, then
-    $s \geq 2$. In particular $\mathcal{B}_{\mathcal{F},1}(U) \not\subset
-        \mathcal{B}_{1}(U)$
-\end{lemma}
-
-\begin{proof}
-
-\end{proof}
 
 
 
