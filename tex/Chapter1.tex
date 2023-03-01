@@ -24,8 +24,6 @@ concerning the approximation properties of \ and we recommend work by
 \cite{eMathematicalUnderstandingNeural2020,bernerModernMathematicsDeep2021} for
 a comprehensive introduction.
 
-$\lp{2}$
-
 % classical Barron space, or the Fourier-analytic Barron space
 
 % infinitely wide
@@ -41,11 +39,12 @@ $\lp{2}$
 In general, neural networks, even 2NN with one hidden layer, are universal
 approximators, which means any continuous functions on a compact set can be
 approximated up to a arbitrary precision under some mild restrictions on the
-activation functions $\sigma$ and the number of nodes are allow to grow
+activation functions $\sigma$ and the number of nodes are allowed to grow
 arbitrarily. The condition on $\sigma$ is formally stated in
 ~\cite{cybenkoApproximationSuperpositionsSigmoidal1989}. Despite its obvious
 importance, one can not benefit much as it can not provide enough quantitative
-information in realist applications. Nevertheless, we will state the main theorem, the univariate approximation theorem in this section.
+information in realist applications. Nevertheless, we will state the main
+theorem, the univariate approximation theorem in this section.
 
 % We will state the the universal approximation theorem that the finite linear
 % combinations of sigmoidal functions (sum of the functions of the form
@@ -354,6 +353,8 @@ Now it remains to show that sigmoidal functions are discriminatory.
 
 %  homogeneity
 
+\tonote{Add something here}
+
 \subsection{Application to the classification problem}
 
 In this section, we will discuss the implications of Theorem \ref{thm:uat} for
@@ -407,107 +408,175 @@ The above result shows that the total measure of the misclassified points can be
 
 \section{Different Barron spaces}
 
-The notation of Barron spaces is not in consenus within the community and
-different terms have been give to the same model classes. For the function
-spaces in which functions have finite Fourier moments,
-~\cite{xuFiniteNeuronMethod2020} called this model classes \textit{Barron
-spectral spaces} while \cite{carageaNeuralNetworkApproximation2022} refers them
-as \textit{Fourier-analytic Barron space}. For function spaces whose functions
-admit a integral representation (to be defined later) with a ReLU activation
-function, \cite{eBarronSpaceFlowinduced2021} name them simply as \textit{Barron
-spaces} of different orders $p \in \Nat^+ \bigcup\,\{\infty\}$. In some
-literature \TOCITE, these are coined \textit{infinite-width Barron spaces}
-assoicated with different activation functions and in some cases the defnition
-\textit{Classical Barron space} is reserved for those associated with Heaviside
-function.
+The notation of Barron spaces is not in consensus within the community and
+different terms have been given to describe the same model classes or spaces.
+For the function spaces in which functions have finite Fourier moments,
+~\cite{xuFiniteNeuronMethod2020} call this model classes \textit{Barron spectral
+spaces} while \cite{carageaNeuralNetworkApproximation2022} refers them as
+\textit{Fourier-analytic Barron space}.  For function spaces in which the
+functions admit a integral representation (to be defined later) with a ReLU
+activation function, \cite{eBarronSpaceFlowinduced2021} refer them simply as
+\textit{Barron spaces} of different orders $p \in \Nat^+ \bigcup\,\{\infty\}$.
+The term \textit{Barron space} was coined by
+\cite{ePrioriEstimatesPopulation2019} to honor Prof. Andrew Barron's
+contribution in the understanding of neural nets. In some
+literature~\cite{carageaNeuralNetworkApproximation2022}, these are given
+\textit{infinite-width Barron spaces} associated with different activation
+functions and in some rare cases the term \textit{classical Barron space} is
+reserved for those associated with Heaviside function.
 
-To avoid confusion, we will only use two definitions:
+To avoid confusion and in the meantime emphasize Prof. Andrew Barron's
+contribution, we will use two definitions:
 \begin{itemize}
-    \item Fourier-analytic spaces
+    \item Fourier-analytic Barron spaces
     \item infinite-width Barron spaces
 \end{itemize}
 
-\subsection{Fourier-analytic spaces}
+In general, the activation function associated with the infinite-width Barron
+spaces is ReLU and we will explicitly state when other functions (e.g. squared
+ReLU, Heaviside) are used.
 
-Firstly, we define the smoothness constraint via the \textit{spectral norm}.
+
+\subsection{Fourier-analytic Barron spaces}
+
+Firstly, we define the seminorm and norm~\footnote{
+    Often papers omit the ``Barron'' as readers can deduce from the context. 
+    In the following chapters, we would like to call them \textit{spectral 
+    semi/norm} as another definition of norm in infinite-width Barron spaces is 
+    named \textit{Barron norm}.
+}by which the smoothness of a function
+is controlled. We begin with the Barron spectral seminorm proposed
+originally by \cite{barronUniversalApproximationBounds1993}.
 
 % should be L1 norm of \omega
-\begin{definition}[Barron spectral norm]
-    \label{def:spectral_norm}
-    For any $s \in \Nat$. Suppose a function $f: \R^d \to \R$ admits a Fourier
+
+\begin{definition}[Spectral seminorm]
+    \label{def:spectral_seminorm}
+    \tonote{MUST $U$ be nonempy?}
+    For any $s \in \Nat$. Let $\emptyset \not= U \subset \R^d$ be a bounded
+    domain on $\R^d$. Suppose a function $f: U \to \R$ admits a Fourier
     representation
     \begin{equation}
-        f(x) = \int_{\R^d} e^{ix \cdot \omega} \fourier{f}(\omega) \,d\omega
+        f(x) = \int_{\R^d} e^{ix\tr\omega} \fourier{f}(\omega) \,d\omega
     \end{equation}
-    where $\fourier{f}: \R^d \to \mathbb{C}$ is the Fourier transform of $f$,
-    the Barron spectral norm or the spectral norm
+    where $\fourier{f}: \R^d \to \mathbb{C}$ is the Fourier transform of $f$.
+
+    Let the spectral condition defined as
     \begin{equation}
-        \specnorm{f}{s} = \int_{\R^d} (1+\norm{\omega}_1)^s \abs{\fourier{f}(\omega)}
-            \,d\omega
+        v_{f,s} 
+            = \int_{\R^d} \norm{\omega}_1^s \abs{\fourier{f}(\omega)}\,d\omega.
+    \end{equation}
+    The spectral seminorm is defined as
+    \begin{equation}
+        \specseminorm{f}{s} = \inf_{f_{e\mid U} = f} v_{f,s}
+    \end{equation}
+    where the infimum is taken over all extensions $f_e$ of $f$ in $L^1(U)$.
+\end{definition}
+
+The notion of spectral norm was first introduced in
+~\cite{siegelApproximationRatesNeural2021} since it is more convenient compared
+to the seminorm give by \cite{barronUniversalApproximationBounds1993}.
+
+
+
+\begin{definition}[Spectral norm]
+    \label{def:spectral_norm}
+    Under the setup of Definition \ref{def:spectral_seminorm}, we define a
+    modified spectral condition
+    \begin{equation}
+        v'_{f,s} 
+            = \int_{\R^d} (1 + \norm{\omega}_1)^s \abs{\fourier{f}(\omega)}
+            \,d\omega.
+    \end{equation}
+    The spectral norm is defined as
+    \begin{equation}
+        \specnorm{f}{s} = \inf_{f_{e\mid U} = f} v'_{f,s}
     \end{equation}
 \end{definition}
 
-The notion of Barron spectral norm was first introduced in
-~\cite{siegelApproximationRatesNeural2021} as it is more convenient compared to
-the seminorm give by \cite{barronUniversalApproximationBounds1993}.
 
-\begin{definition}[Barron spectral seminorm]
-    \label{def:spectral_seminorm}
-    Under the set of of Definition \ref{def:spectral_norm}, the Barron spectral
-    seminorm or the spectral seminorm
-    \begin{equation}
-        \specseminorm{f}{s} = \int_{\R^d} \norm{\omega}_1^s \abs{\fourier{f}(\omega)}
-            \,d\omega 
-    \end{equation}
-\end{definition}
 
 The index or coefficients $s \in \Nat$ is referred as the smoothness index in
 \cite{siegelHighOrderApproximationRates2021} and it is easy to see that as $s$
 increases, the functions with finite $\specnorm{f}{s}$ ($\specseminorm{f}{s}$,
-resp.) is smoother. Therefore the model class of higher smoothness index $s$ is
-expected to ``shrink'' in terms of the complexity. In the coming sections, we
-will provide a accurate statement of the improved approximation error rates with
-a depiction of the intricacies inherent in these spaces.
+resp.) are becoming ``smoother''. Therefore the \textit{size} a function spaces
+of higher smoothness index $s$ is expected to ``shrink'' which might suggests
+better approximation rate with 2NN. In the coming sections, we will provide a
+accurate statement of the improved approximation error rates with a depiction of
+the intricacies inherent within and between these spaces.
 
-
-\begin{definition}[Fourier-analytic spaces]
-    Let $\Omega$ be $\R \times \R^d \times \R$ and $\mcal{P}_d$ denote all Borel
-    probability measure on $\Omega$. $U$ denotes a nonempty bounded set
-    $\emptyset \not= U \subset \R^d$. The Fourier-analytic spaces are
+\begin{definition}[Fourier-analytic Barron spaces]
+    For any $s \in \Nat$. Let $\emptyset \not= U \subset \R^d$ be a bounded
+    domain on $\R^d$. The Fourier-analytic Barron spaces are
     \begin{equation}
         \bspace{f,s}(U) := \Big\{
-            f: U \to \R: \specnorm{f}{s} < \infty  \textrm{ and }
+            f: U \to \R: v'_{f,s} < \infty  \textnormal{ and }
             \forall x\in U, 
                 f(x) = \int_{\R^d} e^{i\omega x} \fourier{f}(\omega)\,d\omega
         \Big\}
     \end{equation}
-    equipped with $\specnorm{f}{s}$, for all $s \in \Nat$
+    equipped with a norm $\specnorm{f}{s}$, for all $s \in \Nat$.
 \end{definition}
+
+The norm z
 
 \subsection{infinite-width Barron spaces}
 \label{sec:barron_norm}
 
-This section introduces the definition of infinite-width Barron space and its
-elementary properties. It should be noted that the term ``Barron space'' was
-coined by \cite{ePrioriEstimatesPopulation2019} to honor Prof. Andrew Barron's
-contribution in the understanding of neural nets.
+This section introduces the infinite-width Barron space and its elementary
+properties. 
 
 \tonote{Is $X$ nonempty and bounded?}
 
-For a function $f: X \subset \mathbb{R}^d \to \mathbb{R}$, we consider those
-that admit the following integral representation:
+For a nonempty and bounded domain in $U \subset \R^d$ and a function $f: U
+\to \mathbb{R}$, we consider those that admit the following integral
+representation:
 
 \begin{equation}
     \label{eq:barron_represent}
-    f(x) = \int_{\Omega} a \sigma(b\tr x + c) \mu(da, db, dc), \quad x \in X
+    f(x) = \int_{\Omega} a \sigma(b\tr x + c) \mu(da, db, dc), \quad x \in U
 \end{equation}
 
-where $\mu$ is a probability distribution on $(\Omega, \Sigma_\Omega)$, $\Omega
-= \mathbb{R}^1 \times \mathbb{R}^d \times \mathbb{R}^1$ and $\Sigma_\Omega$ is
-a Borel $\sigma$-algebra on $\Omega$ and $\sigma(\cdot) = \max\{\cdot, 0\}$ is
-the ReLU activation function.
+We define a condition
+\begin{align}
+    \norm{f}_{\mu, \sigma, p} 
+    &= \Big(\int_{\R^d} \abs{a}^p  (\norm{b}_1 + \abs{c})^p \,d\mu(a,b,c)\Big)^{1/p} \\
+    &= \Big(\ERWi{\mu}{\abs{a}^p  (\norm{b}_1 + \abs{c})^p}\Big)^{1/p},
+    \quad 1 \leq p \leq +\infty.
+\end{align}
 
-This representation can be seen as a continuum analogy of the 2NN with $m$
+where $\mu$ is a probability distribution on $(\Omega, \Sigma_\Omega)$, $\Omega
+= \mathbb{R}^1 \times \mathbb{R}^d \times \mathbb{R}^1$ and $\Sigma_\Omega$ is a
+Borel $\sigma$-algebra on $\Omega$ and $\sigma(\cdot)$ is the ReLU activation
+function.
+
+We consider another case where the ReLU function is replaced with the Heaviside
+function~\footnote{
+    also called step function
+}
+
+\begin{definition}[Heaviside function]
+    \begin{equation}
+        H(x) = 
+        \begin{cases}
+            1 \quad x > 0,\\
+            0 \quad x \leq 0    
+        \end{cases}
+    \end{equation}
+\end{definition}
+
+\begin{equation}
+    \label{eq:heaviside_represent}
+    f(x) = \int_{\Omega} a H(b\tr x + c) \mu(da, db, dc), \quad x \in U
+\end{equation}
+
+Similarly, we define a condition
+\begin{align}
+    \norm{f}_{\mu, H} 
+    = \int_{\R^d} \abs{a}\,d\mu(a,b,c) = \ERWi{\mu}{\abs{a}}
+\end{align}
+
+These representations can be seen as a continuum analogy of the 2NN with $m$
 hidden nodes:
 
 \begin{equation}
@@ -531,16 +600,57 @@ hidden nodes:
 \end{definition}
 
 The infimum is taken over all probability distribution where
-\eqref{eq:barron_represent} holds (\tonote{why} $\rho$ is not unique) for all
-$\mathbf{x} \in X$. When $p = + \infty$, the Barron norm reads
+\eqref{eq:barron_represent} holds for all $x \in U$. When $p = + \infty$, the
+Barron norm reads
 
 \begin{equation}
-    \inf_{\rho} \max_{a, b, c \in \supp(\rho)} \abs{a} (\norm{b}_1 + \abs{c})
+    \label{eq:barron_infinite_norm}
+    \inf_{\rho} \max_{a, b, c \in \supp(\rho)} \abs{a} (\norm{b}_1 + \abs{c}).
 \end{equation}
 
-Barron spaces are denoted by $\mathcal{B}_p$ and defined as the set of
-\textit{}{continuous} functions that admit representation in
-\eqref{eq:barron_represent} with finite Barron norm.
+Similarly, we can defined a norm associated with Heaviside function
+\begin{equation}
+    \label{def:heaviside_norm}
+    \norm{f}_{\mcal{B}_H} = \inf_{\rho} \ERWi{\mu}{\abs{a}},
+    \quad 1 \leq p \leq +\infty.
+\end{equation}
+
+\begin{definition}[Infinite-width Barron space]
+    \label{def:barron_space}
+    Let $U$ be a nonempty unbounded domain in $\R^d$. For functions that admit
+    representation \eqref{eq:barron_represent}, the infinite-width Barron space
+    with a order of $1 \leq p \leq \infty$
+    \begin{equation}
+        \mcal{B}_p(U) = \Bigg\{
+            f: U \to \R \mid \exists\, \mu \in \Sigma_{\Omega}: 
+            \norm{f}_{\mu, \sigma, p} < \infty \textnormal{ and }
+            \forall x \in U, f(x) = \int_{\Omega} a \sigma(b\tr x + c) \mu(da, db, dc)
+        \Bigg\}
+    \end{equation}
+\end{definition}
+
+Similarly for Heaviside function, a normed space can be defined
+
+\begin{definition}
+    \label{def:heaviside_space}
+    Let $U$ be a nonempty unbounded domain in $\R^d$. For functions that admit
+    representation \eqref{eq:barron_represent}, the infinite-width Barron space
+    with a order of $1 \leq p \leq \infty$
+    \begin{equation}
+        \label{def:heaviside_space}
+        \mcal{B}_H(U) = \Bigg\{
+            f: U \to \R \mid \exists\, \mu \in \Sigma_{\Omega}:
+            \norm{f}_{\mu, H} < \infty \textnormal{ and }
+            \forall x \in U, f(x) = \int_{\Omega} a H(b\tr x + c) \mu(da, db, dc)
+        \Bigg\}
+    \end{equation}
+\end{definition}
+
+Barron spaces are denoted by $\mathcal{B}_p$~\footnote{
+    We usually write $\mcal{B}_p(U)$ and $\mcal{B}_H(U)$ as $\mcal{B}_p$ and
+    $\mcal{B}_H$.
+}, consist of functions whose $\norm{f}_{\mu, \sigma, p}$ is finite for a 
+measure $\mu \in \Sigma_{\Omega}$.
 
 By the definition of Barron norm, it is easy to see that
 
@@ -557,10 +667,10 @@ The idea is similar to the inclusion of $L_p$, $L_q$ space.
 Applying Hölder's inequality, for any $1 \leq p \leq q < \infty$
 
 \begin{align*}
-    \int \abs{a}^p (\norm{\mathbf{b}}_1 + \abs{c})^p d\rho
-     & = \int \abs{a}^p (\norm{\mathbf{b}}_1 + \abs{c})^p \cdot 1 d\rho                                                    \\
-     & \leq \Big(\int \abs{a}^{pq/p} (\norm{\mathbf{b}}_1 + \abs{c})^{pq/p} d\rho \Big)^{p/q} \Big(\int d\rho\Big)^{1-p/q} \\
-     & = \Big(\int \abs{a}^q (\norm{\mathbf{b}}_1 + \abs{c})^q d\rho \Big)^{p/q} \Big(\int d\rho\Big)^{1-p/q}
+    \int \abs{a}^p (\norm{b}_1 + \abs{c})^p d\rho
+     & = \int \abs{a}^p (\norm{b}_1 + \abs{c})^p \cdot 1 d\rho                                                    \\
+     & \leq \Big(\int \abs{a}^{pq/p} (\norm{b}_1 + \abs{c})^{pq/p} d\rho \Big)^{p/q} \Big(\int d\rho\Big)^{1-p/q} \\
+     & = \Big(\int \abs{a}^q (\norm{b}_1 + \abs{c})^q d\rho \Big)^{p/q} \Big(\int d\rho\Big)^{1-p/q}
 \end{align*}
 
 Therefore we have the inclusion $\mathcal{B}_{q} \subset \mathcal{B}_p$ for $1
@@ -607,7 +717,7 @@ $\mathcal{B}_{\infty} = \mathcal{B}_p$, $\barronnorm{\cdot}{\infty} =
 \end{proof}
 
 
-\section{Approximation in Fourier-analytic spaces}
+\section{Approximation in Fourier-analytic Barron spaces}
 \label{sec:spectral_norm}
 
 It is shown by \cite{barronUniversalApproximationBounds1993} that functions with
