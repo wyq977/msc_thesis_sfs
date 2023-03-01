@@ -470,6 +470,20 @@ will provide a accurate statement of the improved approximation error rates with
 a depiction of the intricacies inherent in these spaces.
 
 
+\begin{definition}[Fourier-analytic spaces]
+    Let $\Omega$ be $\R \times \R^d \times \R$ and $\mcal{P}_d$ denote all Borel
+    probability measure on $\Omega$. $U$ denotes a nonempty bounded set
+    $\emptyset \not= U \subset \R^d$. The Fourier-analytic spaces are
+    \begin{equation}
+        \bspace{f,s}(U) := \Big\{
+            f: U \to \R: \specnorm{f}{s} < \infty  \textrm{ and }
+            \forall x\in U, 
+                f(x) = \int_{\R^d} e^{i\omega x} \fourier{f}(\omega)\,d\omega
+        \Big\}
+    \end{equation}
+    equipped with $\specnorm{f}{s}$, for all $s \in \Nat$
+\end{definition}
+
 \subsection{infinite-width Barron spaces}
 \label{sec:barron_norm}
 
@@ -593,7 +607,7 @@ $\mathcal{B}_{\infty} = \mathcal{B}_p$, $\barronnorm{\cdot}{\infty} =
 \end{proof}
 
 
-\section{Funcitons with Finte First Fourier Moment}
+\section{Approximation in Fourier-analytic spaces}
 \label{sec:spectral_norm}
 
 It is shown by \cite{barronUniversalApproximationBounds1993} that functions with
@@ -875,11 +889,13 @@ We now state a result using the classical probabilistic approach by
 \cite{pisierRemarquesResultatNon1980} for the set $\Sigma_m(D_{\sigma}^d)$
 
 \begin{equation}
+    \label{eq:sigma_set}
     \Sigma_m(D_{\sigma}^d) = \{\sum_{j=1}^m a_j d_j, d_j \in D\}
 \end{equation}
 
 Given a dictionary of the form
 \begin{equation}
+    \label{eq:dict_sigma}
     D_{\sigma}^d = \{\sigma(b\tr x + c), b \in \R^d, c \in \R\}
 \end{equation}
 
@@ -954,6 +970,12 @@ To our familiarity, this is exactly an expansion of the form of 2NN.
 
 \section{Improved approximation in Fourier-analytic Barron spaces}
 
+In this section, we consider approximation by 2NN with ReLU$^k$ as activation
+function
+\begin{equation}
+    \sigma_k(x) = [\max(0, x)]^k, \quad k \in \Nat^0
+\end{equation}
+when $k = 0$ $\sigma_0$ is the Heaviside function discussed earlier.
 
 % A smoothness property of the function to be approximated is expressed in terms
 % of its Fourier representation. In particular, an average of the norm of the
@@ -974,14 +996,35 @@ and ideally improve on the $\bigO(m^{-1})$. Tighter rates of approximation is
 made possible with stricter conditions on the Barron spectral norm while
 bounding the parameter $b\in\R^d$ as in \TOCITE w.r.t. $L_1$ norm or $L_2$ norm. 
 
-% We will discuss whether the conditions on activation function $\sigma$ can be
-% relaxed. 
-
-In this section, we consider approximation by 2NN with ReLU and squared ReLU as
-activation function
+We consider the dictionary when researching for shallow neural networks
+\eqref{eq:dict_sigma}
 \begin{equation}
-    \sigma_k(x) = [\max(0, x)]^k, \quad k \in \{1, 2\}
+    D^d_{\sigma} \subset L^p(U)
 \end{equation}
+where $U$ is a bounded domain on $\R^d$.
+
+Specifically, we will consider set similar to \eqref{eq:sigma_set}
+\begin{equation}
+    \Sigma_m^k = \{\sum_{j=1}^m a_j \sigma_k (b_j\tr x + c_j): 
+    b_j \in \R^d, a_i \in \R\} 
+\end{equation}
+
+We define the sets of functions with ReLU$^k$ $\sigma_k$ that are bounded in
+$\lp{1}$ and $\lp{\infty}$.
+
+\begin{align*}
+    \Sigma_{m,M} &:= \Big\{
+        \sum_{j=1}^m a_j d_j:
+        d_j \in D^d_{\sigma_k}, \sum_{j=1}^m \norm{a_j}_1 \leq M 
+    \Big\} \\
+    \Sigma_{m,M}^{\infty} &:= \Big\{
+        \sum_{j=1}^m a_j d_j:
+        d_j \in D^d_{\sigma_k}, \max_{j} \abs{a_j} \leq M 
+    \Big\}
+\end{align*}
+
+We will consider the cases where the $\lp{1}$-norm of $a_i$ is bounded or
+unbounded.
 
 \subsection{Approximation in $L_{\infty}$ with bounded weights}
 
