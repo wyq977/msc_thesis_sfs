@@ -8,7 +8,14 @@ $\Nat = \{1,2,3,\dots\}$ and natural numbers with zero is denoted by $\Nat^0 =
 
 The standard scalar product of $x,y\in\R^d$ will be written as $x\tr y =
 \spr{x}{y} = \sum_{i=1}^d x_iy_i$. We denote the $L_2$ norm of x is denoted by
-$\norm{x} := \sqrt{x\tr x}$
+$\norm{x} := \sqrt{x\tr x}$. We would use the notation
+\begin{equation}
+    \norm{f - g}_{G} := \sup_{g\in G} \abs{f - g}
+\end{equation}
+over all functions $g \in G$.
+
+We write $f(x) \lesssim g(x)$ if $f(x) \leq C g(x)$ for a constant $C>0$ and for
+all $x \in X$. We will explicitly state the constant if $C$ depends on $f$.
 
 \section*{List of Abbreviations}
 

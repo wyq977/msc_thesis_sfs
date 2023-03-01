@@ -798,6 +798,8 @@ below.
 
 \subsection{Improved rate with Heaviside activation function}
 
+
+
 Here, \cite{makovozRandomApproximantsNeural1996} showed that the error can be
 improved to $\bigO(m^{\frac{1}{2} - \frac{1}{2d}})$
 
@@ -838,13 +840,6 @@ improved to $\bigO(m^{\frac{1}{2} - \frac{1}{2d}})$
 % In some literature, V is represented as the dictionary
 \tonote{use which notation for dictionary}
 
-\begin{proof}
-    We know that the. We need to get a estimate of the dictionary 
-
-    We obtained a O net for the dictionary in L2 
-
-\end{proof}
-
 Note that this theorem does not cover the case $q = \infty$. However,
 \cite{barronUniversalApproximationBounds1993} has already showed that $f\in V$ are
 dense w.r.t. supremum norm ($\norm{f - f_m}_{\infty} = \bigO(m^{-1/2})$), which
@@ -859,6 +854,96 @@ closed interval $[-u, u]$ on $\R$, note that the difference $\sigma(t) -
 \stepfunction{\lambda t}$ is still bounded everywhere. Therefore, we can see
 that distance between a bounded sigmoidal function and Heaviside function can be
 made arbitrarily small on the space $\lp{p}(\R, \mu)$.
+
+We will introduce some definitions and Maurey's Theorem
+\cite{pisierRemarquesResultatNon1980}. Detailed constructions about can be found
+in \cite{vandervaartWeakConvergenceEmpirical1996}.
+
+
+\begin{definition}[Covering numbers]
+    \label{def:covering_num}
+    Let $(\mcal{F}, d)$ be a subset of a normed space with norm $d$. The
+    \textit{covering numbers} $N(\epsilon, \mcal{F}, d)$ is the minimal number
+    of balls $\{g: d(g, f) < \epsilon\}$ of radius $\epsilon$ required to cover
+    the set $\mcal{F}$. The \textit{entropy} $\log N(\epsilon, \mcal{F}, d)$ is
+    the logarithm of the covering number. We are usually talking if $L^p(R)$ space
+    for some probability measures $R$
+\end{definition}
+
+
+We now state a result using the classical probabilistic approach by
+\cite{pisierRemarquesResultatNon1980} for the set $\Sigma_m(D_{\sigma}^d)$
+
+\begin{equation}
+    \Sigma_m(D_{\sigma}^d) = \{\sum_{j=1}^m a_j d_j, d_j \in D\}
+\end{equation}
+
+Given a dictionary of the form
+\begin{equation}
+    D_{\sigma}^d = \{\sigma(b\tr x + c), b \in \R^d, c \in \R\}
+\end{equation}
+
+To our familiarity, this is exactly an expansion of the form of 2NN.
+
+\begin{theorem}[Maurey's Theorem]
+    \label{thm:maurey}
+    Let $\Phi = \{\phi_1, \phi_2, \dots\}$ be a arbitrarily bounded sequence of
+    elements in a Hilbert space $H$. For every $f \in H$ of the form
+    \begin{equation}
+        f = \sum_{j=1} c_j \phi_j, \quad
+            \sum_{j=1} \abs{c_i} < \infty, c_j \in \R 
+    \end{equation}
+    then
+    \begin{equation}
+        \norm{f - f_m}_{X} \lesssim N(\epsilon, X, d) m^{-\frac{1}{2}} 
+    \end{equation}
+\end{theorem}
+
+\begin{proof}
+    We denote the set of Heaviside functions with bounded weights
+    \begin{equation}
+        A = \{\stepfunction{b, c}: \stepfunction{b, c} = 
+        \stepfunction{b\tr x + c}, b\in\R^d, c\in\R\}
+    \end{equation}
+
+    As we already knew from \cite{barronUniversalApproximationBounds1993} that
+    $V$ is the closure of the convex, symmetric hull of $A$ in $L^p(D)$
+    \begin{equation}
+        V = \closure{\conv(A \bigcup - A)}.
+    \end{equation}
+
+    \begin{equation}
+        D^d_{\stepfunction{}} = \{\sum_{j=1}^m a_j \stepfunction{b\tr x + c}, 
+        \quad \sum_j \abs{a_i} \leq 1, \abs{b_j} = 1,
+        b\in\R^d,
+        a, c\in\R\}
+    \end{equation}
+    and we denote by $D$ to avoid clutters. We then need to get an
+    estimate of $N(\epsilon, D, d)$ where $d$ is the $L^p$ norm for $2 \leq p <
+    \infty$.
+
+    We consider Heaviside with $\abs{b} = 1$. $D$ is inside a ball with radius
+    $r$, then this implies $\abs{c} \leq r$ as $\stepfunction{b\tr x + c}$ would
+    be ones or zeros over all $D$. Suppose $b_0, b_1, c_0, c_1$ and $\abs{b_0 -
+    b_1} \leq \epsilon$ and $\abs{c_0 - c_1} \leq \epsilon$ for some $\epsilon <
+    0$. It is easy to check that 
+    \begin{equation}
+        \norm{\stepfunction{b_0, c_0} - \stepfunction{b_1, c_1}}_{D}
+            \leq C \sqrt{\epsilon}
+    \end{equation}
+    in $L^2(D)$ with a positive constant $C>0$.
+    
+    We obtain a $\bigO(\sqrt{\epsilon})$-net for $A$ in $L^2(D)$ if we are able
+    to find a $\epsilon$-net for the set $P:= \{(b,c)\in \R^{d+1}: \abs{b} = 1,
+    \abs{c} \leq r\}$. To build a $\epsilon$-net for the sphere $\abs{b}=1$,
+    $\bigO(\frac{1}{\epsilon}^{d-1})$ elements is needed. An interval $[-r,r]$
+    requires $\bigO(\epsilon^{-d})$ elements. Therefore, a $\epsilon$-net of
+    $\bigO(\epsilon^{-2c})$ elements can be constructed for $A$ and hence the
+    covering number for $A$ is of the order $\bigO(\epsilon^{-\frac{1}{2d}})$
+
+    The statement follows from the ~\cite[Corollary, p.
+    104]{makovozRandomApproximantsNeural1996}, 
+\end{proof}
 
 
 % \section{Approximation in $L_2(\Omega)$}
