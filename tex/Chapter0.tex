@@ -165,7 +165,7 @@ function''. These realist \textit{insights} or \textit{impressions} are
 harder to formalize mathematically and the calculation of such problems within
 the Bayesian framework is often intractable.
 
-\tonote{Add something on LASSO, high dim regulzation stuffs}
+\TONOTE{Add something on LASSO, high dim regulzation stuffs}
 Is Lasso or spline regression 
 
 
@@ -254,13 +254,13 @@ encountered in practice. In the next chapters, we will restrict ourself to a
 specialized class, \textit{fully connected networks}. and the vertices of such
 networks are structured into layers.
 
-\tonote{Add a small figure of Neural network}
+\TONOTE{Add a small figure of Neural network}
 
 Within a fully connected network, each vertex is connected to all vertices in
 the proceeding layer via the edges and to no other layers. The \textit{input
 layer} $\mathcal{I}$ consists of simply $d$ input vertices where each vertex
 receive a external scalar signal $x_i \in \R, i \in \{1, \dots, d\}$ and the
-combined input $X := (x_1, \dots, x_d) \in \R^d$ forms the independent variable
+combined input $x := (x_1, \dots, x_d) \in \R^d$ forms the independent variable
 for the function mapping $f_{\mathcal{N}}$. Similarly, the \textit{output layer}
 $\mathcal{O}$ consists of $d'$ output vertices and the output vector is the
 value $f_{\mathcal{N}}(X) \in \R^{d'}$. $L$ hidden layers follows the input
