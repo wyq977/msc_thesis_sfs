@@ -51,9 +51,10 @@
 \makeglossaries
 % https://www.dickimaw-books.com/faq.php?itemlabel=nosection
 \renewcommand{\glossarysection}[2][]{}
+\usepackage{dsfont}
 
 % numbers in mathbb
-\usepackage[bb=dsserif]{mathalpha}
+% \usepackage[bb=dsserif]{mathalpha}
 
 % Optional argument
 % \usepackage{mathrsfs}       % \mathscr
@@ -142,15 +143,15 @@
 % ******************************************************************************
 \newcommand{\mcal}[1]{\mathcal{#1}}
 \newcommand{\bigO}{\mathcal{O}}
-\newcommand{\stepfunction}[1]{\mathbb{1}_{#1}}
+\newcommand{\indicator}[1]{\mathds{1}_{#1}}
 \newcommand{\bspace}[1]{\mathcal{B}_{#1}}
 \newcommand{\fourier}[1]{\mathcal{F}(#1)}
 \newcommand{\interior}[1]{\mathring{#1}}
-\newcommand{\closure}[1]{\overline{#1}} % (or \bar{#1})
 \newcommand{\lpspace}[2]{\mathcal{L}^{#1}(\mathcal{#2})}
 % when to use Lp
 % https://math.stackexchange.com/questions/109394/notation-l-p-vs-ell-p
-\newcommand{\lp}[1]{\mathcal{L}^{#1}}
+% https://www.math.ucdavis.edu/~hunter/measure_theory/measure_notes_ch7.pdf
+\newcommand{\lp}[1]{L^{#1}}
 
 \newcommand{\conv}{\textrm{conv}}
 
@@ -163,12 +164,17 @@
 
 % custom TODO function
 \newcommand{\TOCITE}{\textcolor{blue}{\bf [TO CITE]}}
-\newcommand{\tonote}[1]{\textcolor{red}{(\textit{#1})}}
+\newcommand{\TONOTE}[1]{\textcolor{red}{(\textit{#1})}}
+\newcommand{\TODO}{\textcolor{red}{\textnormal{\textbf{TODO}}}}
 
 % amsmath
 % \numberwithin{equation}{section} % using section number in equation number
 \DeclareMathOperator{\supp}{supp}
 \DeclareMathOperator{\spn}{span} % span already defined ??
+\DeclareMathOperator{\cl}{cl}
+\newcommand{\closure}[1]{\cl{#1}} % (or \bar{#1})
+% \newcommand{\closure}[1]{\overline{#1}} % (or \bar{#1})
+
 % replaced by spr in texab
 % \DeclarePairedDelimiterX{\inp}[2]{\langle}{\rangle}{#1, #2} % mathtools
 % [physics] already include abs and norm
