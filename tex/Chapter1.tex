@@ -1387,6 +1387,7 @@ The $\norm{\Theta}_{path}$ is the per-unit norm control for 2NN defined in
 \section{Difference and Connection Between Different Barron Spaces}
 \label{sec:diff_barron_spaces}
 
+\TODO
 
 As mentioned in the beginning of the chapter, we will start with the definition
 of the different Barron spaces, namely the \textit{Fourier-analytic Barron
@@ -1450,52 +1451,69 @@ We state the following known properties from the literature.
 
 % https://math.stackexchange.com/questions/2319301/why-must-bounded-sets-be-contained-within-a-closed-ball
 \textbf{1):} 
-Firstly, we try to connect ReLU and the indicator function through integral. As
-the set $U$ is nonempty and bounded in $\R^d$, this implies that there exists a
-a open ball, $B_r(\cdot)$, with a radius $r > 0$ whose closure contains $U$ such
-that
+Firstly, we try to connect ReLU and the Heaviside function. As $U$ is nonempty
+and bounded in $\R^d$, there is a open ball for some $x \in \R^d$, $B_r(\cdot)$,
+with a radius $\delta > 0$ whose closure contains $U$ such that
 \begin{equation}
-    U \subset \closure{B_r(x)}
-\end{equation}
-for some $x \in \R^d$. Assume that $U \subset \closure{B_r(0)}$. Let $C:=1+r$
-and then we have:
-
-\begin{equation}
-    \sigma(x) = \int_0^C H(y- t) \,dt \quad \forall y \in \R 
+    U \subset \closure{B_{\delta}(x)}.
 \end{equation}
 
-For all function $f \in \mcal{B}(U)$. Let $\beta_{b,c} = \abs{b} + \abs{c}$ for
-any $b\in\R^d, c\in\R$ and note that $\abs{b\tr x + c} \leq C\cdot\beta_{b,c}$.
-Thanks to the positive homogeneity of ReLU function $\sigma$, i.e.
-$\sigma(\lambda x) = \lambda \sigma(x)$ for $x \in \R$.
+For $x=0$ and a suitable $\delta$, $U \subset \closure{B_{\delta}(0)}$ then we
+have:
 
-For a measure $\mu \in \Sigma_{\Omega}$ and all $x \in U$
+\begin{equation}
+    \sigma(x) = \int_0^{1+\delta} H(x-t) \,dt 
+    \quad \forall x \in \R \textnormal{ and } \abs{x} < \delta.
+\end{equation}
+
+Let $\beta_{b,c} = \abs{b} + \abs{c}$ for any $b\in\R^d, c\in\R$ and note that
+$\abs{b\tr x + c} \leq (1+\delta)\beta_{b,c}$. Thanks to the positive homogeneity of
+ReLU function $\sigma$, i.e. $\sigma(\lambda x) = \lambda \sigma(x)$ for $x \in
+\R$, we observe that for any functions $f:U\to\R$ that admits such a integral
+representation with a measure $\mu \in \Sigma_{\Omega}$ and for all $x \in U$
 \begin{align*}
-    \mu_{ReLU}(x) 
-    &= \int_{\Omega} a \sigma(b\tr x + c )\,d(a,b,c) \\
-    &= \int_{\Omega} \beta_{b,c} \sigma(\frac{b\tr x}{\beta_{b,c}}+ \frac{c}{\beta_{b,c}}) \,d\mu(a,b,c) \\
-    &= \int_{\Omega} \int_0^C a \beta_{b,c} H(\frac{b\tr x}{\beta_{b,c}} + \frac{c}{\beta_{b,c}} -t)\,dt\,d\mu
-    (a,b,c) \quad \text{(Fubini's Theorem)}\\
-    &= \int_{\Omega} a H(b\tr x + c') \,d\nu(a,b,c') = \nu_H(x)
+    f(x) 
+    &= \int_{\Omega} a \sigma(b\tr x + c )\,d\mu(a,b,c) \\
+    &= \int_{\Omega} \beta_{b,c} \sigma(
+        \frac{b\tr x}{\beta_{b,c}}+ \frac{c}{\beta_{b,c}}
+    ) \,d\mu(a,b,c) \\
+    &= \int_{\Omega} \int_0^{1+\delta} 
+        a\beta_{b,c} H(\frac{b\tr x}{\beta_{b,c}} +
+        \frac{c}{\beta_{b,c}} -t)\,dt\,d\mu(a,b,c) \quad
+        \text{(Fubini's Theorem)} \\
+    &= \int_{\Omega} a' H(b\tr x + c') \,d\nu(a',b,c')
 \end{align*}
-where $\nu$ is the pushforward of the measure $\mu \otimes \lambda$ and
-$\lambda$ is the Lebesgue measure on $[0, C]$.
+where $a', c' \in \R$ for some $v \in \Sigma_{\Omega}$.
 
+We can then prove the inclusion if we can find a measure $v$ and the integral
+condition $r(f, v, H)$ is also finite for this function $f \in \mcal{B}(U)$.
+
+With a mapping
 \begin{equation}
-    T: \Omega \times [0,C] \to \Omega, \quad 
+    T: \Omega \times [0,1+\delta] \to \Omega, \quad 
     ((a,b,c), t) \mapsto
-    (a\beta_{b,c}, \frac{b}{\beta_{b,c}}, \frac{c}{\beta_{b,c}} - t )
+    (a\beta_{b,c}, \frac{b}{\beta_{b,c}}, \frac{c}{\beta_{b,c}} - t).
 \end{equation}
 
-We have 
+Given $\lambda$ is the Lebesgue measure on the interval $[0,1+\delta]$, we can
+construct the measure $v$ via the pushforward of the product measure
+$\mu\otimes\lambda$
 \begin{equation}
-    r(f, \mu, h) = \int_{\Omega} \abs{a}\,d\mu(a,b,c) 
-    = \int_{\Omega}\int_0^C 
+    v := T^{-1}(\mu\otimes\lambda).
 \end{equation}
 
-Therefore, it shows that for any function $f \in \norm{f}_{\mathcal{B}_H}$
+Furthermore, we can evaluate the $r(f, v, H)$
+\begin{align}
+    r(f, v, H) 
+    &= \int_{\Omega} \abs{a} \,dv(a,v,c) 
+    = \int_{\Omega}\int_0^{1+\delta} \abs{a\beta_{b,c}} \,dt\,d\mu(a,b,c) \\
+    &= (1+\delta) \abs{a}(\abs{b} + \abs{c}) \,d\mu(a,b,c)
+    = (1+\delta) r(f,\mu) < \infty.
+\end{align}
+
+Therefore, it shows that for any function $f \in \mcal{B}(U)$
 \begin{equation}
-    \norm{f}_{\mathcal{B}_H} \leq C \norm{f}_{\mathcal{B}_{ReLU}} < \infty
+    \norm{f}_{\mathcal{B}_H} \lesssim \norm{f}_{\mcal{B}} < \infty
 \end{equation}
 hence the inclusion holds.
 
