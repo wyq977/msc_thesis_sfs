@@ -641,6 +641,7 @@ originally by \cite{barronUniversalApproximationBounds1993}.
 
     Let the spectral condition defined as
     \begin{equation}
+        \label{eq:spectral_condition}
         v_{f,s} 
             = \int_{\R^d} \norm{\omega}_1^s \abs{\fourier{f}(\omega)}\,d\omega.
     \end{equation}
@@ -662,6 +663,7 @@ to the seminorm give by \cite{barronUniversalApproximationBounds1993}.
     Under the setup of Definition \ref{def:spectral_seminorm}, we define a
     modified spectral condition
     \begin{equation}
+        \label{eq:spectral_condition_mod}
         v'_{f,s} 
             = \int_{\R^d} (1 + \norm{\omega}_1)^s \abs{\fourier{f}(\omega)}
             \,d\omega.
@@ -1401,6 +1403,7 @@ Firstly, we denote the set of all Borel probability measures on $\Omega = \R^1
 \times \R^d \times \R^1$ by $\Sigma_{\Omega}$ and we write functions that admits
 the integral form below
 \begin{equation}
+    \label{eq:integral_represent}
     f(x) = \int_{\omega} a\sigma(b\tr x + c) \,d\mu(a,b,c), \quad
     \forall x \in \R^d
 \end{equation}
@@ -1582,52 +1585,69 @@ f(0)$ is the closure of the convex hull of finite linear combinations.
 
 Hence we show the inclusion in 2).
 
-\textbf{3):} As $U$ is nonempty and bounded subset in $\R^d$, we can fix a point
-$x_0 \in \R^d$ and a radius $r > 0$ such that $U \subset x_0 + [0, r]^d$. Let
-$f$ be a function in $\mathcal{B}_{\mathcal{F},2}$ with norm $v_{f,2}\leq 1$.
-We define two mapping from $\R^d$ to $\mathbb{C}$ $G, H$.
+\textbf{3):} As $U$ is nonempty and bounded in $\R^d$, we can fix a point $x_0
+\in \R^d$ and a radius $\delta > 0$ such that $U \subset x_0 + [0,\delta]^d$.
+Without loss of generality, it is safe to assume that $f$ is a function in
+$\mathcal{B}_{\mathcal{F},2}$ with the spectral condition $v_{f,2}\leq 1$
+\eqref{def:spectral_seminorm} and consequently this implies that
+\hyperref[def:spectral_norm]{spetral norm} $\norm{f}_{\bspace{\mcal{F}, 2}} \leq
+2$ by direct calculation. 
+
+We then prove the inclusion after finding a function with a ReLU integral
+representation \eqref{eq:integral_represent} with a measure in $\Sigma_{\Omega}$
+and showing its Barron norm is finite.
+
+We define two mapping $G, H: \R^d \to \mathbb{C}$:
 \begin{align*}
     G(\omega) &= \frac{1}{2} (\fourier{f}(\omega) 
-                    + \bar{\fourier{f}(-\omega)}) \\
-    H(\omega) &= \frac{1}{r^d} \cdot 
-                    e^{i \frac{x_0\tr}{r} \omega} \cdot 
-                    G(\omega / r)
+                    + \overline{\fourier{f}(-\omega)}) \\
+    H(\omega) &= \frac{1}{\delta^d} \cdot 
+                    e^{\frac{i \omega\tr x_0}{\delta}} \cdot 
+                    G(\omega / \delta)
 \end{align*}
-where $\fourier{f}(\omega)$ is the Fourier transform of $f$.
+where $\fourier{f}$ is the Fourier transform of $f$ and $\overline{\fourier{f}}$
+is the complex conjugate of $\fourier{f}$.
 
-We calculate their respective norm $G_{\mathcal{F},2} \leq 2$ and
-$H_{\mathcal{F},2} \leq 2r^2$. We then define two functions with $G,H$ being
-their Fourier transform, respectively.
+We calculate their respective spectral norm in $\bspace{\mcal{F}, 2}$:
+\begin{align}
+    \norm{G}_{\mathcal{F},2} &\leq 2 \\
+    \norm{H}_{\mathcal{F},2} &\leq 2r^2
+\end{align}
+
+We then define two functions from $U$ to $\R$ with $G,H$ as their Fourier
+transform, respectively.
 \begin{align*}
-    g(x) := \int_{\R^d} e^{ix\omega} G(\omega)\,d\omega\\
-    h(x) := \int_{\R^d} e^{ix\omega} h(\omega)\,d\omega\\
+    g(x) &:= \int_{\R^d} e^{i\omega\tr x} G(\omega)\,d\omega\\
+    h(x) &:= \int_{\R^d} e^{i\omega\tr x} H(\omega)\,d\omega\\
 \end{align*}
-and it is easy to see that for all $x \in U$, $f(x)=g(x)=h(\frac{x-x_0}{r})$.
+It is easy to check that for all $x \in U$, $f(x)=g(x)=h(\frac{x-x_0}{\delta})$.
 
-By construction, the spectral norm of $h$ is finite. We have
-$\norm{h}_{\mathcal{B}_{ReLU}}$ is finite with some constant $C_h$ thanks to
-Theorem 9 in \cite{eMathematicalUnderstandingNeural2020}. Therefore, $h(y)$ can
-be represented as the integral form
+By construction, the spectral condition of $v_{h,2}$ is finite. We have
+$\norm{h}_{\mathcal{B}}$ is finite with some constant $C_h$ thanks to Theorem 9
+in \cite{eMathematicalUnderstandingNeural2020}. Therefore, $h(y)$ can be
+represented as the integral form
 \begin{equation}
-    h(y) = \int_{[0,1]^d} a \sigma(b\tr x + c) \,d\mu(sa,b,c) \quad \forall y \in [0,1]^d
+    h(y) = \int_{[0,1]^d} a \sigma(b\tr x + c) \,d\mu(a,b,c) \quad
+    \forall y \in [0,1]^d
 \end{equation}
-where $\mu \in \Sigma_{\Omega}$ and $\norm{\mu}_{ReLU} \leq C_h$.
+where $\mu \in \Sigma_{\Omega}$ and $\norm{f}_{\mcal{B}} < \infty$ w.r.t. some
+constant only dependent on $\delta$ and $d$.
 
-Since $y=\frac{x-x_0}{r}$ for all $x\in U$, the results above implies that 
+Since $y=\frac{x-x_0}{\delta}$ for all $x\in U$, the results above implies that 
 \begin{equation}
-    f(x) = h(\frac{x-x_0}{r}) \int_{\Omega} a 
-    \sigma(\frac{b\tr x}{r} + c - \frac{b\tr x_0}{r})\,d\mu(a,b,c)
-    = \mu'_{ReLU}(x)
+    f(x) = h(\frac{x-x_0}{\delta}) \int_{\Omega} a 
+    \sigma(\frac{b\tr x}{\delta} + c - \frac{b\tr x_0}{\delta})\,dv(a,b,c)
 \end{equation}
-where $\mu'$ is the pushforward of $\mu$ under the map:
+for some measure $v \in \Sigma_{\Omega}$.
+
+We continue to construct via the pushforward of $v = T(\mu)$. Let $T$ be a mapping:
 \begin{equation}
-    \Phi: \Omega \to \Omega, (a,b,c) \mapsto (a, \frac{b}{r}, c - \frac{b\tr x_0}{r})
+    T: \Omega \to \Omega, \quad
+    (a,b,c) \mapsto (a, \frac{b}{\delta}, c - \frac{b\tr x_0}{\delta})
 \end{equation}
 
-We can then calculate $\norm{\mu'}_{ReLU} \leq (1+\norm{x_0}_2)
-\norm{\mu}_{ReLU}$ is smaller than some constant $C$ w.r.t. the choice of
-$d,r,x_0$. Hence $f$ is in $\mathcal{B}_{ReLU}$ with some measure $\mu'$ if $f
-\in \mathcal{B}_{\mathcal{F},2}$ and hence the inclusion
+By calculation, $r(f, v) \leq (1+\norm{x_0}) r(h, \mu)$ is finite w.r.t some
+constant $C$ dependent only on $d,\delta,x_0$. Hence the inclusion is shown.
 
 \end{proof}
 
