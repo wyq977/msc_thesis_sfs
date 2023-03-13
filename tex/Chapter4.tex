@@ -1,0 +1,610 @@
+\chapter{Fourier-analytic Barron spaces}
+\label{sec:fourier}
+
+
+Assumption:
+\begin{itemize}
+    \item Maurey's Theorem in Hilbert space
+\end{itemize}
+
+Content:
+\begin{itemize}
+    \item Is the dictionary is compact or not?
+    \item $\lp{\infty}$ bound for? What is the probability measure on
+    \item Why Barron 2018 say the linear combination is by equally weighted
+    combination?
+    \item why it works for $\lp{q}$ also $-1/2$
+    \item What is a type 2 Banach space?
+    \item ReLU\textsuperscript{k}, smaller dictionary or basis?
+    \item How to get the $-1/q d$ improvement by Makovoz?
+    \item Is these spaces more compact?
+    \item variation spaces with its norm
+\end{itemize}
+
+In Chapter \TODO, the question of \textit{density} has been answered for 2NN in
+which functions on any compact domain in $\R^d$ are dense in 2NN w.r.t. the
+supremum norm. Barron presented an different approach where given a dictionary
+$\mathbb{D}$, one tries to find the class of functions that are \textit{well
+approximated} by such dictionary.
+
+To apply the argument of nonlinear approximation with $n$-term dictionary    to
+2NN, we consider the dictionary
+\begin{equation}
+    \mathbb{D}_{\sigma} := \{
+        \sigma(b\tr x + c), \quad b\in\R^d, c\in\R
+    \}
+\end{equation}
+for any $x \in U$ where $U$ is a nonempty bounded domain in $\R^d$, and
+$\sigma:\R\to\R$ is a bounded activation function.
+
+Let $\Sigma_n(\mathbb{D}_{\sigma})$ be the class of function of $n$-width 2NN
+with activation function $\sigma$
+\begin{equation}
+    \Sigma_n(\mathbb{D}_{\sigma}) = \Sigma_n^{\sigma}
+    := \Bigg\{
+        \sum_{j=1}^n a_j d_j, \quad a_j\in\R, d_j\in \mathbb{D}_{\sigma}
+    \Bigg\}.
+\end{equation}
+
+If a function $f$ is in the closed convex hull of $\mathbb{D}_{\sigma}$
+\begin{equation}
+    \closure{\conv(D_{\sigma})} :=
+    \closure{
+        \Bigg\{ 
+            \sum_{j=1}^n a_j d_j: 
+            n\in\Nat, a_j\in\R, d_j\in\mathbb{D}_{\sigma}, 
+            \sum_{j=1}^n \norm{a_j}_1 \leq 1
+        \Bigg\}
+    }.
+\end{equation}
+Applying the Maurey's Theorem (\TODO or should I say the sampling argument?)
+yields a approximation rate
+\begin{equation}
+    \inf_{f_n\in\Sigma_n^{\sigma}} \norm{f - f_n} 
+    \lesssim n^{-\frac{1}{2}}
+\end{equation}
+where $f$ is any function in the closed convex hull of $\mathbb{D}_{\sigma}$
+and $2 \leq q < \infty$.
+
+This chapter will show that functions that satisfies certain smoothness
+conditions are in $\closure{\conv(D_{\sigma})}$ where $\sigma$ is any bounded
+sigmoidal activation functions.
+
+
+\section{Approximation in Fourier-analytic Barron spaces}
+\label{sec:spectral_norm}
+
+It is shown by \cite{barronUniversalApproximationBounds1993} that functions of
+$d$-variables with finite Fourier moments can be approximated with the
+superpositions of sigmoidal functions at a rate independent of the
+dimensionality $d$. The result is extended to ReLU activation function. In other
+words, any functions in that class can be approximated with a 2NN at an error
+rate of $\bigO(n^{-1} \cdot C)$ where $n$ is the number of nodes in the the
+single hidden layer and $C$ is a constant dependent \textit{only} the smoothness
+of the target function. Despite that the convergence rate itself is independent
+of dimension (i.e. the dimensionality $d$ of input vector $x\in\R^d$), the
+constant $C$ could be dimension-dependent as the Fourier transform is used here.
+
+The content of this section is based on
+\cite{barronUniversalApproximationBounds1993}.
+
+\begin{definition}
+    \label{def:fourier_class}
+    Let $U$ be a bounded domain in $\mathbb{R}^d$. A function $f: U \to
+    \mathbb{R}$ is said to be in \textit{Barron class} with a constant $C > 0$,
+    if there is a $x_0$ in $U$, $c \in [-C, C]$, and a measurable function $f:
+    \mathbb{R}^d \to \mathbb{C}$ satisfying:
+
+    \begin{align}
+        & \int_{\mathbb{R}^d} \abs{\omega}_{U, x_0} 
+        \cdot \abs{\fourier{f}(\omega)} \,d\omega < C 
+        \label{eq:another_spectral_seminorm_condition} \\
+        & f(x) = c + \int_{\mathbb{R}^d} (
+            e^{i\omega\tr x} - e^{i\omega\tr x_0}
+        ) \cdot \fourier{f}(\omega)\,d\omega
+    \end{align}
+
+    where $\abs{\omega}_{X, x_0} := \sup_{x\in U}\abs{\spr{\omega}{x - x_0}}$
+    and it is denoted by $\abs{\omega}_U$ when $x_0 = 0$ for simplicity. We
+    refer the class of all functions as $\Gamma_C(U, x_0)$\footnote{
+        $\Gamma_C(U, x_0)$ is the Fourier-analytic Barron space
+        $\bspace{\mcal{F}, 1}(U)$ discussed before. The integral condition in
+        \eqref{eq:another_spectral_seminorm_condition} is the integral condition
+        $v_{f,1} < \infty$ defined in \eqref{eq:spectral_condition}.
+    }.
+\end{definition}
+
+\begin{theorem}
+    % \cite[Theorem~1]{barronUniversalApproximationBounds1993}
+    \label{thm:barron_1993_1}
+    For every function in $\Gamma_C(U, x_0)$, every sigmoidal function $\phi$,
+    every probability measure $\mu$, and every $n \in \Nat$, there exists a
+    linear combination of sigmoidal function $f_n(x) = \sum_{j=1}^n a_j
+    \sigma(b_j\tr x+c_j), a_j, c_j \in \R, b_j \in \R^d$ such that
+    \begin{equation}
+        \norm{f - f_n}_2 \leq n^{-\frac{1}{2}} \cdot 2C
+    \end{equation}
+\end{theorem}
+
+\begin{proof}
+
+    The main idea behind the the proof is to show functions with finite Fourier
+    moment are in the closure of the convex hull of the set of half planes.
+
+    \textbf{Step 0} (\textit{Fixing $x_0$ to $0$}): Changing $x_0$ to $x_1$
+    affects the norm, at most, by a factor of $2$. Let $x_0, x_1$ be two
+    arbitrarily selected points in $U$, and $f$ fulfilling the condition above,
+    i.e. $f \in \Gamma_C(U, x_0)$. For any $\omega \in \mathbb{R}^d$, given
+    $x_0, x_1$, we have
+
+    \begin{equation}
+        \abs{\omega}_{U, x_0} 
+            = \sup_{x\in U}\abs{\spr{\omega}{x-x_0}} 
+            \leq \sup_{x\in U}\abs{\spr{\omega}{x-x_1}} + \abs{\spr{\omega}{x_0-x_1}} 
+            \leq 2\abs{\omega}_{U, x_1}
+    \end{equation}
+
+    Thus we have $\int_{\mathbb{R}^d} \abs{\omega}_{U, x_1} \cdot a < 2C$. If we
+    have $\tilde{c} = c + \int_{\mathbb{R}^d} (e^{\omega\tr x_0} - e^{\omega\tr
+    x_1}) d\omega$, then $f(x) = \tilde{c} + \int_{\mathbb{R}^d} (e^{i\omega\tr
+    x} - e^{i\omega\tr x_1})$ with $\tilde{c} \leq 2C$.
+
+    This shows that changing $x_0$ would only affect the norm in the RHS of
+    Theorem \ref{thm:barron_1993_1} at most by a factor of two, i.e.
+    $\Gamma_C(U, x_0) \subset \Gamma_{2C}(U, x_1)$. Therefore, we continue the
+    proof assuming $x_0 = 0$ for simplicity.
+
+    \textbf{Step 1} (\textit{Represent $f$ via Inverse Fourier Transform}): Note
+    that with polar decomposition, we have $\fourier{f}(\omega) =
+    e^{i\theta(\omega)} \cdot \abs{\fourier{f}(\omega)}$ where $\theta(\omega)
+    \in \mathbb{R}$ denote the magnitude decomposition. From the assumption, and
+    the fact that $f$ is real-valued ($U \subset \mathbb{R}^d \to \mathbb{R}$),
+    the real number part of $f(x) - f(0)$ can be written as:
+
+    \begin{align}
+        \label{eq:barron_fouier_int}
+        f(x) - f(0)
+        & = \Re \int (e^{i\omega\tr x} - e^{i\omega\tr 0}) e^{i\theta(\omega)} \cdot 
+        \abs{\fourier{f}(\omega)} \,d\omega \\
+        & = \int_{\Omega}\Big(\cos(\omega\tr x + \theta(\omega)) - \cos(\theta(\omega))\Big)
+        \abs{\fourier{f}(\omega)} \,d\omega \\
+        & = \int_{\Omega} \frac{C_{f,U}}{\abs{\omega}_{U, 0}}\Big(\cos(\omega\tr x + \theta
+        (\omega)) - \cos(\theta(\omega))\Big)\,d\mu_g \\
+        & = \int_{\Omega} g(x, \omega)\,d\mu_g.
+    \end{align}
+
+    $C_{f,U}$ is a constant defined with $f$ and $U$: $C_{f,U} =
+    \int_{\mathbb{R}^d} \abs{\omega}_{U, 0} \cdot \abs{\fourier{f}(\omega)}
+    d\omega \leq C$ and $\mu_g$ is a probability distribution $d\mu_g =
+    \abs{\omega}_{U,0}/C_{f,U}\abs{\fourier{f}(\omega)} d\omega$, the integral
+    is evaluated on $\Omega = \{\omega \in \R^d: \omega \not = 0\}$ and
+
+    \begin{equation}
+        g(x, \omega) = \frac{C_{f,U}}{\abs{\omega}_{U, 0}}\Big(\cos(\omega\tr x + \theta(\omega)) - \cos(\theta(\omega))\Big)
+    \end{equation}
+
+    \textbf{Step 2} (\textit{$f(x) - f(0)$ is in the closure of the convex hull
+    of $G_{\cos}$}): The integral form in (\ref{eq:barron_fouier_int}) shows that
+    $f(x) - f(0)$ can be represented as an infinite convex combination of
+    functions in the class
+
+    \begin{equation}
+        G_{\cos} = \Bigg\{\frac{\abs{\gamma}}{\abs{\omega}_{U, 0}}\Big(\cos(\omega\tr x + b) - \cos(b)\Big): \omega \not= 0, \abs{\gamma} \leq C, b \in \mathbb{R} \Bigg\}
+    \end{equation}
+
+    Suppose we have drawn $n$ samples ($\{\omega_i, i = 1,\dots, n\}$) from
+    $\mu_g$, the expected norm in $\lp{2}(\mu_g, U)$ converges to zero as $n \to
+    \infty$ by $\lp{2}$ law of large numbers. Therefore, there exist a sequence
+    of convex combination in $G_{\cos}$ that converges to $f(x) - f(0)$ in
+    $\lp{2}$.
+
+
+    \textbf{Step 3} (\textit{$G_{\cos}$ is in the closure of the convex hull of
+    $G_{\textnormal{step}}$}): It is sufficient to check $g(z), z = \alpha x,
+    \alpha = \omega/\abs{\omega}_{U,0}$ on $[-1, 1]$ for some $\omega$. As
+    $g(z)$ is a uniformly continuous sinusoidal function on $[-1, 1]$, it can be
+    uniformly approximately by piecewise constant step function.
+
+    Restricting $g(z)$ on $[0, 1]$, for a partition ${0 \leq p_1 \leq p_2 \leq
+    \cdots \leq p_k = 1}$, define
+
+    \begin{align}
+        g_{k,+}(z) = \sum_{i=1}^{k-1} \Big(g(p_i) - g(p_{i-1})\Big) \cdot
+        \indicator{\{z\geq p_i\}}(z)
+    \end{align}
+
+    Similarly, we can construct $g_{k,-}(z) = \sum_{i=1}^{k-1} (g(-p_i) -
+    g(-p_{i-1})) \cdot \indicator{\{z\leq -p_i\}}(z)$, resulting in a sequence
+    of piecewise step function on $[-1, 1]$ uniformly close to $g(z)$. We have
+    $g(z) = g_{k,+}+g_{k,-}$, a linear combination of step function (or
+    heaviside function) and the sum of the coefficients is bounded by 2C (The
+    sum of coefficients of $g_{k,+}$ is bounded by $C$ as a result of the
+    derivative of $g$ bounded by $C$, so does $g_{k,-}$ and hence $2C$).
+
+    We can see that functions $g(z)$ are in the closure of the convex hull of
+    the step functions (by Lemma 1 in
+    \cite{barronUniversalApproximationBounds1993})
+
+    By substituting $z = \omega/\abs{\omega}_{U, 0} x$, we have $G_{\cos}
+    \subset G_{\textnormal{step}}$,
+    \begin{equation}
+        G_{\textnormal{step}} = \Bigg\{
+            \gamma\indicator{\{\alpha x-t\}}(x):
+            \abs{\gamma} \leq 2C,
+            \abs{t} \leq 1,
+            \abs{\alpha}_{U} = 1
+        \Bigg\}.
+    \end{equation}
+
+    \textbf{Step 4} (\textit{Closure of $G_{\phi}$}): There exists a sequence of
+    sigmoidal functions $\phi(\abs{c}(\alpha x - t))$, as $\abs{c} \to \infty$,
+    they converge to step functions pointwise (except at points where $\alpha x
+    - t = 0$). If we introduce a measure $\mu$ that has zero measure at those
+    points, previous statement on $G_{\cos} \subset G^{\mu}_{\textnormal{step}}$
+    still holds on $\{\abs{t} \leq 1: \alpha x - t \not=0\}$ give a particular
+    $\alpha$. We subsequently have convergence in $L_2(\mu, U)$ by the dominated
+    convergence theorem, which implies that $G^{\mu}_{\textnormal{step}} \subset
+    G_{\phi}$.
+
+    Finally we have the following relationship since the closure of a convex set
+    is also convex:
+
+    \begin{equation*}
+        \Gamma_{U, x_0} \subset \closure{G_{\cos}} 
+        \subset \closure{G_{\textnormal{step}}} \subset \closure{G_{\phi}}.
+    \end{equation*}
+
+    % \cite[\textit{Lemma~1}]{barronUniversalApproximationBounds1993}: If $f$ is
+    \begin{lemma}
+    If $f$ is in the closure of the convex hull of a set $G$ in a Hilbert space
+    with norm $\norm{\cdot}$ and every function $g \in G$ is bounded, then for
+    every integer $n \in \Nat$, there is an $f_n$ in the convex hull of $n$
+    points in $G$ such that:
+    \begin{equation}
+        \norm{f - f_n}^2 \leq \frac{C}{n}
+    \end{equation}
+
+    where $f_n = \sum_{i=1}^n \lambda_i \cdot g_i, \quad g_i \in G, \quad
+    \sum_{i=1}^n \lambda_i = 1$, and $C \geq \sup_{g\in G} \norm{g}^2 -
+    \norm{f}^2$.
+
+    \end{lemma}
+
+    % Lemma 1 in \cite{barronUniversalApproximationBounds1993} showed that
+    % function in a closure of the convex hull of a set in a Hilbert space can
+    % be approximated with a sequence of functions from such closure and the
+    % norm between the function and the sequences $\{f_i, i = 1, \dots, N\}$ are
+    % bounded in a magnitude of $\bigO(N^{-1})$.
+
+    It has been shown above that function $f(x) - f(0)$ are in the closure of
+    the convex hull of $G_{\phi}$ where $\norm{g} \leq (2C)^2$ for every $g \in
+    G_{\phi}$. Hence the $L_2$ norm of the approximation error is bounded for
+    any choice of $C' > (2C)^2 - \norm{f(x) - f(0)}^2$.
+    % Suppose we restrict $t$ t
+
+    % Suppose we now restrict $t$ to the continuity point induced by measure
+    % $\mu$ in We can check that the functions in $G_{\textnormal{step}}$ are in the closure
+    % of the convex hull of 
+
+    % \textbf{Step 3} (\textit{Putting it together}): We can further show
+    % $G_{\cos}$ are in the class of sigmoidal functions. 
+
+    % Theorem 2 in \cite{barronUniversalApproximationBounds1993}, we have that
+
+\end{proof}
+
+
+
+\section{Improved rate via bounding coefficients}
+\label{sec:improved_heaviside}
+
+
+\cite{makovozRandomApproximantsNeural1996} showed that the error can be improved
+to $\bigO(n^{\frac{1}{2} - \frac{1}{q\cdot d}})$ in $\lp{p}(\Omega)$, $q <
+\infty$.
+
+\begin{theorem}
+    % \cite[Theorem 3]{makovozRandomApproximantsNeural1996}
+    \label{thm:improve_barron}
+    Let $U$ be bounded set on $\R^d$. Let $f: U \to \R$ be a function and $V$ be
+    the closure of all functions $f: U \to \R$ of the following form
+    \begin{equation}
+        V = \closure{
+            \{f(x) = \sum_{j=1}^n a_j \sigma(b_j\tr x + c_j) \quad 
+            \sum a_j \leq 1, \abs{b_j} = 1, c_j \in \R \}
+            }
+    \end{equation}
+    where $\sigma$ is a sigmoidal function.
+
+    Then there exists a finite linear combination $f_n$ 
+    \begin{equation}
+        f_n = \sum_{j=1}^n a_j s(b_j\tr x + c_j), b_j \in R^d, a_j, c_j \in \R
+    \end{equation}
+    where $s(x)$ is a function from $\R$ to $\R$.
+
+    For any $f \in V$ and any $n \in \Nat$ such that 
+    \begin{equation}
+        \norm{f- f_n}_{q} \leq C n^{-\frac{1}{2} - \frac{1}{q \cdot d}}
+        \quad 1 \leq q < \infty
+    \end{equation}
+    where $C$ is a constant dependent only $U$, $q$ and $s(\cdot)$.
+\end{theorem}
+
+% In some literature, V is represented as the dictionary
+
+Note that this theorem does not cover the case $q = \infty$. However,
+\cite{barronUniversalApproximationBounds1993} has already showed that $f\in V$ are
+dense w.r.t. supremum norm ($\norm{f - f_n}_{\infty} = \bigO(n^{-1/2})$), which
+implies $\norm{f-f_n}_{q}$ for all $\lp{q}, q<\infty$.
+
+As the dimensionality $d$ increases, this rate approaches to the original rate
+and therefore this theorem is insignificant for high dimensionality. It is
+sufficient to prove the case $s$ is sigmoidal. It is easy to check $s(\lambda t)
+\to s(t)$ as $\lambda \to \infty$ and $s(\lambda t) \to s{t}$ as $\lambda \to
+-\infty$. On a closed interval $[-u, u]$ on $\R$, note that the difference $s(t)
+- \sigma(\lambda t)$ is still bounded everywhere. Therefore, we can see that
+distance between $s$ and $\sigma$ can be made arbitrarily small on the space
+$\lp{d}(\R)$ with a sufficiently large $b$.
+
+\begin{proof}
+    We denote the set of sigmoidal functions
+    \begin{equation}
+        A = \{\sigma(b,c): \sigma(b,c) = \sigma(b\tr x + c), \quad 
+        b\in\R^d, c\in\R\}
+    \end{equation}
+
+    As we already knew from \cite{barronUniversalApproximationBounds1993} that
+    $V$ is the closure of the convex, symmetric hull of $A$ in $\lp{p}(U)$
+    \begin{equation}
+        V = \closure{\conv(A \bigcup - A)}.
+    \end{equation}
+    
+    Now it remains to finding an estimate for the entropy of $A$. Without loss
+    of generality, only the case $\sigma$ with $\abs{b} = 1$ is considered. We
+    can assume $U$ is inside a ball with a suitable radius $r$ since $U$ is
+    bounded subset in $\R^d$. Then this implies $\abs{c} \leq r$ as $\sigma(b\tr
+    x + c)$ would be ones or zeros over all $U$. Suppose $b_0, b_1, c_0, c_1$
+    and $\abs{b_0 - b_1} \leq \epsilon$ and $\abs{c_0 - c_1} \leq \epsilon$ for
+    some $\epsilon < 0$. It is easy to check that 
+    \begin{equation}
+        \sup_{x\in U} \norm{\sigma({b_0, c_0}) - \sigma({b_1, c_1})}_2
+            \lesssim \sqrt{\epsilon}
+    \end{equation}
+    in $\lp{2}$ with some constant independent of $d$.
+    
+    By the volume ratio argument \cite{vandervaartWeakConvergenceEmpirical1996},
+    one can obtain a $\bigO(\sqrt{\epsilon})$-net for $A$ in $\lp{2}(U)$ if we
+    are able to find a $\epsilon$-net for the set $P:= \{(b,c)\in \R^{d+1}:
+    \abs{b} = 1, \abs{c} \leq r\}$. To build a $\epsilon$-net for the sphere
+    $\abs{b}=1$, $\bigO(\epsilon^{1-d})$ elements is needed for the
+    sphere $\{v \in \R^d, \abs{v}=1\}$. An interval $[-r,r]$ requires
+    $\bigO(\epsilon^{-d})$ elements. Therefore, a $\epsilon$-net of
+    $\bigO(\epsilon^{-2d})$ elements can be constructed for $A$ and hence the
+    covering number for $A$ is of the order $\bigO(\epsilon^{-\frac{1}{2d}})$.
+
+    The statement then follows the Corollary on~\cite[p.
+    104]{makovozRandomApproximantsNeural1996}.
+
+    % We denote by $D$ to avoid clutters.
+    % \begin{equation}
+    %     \Sigma = \{\sum_{j=1}^m a_j \indicator{b\tr x + c}, 
+    %     \quad \sum_j \abs{a_i} \leq 1, \abs{b_j} = 1,
+    %     b\in\R^d,
+    %     a, c\in\R\}
+    % \end{equation}
+    % An estimate of entropy of $\Sigma$ w.r.t. the $\lp{q}$ norm.
+
+    % It is sufficient to prove (10) only for the case s=_. Indeed, if s is an
+    % arbitrary sigmoidal function, then s(*t) Ä _(t), * Ä +􏱶, uniformly on
+    % every set |t|􏱵a>0; on [&a,a] the difference _(t)&s(*t) remains bounded. It
+    % follows that &_v, b&sv, b&Lq(D) can be made arbitrarily small by taking a
+    % sufficiently large &v&. For s=_ we can use (8) since obviously V=(A_)c. We
+    % need an estimate for =n(A_). We may consider only the _v, b with |v|=1. If D
+    % is contained in some ball |x|􏱴r, then we may assume that |b|􏱴r for
+    % otherwise _v, b is identically 1 or 0 on D. Suppose that |v&v1|<=, |b&b1|<=
+    % for some =>0. If v=v1 and, say, b>b1 , then _v, b &_v1, b1 is equal to \1 on
+    % the strip &b􏱴vx􏱴&b1 of width 􏱴=, and to zero elsewhere. Similarly, if
+    % b=b1, then _v,b&_v1,b1{0 only on a strip of width O(=). It follows that
+    % &_v,b&_v1,b1&􏱴C-= in L2. (Here and below C stands for various con- stants
+    % independent of n). Therefore we obtain an O(-=)-net for A_ in L2(D) if we
+    % find an =-net for the set P :=[(v, b) # Rd+1 : |v|=1, |b|􏱴r]. By a standard
+    % volume ratio argument, one needs O((1􏱩=)d&1) elements to build an =-net for
+    % the sphere |v|=1 and O(1􏱩=) elements for the interval [&r, r], which gives
+    % O(=&d ) elements for P. Consequently, one can find an =-net for A_ in L2
+    % consisting of O(=&2d) elements. Thus =n(A_)= O(n&1􏱩(2d)), and (10) now
+    % follows from (8).
+
+
+\end{proof}
+
+\section{Barron class and seminorm}
+
+Firstly, we define the spectral condition and the semi/norm\footnote{
+    Often papers omit the ``Barron'' as readers can deduce from the context. 
+    In the following chapters, we would like to call them \textit{spectral 
+    semi/norm} as another definition of norm in infinite-width Barron spaces is 
+    named \textit{Barron norm}.
+} by which the smoothness of a function
+is controlled. We begin with the Barron spectral seminorm originally proposed
+ by \cite{barronUniversalApproximationBounds1993}.
+
+% should be L1 norm of \omega
+
+\begin{definition}[Spectral seminorm]
+    \label{def:spectral_seminorm}
+    For any $s \in \Nat$. Let $\emptyset \not= U \subset \R^d$ be a bounded
+    domain on $\R^d$. Suppose a function $f: U \to \R$ admits a Fourier
+    representation
+    \begin{equation}
+        f(x) = \int_{\R^d} e^{i\omega\tr x} \fourier{f}(\omega) \,d\omega
+    \end{equation}
+    where $\fourier{f}: \R^d \to \mathbb{C}$ is the Fourier transform of $f$.
+
+    Let the spectral condition of $f$ be defined as
+    \begin{equation}
+        \label{eq:spectral_condition}
+        v_{f,s} 
+            = \int_{\R^d} \norm{\omega}_1^s \abs{\fourier{f}(\omega)}\,d\omega.
+    \end{equation}
+    The spectral seminorm is defined as
+    \begin{equation}
+        \specseminorm{f}{s} = \inf_{f_{e\mid U} = f} v_{f,s}
+    \end{equation}
+    where the infimum is taken over all extensions $f_e$ of $f$ in $\lp1(U)$.
+\end{definition}
+
+The notion of spectral norm was first introduced in
+~\cite{siegelApproximationRatesNeural2021} since it is more convenient compared
+to the seminorm.
+
+\begin{definition}[Spectral norm]
+    \label{def:spectral_norm}
+    Under the setup of Definition \ref{def:spectral_seminorm}, we define a
+    modified spectral condition
+    \begin{equation}
+        \label{eq:spectral_condition_mod}
+        v'_{f,s} 
+            = \int_{\R^d} (1 + \norm{\omega}_1)^s \abs{\fourier{f}(\omega)}
+            \,d\omega.
+    \end{equation}
+    The spectral norm is defined as
+    \begin{equation}
+        \specnorm{f}{s} = \inf_{f_{e\mid U} = f} v'_{f,s}
+    \end{equation}
+\end{definition}
+
+\begin{definition}[Fourier-analytic Barron spaces]
+    \label{def:fourier_space}
+    For any $s \in \Nat$. Let $\emptyset \not= U \subset \R^d$ be a bounded
+    domain on $\R^d$. The Fourier-analytic Barron spaces are
+    \begin{equation}
+        \bspace{\mcal{F},s}(U) := \Big\{
+            f: U \to \R: v'_{f,s} < \infty  \textnormal{ and }
+            \forall x\in U, 
+                f(x) = \int_{\R^d} e^{i\omega\tr x} \fourier{f}(\omega)\,d\omega
+        \Big\}
+    \end{equation}
+    equipped with a norm $\specnorm{f}{s}$, for all $s \in \Nat$.
+\end{definition}
+
+$s \in \Nat$ is referred as the smoothness index. It is easy to conjecture
+that as $s$ increases, functions in $\bspace{\mcal{F}, s}$ are becoming
+``smoother''. Therefore the \textit{size} of the function spaces of higher
+smoothness index $s$ is expected to ``shrink'' which might suggests better
+approximation error rate. In the coming sections, we will provide an accurate
+statement of the improved approximation error rates with a depiction of the
+intricacies inherent within and between these spaces.
+
+
+\section{Connection with variation spaces}
+
+What is separable? Is it necessary?
+
+Let $(\mcal{H}, \norm{\cdot}_{\mcal{H}})$ be a separable Hilbert space.
+
+If $G$ is a subset of $\mcal{H}$ and $c \in \R$, then we define the set
+\begin{equation}
+    cG = \{cg: g \in G\}
+\end{equation}
+
+
+\begin{definition}[Varitaion norm]
+    The variation norm of $\normVar{f}{\mathbb{D}}$ of a subset $\mathbb{D}$ of
+    a linear space $X$ is defined for all $f \in X$ as
+    \begin{equation}
+        \normVar{f}{\mathbb{D}} := \inf \{
+            c > 0: f/c \in \closure{\conv(\mathbb{D} \bigcup - \mathbb{D})}
+        \}.
+    \end{equation}
+
+    This is the Minkowski functional of the closed symmetric convex hull of $\mathbb{D}$
+    \begin{equation}
+        \closure{\conv(\mathbb{D} \bigcup - \mathbb{D})} := \Bigg\{ 
+            \sum_{j=1}^n a_j d_j: n \in \Nat, d_j \in \mathbb{D}, 
+            \sum_{j=1}^n \norm{a_j}_1 \leq 1
+        \Bigg\}.
+    \end{equation}
+\end{definition}
+
+\begin{definition}[Varitaion space]
+    The variation space $\spaceVar{\mathbb{D}}$ is given by
+    \begin{equation}
+        \spaceVar{\mathbb{D}} := \{ 
+            f \in \mathcal{H}: \normVar{f}{\mathbb{D}} < \infty
+        \}.
+    \end{equation}
+\end{definition}
+
+By the definitions, the following elementary properties of the variation space
+hold.
+\begin{proposition}
+    \label{prop:spaceVar_properties}
+    Let $\mathbb{D}$ be a uniformly bounded subset of a Hilbert space $\mcal{H}$
+    \begin{equation}
+        \sup_{d\in\mathbb{D}} \norm{d}_{\mcal{H}} < \infty.
+    \end{equation}
+    \begin{enumerate}
+        \item $\closure{\conv(\mathbb{D} \bigcup - \mathbb{D})} = \{
+            f\in\mcal{H}: \normVar{f}{\mathbb{D}} \leq 1
+        \}$
+        \item $\norm{f}_{\mcal{H}} \leq \normVar{f}{\mathbb{D}} \cdot
+        \sup_{d\in\mathbb{D}} \norm{d}_{\mcal{H}}$
+        \item $\spaceVar{\mathbb{D}}$ is a Banach space equipped with norm
+        $\normVar{f}{\mathbb{D}}$
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    (1) and (2) is clear from the previous definitions. In order for
+    $\spaceVar{\mathbb{D}}$ to be a Banach space, we need to show
+    $\spaceVar{\mathbb{D}}$ is complete with norm $\normVar{\cdot}{\mathbb{D}}$.
+
+    Let $\{f_n\}$ be a Cauchy sequence w.r.t. $\normVar{\cdot}{\mathbb{D}}$. By
+    (2), this automatically implies that $f_n \to f$ in $\mcal{H}$ so the
+    sequence is Cauchy w.r.t. $\norm{\cdot}_{\mcal{H}}$.
+\end{proof}
+
+\begin{definition}[Spectral dictionary]
+    The spectral dictionary of order $s \in \Nat^0$ is given by
+    \begin{equation}
+        \mathbb{F}_s := \Bigg\{ 
+            (1 + \norm{\omega})^{-s} \cdot e^{2\pi i\omega\tr x}: 
+            \omega \in \R^d
+        \Bigg\}
+    \end{equation}
+\end{definition}
+
+The variation space of $\mathbb{F}_s$ can be characterized in terms of the
+Fourier transform.
+
+\begin{proposition}
+    \TONOTE{Is H separable?}
+
+    Let $(\mcal{H}, \norm{\cdot}_{\mcal{H}})$ be a Hilbert space and $f$ be a
+    function in $\mcal{H}$. Suppose that a sequence $\{f_n\}$ in $\mcal{H}$
+    where $f_n \in \Sigma_{n,M}(\mathbb{D})$ \TODO and $f_n \to f$ in $\mcal{H}$
+    for some fixed $M < \infty$. Then $f$ is in the variation space
+    $\spaceVar{\mathbb{D}}$ and its variation norm is bounded by $M$
+    \begin{equation}
+        f \in \spaceVar{\mathbb{D}}, \quad \normVar{f}{\mathbb{D}}\leq M.
+    \end{equation}
+\end{proposition}
+
+\begin{proof}
+    Without loss of generality, we only need to prove for $M = 1$.
+\end{proof}
+
+
+\begin{lemma}
+    Let $\mathbb{D}$ be a compact subset on $\mcal{H}$. Then $f \in
+    \spaceVar{\mathbb{D}}$ if and only if there exists a Borel measure $\mu$ on
+    $\mathbb{D}$ such that
+    \begin{equation}
+        f 
+    \end{equation}
+\end{lemma}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "MasterThesisSfS"
+%%% End: 

@@ -1,6 +1,7 @@
 \chapter{Functional Analysis And Measure Theory}
 \label{app:function_measure}
 
+
 We will briefly review some of the constructions and theorems of functional
 analysis and measure theory used throughout this paper. Further background
 material can be found.
@@ -11,6 +12,58 @@ Familiarity with the basic notions of topology is assumed (inner product
 spaces, normed spaces, Banach and Hilbert spaces)
 
 % https://www.math.uzh.ch/gorodnik/functional_analysis/lecture4.pdf
+
+% convex hull
+% http://staff.ustc.edu.cn/~wangzuoq/Courses/15F-FA/Notes/FA16.pdf
+
+Let $X$ be any vector space, and $K \subset X$ a subset.
+
+\begin{definition}[Convex hull]
+   \label{def:convex_hull}
+   The \textit{convex hull} of $E$ is the set:
+   \begin{equation}
+      \conv(E) 
+      = \{x = a_1x_1 + \cdots + a_nx_n \in X \mid 
+      x_1, \cdots, x_n \in E \quad
+      t_1 + \cdots t_n = 1, t_i \geq 0\}
+   \end{equation}
+   and an element $x$ in $\conv(E)$ is called a convex combination of $x_1,
+   \cdots, x_n$.
+\end{definition}
+
+From the definition, it is easy to see that 
+\begin{itemize}
+   \item $E \subset \conv(E)$, $\conv(E)$ is convex.
+   \item If a set $A \subset X$ is convex and $E \subset A$, then $\conv(E) \subset A$.
+\end{itemize}
+
+Since any intersection of convex sets is still convex, we can get the following equivalent definition of convex hull
+
+\begin{proposition}
+   The convex hull of a set $E$ is 
+   \begin{equation}
+      \conv(E) = \bigcap_{E \subset A, A \text{ is convex}} A.
+   \end{equation}   
+\end{proposition}
+
+\begin{definition}[Closed convex hull]
+   The closure of the convex hull of $E$ is called closed convex hull of $E$,
+   denoted by $\closure{\conv(E)}$.
+\end{definition}
+
+It is easy to see that $\closure{\conv(E)}$ is a closed convex set, and it is
+the smallest closed convex set containing $E$. Another way to view it is that
+$\closure{\conv(E))}$ is the intersection of all closed convex sets that
+contains $E$:
+\begin{equation}
+   \closure{\conv(E)} = \bigcap_{E \subset A, A \text{ is convex and closed}} A   
+\end{equation}
+
+We have the following for $K \subseteq E$ in $X$, $\closure{\conv(K)} \subseteq
+\closure{\conv(E)}$.
+
+
+
 
 
 \begin{definition}[Linear opertor]

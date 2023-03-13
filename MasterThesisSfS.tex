@@ -154,7 +154,7 @@
 % https://www.math.ucdavis.edu/~hunter/measure_theory/measure_notes_ch7.pdf
 \newcommand{\lp}[1]{L^{#1}}
 
-\newcommand{\conv}{\textrm{conv}}
+\newcommand{\conv}{\textnormal{conv}}
 
 % Barron spectral seminorm
 \newcommand{\specseminorm}[2]{ \abs{#1}_{\mathcal{F}, {#2}} }
@@ -162,6 +162,10 @@
 \newcommand{\specnorm}[2]{ \norm{#1}_{\mathcal{F}, {#2}}}
 % Barron norm
 \newcommand{\barronnorm}[2]{\norm{{#1}}_{\mathcal{B}_{#2}}}
+
+% Minkowski norm or variation norm
+\newcommand{\normVar}[2]{\norm{{#1}}_{\mathcal{K}({#2})}}
+\newcommand{\spaceVar}[1]{\mathcal{K}({#1})}
 
 % custom TODO function
 \newcommand{\TOCITE}{\textcolor{blue}{\bf [TO CITE]}}
@@ -173,8 +177,8 @@
 \DeclareMathOperator{\supp}{supp}
 \DeclareMathOperator{\spn}{span} % span already defined ??
 \DeclareMathOperator{\cl}{cl}
-\newcommand{\closure}[1]{\cl{#1}} % (or \bar{#1})
-% \newcommand{\closure}[1]{\overline{#1}} % (or \bar{#1})
+% \newcommand{\closure}[1]{\cl{#1}} % (or \bar{#1})
+\newcommand{\closure}[1]{\overline{#1}} % (or \bar{#1})
 
 % replaced by spr in texab
 % \DeclarePairedDelimiterX{\inp}[2]{\langle}{\rangle}{#1, #2} % mathtools
@@ -260,7 +264,8 @@
 \include{tex/Chapter0}
 \include{tex/Chapter1}
 \include{tex/Chapter2}
-% \include{tex/Chapter...}
+\include{tex/Chapter3}
+\include{tex/Chapter4}
 % \include{tex/Summary}
 
 % ******************************************************************************
