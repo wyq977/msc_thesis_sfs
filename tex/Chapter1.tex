@@ -1,829 +1,623 @@
-\chapter{The approximation properties of two-layer neural networks}
+\chapter{Nonlinear approximation}
 
-In the previous chapter, we introduced the basic concepts of the two-layer
-neural networks (\gls{2nn}). Section \ref{sec:preliminary} introduces the
-approximation theory using $n$-term dictionary in a Hilbert space. In Section
-\ref{sec:uat}, we will state the result of the universal approximation theorem.
-Later in Section \ref{sec:spectral_norm} and \ref{sec:different_barron_spaces},
-we formally introduce the function spaces associated with 2NN: the
-\textit{Fourier-analytic Barron spaces} and \textit{infinite-width Barron
-spaces}. The norms associated with these spaces (\textit{spectral norm},
-\textit{Barron norm}) are examined in Section \ref{sec:different_barron_spaces}.
-An error rate of $\bigO(n^{-1/2})$ for functions in these spaces are given in
-Section \ref{sec:spectral_norm} and \ref{sec:barron_norm}. This chapter aims to
-provide a concise summary of various well-known results concerning the
-approximation properties of 2NN, and we recommend work by
-\cite{eMathematicalUnderstandingNeural2020,bernerModernMathematicsDeep2021} for
-a comprehensive review.
-
-% classical Barron space, or the Fourier-analytic Barron space
-
-% infinitely wide
-
-% infinite-width Barron spaces.
-
-% sparsity-inducing norm ? in bach 2017 paper.
-
-
-\section{Different Barron spaces}
-\label{sec:different_barron_spaces}
-
-The notation of Barron spaces is not in consensus within the community and
-different terms have been given to describe the same model classes or spaces.
-For the function spaces in which functions have finite Fourier moments,
-~\cite{xuFiniteNeuronMethod2020} call this model classes \textit{Barron spectral
-spaces} while \cite{carageaNeuralNetworkApproximation2022} refers them as
-\textit{Fourier-analytic Barron space}.  For function spaces in which functions
-admit an integral representation \eqref{eq:barron_represent} with a ReLU
-activation function, \cite{eBarronSpaceFlowinduced2021} refer them simply as
-\textit{Barron spaces} of different orders $p \in \Nat \bigcup\,\{\infty\}$. The
-term \textit{Barron space} was coined by \cite{ePrioriEstimatesPopulation2019}
-to honor Prof. Andrew Barron's contribution in the understanding of neural nets.
-In some literature including~\cite{carageaNeuralNetworkApproximation2022}, these
-spaces are named \textit{infinite-width Barron spaces} associated with different
-activation functions and the term \textit{classical Barron space} is reserved
-for those associated with Heaviside function\footnote{Also called step function
-or unit step function}.
-
-To avoid confusion and in the meantime emphasize Prof. Andrew Barron's
-contribution, we will use two definitions:
+This chapter is mainly about:
 \begin{itemize}
-    \item Fourier-analytic Barron spaces
-    \item infinite-width Barron spaces\footnote{
-        We limit the model classes to those associated with ReLU only. In the 
-        case of Heaviside function, we denote the space still by the term 
-        \hyperref[def:heaviside_space]{\textit{classical Barron space}}.
-    }
+    \item what are linear approximation ?
+    \item what are nonlinear approximation ?
+    \item what functions can be learnt ?
+    \item MLP/2NN are dense. In what space? by what norm
+    \item Maurey Theorem in a Hilbert space
 \end{itemize}
 
-In general, the activation function associated with the infinite-width Barron
-spaces is ReLU and we will explicitly state when other functions (e.g. squared
-ReLU, ReLU\textsuperscript{k}, Heaviside) are used.
+\TODO
 
 
+\section{Overview}
 
-\subsection{infinite-width Barron spaces}
-\label{sec:barron_norm}
+Write an overview based on \cite{devore_1998,pinkusApproximationTheoryMLP1999}.
 
-This section introduces the infinite-width Barron space and its elementary
-properties, which is mostly based on \cite{eBarronSpaceFlowinduced2021} unless
-stated otherwise.
 
-Let $U$ be a nonempty and bounded domain in $\R^d$. For functions $f: U \to
-\mathbb{R}$, we consider those that admit the following integral representation:
+\section{Preliminary results}
+\label{sec:preliminary}
 
+% \TONOTE{Is it Banach spaces or Hilbert space?}
+
+% Jonas-Barron method
+
+% Maurey's Theorem: with a closure of convex hull suggests bound
+
+% Here I will start classical probabilistic argument of Maurey
+
+In this section, we will introduce the approximation theory using $n$-terms from
+a dictionary in a Hilbert space. This approximation problem is highly nonlinear
+introduced by the selection of a dictionary. A dictionary could be an
+arbitrarily chosen subset of $\mcal{H}$ but limits have to be imposed for
+computational feasibility in practice. 
+
+This section is mainly based on \cite[Chapter 8]{devore_1998} and
+\cite{vandervaartWeakConvergenceEmpirical1996}, unless stated otherwise.
+
+Let $\mathbb{D} = \{d_1,d_2,\dots\}$ be a uniformly bounded domain in a Hilbert
+space $(\mcal{H}, \norm{\cdot}_{\mcal{H}})$
 \begin{equation}
-    \label{eq:barron_represent}
-    f(x) = \int_{\Omega} a \sigma(b\tr x + c) \mu(da, db, dc), \quad 
-    x \in U, a,c \in \R, b \in \R^d.
+    \sup_{d_j\in \mathbb{D}} \norm{d_j}_{\mcal{H}} < \infty \quad 
+    \forall d_j \in \mathbb{D}.
 \end{equation}
 
-Let $\Omega = \R^1 \times \R^d \times \R^1$ and $\Sigma_{\Omega}$ be the
-$\sigma$-algebra on $\Omega$. Define an integral condition for $f$ w.r.t. a
-measure $\mu \in \Sigma_{\Omega}$
-\begin{align}
-    r(f, \mu, p)
-    &= \Big(\int_{\R^d} \abs{a}^p  (\norm{b}_1 + \abs{c})^p \,d\mu(a,b,c)\Big)^{1/p} \\
-    &= \Big(\ERWi{\mu}{\abs{a}^p  (\norm{b}_1 + \abs{c})^p}\Big)^{1/p},
-    \quad 1 \leq p \leq +\infty.
-\end{align}
+For every $n \in \Nat$, the collection of all functions in $\mcal{H}$
+which can be expressed as a linear combination of at most $n$ elements of
+$\mathbb{D}$ (i.e. elements of \eqref{eq:gm}) is denoted by
 
-$\mu$ is a probability distribution on $(\Omega, \Sigma_\Omega)$, $\Omega =
-\mathbb{R}^1 \times \mathbb{R}^d \times \mathbb{R}^1$ and $\Sigma_\Omega$ is a
-Borel $\sigma$-algebra on $\Omega$ and $\sigma(\cdot)$ is the ReLU activation
-function.
+\begin{equation}
+    \label{eq:dict_represent}
+    \Sigma_n(\mathbb{D}) = \Bigg\{
+        \sum_{j=1}^n \alpha_j d_j, \quad
+        d_j \in \mathbb{D}, \alpha_j \in \R
+    \Bigg\}.
+\end{equation}
 
-We consider another case where the ReLU function is replaced by the Heaviside
-function.
+Any function $f_n \in \Sigma_n(\mathbb{D})$ with $n \in \Nat$ is represented as
+\begin{equation}
+    \label{eq:gm}
+    f_n = \sum_{j=1}^n \alpha_j d_j, \quad d_j \in \mathbb{D}.
+\end{equation}
 
-\begin{definition}[Heaviside function]
-    \label{eq:heaviside_represent}
+The problem of nonlinear approximation would generally be framed as: given a
+target function $f \in \mcal{H}$, one needs to choose both a dictionary
+$\mathbb{D}$ and $n$-term elements from $\mathbb{D}$ to approximate $f$. These
+dictionaries \eqref{eq:dict_represent} can be interpreted as splines
+approximation with free knots with a selected dictionary and we will study the
+approximation results when $\mathbb{D}$ is comprised of sigmoidal functions and
+ReLU.
+
+To include the control over the coefficients, also called \textit{outer
+parameters}, $\alpha_j$ in the above expansion, we introduce
+\begin{equation}
+    \label{eq:dict_sigma}
+    \Sigma^{t}_n(\mathbb{D}, M) := \Bigg\{
+        f = \sum_{j=1}^n \alpha_j d_j: 
+        d_j \in \mathbb{D} \textnormal{ and } 
+        \sum_{j=1}^n \abs{\alpha_j}^t \leq M^t, \quad 
+        n \in \Nat, \alpha_j \in \R
+    \Bigg\}
+\end{equation}
+for any $t > 0 \in \Nat \bigcup\, \{\infty\}$ and any $M > 0$. 
+
+Let $K^t_n(\mathbb{D}, M)$ be the closure of $\Sigma^t_n(\mathbb{D}, M)$ in
+$\mcal{H}$
+\begin{equation}
+    K^t_n(\mathbb{D}, M) := \closure{\Sigma^t_n(\mathbb{D}, M)}.
+\end{equation}
+
+When $t = 1$, $K^1_n(\mathbb{D}, M)$ is the class of functions that are a
+\textit{convex} combination of elements in $\mathbb{D}$. When $t = \infty$,
+$\Sigma^{\infty}_n(\mathbb{D}, M)$ corresponds to the sets whose coefficients
+are bounded in $\lp{\infty}$. 
+
+Next, we define the union for all $M > 0$
+\begin{equation}
+    K^t_n(\mathbb{D}) = \bigcup_{M > 0} K^t_n(\mathbb{D}, M).
+\end{equation}
+
+We define a seminorm for functions $f \in K^t(\mathbb{D})$
+\begin{equation}
+    \label{eq:general_seminorm}
+    \abs{f}_{K^t(\mathbb{D})} = \inf \{
+        M >0: f \in K^t_n(\mathbb{D}, M)
+    \}.
+\end{equation}
+
+For $f \in \mcal{H}$, the approximation error is defined as
+\begin{equation}
+    \label{eq:appro_err_hilbert}
+    e_n(f, \mathbb{D}, \mcal{H})
+        := \sup_{g\in\Sigma_{\mathbb{D}}} \norm{f - g}_{\mcal{H}}.
+\end{equation}
+
+Assuming that approximation holds with a dictionary $\mathbb{D}$ in $\mcal{H}$
+such that for any function $f \in \mcal{H}$, the approximation error is
+\begin{equation}
+    \label{eq:appro_error_general}
+    e_n(f, \mathbb{D}, H) \leq n^{-\alpha} C_{\mathbb{D}}.
+\end{equation}
+
+We are concerned with the coefficients in the exponents $\alpha$ and what
+$C_{\mathbb{D}}$ is dependent on.
+
+For the special cases where $\mathbb{D}$ is the orthonormal basis of $\mcal{H}$,
+the approximation error is given as
+\begin{equation}
+    \label{eq:appro_error_ortho}
+    e_n(f, \mathbb{D}, \mcal{H}) 
+        \lesssim n^{-\alpha} \abs{f}_{K^t(\mathbb{D})}.
+\end{equation}
+
+\begin{definition}[Covering numbers and entropy]
+    \label{def:covering_num}
+    Let $(\mcal{F}, \norm{\cdot}_{\mcal{F}})$ be a subset of a normed space. The
+    \textit{covering number} $N(\epsilon, \mcal{F}, \norm{\cdot}_{\mcal{F}})$ is
+    the minimal number of balls $\{g: \norm{f - g}_{\mcal{F}} < \epsilon\}$ of
+    radius $\epsilon$ required to cover the set $\mcal{F}$. The \textit{entropy}
+    $\log N(\epsilon, \mcal{F}, \norm{\cdot}_{\mcal{F}})$ is the logarithm of
+    the covering number.
+\end{definition}
+
+Approximation with a finite linear combination of elements from a bounded
+dictionary in a Hilbert space $\mcal{H}$ achieves an error rate of
+$\bigO(n^{-1/2})$ by~\cite{pisierRemarquesResultatNon1980} and this holds for
+any bounded $\mathbb{D} \subset \mcal{H}$.
+
+\begin{theorem}[Maurey's Theorem]
+    \label{thm:maurey}
+    Let $\mathbb{D} = \{d_1, d_2, \dots\}$ be an arbitrarily bounded dictionary
+    in a Hilbert space $(\mcal{H}, \norm{\cdot}_{\mcal{F}})$. For every $f \in
+    \mcal{H}$ of the form
     \begin{equation}
-        H(x) = 
+        f = \sum_{j=1}^n c_j d_j, \quad
+        \sum_{j=1}^n \abs{c_i} < \infty, \quad
+        c_j \in \R, n < \infty
+    \end{equation}
+    Then for every $n \in \Nat$, there exists a function $g_n = \sum_{j=1}^n a_j
+    d_j$ with at most $n$ non-zero coefficients
+    \begin{equation}
+        \sum_{j=1}^n \abs{a_j} \leq
+        \sum_{j=1}^n \abs{c_j}, 
+        \quad a_j \in \R
+    \end{equation}
+    such that
+    \begin{equation}
+        \norm{f - g_n}_{\mcal{H}} \leq
+        2 N(\epsilon, \mathbb{D}, \norm{\cdot}_{\mcal{H}})
+        \cdot n^{-1/2}
+        \cdot \sum_{j=1}^n \abs{c_j}.
+    \end{equation}
+
+\end{theorem}
+
+\cite{jonesSimpleLemmaGreedy1992} has also showed the same approximation error
+$\bigO(n^{-1/2})$ using an iterative argument. The approximation rate by Maurey
+is not always sharp and one can use the compactness of the dictionary
+$\mathbb{D}$ to improve it.
+
+Let $G$ be a nonempty bounded subset of a Hilbert space $\mcal{H}$. Suppose a
+sequence of function $f_n$ were used to approximate a element $f$ in $\mcal{H}$
+with the following algorithm
+\begin{equation}
+    \label{eq:seq_appro_jones}
+    f_n = \alpha_n + f_{n-1} + (1-\alpha_n) g_n, \quad
+    g_n \in G, \alpha_n \in [0,1], n \geq 1.
+\end{equation}
+The iteration starts with $f_1 = g_1 \in G$ and $\alpha_1 = 0$ and the sequence
+$\{f_n\}$ defined as above is in the convex hull of the points $\{g_1,\dots,
+g_n\}$.
+
+\begin{theorem}[Jone's Theorem]
+    Let $G$ be a nonempty bounded domain of a Hilbert space $\mcal{H}$. If $f$
+    is in the closure of the convex hull of $G$, i.e. $f \in \conv(G)$. Then for
+    every $n \in \Nat$, $f_n$ is chosen iteratively as
+    \eqref{eq:seq_appro_jones}, the approximation error is $\bigO(n^{-1/2})$
+\end{theorem}
+
+\begin{proof}
+    One can find a proof in \cite{jonesSimpleLemmaGreedy1992} and a refinement
+    of Jone's result in \cite[Theorem
+    5]{barronUniversalApproximationBounds1993}.    
+\end{proof}
+
+% Using a classical probabilistic argument of Maurey [45], an approximation rate
+% of O(n 2 ) can be obtained for the class B1(D) using non-linear dictionary
+% expansions. Moreover, Jones [27] gave a constructive proof of this fact using
+% the relaxed greedy algorithm and applied this result to shallow neural networks
+% with a cosine activation function. Improvements upon this rate of dictionary
+% approximation under an assumption about the behavior of the relaxed greedy
+% algorithm appear in [31, 33]. These results yield exponential rates of
+% convergence for individual functions in the convex hull of D (but not
+% necessarily its closure), which are however not uniform over the class B1(D).
+% Further, under compactness [29, 41] or smoothness [50] assumptions on the
+% dictionary D improved rates can also be obtained, although for general
+% dictionaries the Maurey-Jones rate is the best one can expect [30].
+
+\section{Universal approximation theorem}
+\label{sec:uat}
+
+In general, neural networks, even 2NN with one hidden layer, are universal
+approximators, which means any continuous functions on a compact set can be
+approximated up to a arbitrary precision under some mild restrictions on the
+activation functions $\sigma$ and the number of nodes are allowed to grow
+arbitrarily. Functions of $d$-variables can be approximated uniformly by linear
+combinations of functions from the dictionary
+
+\begin{equation}
+    \label{eq:uat_dict}
+    \mathbb{D} = \{\sigma(b\tr x + c): b \in \R^d, c\in \R \}.
+\end{equation}
+
+The requirements on $\sigma$ is formally stated
+in~\cite{cybenkoApproximationSuperpositionsSigmoidal1989} and functions in
+$\mathbb{D}$ are called \textit{ridge functions} or \textit{planar waves}.
+Despite its obvious importance, one can not extract quantitative information
+about the error rate since there is no restriction for $n$. Nevertheless, we
+will state the univariate approximation theorem in this section. This section is
+mainly based on \cite{cybenkoApproximationSuperpositionsSigmoidal1989}, unless
+stated otherwise.
+
+% We will state the the universal approximation theorem that the finite linear
+% combinations of sigmoidal functions (sum of the functions of the form
+% (\eqref{def:sigmoidal})) are dense in the space of continuous functions. This
+% approximation result holds for any continuous sigmoidal functions.
+
+% function on a compact set up to arbitrary precision [Cyb89, Fun89, HSW89,
+% LLPS93]. modern mathematics of deep learning
+
+\begin{definition}[sigmoidal function]\label{def:sigmoidal}
+    A function $\sigma$ is \textbf{sigmoidal} if
+    \begin{equation}
+        \sigma(t) =
         \begin{cases}
-            1 \quad x > 0,\\
-            0 \quad x \leq 0    
+            1 & \text{as} \quad t \to +\infty \\
+            0 & \text{as} \quad t \to -\infty.
         \end{cases}
     \end{equation}
 \end{definition}
 
+\subsection*{Notations and setup}
 
-Similarly, for a $\mu \in \Sigma_{\Omega}$, we consider functions $f$ that admit
-the representation below
+Let $I_d = [0,1]^d$ denote the $d$-dimensional unit cube, and the space of
+continuous functions over $I_d$ is denoted by $C(I_d)$. We denote the supremum
+norm of a function $f \in C(I_d)$ by
 \begin{equation}
-    \label{eq:heaviside_represent}
-    f(x) = \int_{\Omega} a H(b\tr x + c) \mu(da, db, dc), \quad x \in U.
+    \label{def:sup_norm}
+    \norm{f}_{\infty} = \sup_{x\in I_d} \abs{f(x)}.
 \end{equation}
+We use $M(I_d)$ to denote the space of finite, signed regular Borel measures,
+i.e. $\mu(A) \in \R$ for all Borel sets $A \in I_d$ and $\mu(\emptyset)= 0$. We
+refer readers to \cite{rudinFunctionalAnalysis1991,
+rudinRealComplexAnalysis1987} for a detailed presentation of functional
+construction used and we include some basic materials in Appendix
+\ref{app:function_measure}.
 
-Accordingly, we define a condition for that particular $\mu$ where
-\eqref{eq:heaviside_represent} holds
-\begin{align}
-    r(f,\mu, H)
-    = \int_{\Omega} \abs{a}\,d\mu(a,b,c) = \ERWi{\mu}{\abs{a}}
-\end{align}
-
-These representations can be seen as a continuum analogy of the 2NN with $b$
-hidden nodes:
-
-\begin{equation}
-    f_n(x, \Theta) := \frac{1}{n}
-    \sum_{j=1}^n a_j 
-        \sigma(b\tr x + c_j), 
-    \quad \Theta = \{(a_j, b_j, c_j), \ j = 1, \dots, n\}.
-\end{equation}
-
-\begin{definition}[Barron norm] For a function $f$ that admits the integral
-    representation in \eqref{eq:barron_represent}, the Barron norm is defined as:
-    \begin{equation}\label{eq:barron_norm}
-        \barronnorm{f}{p} := \inf_{\rho} \Big(\ERWi{\mu}{\abs{a}^p 
-        (\norm{b}_1 + \abs{c})^p}\Big)^{1/p},
-        \quad 1 \leq p \leq +\infty.
-    \end{equation}
-    % where \begin{equation*} \Theta_f = \left\{ (a, \pi) \mid f(x) =
-    % \int_{space} a(w) \sigma(\langle w, x \rangle)\dd{\pi(w)} \right\}.
-    % \end{equation*}
-\end{definition}
-
-The infimum is taken over all probability distribution where
-\eqref{eq:barron_represent} holds for all $x \in U$. When $p = + \infty$, the
-Barron norm reads
+Let $h(x)$ be a linear combinations of elements from the dictionary $\mathbb{D}$
+\eqref{eq:uat_dict}
 
 \begin{equation}
-    \label{eq:barron_infinite_norm}
-    \barronnorm{f}{\infty} :=
-    \inf_{\rho} \max_{a, b, c \in \supp(\rho)} \abs{a} (\norm{b}_1 + \abs{c}).
+    \label{eq:sum_sigma}
+    h(x) = \sum_{j=1}^n a_j d_j = \sum_{j=1}^n a_j \sigma(b_j\tr x + c_j)
 \end{equation}
 
-Similarly, we can define a norm associated with Heaviside function where the
-infimum is taken for all measure $\mu$ where \eqref{eq:heaviside_represent}
-holds
-\begin{equation}
-    \label{def:heaviside_norm}
-    \norm{f}_{\mcal{B}_H} = \inf_{\rho} \ERWi{\mu}{\abs{a}},
-    \quad 1 \leq p \leq +\infty.
-\end{equation}
+where $a_j, c_j \in \R$, $d_j \in D$,  $b_j \in \R^d$, $n < \infty$, and
+$\sigma$ is a univariate function from $\R$ to $\R$.
+ 
+The main contribution of approximation theorem is the statement on the
+conditions of $\sigma$ such that the above finite linear combination $h(x)$ is
+dense in $C(I_d)$ with respect to the supremum norm. It should also be stressed
+that there is no restriction for the number of combinations.
 
-\begin{definition}[Infinite-width Barron space]
-    \label{def:barron_space}
-    Let $U$ be a nonempty bounded domain in $\R^d$. For functions that admit
-    representation \eqref{eq:barron_represent}, the infinite-width Barron space
-    with an order of $1 \leq p \leq \infty$ is
-    \begin{equation}
-        \mcal{B}_p(U) = \Bigg\{
-            f: U \to \R : \exists\, \mu \in \Sigma_{\Omega}: 
-            r(f, \mu, p) < \infty \textnormal{ and }
-            \forall x \in U, f(x) = \int_{\Omega} a \sigma(b\tr x + c) \mu(da, db, dc)
-        \Bigg\}.
-    \end{equation}
-\end{definition}
+\begin{theorem}[Universal approximation theorem]
+    \label{thm:uat}
+    If $\sigma$ is sigmoidal as defined in Definition $\ref{def:sigmoidal}$,
+    then any function $f \in C(I_d)$ be approximated uniformly well by a finite
+    linear combination of the form \eqref{eq:sum_sigma}.
 
-A normed space can be defined for those associated with Heaviside function.
-
-\begin{definition}[Classical Barron space]
-    \label{def:heaviside_space}
-    Let $U$ be a nonempty unbounded domain in $\R^d$. For functions that admit
-    representation \eqref{eq:barron_represent}, the infinite-width Barron space
-    associated with Heaviside function is
-    \begin{equation}
-        \label{def:heaviside_space}
-        \mcal{B}_H(U) = \Bigg\{
-            f: U \to \R : \exists\, \mu \in \Sigma_{\Omega}:
-            r(f, \mu, H) < \infty \textnormal{ and }
-            \forall x \in U, f(x) = \int_{\Omega} a H(b\tr x + c) \mu(da, db, dc)
-        \Bigg\}.
-    \end{equation}
-\end{definition}
-
-Barron spaces are denoted by $\mathcal{B}_p$~\footnote{
-    Going forward, we will simplify $\mcal{B}_{\mcal{F}, s}(U)$, $\mcal{B}_p(U)$ 
-    and $\mcal{B}_H(U)$ as $\mcal{B}_{\mcal{F}, S}$, $\mcal{B}_p$ and 
-    $\mcal{B}_H$ to avoid cluttering the notations when $U$ is a bounded domain
-    in $\R^d$.
-}, consist of all the functions whose $r(f, \mu, p)$ is finite for a measure 
-$\mu \in \Sigma_{\Omega}$.
-
-\begin{proposition}
-    By the definition of Barron norm, it is easy to see that
-
-    \begin{equation}
-        \mathcal{B}_{\infty} \subset \cdots \subset \mathcal{B}_{2} 
-        \subset \mathcal{B}_1.
-    \end{equation}
-\end{proposition}
-
-
-% https://ocw.mit.edu/courses/18-125-measure-and-integration-fall-2003/6f21af6c40de1eccd70349bd3a3b0095_18125_lec17.pdf
-
-\begin{proof}
-
-The idea is similar to the inclusion of $L_p$, $L_q$ space.
-
-Applying Hölder's inequality, for any $1 \leq p \leq q < \infty$
-
-\begin{align*}
-    \int \abs{a}^p (\norm{b}_1 + \abs{c})^p d\rho
-     & = \int \abs{a}^p (\norm{b}_1 + \abs{c})^p \cdot 1 d\rho                                                    \\
-     & \leq \Big(\int \abs{a}^{pq/p} (\norm{b}_1 + \abs{c})^{pq/p} d\rho \Big)^{p/q} \Big(\int d\rho\Big)^{1-p/q} \\
-     & = \Big(\int \abs{a}^q (\norm{b}_1 + \abs{c})^q d\rho \Big)^{p/q} \Big(\int d\rho\Big)^{1-p/q}
-\end{align*}
-
-Therefore we have the inclusion $\mathcal{B}_{q} \subset \mathcal{B}_p$ for $1
-    \leq p \leq q \leq \infty$.
-\end{proof}
-
-As the reverse also holds in the class of ReLU functions,  we have
-$\mathcal{B}_{\infty} = \mathcal{B}_p$, $\barronnorm{\cdot}{\infty} =
-    \barronnorm{\cdot}{p}$  for all $1 \leq p \leq +\infty$.
-
-% ~\cite[Proposition 1]{eBarronSpaceFlowinduced2021}
-\begin{proposition}
-    \label{lamma:equivalence_barron_space}
-
-    For any $f \in \mathcal{B}_1$, $f
-        \,\text{also}\, \in \mathcal{B}_{\infty}$ and $\barronnorm{f}{\infty} =
-        \barronnorm{f}{p}$ and hence $ \mathcal{B}_{\infty} = \cdots =
-        \mathcal{B}_{2} = \mathcal{B}_1$ when $\sigma(\cdot)$ is ReLU function.
-\end{proposition}
-
-
-\section{Approximation in infinite-width Barron spaces}
-\label{sec:appro_barron_space}
-
-\begin{theorem} [Direct Approximation in $\lp{2}$]\
-    \label{thm:barron_direct_appro_l2}
-    Let $U$ be a nonempty unbounded domain in $[0,1]^d$ and $f: U \to \R$. For
-    any function $f \in \mathcal{B}(U)$ and any integer $n \in \Nat$, there
-    exists a 2NN $f_n = f(x, \Theta) = \frac{1}{n}\sum_{j=1}^n a_j \sigma(b_j\tr
-    x + c_j)$ such that
-    \begin{equation}
-        \norm{f - f_n}_2 \lesssim \frac{\norm{f}_{\mathcal{B}}}{\sqrt{n}}.
-    \end{equation}
-    where $\Theta$ is the set of parameters $\Theta = \{(a_j, b_j, c_j),
-    j=1,\dots,m\}$.
-
-    % Furthermore, we have
-    % \begin{equation}
-    %     \norm{\Theta}_{\textnormal{path}} 
-    %     := \frac{1}{n} \sum_{j=1}^m \abs{a_j} 
-    %     (
-    %         \norm{b_j}_1 + \abs{c_j}
-    %     )
-    %     \leq 3\norm{f}_{\mathcal{B}}
-    % \end{equation}
-\end{theorem}
-
-% The $\norm{\Theta}_{\textnormal{path}}$ is the per-unit norm control for 2NN
-% defined in \cite{neyshaburNormBasedCapacityControl2015}. 
-
-\begin{theorem}[Direct approximation in $\lp{\infty}$]
-    Given the conditions outlined in Theorem \ref{thm:barron_direct_appro_l2},
-    it can be established that for any function $f \in \mcal{B}(U)$ and any
-    integer $n \in \Nat$, there exists a 2NN such that
-    \begin{equation}
-        \norm{f - f_n}_{\infty} \lesssim 
-        \norm{f}_{\mathcal{B}} \sqrt{\frac{d+1}{n}}.
-    \end{equation}
+    In other words, for any function $f: I_d \to \R$ and any $\epsilon > 0$.
+    There exists a linear combination of $n$ ridge functions $d_j \in
+    \mathbb{D}$ of the form \eqref{eq:uat_dict} such that
+    \begin{align}
+        f_n(x) = \sum_{j=1}^n a_j d_j, \quad d_j \in \mathbb{D}, n\in\Nat \\
+        \norm{f - f_n}_{\infty} < \epsilon \quad \forall x \in I_d.
+    \end{align}
 \end{theorem}
 
 
-\section{Difference and Connection Between Different Barron Spaces}
-\label{sec:diff_barron_spaces}
+The main structure of the proof is followed:
+\begin{enumerate}
+    \item any finite sums of the form \eqref{eq:sum_sigma} with a
+    \hyperref[def:dis_func]{discriminatory function} $\sigma$ are dense in
+    $C(I_d)$ with respective to the supremum norm;
+    \item any bounded sigmoidal function is discriminatory.
+\end{enumerate}
 
-This section will clarify the relationships between  Barron spaces, namely the
-\textit{Fourier-analytic Barron spaces} and the \textit{infinite-width Barron
-spaces}. Although some relationships between these spaces has been examined and
-understood partially in
-\cite{eBarronSpaceFlowinduced2021,eMathematicalUnderstandingNeural2020}, we hope
-to clarify this problem in this section inspirerd by the work from
-\cite{carageaNeuralNetworkApproximation2022}.
+\begin{definition}[Discriminatory function]
+    \label{def:dis_func}
+    A function $\sigma$ is \textbf{discriminatory} if for every measure $\mu \in
+    M(I_d)$,
+    \begin{equation}
+        \int_{I_d} \sigma(b\tr x + c) \,d\mu(x) = 0 \quad 
+        \forall b \in \R^d \textnormal{ and } c \in \R
+    \end{equation}
+    implies $\mu = 0$.
+\end{definition}
 
-Firstly, Let $\Sigma_{\Omega}$ denote the set of all Borel probability
-measures on $\Omega = \R^1 \times \R^d \times \R^1$ and we write functions that
-admits the integral form
-\begin{equation}
-    \label{eq:integral_represent}
-    f(x) = \int_{\omega} a\sigma(b\tr x + c) \,d\mu(a,b,c), \quad
-    \forall x \in \R^d.
-\end{equation}
-
-Given a nonempty, bounded domain $U \subset \R^d$, we have already defined
-various Barron spaces:
-
-\begin{itemize}
-    \item $\bspace{\mcal{F}, s}$, $s \in \{1,2\}$ Fourier-analytic Barron spaces 
-        \eqref{def:fourier_space} with $\norm{\cdot}_{\mcal{F},s}$ 
-        \eqref{def:spectral_norm}
-    \item $\mcal{B}$ infinite-width Barron spaces \eqref{def:barron_space} with
-        $\norm{\cdot}_{\mcal{B}}$ \eqref{eq:barron_norm}
-    {
-        \setlength\itemindent{25pt}
-        \item $\bspace{H}$ classical Barron space \eqref{def:heaviside_space}
-            with $\norm{\cdot}_{\mcal{B}_H}$ \eqref{def:heaviside_norm}
-    }
-\end{itemize}
-
-We \textit{could} include the classical Barron space within the infinite-width
-Barron spaces when $\bspace{p}(U), p=0$ with a ReLU$^0$ activation function
-which is essentially the Heaviside function but we decide against it to
-emphasize on $\bspace{H}(U)$ as it is frequently visited. We denote
-infinite-width Barron spaces with $\bspace{}(U)$ after the equivalence of
-$\bspace{p}(U), 1\leq p \leq\infty$ has been shown in Proposition
-\ref{lamma:equivalence_barron_space}.
-
-% hookrightarrow or subset
-\begin{lemma}
-    Given the constructions of spaces above and a nonempty bounded domain $U$ in
-    $\R^d$, then the following relationships holds:
-
-    1) $\mcal{B}(U) \subset \bspace{H}(U)$
-
-    2) $\bspace{\mathcal{F}, 1}(U) \subset \bspace{H}(U)$
-
-    3) $\bspace{\mathcal{F}, 2}(U) \subset \mcal{B}(U)$
-\end{lemma}
-
-
-\begin{proof}
-
-% As shown in weinan, functions in the $\mathcal{B}_{ReLU}$ i.e. Barron space, are
-% Lipschitz.
-
-% https://math.stackexchange.com/questions/2319301/why-must-bounded-sets-be-contained-within-a-closed-ball
-\textbf{1):} 
-One can begin with the connection between the ReLU and the Heaviside function.
-As $U$ is nonempty and bounded in $\R^d$, there is a open ball for some $x \in
-\R^d$, $B_r(\cdot)$, with a radius $\delta > 0$ whose closure contains $U$ such
-that
-\begin{equation}
-    U \subset \closure{B_{\delta}(x)}.
-\end{equation}
-
-For $x=0$ and a suitable $\delta$, $U \subset \closure{B_{\delta}(0)}$ then we
-have:
-
-\begin{equation}
-    \sigma(x) = \int_0^{1+\delta} H(x-t) \,dt 
-    \quad \forall x \in \R \textnormal{ and } \abs{x} < \delta.
-\end{equation}
-
-Let $\beta_{b,c}$ be $\abs{b} + \abs{c}$ for any $b\in\R^d, c\in\R$. It is easy
-to see that $\abs{b\tr x + c} \leq (1+\delta)\beta_{b,c}$. Thanks to the
-positive homogeneity of ReLU function $\sigma$, i.e. $\sigma(\lambda x) =
-\lambda \sigma(x)$ for $x \in \R$, we observe that any function $f:U\to\R$ that
-admits such an integral representation with a measure $\mu \in \Sigma_{\Omega}$
-can be rewritten as
-\begin{align*}
-    f(x) 
-    &= \int_{\Omega} a \sigma(b\tr x + c )\,d\mu(a,b,c) \\
-    &= \int_{\Omega} \beta_{b,c} \sigma(
-        \frac{b\tr x}{\beta_{b,c}}+ \frac{c}{\beta_{b,c}}
-    ) \,d\mu(a,b,c) \\
-    &= \int_{\Omega} \int_0^{1+\delta} 
-        a\beta_{b,c} H(\frac{b\tr x}{\beta_{b,c}} +
-        \frac{c}{\beta_{b,c}} -t)\,dt\,d\mu(a,b,c) \quad
-        \text{(Fubini's Theorem)} \\
-    &= \int_{\Omega} a' H(b\tr x + c') \,d\nu(a',b,c'), 
-    \quad \forall x \in U
-\end{align*}
-where $a', c' \in \R$ for some $v \in \Sigma_{\Omega}$.
-
-The inclusion is immediate if one can find a measure $v$ and the integral
-condition $r(f, v, H)$ is also finite.
-
-With a mapping
-\begin{equation}
-    T: \Omega \times [0,1+\delta] \to \Omega, \quad 
-    ((a,b,c), t) \mapsto
-    (a\beta_{b,c}, \frac{b}{\beta_{b,c}}, \frac{c}{\beta_{b,c}} - t)
-\end{equation}
-
- we can construct the measure $v$ via the pushforward of the product measure
-$\mu\otimes\lambda$, given $\lambda$ is the Lebesgue measure on the interval
-$[0,1+\delta]$,
-\begin{equation}
-    v := T^{-1}(\mu\otimes\lambda).
-\end{equation}
-
-Furthermore, we can evaluate the $r(f, v, H)$
-\begin{align}
-    r(f, v, H) 
-    &= \int_{\Omega} \abs{a} \,dv(a,v,c) 
-    = \int_{\Omega}\int_0^{1+\delta} \abs{a\beta_{b,c}} \,dt\,d\mu(a,b,c) \\
-    &= (1+\delta) \abs{a}(\abs{b} + \abs{c}) \,d\mu(a,b,c)
-    = (1+\delta) r(f,\mu) < \infty.
-\end{align}
-
-Therefore, it shows that for any function $f \in \mcal{B}(U)$
-\begin{equation}
-    \norm{f}_{\mathcal{B}_H} \lesssim \norm{f}_{\mcal{B}} < \infty
-\end{equation}
-hence the inclusion holds.
-
-\textbf{2):} This is a direct consequence of \cite[Theorem
-2]{barronNeuralNetApproximation1992}.
-
-% and we include the proof for completeness.
-
-% \begin{theorem}
-%     Let $f$ be a function that admits a Fourier representation with finite
-%     spectral norm of order $1$, i.e.
-%     \begin{equation}
-%         v_{f,1} < \infty
-%     \end{equation}
-%     then $f(x) - f(0)$ can be expressed as an infinite convex combination of
-%     indicator multiplied by a constant
-%     \begin{equation}
-%         f(x) - f(0) = \int_{\R^d}\int_0^1 (
-%             \indicator{} - \indicator{}
-%         ) \,d\omega\,dt
-%     \end{equation}
-% \end{theorem}
-
-% By Fourier transform, note that
-% \begin{equation}
-%     f(x) - f(0) = \int (e^{i\omega\tr x} - 1) \fourier{f}(\omega)\,d\omega
-% \end{equation}
-
-% We also have
-% \begin{equation}
-%     e^{iz} - 1 =
-%     \begin{cases}
-%         i \int_0^c \indicator{\{z>u\}} e^{iu} \,du \quad
-%             &\text{ when } z \in [0,c] \\
-%         -i \int_0^c \indicator{\{z<-u\}} e^{iu} \,du \quad
-%             &\text{ when } z \in [c,0] 
-%     \end{cases}
-% \end{equation}
-
-% It follows that
-% \begin{equation}
-%     e^{iz} - 1 = i \int_0^c (
-%         \indicator{\{z>u\}} - \indicator{\{z<-u\}}  
-%     )
-%     e^{iu} \,du 
-% \end{equation}
-
-% Integrating when $z = \omega x$ and $c=\abs{\omega}_{[0,1]}$ defined in
-% \eqref{def:fourier_class} gives
-% \begin{equation}
-%     f(x) -f(0) = i\int_{\R^d} (\int_0^{c} (
-%         \indicator{\{\omega x>u\}} - \indicator{\{\omega x<-u\}}
-%     ) e^{iu}\,du)
-%     \fourier{f}(\omega)\,d\omega
-% \end{equation}
-
-% Only taking the real part of the LHS and RHS and integrating using Fubini's theorem
-% \begin{equation}
-%     f(x) = f(0) + \int_{\R^d} \int_0^1 (
-%         \indicator{\{\omega x<-t\}} - \indicator{\{\omega x>t\}}
-%     ) \abs{\omega} \sin(t\omega + \theta_{\omega})
-%     \fourier{f}(\omega)\,d\omega\,d\omega
-% \end{equation}
-
-% A similar argument as the proof in \TONOTE{proof of Fourier} is employed here
-% where the ``drawing'' parameters from the distribution shows that the $f(x) -
-% f(0)$ is the closure of the convex hull of finite linear combinations.
-
-% Hence we show the inclusion in 2).
-
-\textbf{3):} As $U$ is nonempty and bounded in $\R^d$, we can fix a point $x_0
-\in \R^d$ and a radius $\delta > 0$ such that $U \subset x_0 + [0,\delta]^d$.
-Without loss of generality, it is safe to assume that $f$ is a function in
-$\mathcal{B}_{\mathcal{F},2}$ with the spectral condition $v_{f,2}\leq 1$
-\eqref{def:spectral_seminorm}. This implies \hyperref[def:spectral_norm]{spetral
-norm} $\norm{f}_{\bspace{\mcal{F}, 2}} \leq 2$ by direct calculation. 
-
-One can prove the inclusion if $f$ can be represented as in
-\eqref{eq:integral_represent} with a measure in $\Sigma_{\Omega}$.
-
-We define two mapping $G, H: \R^d \to \mathbb{C}$:
-\begin{align*}
-    G(\omega) &= \frac{1}{2} (\fourier{f}(\omega) 
-                    + \overline{\fourier{f}(-\omega)}) \\
-    H(\omega) &= \frac{1}{\delta^d} \cdot 
-                    e^{\frac{i \omega\tr x_0}{\delta}} \cdot 
-                    G(\omega / \delta)
-\end{align*}
-where $\fourier{f}$ is the Fourier transform of $f$ and $\overline{\fourier{f}}$
-is the complex conjugate of $\fourier{f}$.
-
-We calculate their respective spectral norm in $\bspace{\mcal{F}, 2}$:
-\begin{align}
-    \norm{G}_{\mathcal{F},2} &\leq 2 \\
-    \norm{H}_{\mathcal{F},2} &\leq 2\delta^2
-\end{align}
-
-We then define two functions from $U$ to $\R$ with $G,H$ as their Fourier
-transform, respectively.
-\begin{align*}
-    g(x) &:= \int_{\R^d} e^{i\omega\tr x} G(\omega)\,d\omega\\
-    h(x) &:= \int_{\R^d} e^{i\omega\tr x} H(\omega)\,d\omega\\
-\end{align*}
-It is easy to check that for all $x \in U$, $f(x)=g(x)=h(\frac{x-x_0}{\delta})$.
-
-By construction, the spectral condition of $h$, $v_{h,2}$, is finite. We have
-$\norm{h}_{\mathcal{B}}$ is finite with some constant $C_h$ thanks to Theorem 9
-in \cite{eMathematicalUnderstandingNeural2020}. Therefore, $h(y)$ can be
-represented as
-\begin{equation}
-    h(y) = \int_{[0,1]^d} a \sigma(b\tr x + c) \,d\mu(a,b,c) \quad
-    \forall y \in [0,1]^d
-\end{equation}
-where $\mu \in \Sigma_{\Omega}$ and $\norm{f}_{\mcal{B}} < \infty$ w.r.t. some
-constant only dependent on $\delta$ and $d$.
-
-Since $y=\frac{x-x_0}{\delta}$ for all $x\in U$, the results above implies that 
-\begin{equation}
-    f(x) = h(\frac{x-x_0}{\delta}) \int_{\Omega} a 
-    \sigma(\frac{b\tr x}{\delta} + c - \frac{b\tr x_0}{\delta})\,dv(a,b,c)
-\end{equation}
-for some measure $v \in \Sigma_{\Omega}$.
-
-We continue the construction of measure via the pushforward of $v = T(\mu)$. Let
-$T$ be a mapping:
-\begin{equation}
-    T: \Omega \to \Omega, \quad
-    (a,b,c) \mapsto (a, \frac{b}{\delta}, c - \frac{b\tr x_0}{\delta})
-\end{equation}
-
-By calculation, $r(f, v) \leq (1+\abs{x_0}) r(h, \mu)$ is finite w.r.t some
-constant $C$ dependent only on $d,\delta,x_0$. Hence the inclusion is shown.
-
-\end{proof}
-
-
-\begin{proposition}
-
-    Let $U \subset \mathbb{R}^d$ be bounded and have nonempty interior. For
-    $s>0$, if $\mathcal{B}_{\mathcal{F},s}(U) \subset \mathcal{B}_{1}(U)$, then
-    $s \geq 2$. In particular $\mathcal{B}_{\mathcal{F},1}(U) \not\subset
-    \mathcal{B}_{1}(U)$.
-\end{proposition}
-
-\begin{remark}
-
-    It has been argued in \cite{eRepresentationFormulasPointwise2020} that
-    $\bspace{\mcal{F},1}$ embeds into the $\mcal{B}$ but
-    \cite{carageaNeuralNetworkApproximation2022} proven that this embedment
-    wrongly interpretes the results of
-    \cite{barronUniversalApproximationBounds1993,barronNeuralNetApproximation1992}.
-    In other words, the original model class proposed by
-    \cite{barronNeuralNetApproximation1992} is not \textit{contained} in the
-    novel Barron space $\mcal{B}$ introduced recently by
-    \cite{eBarronSpaceFlowinduced2021}. 
-    
-    % It has been discussed in earlier section that we have the equivalence of
-    % Barron norm and Barron spaces for $1 \leq p\leq +\infty$ (see
-    % \eqref{eq:barron_fouier_int}) with ReLU as activation function.
-
-    One can observe that the class of functions in which $f$ admits a Fourier
-    representation with finite second moment, $\bspace{\mcal{F}, 2}$, is well
-    ``contained'' inside the \textit{infinite-width Barron space}. However,
-    $\mathcal{B}_{\mathcal{F}, 1}$ still encapsulates a boarder class of
-    functions. In other words, the infinite-width Barron space $\mcal{B}$ is
-    \textit{sandwiched} between $\bspace{\mcal{F}, 1}$ and $\bspace{\mcal{F},
-    2}$.
-\end{remark}
-
-
-\section{Improved approximation from $\bigO(n^{-1/2})$}
-\label{sec:improvement}
-
-
-In this section, we present an exposition on the improved approximation error
-rates. The curx of the notion is to derive the entropy number corresponding to
-the convex hull of the dictionary $\mathbb{D}$. Maurey's Theorem
-\ref{thm:maurey} provides a bound for \textit{any} bounded dictionaries in a
-Hilbert space. The improvement was first done
-by~\cite{makovozRandomApproximantsNeural1996} and subsequently shown by
-\cite{klusowskiApproximationCombinationsReLU2018} where ReLU and squared ReLU
-are used as the activation functions with norm controlled parameters. The former
-improvement is made possible through the selection of the Heaviside function,
-and a superior rate $\bigO(n^{-1/2 - 1/q\cdot d})$ was obtained in Section
-\ref{subsec:improved_heaviside}. In the latter, the \textit{inner parameters}
-$b\in\R^d$ in \eqref{eq:improved_fourier_dict} are suitably constrained to
-ensure compactness. The works of \cite{maUniformApproximationRates2022,
-siegelSharpBoundsApproximation2022, klusowskiApproximationCombinationsReLU2018a}
-provide the basis for our discussion, unless explicitly cited otherwise.
-
-\subsection{Fourier-analytic Barron spaces with higher smoothness index}
-
-In the previous section, an error of $\bigO(n^{-1/2})$ is obtained for functions
-in $\bspace{\mcal{F}, 1}$ using $n$ elements from the dictionary
-\eqref{eq:dict_represent}
-\begin{align}
-    \label{eq:improved_fourier_dict}
-    \mathbb{D} = \{
-        \sigma(b\tr x + c), \quad b\in\R^d, c\in\R
-    \}.
-\end{align}
-
-The smoothness of a function $f$ is expressed through its \textit{first} Fourier
-representation and controlled via the spectral condition $v_{f,s}$
-\eqref{eq:spectral_condition}. In particular, how ``oscillating'' or
-``fluctuating'' of a function $f$ is measured by the mean of the norm of the
-frequency vector weighted by the Fourier magnitude distribution. Naturally, we
-would like to extend the findings with tighter restriction on the smoothness and
-ideally decrease the error rate $\bigO(n^{-1/2})$. Tighter rates of
-approximation is made possible with stricter conditions on the Barron spectral
-norm while bounding the inner parameter $b\in\R^d$ in
-\eqref{eq:improved_fourier_dict}.
-
-It it shown recently in \cite{siegelSharpBoundsApproximation2022} that the
-spectral norm $\norm{f}_{\bspace{\mcal{F}, s}}$, $s \geq 1$ is the variation
-norm of the dictionary:
-\begin{equation}
-    \mathbb{D}_{\mcal{F}, s} := \{
-        (1 + \abs{\omega})^{-s} e^{i\omega\tr x}: \omega \in \R^d
-    \}.
-\end{equation}
-
-This implies that functions in Fourier-analytic Barron spaces $\bspace{\mcal{F},
-s}$ can be approximated with $n$-term dictionary $\mathbb{D}_{\mcal{F}, s}$. We
-define a set of finite linear combination of elements from
-$\mathbb{D}_{\mcal{F},s}$ in which $\abs{a_j}$ is bounded in $\lp{1}$
-\begin{equation}
-    \Sigma_n(\mathbb{D}_{\mcal{F}, s}, M) := \Bigg\{
-        f = \sum_{j=1}^n \alpha_j d_j: 
-        d_j \in \mathbb{D}_{\mcal{F}, s} \textnormal{ and } 
-        \sum_{j=1}^n \abs{\alpha_j} \leq M, \quad 
-        n \in \Nat, \alpha_j \in \R
-    \Bigg\}.
-\end{equation}
-
-
-\textbf{Approximation in $\lp{\infty}$ with bounded coefficients}
+We continue to show that the linear span of any continuous discriminatory
+functions are dense in the space of $(C(I_d), \norm{\cdot}_{\infty})$.
 
 \begin{theorem}
-    Let $\Omega = [0,1]^d$ and $s > 0$. If $f$ is in the closed, symmetric
-    convex hull of $\mathbb{D}_{\mcal{F}, s, M}$, then for a fixed $M<\infty$
-    and any $n \in \Nat$, there exists a finite linear combination of elements
-    from $\Sigma_n(\mathbb{D}_{\mcal{F}, s}, M)$ the approximation error in
-    $\lp{\infty}(\Omega)$ is
+    Let $\sigma: \R \to \R$ be a continuous
+    \hyperref[def:dis_func]{discriminatory function}, the finite sums of the
+    form \eqref{eq:sum_sigma} are dense in the space $(C(I_d),
+    \norm{\cdot}_{\infty})$. In other words, for any $\epsilon > 0$ and any $f
+    \in C(I_d)$, there exists a $n \in \Nat$ and a sum $h(x)$ of the above form,
+    where
     \begin{equation}
-        \sup_{x\in \Omega} \norm{f(x)-f_n(x)}_{\infty} \lesssim 
-        n^{-\frac{1}{2}-\frac{s}{d}} \sqrt{\log{n}} \norm{f}_{\bspace{\mcal{F},s}}.
-    \end{equation}
-
-    In other words,
-    \begin{equation}
-        \inf_{f\in \Sigma_n(\mathbb{D}_{\mcal{F}, s}, M)} 
-        \norm{f-f_n}_{\infty} \lesssim 
-        n^{-\frac{1}{2}-\frac{s}{d}} \sqrt{\log{n}} \norm{f}_{\bspace{\mcal{F},s}}.
+        \norm{f - h}_{\infty} < \epsilon \quad \forall x \in I_d.
     \end{equation}
 \end{theorem}
 
 \begin{proof}
-    One can find the proof in
-    \cite{klusowskiApproximationCombinationsReLU2018,siegelSharpBoundsApproximation2022}.
+    Let $G := \spn(\{\sigma(b\tr x + c): b \in \R^d, c \in \R \})$ be the linear
+    span for every $b\in\R^d, c\in\R$. $G$ clearly is a linear subspace of
+    $C(I_d)$. We claim that the closure of $G$, $\closure{G}$, is all of
+    $C(I_d)$.
+
+    We continue the proof by contradiction. Assuming $\closure{G}$ is not
+    $C(I_d)$, then there is a bounded linear functional $L$ on $C(I_d)$ such
+    that $L \not\equiv 0$ on $C(I_d)$ and $L(G) = L(\closure{G}) = 0$ by the
+    Hahn-Banach Theorem \ref{thm:hahn_banach_1}.
+
+    By the \hyperref[thm:riesz_rep]{Riesz Representation Theorem}, there is a
+    unique $\mu \in M(I_d)$ for this $L$ such that
+    \begin{equation}
+        L(f) = \int_{I_d} f(x) \,d\mu(x) \quad \forall f \in C(I_d)
+    \end{equation}
+
+    Since $L$ is identically zero on $G$, we must have for all $b$ and $c$ that
+    \begin{equation}
+        \int_{I_d} \sigma(b\tr x + c) \,d\mu(x) = 0
+    \end{equation}
+
+    However, the condition that $\sigma$ is discriminatory implies $\mu = 0$ and
+    consequently $L = 0$. By \eqref{thm:hahn_banach_2}, subspace $G$ must be
+    dense in $C(I_d)$.
 \end{proof}
 
-\textbf{Approximation in $\lp{q}$ with bounded coefficients}
+Now it remains to show that sigmoidal functions are discriminatory with the help
+of Lemma \ref{lemma:zero_measure}.
 
-\subsection{Fourier-analytic Barron spaces with ReLU\textsuperscript{k}}
+\begin{lemma}~\cite{rudinFunctionalAnalysis1991}
+    \label{lemma:zero_measure}
+    if $\mu$ is a signed finite Borel measure on $\R^d$ such that the Fourier
+    transform of $\mu$
+    \begin{equation}
+        \fourier{\mu}(u) = \int_{\R^d} e^{-iu\tr x} \,\mu(x) = 0,  
+    \end{equation}
+    for all $x\in\R^d$, then $\mu = 0$ for all measurable sets of $\R^d$.
+\end{lemma}
 
-In this section, we consider approximation by 2NN with ReLU$^k$ as activation
-function
-\begin{equation}
-    \sigma_k(x) = [\max(0, x)]^k, \quad k \in \Nat^0
-\end{equation}
-when $k = 0$, $\sigma_0$ is the Heaviside function in Definition
-\ref{eq:heaviside_represent}.
+\begin{lemma}
+    Any bounded, measurable sigmoidal function is discriminatory.
+\end{lemma}
 
-% A smoothness property of the function to be approximated is expressed in terms
-% of its Fourier representation. In particular, an average of the norm of the
-% frequency vector weighted by the Fourier magnitude distribution is used to
-% measure the extent to which the function oscillates. In this Introduction, the
-% result is presented in the case that the Fourier distribution has a density that
-% is integrable as well as having a finite first moment. Somewhat greater
-% generality is permitted in the theorem stated and proven in Sections III and IV.
+\begin{proof}
 
-% In addition to the smoothness property ensured via the finite first moment,
+    \textbf{Step 0} \textit{(Assume discriminatory and construct pointwise
+    convergence function)}: Let $\sigma: \R \to \R$ be a sigmoidal function.
+    Assume that the $\sigma$ is discriminatory with a measure $\mu \in M(I_d)$
+    as in Definition \ref{def:dis_func} and the goal is to show that $\mu = 0$.
 
-The dictionaries of interest corresponding to the $\sigma_k$ activation function
-\begin{equation}
-    \mathbb{D}_{k} = \Bigg\{
-        \sigma_k(b\tr x + c), \quad b\in S^{d-1}, c\in [c_1, c_2] 
-    \Bigg\}
-\end{equation}
-where $\sigma_k$ is ReLU$^k$ function described above, $S^{d-1} := \{x\in\R^d:
-\norm{x}_2 = 1\}$ is the unit sphere in $\R^d$. $c$ is chosen such that
-\begin{equation}
-    c_1 < \inf_{x\in\Omega} b\tr x < 
-    \sup_{x\in\Omega} b\tr x < c_2, \quad
-    b \in S^{d-1}
-\end{equation}
+    Fix an arbitrary $b_0 \in \R^d\setminus \{0\}$ and define
+    $\sigma_{\lambda}(x) := \sigma(\lambda (b_0\tr x + c) + \varphi)$. For
+    any $c, \lambda, \varphi \in \R$, one can write
+    \begin{equation}
+        \sigma_{\lambda}(x)
+        = \begin{cases}
+            \to 1, \quad &\for b_0\tr x + c > 0 \quad \text{as}\, \lambda \to +\infty \\
+            \to 0, \quad &\for b_0\tr x + c < 0 \quad \text{as}\, \lambda \to -\infty \\
+            \sigma(\varphi), \quad &\for b_0\tr x + c = 0, \quad\forall \lambda \in \R
+        \end{cases}.
+    \end{equation}
 
-We define the sets of functions whose coefficients $a_j$ are bounded in $\lp{1}$
-and $\lp{\infty}$ for all $0 < n < \infty$.
+    Therefore, the function $\sigma_{\lambda}$ converges pointwise to a function
+    $\gamma(x): I_d \to \R$ as $\lambda \to + \infty$.
 
-\begin{align*}
-    \Sigma_n^1(\mathbb{D}_k, M) &:= \Big\{
-        \sum_{j=1}^n a_j d_j:
-        d_j \in D^d_{\sigma_k}, \sum_{j=1}^n \norm{a_j}_1 \leq M 
-    \Big\} \\
-    \Sigma_n^{\infty}(\mathbb{D}_k, M) &:= \Big\{
-        \sum_{j=1}^n a_j d_j:
-        d_j \in D^d_{\sigma_k}, \max_{j} \abs{a_j} \leq M 
-    \Big\}
-\end{align*}
+    \begin{equation}
+        \gamma(x) = 
+        \begin{cases}
+            1,               \quad &\for b_0\tr x + c > 0 \\
+            0,               \quad &\for b_0\tr x + c < 0 \\
+            \sigma(\varphi), \quad &\for b_0\tr x + c = 0
+        \end{cases}
+    \end{equation}
+    
+    Let $\Pi_{b_0,c}$ denote the hyperplane and $H_{b_0, c}$ denote the
+    half-space as: 
+    \begin{align}
+        \Pi_{b_0,c} &= \{x\in\R^d \mid b_0\tr x + c = 0\} \\
+        H_{b_0, c}  &= \{x\in\R^d \mid b_0\tr x + c > 0\}
+    \end{align}
+    for all $c \in \R$.
+    
+    By the Lebesgue Convergence Theorem, we have
+    \begin{align*}
+        \sigma(\varphi) \mu(\Pi_{b_0, c}) + \mu (H_{b_0, c})
+        &= \int_{I_d} \gamma(x) \,d\mu(x) \\
+        &= \int_{I_d} \lim_{\lambda\to\infty} \sigma_{\lambda}(x)\,d\mu(x) \\
+        &= \lim_{\lambda\to\infty} \int_{I_d} \sigma_{\lambda}(x)\,d\mu(x) = 0
+    \end{align*}
+    for all $\lambda, \varphi \in \R$.
 
-We will consider the cases where the $\lp{1}$-norm of $a_i$ is bounded or
-unbounded.
-% https://e.math.cornell.edu/people/belk/measuretheory/LpFunctions.pdf
+    Thanks to the function $\sigma$ being sigmoidal, we have $\lim_{\varphi\to
+    +\infty} \sigma(\varphi)= 1$ and $\lim_{\varphi\to -\infty}
+    \sigma(\varphi)=0$ and consequently it is easy to see
+    \begin{equation}
+        \label{eq:disc_1}
+        \mu(\Pi_{b_0, c}) = 0 \quad \text{and} \quad \mu (H_{b_0, c}) = 0 
+        \quad \forall c\in\R.
+    \end{equation}
 
-\TONOTE{Theorems on the improved rates with its conditions}
+    This in turn implies $\mu(I_d) = 0$ as $c$ can be chosen arbitrarily large.
+    
+    We would like to show that the measure of all half-planes being zero implies
+    that the measure $\mu$ must be zero. If $\mu$ is a positive Borel measure,
+    this would be trivial by \eqref{eq:disc_1} but $\mu$ here is a signed
+    measure.
+    
+    \textbf{Step 1} \textit{(Construct a signed measure)}: Let $\phi$ be a
+    finite signed, Borel measure on $\R$
+    \begin{equation}
+        \label{eq:disc_2}
+        \phi(A) = \mu(\{x \in I_d: b_o\tr x \in A\}) \quad \forall A \subseteq \R.
+    \end{equation}
 
-\TONOTE{A summary table for all rates}
+    By construction, we have
+    \begin{align}
+        \forall a < b \in \R, \quad \phi((a,b)) 
+        &= \phi((a,\infty)) - \phi([b, \infty)) \\
+        &= \mu(\{x \in I_d: b_o\tr x > a\}) \\
+        &\quad- \Big(
+            \mu(\{x \in I_d: b_o\tr x > b\})
+            + \mu(\{x \in I_d: b_o\tr x = b\})
+        \Big) \\
+        &= \mu(H_{b_0, -a}) - (\mu(H_{b_0, -b}) + \mu(\Pi_{b_0, -b})) \\
+        &= 0 - 0 = 0.
+    \end{align}
+    Therefore $\phi(A) = 0$ for all Borel sets $A \subseteq \R$.
+
+    % Show a bounded linear functional is zero on such measure
+    \textbf{Step 2} \textit{(Define a linear functional $L$)}: Let
+    $\lp{\infty}(\R)$ denote the space of all measurable bounded functions $f:
+    \R \to \R$. For a function $h \in \lp{\infty}(\R)$, we define a functional
+    $L: \lp{\infty}(\R) \to \R$:
+    \begin{equation}
+        L(h) = \int_{I_d} h(b\tr x)\,d\mu(x).
+    \end{equation}
+
+    $L$ is linear because for all $\alpha, \beta \in \R, \text{ and } g, h \in
+    \lp{\infty}(\R)$
+    \begin{align*}
+        L(\alpha g + \beta h)
+        &= \int_{I_d} (\alpha g + \beta h) (b_0\tr x) \,d\mu(x) \\
+        &= \int_{I_d} (\alpha g(b_0\tr x) + \beta h (b_0\tr x)) \, d\mu(x) \\
+        &= \alpha \int_{I_d} g(b_0\tr x) \,d\mu(x) 
+            + \beta \int_{I_d} h(b_0\tr x) \,d\mu(x) \\
+        &= \alpha F(g) + \beta L(h)
+    \end{align*}
+
+    Now we look at the indicator function for all Borel sets of $\R$
+    \begin{equation}
+        \indicator{A}(x) =
+        \begin{cases}
+            1, \quad \text{ if } x \in A, \\
+            0, \quad \text{ if } x \not\in A.
+        \end{cases}
+    \end{equation}
+
+    Combining $\indicator{A} \in \lp{\infty}(\R)$ and \eqref{eq:disc_2}, we
+    have 
+
+    \begin{equation}
+        L(\indicator{A}) = \int_{I_d} \indicator{A}(b_0\tr x)\,d\mu(x)
+        = \mu(\{ x\in I_d: b_0\tr x\in A \}) = \phi(A) = 0
+    \end{equation}
+    for all Borel sets $A \subseteq \R$.
+
+    Since $L$ is a linear functional, the finite sum of functions of the form
+    (simple functions):
+    \begin{equation}
+        \label{eq:simple_function}
+        s_n(x) = \sum_{j=1}^{n} a_j \indicator{A_j}(x)
+    \end{equation}
+    is zero for all $n\in\Nat$ where $a_j \in \R$, and ${A_j} \subseteq \R$ are
+    measurable and pairwise disjoint sets of $\R$. Since the simple functions
+    \eqref{eq:simple_function} are dense in $\lp{\infty}(\R)$, then for a
+    function $h \in \lp{\infty}(\R)$, there exists a sequence of functions $s_n$
+    converge pointwise to $h$ for all $n \in \Nat$ and $x \in \R$
+    \begin{align}
+        L(h) &= \int_{I_d} h(b_0\tr x) \,d\mu(x) 
+             = \int_{I_d} \lim_{n\to\infty} s_n(b_0\tr x) \,d\mu(x) \\
+             &= \lim_{n\to\infty} \int_{I_d} s_n(b_0\tr x) \,d\mu(x)
+             = \lim_{n\to\infty} L(s_n)
+             = 0
+    \end{align}
+    where the limit in the integral is moved outside the integral by the
+    Lebesgue Convergence Theorem.
+
+    \textbf{Step 3} \textit{(Tidy up)}: sine and cosine functions are in
+    $\lp{\infty}(\R)$, which implies $L(\cos) = L(\sin) = 0$ for all $b_0$. For a
+    bounded measurable function $h'(x) = e^{ib_0\tr x} = \cos(b_0\tr x) + i
+    \sin(b_0\tr x)$, we have
+    \begin{equation}
+        \label{eq:bounded_functional}
+        L(h') = \int_{I_d} h'(b_0\tr x) \,d\mu(x) 
+              = \int_{I_d} \cos(b_0\tr x) + i \sin(b_0\tr x) \,d\mu(x)
+              = 0.
+    \end{equation}
+
+    It is easy to verify that $\mu = 0$ on $\R^d \setminus \{0\}$ as the Fourier
+    transform of $\mu$ is zero from Lemma \ref{lemma:zero_measure}. Combining
+    with the fact that $\mu(I_d) = 0$, \eqref{eq:bounded_functional} establishes
+    that $\sigma$ is discriminatory.
+
+\end{proof}
+
+% Let $f_m(\mathbf{x}, \Theta)$ be the parameterized family of 2NN defined above
+% of $m$ nodes that which map input vector $\mathbf{x}$ of dimension $d$.
+
+% \begin{equation}
+%     f_m(\mathbf{x}, \Theta) = \sum_{i=1}^m a_i \sigma(\mathbf{b_i}^T\mathbf{x} + c_i)
+% \end{equation}
+
+% where $\Theta = (a_1, \mathbf{b}_1, c_1, \dots, a_m, \mathbf{b}_m, c_m)$ denotes
+% all the parameters (the total number of parameters is $(d+2)m + 1$). We will
+% consider the hypothesis spaces where the activation functions $\sigma$ is ReLU
+% \footnote{\TONOTE{The choice of activation function is important for
+%         infinite-width Barron spaces}}.
+
+%  homogeneity
+
+\subsection{Application to the classification problem}
+
+This section will explicate the implications of Theorem \ref{thm:uat} for
+classification problems. It should be noted that the decision function defined
+below is not continuous on $I_d$. We would like to check whether such
+classification problem can also be well understood as the regression problem.
+
+\begin{definition}[Decision function]
+    Let $\{P_1, \dots, P_k\}$ be a partition of $I_d$ where each partition $P_j$
+    are pairwise disjoint nonempty Borel sets, i.e. $P_j \not= \emptyset$ and
+    $\bigcup_{j=1}^k P_j = I_d$. $f$ is a decision function for $I_d$ of the
+    form
+    \begin{equation}
+        f: I_d \to \{1, \dots, k\}
+    \end{equation}
+    where $f(x) = j$ for $x \in P_j$. 
+\end{definition}
+
+\begin{theorem}
+    \label{thm:uat_clas}
+    Let $\sigma$ be a continuous sigmoidal function and $f$ be the decision
+    function for any finite, measurable partition of $I_d$. Let $\phi$ be a
+    Borel measure on $I_d$ and $\mu(I_d) = 1$. Then for any $\epsilon>0$, there
+    exists a finite sum of the form
+    \begin{equation}
+        G(x) = \sum_{j=1}^n a_j \sigma(b_j\tr x + c_j)
+    \end{equation}
+    where $a_j, c_j \in \R, b_j \in \R^d$ and a set $D\subset I_d$, such that
+    the measure of the set $D$, $\mu(D) \geq 1 - \epsilon$ and
+    \begin{equation}
+        \sup_{x\in D}\abs{G(x) - f(x)} < \epsilon
+    \end{equation}
+\end{theorem}
+
+Theorem \ref{thm:uat_clas} is a anoloy of the UAT and the proof is
+straightforward using Lusin's Theorem \eqref{thm:lusin}.
+
+\begin{proof}
+    By Lusin's Theorem \eqref{thm:lusin}, there exists a continuous function $g
+    \in C(I_d)$ such that $\mu(\{x\in I_d \mid f(x) \not= g(x)\}) < \epsilon$.
+    Now we have a continuous $g$ and we are able to a find a sum of the form
+    above satisfying $\abs{G(x) - g(x)} < \epsilon$ by Theorem \eqref{thm:uat}
+    for all $x\in I_d$. Let set $D = \{x\in I_d \mid f(x) = g(x)\}$ and we have
+    $\mu(D) \geq 1 - \epsilon$. Then for $x\in D$, we have
+    \begin{equation}
+        \sup_{x\in D}\abs{G(x)-f(x)} = \sup_{x\in D}\abs{G(x) - g(x)} < \epsilon 
+        \quad \forall x\in D.
+    \end{equation}
+\end{proof}
+
+The above result shows that the total measure of the misclassified points can be
+made arbitrarily small when $n$ is allowed to grow.
 
 
-
-% \subsection{Approximation in $L_{\infty}$ with bounded weights}
-
-% We start with the main result when the approximation with 2NN with $m$ nodes and 
-% the parameters bounded in $L_1$.
-
-% \begin{theorem}
-%     \label{thm:appro_bound_l1}
-%     Let $U = [-1,1]^d$. Suppose $f: U \to \R$ admits a Fourier representation
-%     and the spectral norm of order $2$ of $f$ is finite, i.e.
-%     \begin{equation}
-%         v_{f,2} = \int_{\R^d} \norm{\omega}_1^s \abs{\fourier{f}(\omega)} 
-%         d\omega < \infty.
-%     \end{equation}
-%     There exists a 2NN of the form with ReLU activation function $\sigma$
-%     \begin{equation}
-%         f_n(x) = f(0) + \nabla f(0) \cdot x + v \cdot 
-%         \frac{1}{n} \sum_{j=1}^n a_j \sigma(b_j\tr x + c_j)
-%     \end{equation}
-%     with $a_j\in[-1,1]$, $\norm{b_j}_1 = 1$, $c_j\in[0,1]$ and $v \leq
-%     2v_{f,2}$ such that
-%     \begin{equation}
-%         \sup_{\mathbf{x} \in D} \norm{f(x) - f_m(x)}_{\infty} 
-%         \leq c v_{f,2} \sqrt{d+\log{n}} \, n^{-1/2-1/d}
-%     \end{equation}
-
-%     for some universal $c > 0$.
-% \end{theorem}
-
-% \begin{theorem}
-%     Let $U = [-1,1]^d$. Suppose $f: U \to \R$ admits a Fourier representation
-%     and the spectral norm of order $2$ of $f$ is finite, i.e.
-%     \begin{equation}
-%         v_{f,3} = \int_{\R^d} \norm{\omega}_1^3 \abs{\fourier{f}(\omega)} 
-%         d\omega < \infty.
-%     \end{equation}
-%     There exists a 2NN of the form with squared ReLU activation function
-%     \begin{equation}
-%         f_n(x) = f(0) + \nabla f(0) \cdot x + v \cdot 
-%         \frac{1}{n} \sum_{j=1}^n a_j \sigma(b_j\tr x + c_j)
-%     \end{equation}
-%     with $a_j\in[-1,1]$, $\norm{b_j}_1 = 1$, $c_j\in[0,1]$ and $v \leq
-%     2v_{f,2}$ such that
-%     \begin{equation}
-%         \sup_{\mathbf{x} \in D} \abs{f(x) - f_m(x)} \leq 
-%         c v_{f,3} \sqrt{d} n^{-1/2-1/d}
-%     \end{equation}
-
-%     for some universal $c > 0$.
-% \end{theorem}
-
-
- 
-% \section{Minimax Lower Bounds for Two Neural Network Model}
-
-% For simplicity, data are of the form $\{(U_i, Y_i)\}_{i=1}^n$ from a
-
-% For functions $f$ in the class $\mathcal{F}: [-1, 1]^d \to \mathcal{R}$, the
-% minimax risk is:
-
-% \begin{equation} R_{n,d} := \inf_{\hat{f}} \sup_{f\in \mathcal{F}}
-%     \ERW{\norm{f - \hat{f}}^2} \end{equation}
-
-% It has been shown in \TOCITE(Barron Minimax paper) that the minimax lower
-% bound for neural nets is of order $\bigO(\log{d}/n)$ to some fractional power
-% when $d$ is of larger order than $n$.
-
-% \section{Risk Bounds for }
-
-% {\itshape Firstly, I need to understand the difference between approximation
-% rates and estimation of population risk.
-
-% There exists a vast dictionary of definitions with similar wordings but the
-% context is hughly different.
-
-% e.g. What's the estimate of the population risk? In my understanding,
-
-% $f^* - f_m$ where $f_m$ is the best solution in such hypothesis class is the
-% approximation rates
-
-% It should be that Population risk is w.r.t. a particular loss function?}
-
-% \begin{equation} f(x) = \sum_{i=1}^m a_i \phi (\spr{\mathbf{w_i}}{x})
-%     \end{equation}
-
-
-
-
-
-%%% Local Variables: %% mode: latex %% TeX-master: "MasterThesisSfS" %% End: 
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "MasterThesisSfS"
+%%% End: 
