@@ -74,39 +74,103 @@ sigmoidal activation functions.
 
 \section{Barron class and spectral condition}
 
-Firstly, we define the spectral condition and the semi/norm\footnote{
-    Often papers omit the ``Barron'' as readers can deduce from the context. 
-    In the following chapters, we would like to call them \textit{spectral 
-    semi/norm} as another definition of norm in infinite-width Barron spaces is 
-    named \textit{Barron norm}.
-} by which the smoothness of a function
-is controlled. We begin with the Barron spectral seminorm originally proposed
- by \cite{barronUniversalApproximationBounds1993}.
+In this section, we would identify the class of functions originally proposed by
+\cite{barronUniversalApproximationBounds1993}. We define the \textit{spectral
+conditions} on which the smoothness constrain is imposed. A modified spectral
+condition proposed by \cite{siegelCharacterizationVariationSpaces2022} is
+also introduced.
+
+\begin{definition}[Barron class]
+    \label{def:barron_class}
+    Let $U$ be a nonempty bounded domain in $\mathbb{R}^d$. A function $f: U \to
+    \mathbb{R}$ is said to be in \textit{Barron class} with a constant $C > 0$,
+    if there is a $x_0$ in $U$, $c \in [-C, C]$, and a measurable function $f:
+    \mathbb{R}^d \to \mathbb{C}$ satisfying:
+    \begin{align}
+        & \int_{\mathbb{R}^d} \abs{\omega}_{U, x_0} 
+        \cdot \abs{\fourier{f}(\omega)} \,d\omega < C 
+        \label{eq:another_spectral_seminorm_condition} \\
+        & f(x) = c + \int_{\mathbb{R}^d} (
+            e^{i\omega\tr x} - e^{i\omega\tr x_0}
+        ) \cdot \fourier{f}(\omega)\,d\omega
+    \end{align}
+
+    where $\abs{\omega}_{U, x_0} := \sup_{x\in U}\norm{\spr{\omega}{x - x_0}}_2$
+    and it is denoted by $\abs{\omega}_U$ when $x_0 = 0$ for simplicity. We
+    refer the class of all functions satisfying the above condition as 
+    $\Gamma_C(U, x_0)$\footnote{
+        $\Gamma_C(U, x_0)$ is the Fourier-analytic Barron space
+        $\bspace{\mcal{F}, 1}(U)$ discussed before. The integral condition in
+        \eqref{eq:another_spectral_seminorm_condition} is the integral condition
+        $v_{f,1} < \infty$ defined in \eqref{eq:spectral_condition}.
+    }.
+\end{definition}
 
 % should be L1 norm of \omega
 
-\begin{definition}[Spectral seminorm]
-    \label{def:spectral_seminorm}
-    For any $s \in \Nat$. Let $\emptyset \not= U \subset \R^d$ be a bounded
-    domain on $\R^d$. Suppose a function $f: U \to \R$ admits a Fourier
-    representation
+\TONOTE{Why is 1/2 allowed? in \cite{siegelCharacterizationVariationSpaces2022}}
+
+\begin{definition}[Spectral condition]
+    \label{def:spectral_condition}
+    Let $U$ be a nonempty bounded domain in $\R^d$.
+    Suppose that a function $f: U \to \R$ admits a Fourier representation
     \begin{equation}
         f(x) = \int_{\R^d} e^{i\omega\tr x} \fourier{f}(\omega) \,d\omega
     \end{equation}
     where $\fourier{f}: \R^d \to \mathbb{C}$ is the Fourier transform of $f$.
 
-    Let the spectral condition of $f$ be defined as
+    For any $s \in \Nat$, the spectral condition of such function $f$ be defined
+    as
     \begin{equation}
         \label{eq:spectral_condition}
         v_{f,s} 
             = \int_{\R^d} \norm{\omega}_1^s \abs{\fourier{f}(\omega)}\,d\omega.
     \end{equation}
-    The spectral seminorm is defined as
+\end{definition}
+
+
+
+\begin{definition}[Modified spectral condition]
+    \label{def:spectral_condition_mod}
+    Under the setup of Definition \ref{def:spectral_condition}, we define a
+    modified spectral condition
+    \begin{equation}
+        \label{eq:spectral_condition_mod}
+        v'_{f,s} 
+            = \int_{\R^d} (1 + \norm{\omega}_1)^s \abs{\fourier{f}(\omega)}
+            \,d\omega.
+    \end{equation}
+\end{definition}
+
+
+
+\section{Construction of Fourier-analytic Barron spaces}
+
+Firstly, we define the spectral condition and the seminorm and norm\footnote{
+    Often papers include ``Barron'' as readers can deduce from the context. 
+    In the following chapters, we would like to call them \textit{spectral 
+    semi/norm} as another definition of norm in infinite-width Barron spaces is 
+    named \textit{Barron norm}.
+} by which the smoothness of a function
+is controlled. 
+
+\begin{definition}[Spectral seminorm]
+    \label{def:spectral_seminorm}
+    Let $U$ be a nonempty bounded domain in $\R^d$. Suppose that a function $f:
+    U \to \R$ admits a Fourier representation
+    \begin{equation}
+        f(x) = \int_{\R^d} e^{i\omega\tr x} \fourier{f}(\omega) \,d\omega
+    \end{equation}
+    where $\fourier{f}: \R^d \to \mathbb{C}$ is the Fourier transform of $f$.
+
+    For any $s \in \Nat$, the spectral seminorm of such function $f$ be defined
+    as
     \begin{equation}
         \specseminorm{f}{s} = \inf_{f_{e\mid U} = f} v_{f,s}
     \end{equation}
     where the infimum is taken over all extensions $f_e$ of $f$ in $\lp1(U)$.
 \end{definition}
+
 
 The notion of spectral norm was first introduced in
 ~\cite{siegelApproximationRatesNeural2021} since it is more convenient compared
@@ -115,14 +179,7 @@ to the seminorm.
 \begin{definition}[Spectral norm]
     \label{def:spectral_norm}
     Under the setup of Definition \ref{def:spectral_seminorm}, we define a
-    modified spectral condition
-    \begin{equation}
-        \label{eq:spectral_condition_mod}
-        v'_{f,s} 
-            = \int_{\R^d} (1 + \norm{\omega}_1)^s \abs{\fourier{f}(\omega)}
-            \,d\omega.
-    \end{equation}
-    The spectral norm is defined as
+    spectra norm
     \begin{equation}
         \specnorm{f}{s} = \inf_{f_{e\mid U} = f} v'_{f,s}
     \end{equation}
@@ -130,8 +187,8 @@ to the seminorm.
 
 \begin{definition}[Fourier-analytic Barron spaces]
     \label{def:fourier_space}
-    For any $s \in \Nat$. Let $\emptyset \not= U \subset \R^d$ be a bounded
-    domain on $\R^d$. The Fourier-analytic Barron spaces are
+    Let $U$ be a nonempty bounded domain in $\R^d$. The Fourier-analytic Barron
+    spaces are
     \begin{equation}
         \bspace{\mcal{F},s}(U) := \Big\{
             f: U \to \R: v'_{f,s} < \infty  \textnormal{ and }
@@ -139,7 +196,7 @@ to the seminorm.
                 f(x) = \int_{\R^d} e^{i\omega\tr x} \fourier{f}(\omega)\,d\omega
         \Big\}
     \end{equation}
-    equipped with a norm $\specnorm{f}{s}$, for all $s \in \Nat$.
+    equipped with a norm $\specnorm{f}{s}$ for all $s \in \Nat$.
 \end{definition}
 
 $s \in \Nat$ is referred as the smoothness index. It is easy to conjecture
@@ -150,8 +207,7 @@ approximation error rate. In the coming sections, we will provide an accurate
 statement of the improved approximation error rates with a depiction of the
 intricacies inherent within and between these spaces.
 
-\section{Construction of Fourier-analytic Barron spaces}
-
+\TODO
 
 In general, the activation function associated with the infinite-width Barron
 spaces is ReLU and we will explicitly state when other functions (e.g. squared
@@ -165,14 +221,15 @@ spaces} while \cite{carageaNeuralNetworkApproximation2022} refers them as
 \textit{Fourier-analytic Barron space}.  For function spaces in which functions
 admit an integral representation \eqref{eq:barron_represent} with a ReLU
 activation function, \cite{eBarronSpaceFlowinduced2021} refer them simply as
-\textit{Barron spaces} of different orders $p \in \Nat \bigcup\,\{\infty\}$. The
-term \textit{Barron space} was coined by \cite{ePrioriEstimatesPopulation2019}
-to honor Prof. Andrew Barron's contribution in the understanding of neural nets.
-In some literature including~\cite{carageaNeuralNetworkApproximation2022}, these
-spaces are named \textit{infinite-width Barron spaces} associated with different
-activation functions and the term \textit{classical Barron space} is reserved
-for those associated with Heaviside function\footnote{Also called step function
-or unit step function}.
+\textit{Barron spaces} of different orders $p \in \{1, 2, 3, \cdots, \infty\}$.
+The term \textit{Barron space} was coined by
+\cite{ePrioriEstimatesPopulation2019} to honor Prof. Andrew Barron's
+contribution in the understanding of neural nets. In some literature
+including~\cite{carageaNeuralNetworkApproximation2022}, these spaces are named
+\textit{infinite-width Barron spaces} associated with different activation
+functions and the term \textit{classical Barron space} is reserved for those
+associated with Heaviside function\footnote{Also called step function or unit
+step function}.
 
 To avoid confusion and in the meantime emphasize Prof. Andrew Barron's
 contribution, we will use two definitions:
@@ -203,39 +260,17 @@ constant $C$ could be dimension-dependent as the Fourier transform is used here.
 The content of this section is based on
 \cite{barronUniversalApproximationBounds1993}.
 
-\begin{definition}
-    \label{def:fourier_class}
-    Let $U$ be a bounded domain in $\mathbb{R}^d$. A function $f: U \to
-    \mathbb{R}$ is said to be in \textit{Barron class} with a constant $C > 0$,
-    if there is a $x_0$ in $U$, $c \in [-C, C]$, and a measurable function $f:
-    \mathbb{R}^d \to \mathbb{C}$ satisfying:
 
-    \begin{align}
-        & \int_{\mathbb{R}^d} \abs{\omega}_{U, x_0} 
-        \cdot \abs{\fourier{f}(\omega)} \,d\omega < C 
-        \label{eq:another_spectral_seminorm_condition} \\
-        & f(x) = c + \int_{\mathbb{R}^d} (
-            e^{i\omega\tr x} - e^{i\omega\tr x_0}
-        ) \cdot \fourier{f}(\omega)\,d\omega
-    \end{align}
-
-    where $\abs{\omega}_{X, x_0} := \sup_{x\in U}\abs{\spr{\omega}{x - x_0}}$
-    and it is denoted by $\abs{\omega}_U$ when $x_0 = 0$ for simplicity. We
-    refer the class of all functions as $\Gamma_C(U, x_0)$\footnote{
-        $\Gamma_C(U, x_0)$ is the Fourier-analytic Barron space
-        $\bspace{\mcal{F}, 1}(U)$ discussed before. The integral condition in
-        \eqref{eq:another_spectral_seminorm_condition} is the integral condition
-        $v_{f,1} < \infty$ defined in \eqref{eq:spectral_condition}.
-    }.
-\end{definition}
 
 \begin{theorem}
     % \cite[Theorem~1]{barronUniversalApproximationBounds1993}
     \label{thm:barron_1993_1}
-    For every function in $\Gamma_C(U, x_0)$, every sigmoidal function $\phi$,
-    every probability measure $\mu$, and every $n \in \Nat$, there exists a
-    linear combination of sigmoidal function $f_n(x) = \sum_{j=1}^n a_j
-    \sigma(b_j\tr x+c_j), a_j, c_j \in \R, b_j \in \R^d$ such that
+    Let $U$ be a nonempty bounded domain in $\R^d$ and $C > 0$ a constant. For
+    every function in the Barron class $\Gamma_C(U, x_0)$, every sigmoidal
+    function $\phi$, every probability measure $\mu$, and every $n \in \Nat$,
+    there exists a linear combination of sigmoidal function $f_n(x) =
+    \sum_{j=1}^n a_j \sigma(b_j\tr x+c_j), a_j, c_j \in \R, b_j \in \R^d$ such
+    that
     \begin{equation}
         \norm{f - f_n}_2 \leq n^{-\frac{1}{2}} \cdot 2C
     \end{equation}
@@ -409,130 +444,6 @@ The content of this section is based on
 \end{proof}
 
 
-
-\section{Improved rate via bounding coefficients}
-\label{sec:improved_heaviside}
-
-
-\cite{makovozRandomApproximantsNeural1996} showed that the error can be improved
-to $\bigO(n^{\frac{1}{2} - \frac{1}{q\cdot d}})$ in $\lp{p}(\Omega)$, $q <
-\infty$.
-
-\begin{theorem}
-    % \cite[Theorem 3]{makovozRandomApproximantsNeural1996}
-    \label{thm:improve_barron}
-    Let $U$ be bounded set on $\R^d$. Let $f: U \to \R$ be a function and $V$ be
-    the closure of all functions $f: U \to \R$ of the following form
-    \begin{equation}
-        V = \closure{
-            \{f(x) = \sum_{j=1}^n a_j \sigma(b_j\tr x + c_j) \quad 
-            \sum a_j \leq 1, \abs{b_j} = 1, c_j \in \R \}
-            }
-    \end{equation}
-    where $\sigma$ is a sigmoidal function.
-
-    Then there exists a finite linear combination $f_n$ 
-    \begin{equation}
-        f_n = \sum_{j=1}^n a_j s(b_j\tr x + c_j), b_j \in R^d, a_j, c_j \in \R
-    \end{equation}
-    where $s(x)$ is a function from $\R$ to $\R$.
-
-    For any $f \in V$ and any $n \in \Nat$ such that 
-    \begin{equation}
-        \norm{f- f_n}_{q} \leq C n^{-\frac{1}{2} - \frac{1}{q \cdot d}}
-        \quad 1 \leq q < \infty
-    \end{equation}
-    where $C$ is a constant dependent only $U$, $q$ and $s(\cdot)$.
-\end{theorem}
-
-% In some literature, V is represented as the dictionary
-
-Note that this theorem does not cover the case $q = \infty$. However,
-\cite{barronUniversalApproximationBounds1993} has already showed that $f\in V$ are
-dense w.r.t. supremum norm ($\norm{f - f_n}_{\infty} = \bigO(n^{-1/2})$), which
-implies $\norm{f-f_n}_{q}$ for all $\lp{q}, q<\infty$.
-
-As the dimensionality $d$ increases, this rate approaches to the original rate
-and therefore this theorem is insignificant for high dimensionality. It is
-sufficient to prove the case $s$ is sigmoidal. It is easy to check $s(\lambda t)
-\to s(t)$ as $\lambda \to \infty$ and $s(\lambda t) \to s{t}$ as $\lambda \to
--\infty$. On a closed interval $[-u, u]$ on $\R$, note that the difference $s(t)
-- \sigma(\lambda t)$ is still bounded everywhere. Therefore, we can see that
-distance between $s$ and $\sigma$ can be made arbitrarily small on the space
-$\lp{d}(\R)$ with a sufficiently large $b$.
-
-\begin{proof}
-    We denote the set of sigmoidal functions
-    \begin{equation}
-        A = \{\sigma(b,c): \sigma(b,c) = \sigma(b\tr x + c), \quad 
-        b\in\R^d, c\in\R\}
-    \end{equation}
-
-    As we already knew from \cite{barronUniversalApproximationBounds1993} that
-    $V$ is the closure of the convex, symmetric hull of $A$ in $\lp{p}(U)$
-    \begin{equation}
-        V = \closure{\conv(A \bigcup - A)}.
-    \end{equation}
-    
-    Now it remains to finding an estimate for the entropy of $A$. Without loss
-    of generality, only the case $\sigma$ with $\abs{b} = 1$ is considered. We
-    can assume $U$ is inside a ball with a suitable radius $r$ since $U$ is
-    bounded subset in $\R^d$. Then this implies $\abs{c} \leq r$ as $\sigma(b\tr
-    x + c)$ would be ones or zeros over all $U$. Suppose $b_0, b_1, c_0, c_1$
-    and $\abs{b_0 - b_1} \leq \epsilon$ and $\abs{c_0 - c_1} \leq \epsilon$ for
-    some $\epsilon < 0$. It is easy to check that 
-    \begin{equation}
-        \sup_{x\in U} \norm{\sigma({b_0, c_0}) - \sigma({b_1, c_1})}_2
-            \lesssim \sqrt{\epsilon}
-    \end{equation}
-    in $\lp{2}$ with some constant independent of $d$.
-    
-    By the volume ratio argument \cite{vandervaartWeakConvergenceEmpirical1996},
-    one can obtain a $\bigO(\sqrt{\epsilon})$-net for $A$ in $\lp{2}(U)$ if we
-    are able to find a $\epsilon$-net for the set $P:= \{(b,c)\in \R^{d+1}:
-    \abs{b} = 1, \abs{c} \leq r\}$. To build a $\epsilon$-net for the sphere
-    $\abs{b}=1$, $\bigO(\epsilon^{1-d})$ elements is needed for the
-    sphere $\{v \in \R^d, \abs{v}=1\}$. An interval $[-r,r]$ requires
-    $\bigO(\epsilon^{-d})$ elements. Therefore, a $\epsilon$-net of
-    $\bigO(\epsilon^{-2d})$ elements can be constructed for $A$ and hence the
-    covering number for $A$ is of the order $\bigO(\epsilon^{-\frac{1}{2d}})$.
-
-    The statement then follows the Corollary on~\cite[p.
-    104]{makovozRandomApproximantsNeural1996}.
-
-    % We denote by $D$ to avoid clutters.
-    % \begin{equation}
-    %     \Sigma = \{\sum_{j=1}^m a_j \indicator{b\tr x + c}, 
-    %     \quad \sum_j \abs{a_i} \leq 1, \abs{b_j} = 1,
-    %     b\in\R^d,
-    %     a, c\in\R\}
-    % \end{equation}
-    % An estimate of entropy of $\Sigma$ w.r.t. the $\lp{q}$ norm.
-
-    % It is sufficient to prove (10) only for the case s=_. Indeed, if s is an
-    % arbitrary sigmoidal function, then s(*t) Ä _(t), * Ä +􏱶, uniformly on
-    % every set |t|􏱵a>0; on [&a,a] the difference _(t)&s(*t) remains bounded. It
-    % follows that &_v, b&sv, b&Lq(D) can be made arbitrarily small by taking a
-    % sufficiently large &v&. For s=_ we can use (8) since obviously V=(A_)c. We
-    % need an estimate for =n(A_). We may consider only the _v, b with |v|=1. If D
-    % is contained in some ball |x|􏱴r, then we may assume that |b|􏱴r for
-    % otherwise _v, b is identically 1 or 0 on D. Suppose that |v&v1|<=, |b&b1|<=
-    % for some =>0. If v=v1 and, say, b>b1 , then _v, b &_v1, b1 is equal to \1 on
-    % the strip &b􏱴vx􏱴&b1 of width 􏱴=, and to zero elsewhere. Similarly, if
-    % b=b1, then _v,b&_v1,b1{0 only on a strip of width O(=). It follows that
-    % &_v,b&_v1,b1&􏱴C-= in L2. (Here and below C stands for various con- stants
-    % independent of n). Therefore we obtain an O(-=)-net for A_ in L2(D) if we
-    % find an =-net for the set P :=[(v, b) # Rd+1 : |v|=1, |b|􏱴r]. By a standard
-    % volume ratio argument, one needs O((1􏱩=)d&1) elements to build an =-net for
-    % the sphere |v|=1 and O(1􏱩=) elements for the interval [&r, r], which gives
-    % O(=&d ) elements for P. Consequently, one can find an =-net for A_ in L2
-    % consisting of O(=&2d) elements. Thus =n(A_)= O(n&1􏱩(2d)), and (10) now
-    % follows from (8).
-
-
-\end{proof}
-
-
 \section{Connection with variation spaces}
 
 What is separable? Is it necessary?
@@ -691,15 +602,146 @@ I suppose that the domain $U \subseteq \R^d$ is required to be compact?
 It seems like $U$ is only bounded.
 
 \begin{theorem}[Equal norm]
-    \begin{equation}
-        \normVar{f}{\mathbb{F}_s} =
-        \inf_{f_{e\mid U} = f} \int_{\R^d} 
-        (1+\abs{\omega})^s \abs{\fourier{f}} \,d\omega
-    \end{equation}
+The Fourier-analytic Barron space is equivalent to the variation space
+constructed with $\mathbb{F}_s$
+\begin{equation}
+    \bspace{\mathcal{F}, s} = \spaceVar{\mathbb{F}_s}.
+\end{equation}
+
+Furthermore, the spectral norm is equivalent to the variation norm:
+\begin{equation}
+    \normVar{f}{\mathbb{F}_s} =
+    \inf_{f_{e\mid U} = f} \int_{\R^d} 
+    (1+\abs{\omega})^s \abs{\fourier{f}} \,d\omega.
+\end{equation}
 \end{theorem}
 
 
-\section{Improved approximation from $\bigO(n^{-1/2})$}
+
+\section{Improved rate via Heaviside function}
+\label{sec:improved_heaviside}
+
+
+\cite{makovozRandomApproximantsNeural1996} showed that the error can be improved
+to $\bigO(n^{\frac{1}{2} - \frac{1}{q\cdot d}})$ in $\lp{p}(\Omega)$, $q <
+\infty$.
+
+\begin{theorem}
+    % \cite[Theorem 3]{makovozRandomApproximantsNeural1996}
+    \label{thm:improve_barron}
+    Let $U$ be bounded set on $\R^d$. Let $f: U \to \R$ be a function and $V$ be
+    the closure of all functions $f: U \to \R$ of the following form
+    \begin{equation}
+        V = \closure{
+            \{f(x) = \sum_{j=1}^n a_j H(b_j\tr x + c_j) \quad 
+            \sum a_j \leq 1, \abs{b_j} = 1, c_j \in \R \}
+            }
+    \end{equation}
+    where $H$ is the Heaviside function.
+
+    Then there exists a finite linear combination $f_n$ 
+    \begin{equation}
+        f_n = \sum_{j=1}^n a_j \sigma(b_j\tr x + c_j), b_j \in R^d, a_j, c_j \in \R
+    \end{equation}
+    where $\sigma(x)$ is a sigmoidal function from $\R$ to $\R$.
+
+    For any $f \in V$ and any $n \in \Nat$ such that 
+    \begin{equation}
+        \norm{f- f_n}_{q} \leq C n^{-\frac{1}{2} - \frac{1}{q \cdot d}}
+        \quad 1 \leq q < \infty
+    \end{equation}
+    where $C$ is a constant dependent only $U$, $q$ and $s(\cdot)$.
+\end{theorem}
+
+% In some literature, V is represented as the dictionary
+
+Note that this theorem does not cover the case $q = \infty$. However,
+\cite{barronUniversalApproximationBounds1993} has already showed that $f\in V$ are
+dense w.r.t. supremum norm ($\norm{f - f_n}_{\infty} = \bigO(n^{-1/2})$), which
+implies $\norm{f-f_n}_{q}$ for all $\lp{q}, q<\infty$.
+
+As the dimensionality $d$ increases, this rate approaches to the original rate
+and therefore this theorem is insignificant for high dimensionality. It is
+sufficient to prove the case $s$ is sigmoidal. It is easy to check $s(\lambda t)
+\to s(t)$ as $\lambda \to \infty$ and $s(\lambda t) \to s{t}$ as $\lambda \to
+-\infty$. On a closed interval $[-u, u]$ on $\R$, note that the difference $s(t)
+- \sigma(\lambda t)$ is still bounded everywhere. Therefore, we can see that
+distance between $s$ and $\sigma$ can be made arbitrarily small on the space
+$\lp{d}(\R)$ with a sufficiently large $b$.
+
+\begin{proof}
+    We denote the set of sigmoidal functions
+    \begin{equation}
+        A = \{\sigma(b,c): \sigma(b,c) = \sigma(b\tr x + c), \quad 
+        b\in\R^d, c\in\R\}
+    \end{equation}
+
+    As we already knew from \cite{barronUniversalApproximationBounds1993} that
+    $V$ is the closure of the convex, symmetric hull of $A$ in $\lp{p}(U)$
+    \begin{equation}
+        V = \closure{\conv(A \bigcup - A)}.
+    \end{equation}
+    
+    Now it remains to finding an estimate for the entropy of $A$. Without loss
+    of generality, only the case $\sigma$ with $\abs{b} = 1$ is considered. We
+    can assume $U$ is inside a ball with a suitable radius $r$ since $U$ is
+    bounded subset in $\R^d$. Then this implies $\abs{c} \leq r$ as $\sigma(b\tr
+    x + c)$ would be ones or zeros over all $U$. Suppose $b_0, b_1, c_0, c_1$
+    and $\abs{b_0 - b_1} \leq \epsilon$ and $\abs{c_0 - c_1} \leq \epsilon$ for
+    some $\epsilon < 0$. It is easy to check that 
+    \begin{equation}
+        \sup_{x\in U} \norm{\sigma({b_0, c_0}) - \sigma({b_1, c_1})}_2
+            \lesssim \sqrt{\epsilon}
+    \end{equation}
+    in $\lp{2}$ with some constant independent of $d$.
+    
+    By the volume ratio argument \cite{vandervaartWeakConvergenceEmpirical1996},
+    one can obtain a $\bigO(\sqrt{\epsilon})$-net for $A$ in $\lp{2}(U)$ if we
+    are able to find a $\epsilon$-net for the set $P:= \{(b,c)\in \R^{d+1}:
+    \abs{b} = 1, \abs{c} \leq r\}$. To build a $\epsilon$-net for the sphere
+    $\abs{b}=1$, $\bigO(\epsilon^{1-d})$ elements is needed for the
+    sphere $\{v \in \R^d, \abs{v}=1\}$. An interval $[-r,r]$ requires
+    $\bigO(\epsilon^{-d})$ elements. Therefore, a $\epsilon$-net of
+    $\bigO(\epsilon^{-2d})$ elements can be constructed for $A$ and hence the
+    covering number for $A$ is of the order $\bigO(\epsilon^{-\frac{1}{2d}})$.
+
+    The statement then follows the Corollary on~\cite[p.
+    104]{makovozRandomApproximantsNeural1996}.
+
+    % We denote by $D$ to avoid clutters.
+    % \begin{equation}
+    %     \Sigma = \{\sum_{j=1}^m a_j \indicator{b\tr x + c}, 
+    %     \quad \sum_j \abs{a_i} \leq 1, \abs{b_j} = 1,
+    %     b\in\R^d,
+    %     a, c\in\R\}
+    % \end{equation}
+    % An estimate of entropy of $\Sigma$ w.r.t. the $\lp{q}$ norm.
+
+    % It is sufficient to prove (10) only for the case s=_. Indeed, if s is an
+    % arbitrary sigmoidal function, then s(*t) Ä _(t), * Ä +􏱶, uniformly on
+    % every set |t|􏱵a>0; on [&a,a] the difference _(t)&s(*t) remains bounded. It
+    % follows that &_v, b&sv, b&Lq(D) can be made arbitrarily small by taking a
+    % sufficiently large &v&. For s=_ we can use (8) since obviously V=(A_)c. We
+    % need an estimate for =n(A_). We may consider only the _v, b with |v|=1. If D
+    % is contained in some ball |x|􏱴r, then we may assume that |b|􏱴r for
+    % otherwise _v, b is identically 1 or 0 on D. Suppose that |v&v1|<=, |b&b1|<=
+    % for some =>0. If v=v1 and, say, b>b1 , then _v, b &_v1, b1 is equal to \1 on
+    % the strip &b􏱴vx􏱴&b1 of width 􏱴=, and to zero elsewhere. Similarly, if
+    % b=b1, then _v,b&_v1,b1{0 only on a strip of width O(=). It follows that
+    % &_v,b&_v1,b1&􏱴C-= in L2. (Here and below C stands for various con- stants
+    % independent of n). Therefore we obtain an O(-=)-net for A_ in L2(D) if we
+    % find an =-net for the set P :=[(v, b) # Rd+1 : |v|=1, |b|􏱴r]. By a standard
+    % volume ratio argument, one needs O((1􏱩=)d&1) elements to build an =-net for
+    % the sphere |v|=1 and O(1􏱩=) elements for the interval [&r, r], which gives
+    % O(=&d ) elements for P. Consequently, one can find an =-net for A_ in L2
+    % consisting of O(=&2d) elements. Thus =n(A_)= O(n&1􏱩(2d)), and (10) now
+    % follows from (8).
+
+
+\end{proof}
+
+
+\section{TODO to be relocated}
 \label{sec:improvement}
 
 
@@ -719,7 +761,7 @@ ensure compactness. The works of \cite{maUniformApproximationRates2022,
 siegelSharpBoundsApproximation2022, klusowskiApproximationCombinationsReLU2018a}
 provide the basis for our discussion, unless explicitly cited otherwise.
 
-\subsection{Fourier-analytic Barron spaces with higher smoothness index}
+\section{Improved rate with higher smoothness index}
 
 In the previous section, an error of $\bigO(n^{-1/2})$ is obtained for functions
 in $\bspace{\mcal{F}, 1}$ using $n$ elements from the dictionary
@@ -765,7 +807,7 @@ $\mathbb{D}_{\mcal{F},s}$ in which $\abs{a_j}$ is bounded in $\lp{1}$
 \end{equation}
 
 
-\textbf{Approximation in $\lp{\infty}$ with bounded coefficients}
+\subsection{Approximation in $\lp{\infty}$ with bounded coefficients}
 
 \begin{theorem}
     Let $\Omega = [0,1]^d$ and $s > 0$. If $f$ is in the closed, symmetric
@@ -791,7 +833,7 @@ $\mathbb{D}_{\mcal{F},s}$ in which $\abs{a_j}$ is bounded in $\lp{1}$
     \cite{klusowskiApproximationCombinationsReLU2018,siegelSharpBoundsApproximation2022}.
 \end{proof}
 
-\textbf{Approximation in $\lp{q}$ with bounded coefficients}
+\subsection{Approximation in $\lp{q}$ with bounded coefficients}
 
 % A smoothness property of the function to be approximated is expressed in terms
 % of its Fourier representation. In particular, an average of the norm of the

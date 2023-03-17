@@ -169,6 +169,8 @@
 
 \newcommand{\inclusionMap}[2]{i_{{#1}\to{#2}}}
 
+\newcommand{\closedConvexHull}[1]{\closure{\conv({#1} \bigcup\, -{#1})}}
+
 % custom TODO function
 \newcommand{\TOCITE}{\textcolor{blue}{\bf [TO CITE]}}
 \newcommand{\TONOTE}[1]{\textcolor{red}{(\textit{#1})}}
@@ -179,6 +181,8 @@
 \DeclareMathOperator{\supp}{supp}
 \DeclareMathOperator{\spn}{span} % span already defined ??
 \DeclareMathOperator{\cl}{cl}
+\DeclareMathOperator{\disc}{disc}
+
 % \newcommand{\closure}[1]{\cl{#1}} % (or \bar{#1})
 \newcommand{\closure}[1]{\overline{#1}} % (or \bar{#1})
 

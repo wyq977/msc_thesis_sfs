@@ -183,6 +183,47 @@ What is a bounded measurable function?
    
 \end{definition}
 
+\section{VC}
+
+\begin{theorem}[Discrepancy of a set]
+   Let $(X, \mcal{R})$ be a set system and $\mcal{R} = P(X)$ is the power set of
+   $X$. Let a mapping $\chi: X \to \{-1, +1\}$ and we name it a
+   \textit{coloring} of $X$
+   \begin{equation}
+      \chi(A) = \sum_{x\in A} \chi(x), A \subseteq X.
+   \end{equation}
+   
+   The \textit{discrepancy} of $\chi$ on $\mcal{R}$ is given by 
+   \begin{equation}
+      \disc(\mcal{R}, \chi) = \max_{R\in \mcal{R}} \abs{\chi(R)}.
+   \end{equation}
+
+   The discrepancy of $\mcal{R}$ is defined as
+   \begin{align}
+      \disc(\mcal{R}) 
+      &= \min_{\chi: X\to\{-1,+1\}} \Big\{
+         \disc(\mcal{R}, \chi)
+      \Big\}
+      = \min_{\chi: X\to\{-1,+1\}} \max_{R\in\mcal{R}} \abs{\chi(R)} \\
+      &= \min_{\chi: X\to\{-1,+1\}} \max_{R\in\mcal{R}} 
+      \abs{\sum_{x\in R} \chi(x)}.
+   \end{align}
+\end{theorem}
+
+\begin{definition}[VC-class]
+   
+\end{definition}
+
+\begin{proposition}
+   Let 
+\end{proposition}
+
+\begin{theorem}
+   \cite[Theorem 1.2, p. 595]{matousekDiscrepancyApproximationsBounded1993}
+   \label{thm:coloring_set_bound}
+   sds
+\end{theorem}
+
 %%% Local Variables: 
 %%% mode: latex
 %%% TeX-master: "MasterThesisSfS"
