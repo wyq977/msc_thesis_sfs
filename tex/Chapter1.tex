@@ -1,21 +1,8 @@
 \chapter{Nonlinear approximation}
+\label{ch:preliminary}
 
-This chapter is mainly about:
-\begin{itemize}
-    \item what are linear approximation ?
-    \item what are nonlinear approximation ?
-    \item what functions can be learnt ?
-    \item MLP/2NN are dense. In what space? by what norm
-    \item Maurey Theorem in a Hilbert space
-\end{itemize}
-
-\TODO
-
-
-\section{Overview}
-
+In this chapter, we study the approximation results of. 
 Write an overview based on \cite{devore_1998,pinkusApproximationTheoryMLP1999}.
-
 
 \section{Preliminary results}
 \label{sec:preliminary}
@@ -81,7 +68,7 @@ parameters}, $\alpha_j$ in the above expansion, we introduce
         n \in \Nat, \alpha_j \in \R
     \Bigg\}
 \end{equation}
-for any $t > 0 \in \Nat \bigcup\, \{\infty\}$ and any $M > 0$. 
+for any $t \in \Nat \bigcup\, \{\infty\}$ and any $M > 0$. 
 
 Let $K^t_n(\mathbb{D}, M)$ be the closure of $\Sigma^t_n(\mathbb{D}, M)$ in
 $\mcal{H}$
@@ -137,9 +124,19 @@ the approximation error is given as
     Let $(\mcal{F}, \norm{\cdot}_{\mcal{F}})$ be a subset of a normed space. The
     \textit{covering number} $N(\epsilon, \mcal{F}, \norm{\cdot}_{\mcal{F}})$ is
     the minimal number of balls $\{g: \norm{f - g}_{\mcal{F}} < \epsilon\}$ of
-    radius $\epsilon$ required to cover the set $\mcal{F}$. The \textit{entropy}
-    $\log N(\epsilon, \mcal{F}, \norm{\cdot}_{\mcal{F}})$ is the logarithm of
-    the covering number.
+    radius $\epsilon$ required to cover the set $\mcal{F}$. 
+\end{definition}
+
+\begin{definition}[Entropy]
+    \label{def:entropy} The \textit{entropy} $\log N(\epsilon, \mcal{F},
+    \norm{\cdot}_{\mcal{F}})$ is the logarithm of the covering number.
+    \begin{equation}
+        \log N(\epsilon, \mcal{F}, \norm{\cdot}_{\mcal{F}})
+        = \inf \{
+            \epsilon > 0: \mcal{F} \text{ is covered by } 2^n 
+            \text{ balls of radius } \epsilon
+        \}
+    \end{equation}
 \end{definition}
 
 Approximation with a finite linear combination of elements from a bounded
@@ -149,16 +146,20 @@ any bounded $\mathbb{D} \subset \mcal{H}$.
 
 \begin{theorem}[Maurey's Theorem]
     \label{thm:maurey}
-    Let $\mathbb{D} = \{d_1, d_2, \dots\}$ be an arbitrarily bounded dictionary
-    in a Hilbert space $(\mcal{H}, \norm{\cdot}_{\mcal{F}})$. For every $f \in
-    \mcal{H}$ of the form
+    Let $\mathbb{D} = \{d_1, d_2, \dots\}$ be a subset of a Hilbert space
+    $(\mcal{H}, \norm{\cdot}_{\mcal{H}})$. $\mathbb{D}$ is uniformly bounded
     \begin{equation}
-        f = \sum_{j=1}^n c_j d_j, \quad
-        \sum_{j=1}^n \abs{c_i} < \infty, \quad
-        c_j \in \R, n < \infty
+        \sup_{d\in\mathbb{D}} \norm{d}_{\mcal{H}} < \infty.
     \end{equation}
-    Then for every $n \in \Nat$, there exists a function $g_n = \sum_{j=1}^n a_j
-    d_j$ with at most $n$ non-zero coefficients
+    For every $f \in \mcal{H}$ of the form
+    \begin{equation}
+        \label{eq:maurey_eq_1}
+        f = \sum_{j=1}^m c_j d_j, \quad
+        \sum_{j=1}^m \abs{c_i} < \infty, \quad
+        c_j \in \R, m > 0
+    \end{equation}
+    and every $n \in \Nat$, there exists a $g_n = \sum_{j=1}^n a_j
+    d_j$ with at most $n$ non-zero coefficients with
     \begin{equation}
         \sum_{j=1}^n \abs{a_j} \leq
         \sum_{j=1}^n \abs{c_j}, 
@@ -167,17 +168,66 @@ any bounded $\mathbb{D} \subset \mcal{H}$.
     such that
     \begin{equation}
         \norm{f - g_n}_{\mcal{H}} \leq
-        2 N(\epsilon, \mathbb{D}, \norm{\cdot}_{\mcal{H}})
-        \cdot n^{-1/2}
+        2 \log N(\epsilon, \mathbb{D}, \norm{\cdot}_{\mcal{H}})
+        \cdot n^{-\frac{1}{2}}
         \cdot \sum_{j=1}^n \abs{c_j}.
     \end{equation}
 
 \end{theorem}
 
+\begin{proof}
+    Without loss of generality, we can assume $m < \infty$ and the coefficients
+    $c_j$ in \eqref{eq:maurey_eq_1} are non-negative and the sum $\sum_{j=1}^m
+    \abs{c_j} = 1$.
+
+    We partition the index set $I = \{1,2,\cdots,m\}$ into $n$ nonempty subsets
+    $I_p, \,p=1,2,\cdots,n$ such that each subset $\mathbb{D}_p$ of $\mathbb{D}$
+    has a diameter smaller than $\epsilon$.
+
+    For each partition $p = 1, 2,\cdots, n$, $n_p := \abs{I_p}$. Let $S_p = \sum_{i\in I_p} c_i$
+    and 
+    \begin{align}
+        \hat{f}_p := \frac{S_p}{n_p} (\hat{d}_1^{(p)} + \cdots + \hat{d}_{n_p}^{(p)}) \\
+        \hat{f} := \sum_{p=1}^n \hat{f}_p
+    \end{align}
+    where each $\hat{d}_{k}^{(p)}$ is identically distributed and pairwise
+    independent from $\mathbb{D}_p$ and the probability of equalling to $d_i \in
+    \mathbb{D}_p$ is $\frac{c_i}{S_p}$.
+    \begin{equation}
+        \PR{\hat{d}_{k}^{(p)} = d_i} = \frac{c_i}{S_p}, 
+        \quad i \in I_p, p = 1,2,\cdots, n.
+    \end{equation}
+
+    Next, we can show that 
+    \begin{equation}
+        \ERW{\hat{f}_p} = \frac{S_p}{n_p} \sum_{k}^{n_p}\ERW{\hat{d}_{k}^{(p)}}
+        = \frac{S_p}{n_p} \sum_{i\in I_p} \frac{c_i}{S_p} d_i = f_p
+    \end{equation}
+
+    \begin{equation}
+        \ERW{\norm{f - \hat{f}}^2} = \sum^n_p \VAR{f_p - \hat{f}_p} = \sum^n_p \VAR{\hat{f}_p}
+    \end{equation}
+
+    As each partition $I_p$, the $\mathbb{D}_p$ has a diameter of smaller than
+    $\epsilon$ which implies variance of $\hat{d}_p^{(p)}$ is controlled by
+    $\epsilon^2$, we have
+    \begin{equation}
+        \ERW{\norm{f - \hat{f}}^2} =\sum^n_p \VAR{\hat{f}_p} \leq \sum^n_p \frac{\epsilon^2}{n} S_p = \epsilon^2/n.
+    \end{equation}
+
+    In conclusion, there must exist some realization $\hat{f}$ such that
+    $\norm{f-\hat{f}}^2$ is smaller than $\epsilon^2/n$ and $\epsilon$ can be
+    chosen close to the entropy. Such realization is a linear combination of at
+    most $2n$ elements from $\mathbb{D}$.
+\end{proof}
+
+\begin{remark}
+    This is refinement of the result in \cite{pisierRemarquesResultatNon1980} in a
+    Hilbert space. 
+\end{remark}
+
 \cite{jonesSimpleLemmaGreedy1992} has also showed the same approximation error
-$\bigO(n^{-1/2})$ using an iterative argument. The approximation rate by Maurey
-is not always sharp and one can use the compactness of the dictionary
-$\mathbb{D}$ to improve it.
+$\bigO(n^{-1/2})$ using an iterative argument. 
 
 Let $G$ be a nonempty bounded subset of a Hilbert space $\mcal{H}$. Suppose a
 sequence of function $f_n$ were used to approximate a element $f$ in $\mcal{H}$
@@ -203,6 +253,12 @@ g_n\}$.
     of Jone's result in \cite[Theorem
     5]{barronUniversalApproximationBounds1993}.    
 \end{proof}
+
+\begin{remark}
+    The approximation rate by Maurey is not always sharp and one can use the
+    compactness of the dictionary $\mathbb{D}$ to improve it.
+\end{remark}
+
 
 % Using a classical probabilistic argument of Maurey [45], an approximation rate
 % of O(n 2 ) can be obtained for the class B1(D) using non-linear dictionary

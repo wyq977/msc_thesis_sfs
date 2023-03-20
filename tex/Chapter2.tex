@@ -1,34 +1,25 @@
 \chapter{Fourier-analytic Barron spaces}
 \label{sec:fourier}
 
-
-Assumption:
-\begin{itemize}
-    \item Maurey's Theorem in Hilbert space
-\end{itemize}
-
-Content:
-\begin{itemize}
-    \item Is the dictionary is compact or not?
-    \item $\lp{\infty}$ bound for? What is the probability measure on
-    \item Why Barron 2018 say the linear combination is by equally weighted
-    combination?
-    \item why it works for $\lp{q}$ also $-1/2$
-    \item What is a type 2 Banach space?
-    \item ReLU\textsuperscript{k}, smaller dictionary or basis?
-    \item How to get the $-1/q d$ improvement by Makovoz?
-    \item Is these spaces more compact?
-    \item variation spaces with its norm
-    \item signed Borel measure with finite variation on a set in a Hilbert space
-\end{itemize}
-
+In this chapter, we study the approximation property. As shown in
+\cite{barronUniversalApproximationBounds1993}, 
 In Chapter \TODO, the question of \textit{density} has been answered for 2NN in
 which functions on any compact domain in $\R^d$ are dense in 2NN w.r.t. the
-supremum norm. Barron presented an different approach where given a dictionary
-$\mathbb{D}$, one tries to find the class of functions that are \textit{well
-approximated} by such dictionary.
+supremum norm . Barron presented an different
+approach where given a dictionary $\mathbb{D}$, one tries to find the class of
+functions that are \textit{well approximated} by such dictionary.
 
-To apply the argument of nonlinear approximation with $n$-term dictionary    to
+This chapter is organized as follows. In section \ref{sec:spectral_condition},
+the class of functions that satisfies certain smoothness constrain is
+introduced. Section \ref{sec:construction_of_fouier} defines and characterizes
+the function spaces constructed based on the previous smoothness restriction. In
+section \ref{sec:approximation_fouier}, an approximation rate of
+$\bigO(n^{-\frac{1}{2}})$ is proven w.r.t. the supremum norm where $n$ is the
+number of nodes. Section \ref{sec:fourier_variation_space} shows the dictionary
+corresponding to the smoothness condition. Finally, we give some high order
+error rate for ReLU\textsuperscript{k} networks
+
+To apply the argument of nonlinear approximation with $n$-term dictionary to
 2NN, we consider the dictionary
 \begin{equation}
     \mathbb{D}_{\sigma} := \{
@@ -73,6 +64,7 @@ sigmoidal activation functions.
 
 
 \section{Barron class and spectral condition}
+\label{sec:spectral_condition}
 
 In this section, we would identify the class of functions originally proposed by
 \cite{barronUniversalApproximationBounds1993}. We define the \textit{spectral
@@ -145,6 +137,7 @@ also introduced.
 
 
 \section{Construction of Fourier-analytic Barron spaces}
+\label{sec:construction_of_fouier}
 
 Firstly, we define the spectral condition and the seminorm and norm\footnote{
     Often papers include ``Barron'' as readers can deduce from the context. 
@@ -244,7 +237,7 @@ contribution, we will use two definitions:
 
 
 \section{Approximation in Fourier-analytic Barron spaces}
-\label{sec:spectral_norm}
+\label{sec:approximation_fouier}
 
 It is shown by \cite{barronUniversalApproximationBounds1993} that functions of
 $d$-variables with finite Fourier moments can be approximated with the
@@ -445,6 +438,7 @@ The content of this section is based on
 
 
 \section{Connection with variation spaces}
+\label{sec:fourier_variation_space}
 
 What is separable? Is it necessary?
 
@@ -616,11 +610,30 @@ Furthermore, the spectral norm is equivalent to the variation norm:
 \end{equation}
 \end{theorem}
 
+\begin{proof}
+    
+\end{proof}
 
 
 \section{Improved rate via Heaviside function}
 \label{sec:improved_heaviside}
 
+In the following sections, we present an exposition on the improved
+approximation error rates either by compactness condition of the dictionary set
+or stricter smoothness condition. The curx of the notion is to derive the
+entropy number corresponding to the convex hull of the dictionary $\mathbb{D}$.
+Maurey's Theorem \ref{thm:maurey} provides a bound for \textit{any} bounded
+dictionaries in a Hilbert space. The improvement was first done in
+\cite{makovozRandomApproximantsNeural1996} by the compactness of the dictionary
+of Heaviside networks. Subsequently,
+\cite{klusowskiApproximationCombinationsReLU2018} showed ReLU and squared ReLU
+networks where the compactness of the dictionary is guaranteed by controlling
+the $\lp{1}$ and $\lp{\infty}$ norm of parameters. In the latter, the
+\textit{inner parameters} $b\in\R^d$ in \eqref{eq:improved_fourier_dict} are
+suitably constrained to ensure compactness. The works of
+\cite{maUniformApproximationRates2022, siegelSharpBoundsApproximation2022,
+klusowskiApproximationCombinationsReLU2018a} provide the basis for our
+discussion, unless explicitly cited otherwise.
 
 \cite{makovozRandomApproximantsNeural1996} showed that the error can be improved
 to $\bigO(n^{\frac{1}{2} - \frac{1}{q\cdot d}})$ in $\lp{p}(\Omega)$, $q <
@@ -740,27 +753,6 @@ $\lp{d}(\R)$ with a sufficiently large $b$.
 
 \end{proof}
 
-
-\section{TODO to be relocated}
-\label{sec:improvement}
-
-
-In this section, we present an exposition on the improved approximation error
-rates. The curx of the notion is to derive the entropy number corresponding to
-the convex hull of the dictionary $\mathbb{D}$. Maurey's Theorem
-\ref{thm:maurey} provides a bound for \textit{any} bounded dictionaries in a
-Hilbert space. The improvement was first done
-by~\cite{makovozRandomApproximantsNeural1996} and subsequently shown by
-\cite{klusowskiApproximationCombinationsReLU2018} where ReLU and squared ReLU
-are used as the activation functions with norm controlled parameters. The former
-improvement is made possible through the selection of the Heaviside function,
-and a superior rate $\bigO(n^{-1/2 - 1/q\cdot d})$ was obtained in Section
-\ref{subsec:improved_heaviside}. In the latter, the \textit{inner parameters}
-$b\in\R^d$ in \eqref{eq:improved_fourier_dict} are suitably constrained to
-ensure compactness. The works of \cite{maUniformApproximationRates2022,
-siegelSharpBoundsApproximation2022, klusowskiApproximationCombinationsReLU2018a}
-provide the basis for our discussion, unless explicitly cited otherwise.
-
 \section{Improved rate with higher smoothness index}
 
 In the previous section, an error of $\bigO(n^{-1/2})$ is obtained for functions
@@ -796,7 +788,8 @@ norm of the dictionary:
 This implies that functions in Fourier-analytic Barron spaces $\bspace{\mcal{F},
 s}$ can be approximated with $n$-term dictionary $\mathbb{D}_{\mcal{F}, s}$. We
 define a set of finite linear combination of elements from
-$\mathbb{D}_{\mcal{F},s}$ in which $\abs{a_j}$ is bounded in $\lp{1}$
+$\mathbb{D}_{\mcal{F},s}$ in which $\abs{a_j}$ is bounded in $\lp{1}$ for a
+fixed $M > 0$
 \begin{equation}
     \Sigma_n(\mathbb{D}_{\mcal{F}, s}, M) := \Bigg\{
         f = \sum_{j=1}^n \alpha_j d_j: 
@@ -813,19 +806,13 @@ $\mathbb{D}_{\mcal{F},s}$ in which $\abs{a_j}$ is bounded in $\lp{1}$
     Let $\Omega = [0,1]^d$ and $s > 0$. If $f$ is in the closed, symmetric
     convex hull of $\mathbb{D}_{\mcal{F}, s, M}$, then for a fixed $M<\infty$
     and any $n \in \Nat$, there exists a finite linear combination of elements
-    from $\Sigma_n(\mathbb{D}_{\mcal{F}, s}, M)$ the approximation error in
+    $f_n \in \Sigma_n(\mathbb{D}_{\mcal{F}, s}, M)$ the approximation error in
     $\lp{\infty}(\Omega)$ is
     \begin{equation}
-        \sup_{x\in \Omega} \norm{f(x)-f_n(x)}_{\infty} \lesssim 
-        n^{-\frac{1}{2}-\frac{s}{d}} \sqrt{\log{n}} \norm{f}_{\bspace{\mcal{F},s}}.
-    \end{equation}
-
-    In other words,
-    \begin{equation}
-        \inf_{f\in \Sigma_n(\mathbb{D}_{\mcal{F}, s}, M)} 
         \norm{f-f_n}_{\infty} \lesssim 
         n^{-\frac{1}{2}-\frac{s}{d}} \sqrt{\log{n}} \norm{f}_{\bspace{\mcal{F},s}}.
     \end{equation}
+
 \end{theorem}
 
 \begin{proof}
@@ -845,6 +832,10 @@ $\mathbb{D}_{\mcal{F},s}$ in which $\abs{a_j}$ is bounded in $\lp{1}$
 
 % In addition to the smoothness property ensured via the finite first moment,
 
+
+\section{Approximation with ReLU\textsuperscript{k} activation function}
+
+\
 
 %%% Local Variables: 
 %%% mode: latex

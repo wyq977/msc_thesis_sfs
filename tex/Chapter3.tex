@@ -1,32 +1,37 @@
 \chapter{Infinite-width Barron spaces}
+\label{ch:infinite}
 
-In the previous chapter, we introduced the basic concepts of the two-layer
-neural networks (\gls{2nn}). Section \ref{sec:preliminary} introduces the
-approximation theory using $n$-term dictionary in a Hilbert space. In Section
-\ref{sec:uat}, we will state the result of the universal approximation theorem.
-Later in Section \ref{sec:spectral_norm} and \ref{sec:different_barron_spaces},
-we formally introduce the function spaces associated with 2NN: the
-\textit{Fourier-analytic Barron spaces} and \textit{infinite-width Barron
-spaces}. The norms associated with these spaces (\textit{spectral norm},
-\textit{Barron norm}) are examined in Section \ref{sec:different_barron_spaces}.
-An error rate of $\bigO(n^{-1/2})$ for functions in these spaces are given in
-Section \ref{sec:spectral_norm} and \ref{sec:barron_norm}. This chapter aims to
-provide a concise summary of various well-known results concerning the
-approximation properties of 2NN, and we recommend work by
+The main goal of this chapter is to construct and identify the function spaces
+associated with 2NN of different activation functions including Heaviside
+function and ReLU function family. To paraphrase, functions are in
+\textit{infinite-width Barron spaces} if and only if they admit a integral
+representation, and they could be well approximated by 2NN. By ``well
+approximation'', the approximation error rate is of the order $\bigO(n^{-1/2})$.
+In contrast to the Fourier-analytic Barron spaces, these spaces are more
+dependent on the choice of activation functions and certainly do not cover all
+conceivable functions that has a integral representation. 
+
+In section \ref{sec:construction_of_infinite_width}, we define the norm and
+finite integral condition for the functions in infinite-width Barron spaces,
+followed by the construction of these function spaces. The elementary properties
+of these spaces are included for completeness. Section
+\ref{sec:approximation_in_infinite_width} details the approximation rate in for
+functions in the space associated with ReLU function in $\lp{2}$ and
+$\lp{\infty}$. Section \ref{sec:infintie_width_variation_space} connects the the
+notion of the variation space and variation norm to infinite-width Barron space
+through some compact dictionaries. Next, the relationships between
+infinite-width Barron spaces and Fourier-analytic Barron space are examined in
+section \ref{sec:diff_barron_spaces}.
+
+This chapter aims to provide a concise summary of various well-known results
+concerning the approximation properties of 2NN, and we recommend work by
 \cite{eMathematicalUnderstandingNeural2020,bernerModernMathematicsDeep2021} for
 a comprehensive review.
 
-% classical Barron space, or the Fourier-analytic Barron space
-
-% infinitely wide
-
-% infinite-width Barron spaces.
-
 % sparsity-inducing norm ? in bach 2017 paper.
 
-
 \section{Construction of infinite-width Barron spaces}
-\label{sec:infinite_barron_space}
+\label{sec:construction_of_infinite_width}
 
 This section introduces the infinite-width Barron space and its elementary
 properties, which is mostly based on \cite{eBarronSpaceFlowinduced2021} unless
@@ -216,7 +221,7 @@ $\mathcal{B}_{\infty} = \mathcal{B}_p$, $\barronnorm{\cdot}{\infty} =
 
 
 \section{Approximation in infinite-width Barron spaces}
-\label{sec:appro_barron_space}
+\label{sec:approximation_in_infinite_width}
 
 \begin{theorem} [Direct Approximation in $\lp{2}$]\
     \label{thm:barron_direct_appro_l2}
@@ -410,6 +415,7 @@ parameter $\Theta$ satisfies such condition in the theorem.
 
 
 \section{Connection with variation spaces}
+\label{sec:infintie_width_variation_space}
 
 In this section, we consider approximation by 2NN with ReLU$^k$ as activation
 function
@@ -678,7 +684,7 @@ metric?
     represented as $f = \frac{1}{N}\sum_{j=1}^N H(b_j\tr x + c_j)$, which is
     clearly positive.
 
-    Let $X=\{1,2,\cdots,N\}$ and $R_x$ be the index set of hyperplanes in $\R^d$
+    Let $X=\{1,2,\cdots,N\}$ and $R_x$   be the index set of hyperplanes in $\R^d$
     \begin{equation}
         R_x = \{j: b_j\tr x+c_j \geq 0\}
     \end{equation}
@@ -726,7 +732,7 @@ metric?
 \end{proof}
 
 
-\section{Difference and Connection Between Different Barron Spaces}
+\section{Difference and connection between different Barron spaces}
 \label{sec:diff_barron_spaces}
 
 This section will clarify the relationships between  Barron spaces, namely the
