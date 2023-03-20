@@ -119,7 +119,10 @@ the approximation error is given as
         \lesssim n^{-\alpha} \abs{f}_{K^t(\mathbb{D})}.
 \end{equation}
 
-\begin{definition}[Covering numbers and entropy]
+\section{Maurey's Theorem}
+
+\begin{definition}[Covering numbers]
+    % http://www.stat.yale.edu/~yw562/teaching/598/lec14.pdf
     \label{def:covering_num}
     Let $(\mcal{F}, \norm{\cdot}_{\mcal{F}})$ be a subset of a normed space. The
     \textit{covering number} $N(\epsilon, \mcal{F}, \norm{\cdot}_{\mcal{F}})$ is
@@ -222,12 +225,33 @@ any bounded $\mathbb{D} \subset \mcal{H}$.
 \end{proof}
 
 \begin{remark}
-    This is refinement of the result in \cite{pisierRemarquesResultatNon1980} in a
-    Hilbert space. 
+    This is refinement of the result in \cite{pisierRemarquesResultatNon1980} in
+    a Hilbert space. The approximation rate by Maurey is not always sharp and
+    one can use the compactness of the dictionary $\mathbb{D}$ to improve it.
 \end{remark}
 
+\begin{corollary}
+    \label{cor:maurey}
+    If $f$ is in the closure of the convex hull of a set $G$ in a Hilbert space
+    with norm $\norm{\cdot}$ and every function $g \in G$ is bounded, then for
+    every $n \in \Nat$, there is an $f_n$ in the convex hull of $n$ elements in
+    $G$ such that:
+    \begin{equation}
+        \norm{f - f_n}^2 \leq \frac{C}{n}
+    \end{equation}
+
+    where $f_n = \sum_{i=1}^n \lambda_i \cdot g_i, \quad g_i \in G, \quad
+    \sum_{i=1}^n \lambda_i = 1$, and $C \geq \sup_{g\in G} \norm{g}^2 -
+    \norm{f}^2$.
+
+\end{corollary}
+
+\section{Iterative approximation}
+
 \cite{jonesSimpleLemmaGreedy1992} has also showed the same approximation error
-$\bigO(n^{-1/2})$ using an iterative argument. 
+$\bigO(n^{-1/2})$ using an iterative argument. One can find a proof in
+\cite[p. 611]{jonesSimpleLemmaGreedy1992} and a refinement of Jone's result in
+\cite[Theorem 5]{barronUniversalApproximationBounds1993}. 
 
 Let $G$ be a nonempty bounded subset of a Hilbert space $\mcal{H}$. Suppose a
 sequence of function $f_n$ were used to approximate a element $f$ in $\mcal{H}$
@@ -242,24 +266,63 @@ $\{f_n\}$ defined as above is in the convex hull of the points $\{g_1,\dots,
 g_n\}$.
 
 \begin{theorem}[Jone's Theorem]
-    Let $G$ be a nonempty bounded domain of a Hilbert space $\mcal{H}$. If $f$
-    is in the closure of the convex hull of $G$, i.e. $f \in \conv(G)$. Then for
-    every $n \in \Nat$, $f_n$ is chosen iteratively as
-    \eqref{eq:seq_appro_jones}, the approximation error is $\bigO(n^{-1/2})$
+    Let $G$ be a nonempty bounded domain of a Hilbert space $\mcal{H}$. Let $C_G
+    = \sup_{g\in G} \norm{g}^2 < \infty$ and set $C_f = C_G - \norm{f}^2$. If
+    $f$ is in the closure of the convex hull of $G$, i.e. $f \in \conv(G)$. Then
+    for every $n \in \Nat$, $f_n$ is chosen iteratively as
+    \begin{equation}
+        \norm{f_n - f}^2 \leq \inf_{\alpha \in [0,1]} \inf_{g \in G}
+        \norm{\alpha f_{n-1} + (1-\alpha)g - f}^2 + e_n
+    \end{equation}
+    where $e_n \leq \frac{}{n(n+C -1 )}$.
+    Then approximation error for each $n \leq 1$ is $\bigO(n^{-1/2})$
 \end{theorem}
 
 \begin{proof}
-    One can find a proof in \cite{jonesSimpleLemmaGreedy1992} and a refinement
-    of Jone's result in \cite[Theorem
-    5]{barronUniversalApproximationBounds1993}.    
+
+     Set $f_{\delta} = \sum_{j=1}^m a_j g_j$ be a convex combination
+    of $m$ elements from $G$ for some $\delta > 0$ such that $f$ and
+    $f_{\delta}$ is close
+    \begin{equation}
+        \norm{f - f_{\delta}} \leq \delta.
+    \end{equation}
+    We have
+    \begin{align}
+        \norm{\alpha (f_{n-1} - f) + (1-\alpha) (g - f_{\delta})}^2
+        &= \alpha^2 \norm{f_{n-1} - f}^2 + (1-\alpha)^2 \norm{g - f_{\delta}}^2 \\
+        &+ 2 \alpha (1-\alpha) \spr{f_{n-1}-f}{g - f_{\delta}}
+    \end{align}
+
+    We can then calculate the average of terms containing $g$
+    \begin{align}
+        &\sum_{j=1}^m a_j (1-\alpha)^2 \norm{g_j - f_{\delta}}^2 + 
+        2 a_j \alpha (1-\alpha) \spr{f_{n-1}-f}{g_j - f_{\delta}} \\
+        &= (1-\alpha)^2 \sum_{j=1}^m a_j \norm{g_j - f_{\delta}}^2 
+        + 2 \alpha (1-\alpha) \spr{f_{n-1}-f}{\sum_{j=1}^m a_j g_j - f_{\delta}}\\
+        &= (1-\alpha)^2 \sum_{j=1}^m a_j \norm{g_j - f_{\delta}}^2 + 0 \\
+        &= (1-\alpha)^2 \sum_{j=1}^m a_j \norm{g_j}^2 - \norm{f_{\delta}}^2 \\
+        &\leq (1-\alpha)^2 (C_G - \norm{f_{\delta}}^2).
+    \end{align}
+
+    This implies that there must exist a $g \in G$ such that
+    \begin{align}
+        \norm{\alpha (f_{n-1} - f) + (1-\alpha) (g - f_{\delta})}^2
+        \leq \alpha^2 \norm{f_{n-1} - f}^2 + 
+        (1-\alpha)^2 \norm{(g - f_{\delta})}^2 + \delta.
+    \end{align}
+
+    By triangle inequality and setting $\delta \to 0$, we have
+    \begin{align}
+        \inf_{g\in G} \norm{\alpha f_{n-1} + (1-\alpha) g - f}^2
+        &= \inf_{g\in G} \norm{\alpha (f_{n-1} - f) + (1-\alpha) (g - f)}^2 \\
+        &\leq \alpha^2 \norm{f_{n-1} - f}^2 + (1-\alpha)^2 C_f.
+    \end{align}
+
+    Then proof is complete when we set $\alpha = \frac{C_f}{C_f + \norm{f_{n-1}
+    - f}^2}$.
 \end{proof}
 
-\begin{remark}
-    The approximation rate by Maurey is not always sharp and one can use the
-    compactness of the dictionary $\mathbb{D}$ to improve it.
-\end{remark}
-
-
+% in siegelHighOrderApproximationRates2021
 % Using a classical probabilistic argument of Maurey [45], an approximation rate
 % of O(n 2 ) can be obtained for the class B1(D) using non-linear dictionary
 % expansions. Moreover, Jones [27] gave a constructive proof of this fact using
@@ -280,8 +343,8 @@ In general, neural networks, even 2NN with one hidden layer, are universal
 approximators, which means any continuous functions on a compact set can be
 approximated up to a arbitrary precision under some mild restrictions on the
 activation functions $\sigma$ and the number of nodes are allowed to grow
-arbitrarily. Functions of $d$-variables can be approximated uniformly by linear
-combinations of functions from the dictionary
+arbitrarily. Functions of $d$-variables can be approximated uniformly well by
+linear combinations of functions from the dictionary
 
 \begin{equation}
     \label{eq:uat_dict}
@@ -293,9 +356,10 @@ in~\cite{cybenkoApproximationSuperpositionsSigmoidal1989} and functions in
 $\mathbb{D}$ are called \textit{ridge functions} or \textit{planar waves}.
 Despite its obvious importance, one can not extract quantitative information
 about the error rate since there is no restriction for $n$. Nevertheless, we
-will state the univariate approximation theorem in this section. This section is
-mainly based on \cite{cybenkoApproximationSuperpositionsSigmoidal1989}, unless
-stated otherwise.
+will state the univariate approximation theorem in this section. 
+
+This section is mainly based on
+\cite{cybenkoApproximationSuperpositionsSigmoidal1989}, unless stated otherwise.
 
 % We will state the the universal approximation theorem that the finite linear
 % combinations of sigmoidal functions (sum of the functions of the form
@@ -335,13 +399,16 @@ construction used and we include some basic materials in Appendix
 Let $h(x)$ be a linear combinations of elements from the dictionary $\mathbb{D}$
 \eqref{eq:uat_dict}
 
-\begin{equation}
+\begin{align}
     \label{eq:sum_sigma}
-    h(x) = \sum_{j=1}^n a_j d_j = \sum_{j=1}^n a_j \sigma(b_j\tr x + c_j)
-\end{equation}
+    h(x) = \sum_{j=1}^n a_j d_j = \sum_{j=1}^n a_j \sigma(b_j\tr x + c_j) \\
+    \Sigma_n(\mathbb{D}) = \Bigg\{
+        \sum_{j=1}^n a_j \sigma(b_j\tr x + c_j), \quad
+        a_j, c_j \in \R,  b_j \in \R^d
+    \Bigg\}.
+\end{align}
 
-where $a_j, c_j \in \R$, $d_j \in D$,  $b_j \in \R^d$, $n < \infty$, and
-$\sigma$ is a univariate function from $\R$ to $\R$.
+where  $n < \infty$, and $\sigma$ is a univariate function from $\R$ to $\R$.
  
 The main contribution of approximation theorem is the statement on the
 conditions of $\sigma$ such that the above finite linear combination $h(x)$ is
@@ -354,22 +421,46 @@ that there is no restriction for the number of combinations.
     then any function $f \in C(I_d)$ be approximated uniformly well by a finite
     linear combination of the form \eqref{eq:sum_sigma}.
 
-    In other words, for any function $f: I_d \to \R$ and any $\epsilon > 0$.
-    There exists a linear combination of $n$ ridge functions $d_j \in
-    \mathbb{D}$ of the form \eqref{eq:uat_dict} such that
+    In other words, for any function $f: I_d \to \R$ and any $\epsilon > 0$,
+    there exists a linear combination of $n$ ridge functions $f_n$ of the form
+    \eqref{eq:uat_dict} such that
     \begin{align}
-        f_n(x) = \sum_{j=1}^n a_j d_j, \quad d_j \in \mathbb{D}, n\in\Nat \\
-        \norm{f - f_n}_{\infty} < \epsilon \quad \forall x \in I_d.
+        \norm{f - f_n}_{\infty} < \epsilon, \quad n \in \Nat.
     \end{align}
 \end{theorem}
 
+\begin{proposition}
+    Let $\sigma: \R \to \R$ be a continuous function. We consider the set
+    \begin{equation}
+        \Sigma = \Bigg\{
+            \sum_{j=1}^n \alpha_j \sigma(b\tr x + c), \quad
+            b_j \in \R^d, \alpha_j, c_j \in \R, n\in\Nat
+        \Bigg\}.
+    \end{equation}
 
-The main structure of the proof is followed:
+    For any function $f \in C(\R^d)$, and any compact set $K$ of $\R^d$, and any
+    $\epsilon > 0$, there exists a $f_n \in \Sigma$ such that 
+    \begin{equation}
+        \sup_{x\in K} \abs{f(x) - f_n(x)} < \epsilon
+    \end{equation}
+    if and only if $\sigma$ is not a polynomial. In other words, $\Sigma$ is
+    dense in the space $C(\R^d)$ in the topology of uniform convergence on
+    compact stets.
+\end{proposition}
+
+\begin{remark}
+    The requirements for the set $\Sigma$ constructed using a function $\sigma$
+    is surprisingly simple and it is proven in Theorem 1
+    \cite[p. 10]{leshnoMultilayerFeedforwardNetworks1993} that $\sigma$ simply need not
+    to be a polynomial.
+\end{remark}
+
+The main structure of the proof for Theorem \ref{thm:uat} is as follows:
 \begin{enumerate}
-    \item any finite sums of the form \eqref{eq:sum_sigma} with a
+    \item Any finite sums of the form \eqref{eq:sum_sigma} with a
     \hyperref[def:dis_func]{discriminatory function} $\sigma$ are dense in
     $C(I_d)$ with respective to the supremum norm;
-    \item any bounded sigmoidal function is discriminatory.
+    \item Any bounded sigmoidal function is discriminatory.
 \end{enumerate}
 
 \begin{definition}[Discriminatory function]
@@ -378,7 +469,7 @@ The main structure of the proof is followed:
     M(I_d)$,
     \begin{equation}
         \int_{I_d} \sigma(b\tr x + c) \,d\mu(x) = 0 \quad 
-        \forall b \in \R^d \textnormal{ and } c \in \R
+        \forall \,b \in \R^d \textnormal{ and } c \in \R
     \end{equation}
     implies $\mu = 0$.
 \end{definition}
@@ -391,10 +482,10 @@ functions are dense in the space of $(C(I_d), \norm{\cdot}_{\infty})$.
     \hyperref[def:dis_func]{discriminatory function}, the finite sums of the
     form \eqref{eq:sum_sigma} are dense in the space $(C(I_d),
     \norm{\cdot}_{\infty})$. In other words, for any $\epsilon > 0$ and any $f
-    \in C(I_d)$, there exists a $n \in \Nat$ and a sum $h(x)$ of the above form,
-    where
+    \in C(I_d)$, there exists a $n \in \Nat$ and a sum $h$ of the above form
+    \eqref{eq:sum_sigma}, where
     \begin{equation}
-        \norm{f - h}_{\infty} < \epsilon \quad \forall x \in I_d.
+        \norm{f - h}_{\infty} < \epsilon.
     \end{equation}
 \end{theorem}
 
@@ -644,12 +735,12 @@ classification problem can also be well understood as the regression problem.
     Borel measure on $I_d$ and $\mu(I_d) = 1$. Then for any $\epsilon>0$, there
     exists a finite sum of the form
     \begin{equation}
-        G(x) = \sum_{j=1}^n a_j \sigma(b_j\tr x + c_j)
+        h(x) = \sum_{j=1}^n a_j \sigma(b_j\tr x + c_j)
     \end{equation}
     where $a_j, c_j \in \R, b_j \in \R^d$ and a set $D\subset I_d$, such that
     the measure of the set $D$, $\mu(D) \geq 1 - \epsilon$ and
     \begin{equation}
-        \sup_{x\in D}\abs{G(x) - f(x)} < \epsilon
+        \sup_{x\in D}\abs{f(x) - h(x)} < \epsilon
     \end{equation}
 \end{theorem}
 
@@ -660,11 +751,11 @@ straightforward using Lusin's Theorem \eqref{thm:lusin}.
     By Lusin's Theorem \eqref{thm:lusin}, there exists a continuous function $g
     \in C(I_d)$ such that $\mu(\{x\in I_d \mid f(x) \not= g(x)\}) < \epsilon$.
     Now we have a continuous $g$ and we are able to a find a sum of the form
-    above satisfying $\abs{G(x) - g(x)} < \epsilon$ by Theorem \eqref{thm:uat}
+    above satisfying $\abs{h(x) - g(x)} < \epsilon$ by Theorem \eqref{thm:uat}
     for all $x\in I_d$. Let set $D = \{x\in I_d \mid f(x) = g(x)\}$ and we have
     $\mu(D) \geq 1 - \epsilon$. Then for $x\in D$, we have
     \begin{equation}
-        \sup_{x\in D}\abs{G(x)-f(x)} = \sup_{x\in D}\abs{G(x) - g(x)} < \epsilon 
+        \sup_{x\in D}\abs{h(x)-f(x)} = \sup_{x\in D}\abs{h(x) - g(x)} < \epsilon 
         \quad \forall x\in D.
     \end{equation}
 \end{proof}
