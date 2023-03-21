@@ -3,9 +3,9 @@
 
 % https://tex.stackexchange.com/questions/490222/reproducing-index-of-notation
 
-Throughout this paper, the set of all natural numbers without zero is denoted by
-$\Nat = \{1,2,3,\dots\}$ and the set of all natural numbers including zero is
-denoted by $\Nat^0 = \Nat \setminus \{0\}$. 
+The set of all natural numbers without zero is denoted by $\Nat =
+\{1,2,3,\dots\}$ and the set of all natural numbers including zero is denoted by
+$\Nat^0 = \Nat \setminus \{0\}$. 
 
 For an arbitrary set $S$, we write $\abs{S} := \# S \in \Nat^0 \bigcup\,
 \{\infty\}$ as the number of elements of $S$.
@@ -13,22 +13,54 @@ For an arbitrary set $S$, we write $\abs{S} := \# S \in \Nat^0 \bigcup\,
 For a set $S$ in a space $P$, we write the closure of $S$ in $P$ as
 $\closure{S}$. The convex hull of $S$ is denoted by $\conv(S)$.
 
+% https://perso.lpsm.paris/~biau/BIAU/bma.pdf
+Let $d \in \Nat$ and $x = (x_1, \dots, x_d)$ be a $\R^d$-valued vector, we
+define the $p$-norm for $p>0$
+\begin{equation*}
+    \norm{x}_p = \Biggl( \sum_{j=1}^d \abs{x_j}^p \Biggr)^{1/p}.
+\end{equation*}
+
+When $p = \infty$, we define 
+\begin{equation*}
+    \norm{x}_{\infty} := \max_i \abs{x_i}.
+\end{equation*}
+
 The standard scalar product of $x,y\in\R^d$ will be written as $x\tr y =
-\spr{x}{y} = \sum_{i=1}^d x_iy_i$. We use $\abs{x}$ and $\norm{x} := \sqrt{x\tr
-x}$ to denote $\lp{1}$ and $\lp{2}$-norm for convenience. $\norm{\cdot}_{p}$ is
-used for norm in $\lp{p}$ space, $1 \leq p \leq \infty$.
-$\norm{\cdot}_{\mcal{H}}$ denotes the norm for a normed space $(\mcal{H},
-\norm{\cdot}_{\mcal{H}})$. We would use the notation
-\begin{equation}
-    \norm{f - g}_{G} := \sup_{g\in G} \abs{f - g}
-\end{equation}
-where the supremum is taken over all functions $g \in G$.
+\spr{x}{y} = \sum_{i=1}^d x_iy_i$. $\abs{x}$ and $\norm{x}$ is abbreviated for
+the $\lp{1}$ norm and $\lp{2}$ norm for a vector $x \in \R^d$.
 
-We write $f(x) \lesssim g(x)$ if $f(x) \leq C g(x)$ for a constant $C>0$ and for
-all $x \in X$. We will explicitly state the constant if $C$ depends on $f$ or
-any other relevant conditions.
+For a measure space $(X, \mcal{M}, \mu)$, let $f$ is a measurable function on
+$X$ and $0 < p < \infty$, the $\norm{\cdot}_{p}$ is defined as
+\begin{equation*}
+    \norm{f}_p = \Biggl( \int \abs{f}^p \, d\mu \Biggr)^{1/p}.
+\end{equation*}
 
-\section*{List of Abbreviations}
+When $p = \infty$, we define 
+\begin{equation*}
+    \norm{f}_{\infty} = \inf\Big\{
+        a \geq 0:
+        \mu(\{x: \abs{f(x)} > a \} = 0)
+    \Big\} = \ess{\sup_{x\in X} \abs{f(x)}}.
+\end{equation*}
+
+We abbreviate $\lp{p}(X, \mcal{M}, \mu)$ by $\lp{p}(X)$, or simply $\lp{p}$ when
+this will cause no confusion. $\abs{f}$ and $\norm{f}$ is abbreviated for the
+$\lp{1}$ and $\lp{2}$ norm.
+
+We denote the 
+\begin{equation*}
+    \norm{f - g}_{\lp{p}(X)} := 
+    \sup_{x \in X} \norm{f(x) - g(x)}_{\lp{p}(X)}, \quad 1 \leq p \leq \infty.
+\end{equation*}
+
+We abbreviate it by $\norm{f - g}_{p}$ when this does not cause any confusion
+regarding the domain of $x$.
+
+We write $f(x) \lesssim g(x)$ (or simply $f \lesssim g$) if $f(x) \leq C g(x)$ for
+a constant $C>0$ and for all $x \in X$. We will explicitly state the constant if
+$C$ depends on $f$ or other relevant conditions.
+
+\section*{List of abbreviations}
 
 \printglossary
 

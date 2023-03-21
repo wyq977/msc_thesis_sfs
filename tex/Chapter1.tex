@@ -131,15 +131,16 @@ the approximation error is given as
 \end{definition}
 
 \begin{definition}[Entropy]
-    \label{def:entropy} The \textit{entropy} $\log N(\epsilon, \mcal{F},
-    \norm{\cdot}_{\mcal{F}})$ is the logarithm of the covering number.
+    \label{def:entropy} The \textit{entropy} is the logarithm of the covering
+    number. For $n \in \Nat$, the $n$-th (dyadic) entropy number is given by
     \begin{equation}
-        \log N(\epsilon, \mcal{F}, \norm{\cdot}_{\mcal{F}})
+        \entropyNum{\mcal{F}}
         = \inf \{
             \epsilon > 0: \mcal{F} \text{ is covered by } 2^n 
             \text{ balls of radius } \epsilon
-        \}
+        \}.
     \end{equation}
+    % https://arxiv.org/pdf/1211.1559.pdf
 \end{definition}
 
 Approximation with a finite linear combination of elements from a bounded
@@ -171,7 +172,7 @@ any bounded $\mathbb{D} \subset \mcal{H}$.
     such that
     \begin{equation}
         \norm{f - g_n}_{\mcal{H}} \leq
-        2 \log N(\epsilon, \mathbb{D}, \norm{\cdot}_{\mcal{H}})
+        2 \entropyNum{\mathbb{D}}
         \cdot n^{-\frac{1}{2}}
         \cdot \sum_{j=1}^n \abs{c_j}.
     \end{equation}
@@ -232,17 +233,17 @@ any bounded $\mathbb{D} \subset \mcal{H}$.
 
 \begin{corollary}
     \label{cor:maurey}
-    If $f$ is in the closure of the convex hull of a set $G$ in a Hilbert space
-    with norm $\norm{\cdot}$ and every function $g \in G$ is bounded, then for
-    every $n \in \Nat$, there is an $f_n$ in the convex hull of $n$ elements in
-    $G$ such that:
+    If $f$ is in the closure of the convex hull of a set $\mathbb{D}$ in a
+    Hilbert space $(\mcal{H}, \norm{\cdot}_{\mcal{H}})$ and every function $d
+    \in \mathbb{D}$ is bounded, then for every $n \in \Nat$, there is an $f_n$
+    in the convex hull of $n$ elements in $\mathbb{D}$ such that
     \begin{equation}
-        \norm{f - f_n}^2 \leq \frac{C}{n}
+        \norm{f - f_n}_{\mcal{H}}\leq \sqrt{C} n^{-\frac{1}{2}}
     \end{equation}
 
-    where $f_n = \sum_{i=1}^n \lambda_i \cdot g_i, \quad g_i \in G, \quad
-    \sum_{i=1}^n \lambda_i = 1$, and $C \geq \sup_{g\in G} \norm{g}^2 -
-    \norm{f}^2$.
+    where $f_n = \sum_{j=1}^n \alpha_j \cdot d_j, \quad d_j \in \mathbb{D},
+    \quad \sum_{j=1}^n \alpha_j = 1$, and $C \geq \sup_{d\in \mathbb{D}}
+    \norm{g}_{\mcal{H}}^2 - \norm{f}_{\mcal{H}}^2$.
 
 \end{corollary}
 
@@ -275,7 +276,7 @@ g_n\}$.
         \norm{\alpha f_{n-1} + (1-\alpha)g - f}^2 + e_n
     \end{equation}
     where $e_n \leq \frac{}{n(n+C -1 )}$.
-    Then approximation error for each $n \leq 1$ is $\bigO(n^{-1/2})$
+    Then approximation error for each $n \geq 1$ is $\bigO(n^{-1/2})$
 \end{theorem}
 
 \begin{proof}
@@ -401,11 +402,11 @@ Let $h(x)$ be a linear combinations of elements from the dictionary $\mathbb{D}$
 
 \begin{align}
     \label{eq:sum_sigma}
-    h(x) = \sum_{j=1}^n a_j d_j = \sum_{j=1}^n a_j \sigma(b_j\tr x + c_j) \\
+    h(x) \in 
     \Sigma_n(\mathbb{D}) = \Bigg\{
         \sum_{j=1}^n a_j \sigma(b_j\tr x + c_j), \quad
         a_j, c_j \in \R,  b_j \in \R^d
-    \Bigg\}.
+    \Bigg\}
 \end{align}
 
 where  $n < \infty$, and $\sigma$ is a univariate function from $\R$ to $\R$.
@@ -425,7 +426,7 @@ that there is no restriction for the number of combinations.
     there exists a linear combination of $n$ ridge functions $f_n$ of the form
     \eqref{eq:uat_dict} such that
     \begin{align}
-        \norm{f - f_n}_{\infty} < \epsilon, \quad n \in \Nat.
+        \norm{f - f_n}_{\lp{\infty}(I_d)} < \epsilon, \quad n \in \Nat.
     \end{align}
 \end{theorem}
 
@@ -438,14 +439,14 @@ that there is no restriction for the number of combinations.
         \Bigg\}.
     \end{equation}
 
-    For any function $f \in C(\R^d)$, and any compact set $K$ of $\R^d$, and any
+    For any function $f \in C(\R^d)$, and any compact set $U$ of $\R^d$, and any
     $\epsilon > 0$, there exists a $f_n \in \Sigma$ such that 
     \begin{equation}
-        \sup_{x\in K} \abs{f(x) - f_n(x)} < \epsilon
+        \norm{f - f_n}_{\lp{\infty}(U)} < \epsilon
     \end{equation}
     if and only if $\sigma$ is not a polynomial. In other words, $\Sigma$ is
     dense in the space $C(\R^d)$ in the topology of uniform convergence on
-    compact stets.
+    compact sets.
 \end{proposition}
 
 \begin{remark}
@@ -485,7 +486,7 @@ functions are dense in the space of $(C(I_d), \norm{\cdot}_{\infty})$.
     \in C(I_d)$, there exists a $n \in \Nat$ and a sum $h$ of the above form
     \eqref{eq:sum_sigma}, where
     \begin{equation}
-        \norm{f - h}_{\infty} < \epsilon.
+        \norm{f - h}_{\lp{\infty}(I_d)} < \epsilon.
     \end{equation}
 \end{theorem}
 
@@ -664,9 +665,10 @@ of Lemma \ref{lemma:zero_measure}.
     \end{equation}
     is zero for all $n\in\Nat$ where $a_j \in \R$, and ${A_j} \subseteq \R$ are
     measurable and pairwise disjoint sets of $\R$. Since the simple functions
-    \eqref{eq:simple_function} are dense in $\lp{\infty}(\R)$, then for a
-    function $h \in \lp{\infty}(\R)$, there exists a sequence of functions $s_n$
-    converge pointwise to $h$ for all $n \in \Nat$ and $x \in \R$
+    \eqref{eq:simple_function} are dense in $\lp{\infty}(\R)$ (\TOCITE
+    Proposition 6.7 in Folland's Real Analysis), then for a function $h \in
+    \lp{\infty}(\R)$, there exists a sequence of functions $s_n$ converge
+    pointwise to $h$ for all $n \in \Nat$ and $x \in \R$
     \begin{align}
         L(h) &= \int_{I_d} h(b_0\tr x) \,d\mu(x) 
              = \int_{I_d} \lim_{n\to\infty} s_n(b_0\tr x) \,d\mu(x) \\
@@ -763,6 +765,100 @@ straightforward using Lusin's Theorem \eqref{thm:lusin}.
 The above result shows that the total measure of the misclassified points can be
 made arbitrarily small when $n$ is allowed to grow.
 
+\section{What is a two-layer neural network}
+\label{sec:what_is_2nn}
+
+This section begins with a brief introduction on \textit{feed-forward neural
+networks}. Although most targeted applications are utilizing other architectures,
+e.g. recurrent neural network, fully connected feed-forward neural
+networks allows us to connect the trade-off between model complexity and
+approximation efficiency conveniently.
+
+\subsection{Feed-forward neural network}
+
+The feed-forward neural network $\mathcal{N}$ is a class of artificial neural
+networks (\gls{ann}) equipped with a directed acyclic graph (\gls{dag}),
+\begin{equation*}
+    \mathcal{G} = (\mathcal{V}, \mathcal{E}).
+\end{equation*}
+
+The associated graph $\mathcal{G}$ is the \textit{architecture} of $\mathcal{N}$
+represented by a finite collection of vertices $\mathcal{V}$ 
+\footnote{
+    A computation unit associated with each $v \in \mathcal{V} \setminus \mathcal{I}$
+    is called a \textit{node} or \textit{neuron}. To unify terminology, we will 
+    refer the vertices as nodes.
+}
+and a finite set of edges $\mathcal{E}$. If we represent the input and output
+layer by $\mathcal{I, O}$, we have the following basic properties: 
+\begin{enumerate}
+    \item a activation function $\sigma$ is associated with each $v \in
+    \mathcal{V} \setminus \mathcal{I}$
+    \item a scalar $w$ is associated with each $e \in
+    \mathcal{E}$.    
+\end{enumerate}
+
+Nodes in the input layer observe a scalar input, seen by the downstream nodes.
+Aside from $\mathcal{I}$, a single node takes a superpositions of the upstream
+nodes via the respective weights $w_e$ mediated by the edges $e = (v, v')$
+between the associated vertex $v$ and upstream vertices $v'$. 
+
+We can then view the output function 
+\begin{equation*}
+    f_{\mathcal{N}} := 
+\end{equation*}
+as a mapping from $\R^d$ to $\R^{d'}$, $d = \abs{\mathcal{I}}, d' =
+\abs{\mathcal{O}}$. With a fixed architecture, the family of functions produced
+by $\mathcal{N}$ is determined by the number of trainable parameters: $\Theta :=
+\{w_e,b_v\}, e \in \mathcal{E}, v \in \mathcal{V} \setminus \mathcal{I}$.
+
+\subsection{Fully connected neural networks}
+
+The general definition stated covers virtually all networks architecture
+encountered in practice. In the next chapters, we will restrict ourself to a
+specialized class, \textit{fully connected networks}. and the vertices of such
+networks are structured into layers.
+
+\TONOTE{Add a small figure of Neural network}
+
+Within a fully connected network, each vertex is connected to all vertices in
+the proceeding layer via the edges and to no other layers. The \textit{input
+layer} $\mathcal{I}$ consists of simply $d$ input vertices where each vertex
+receive a external scalar signal $x_i \in \R, i \in \{1, \dots, d\}$ and the
+combined input $x := (x_1, \dots, x_d) \in \R^d$ forms the independent variable
+for the function mapping $f_{\mathcal{N}}$. Similarly, the \textit{output layer}
+$\mathcal{O}$ consists of $d'$ output vertices and the output vector is the
+value $f_{\mathcal{N}}(X) \in \R^{d'}$. $L$ hidden layers follows the input
+layer and the integer $L$ is the \textit{depth} of the networks. Each layer is
+constituted of $n_j$ hidden vertices, and the integer $n_j$ is called the
+\textit{width} of the $j$th layer. 
+
+There is a activation function $\sigma$ associated with each hidden node.
+Identity function is taken at nodes at $\mathcal{O}$ to ensure the
+$f_{\mathcal{N}}(   X)$ is a linear combination of the nodes at $L$th layers plus a bias
+term. Therefore for a fixed architecture, the \textit{weight matrices} and the
+\textit{bias vectors} are sufficient to describe the output function
+$f_{\mathcal{N}}$.
+
+
+
+future stuff
+
+The main interest of this section is to summarize the approximation power of
+ReLU networks, specifically ReLU networks. The problem of finding a stable
+algorithm to produce such approximation is intentionally omitted.
+
+The two main direction of discussing the approximation power are concerned with
+the width and the depth. The first case is to focus on the approximation as the
+width approaches infinity in a shallow network and we will see that even this
+case is fairly complicated even with one or two hidden layers. The other extreme
+would be deep neural networks where the width of the networks are usually fixed
+for simplicity and the depth $L$ is taken to infinity. 
+
+
+
+It also holds for the nowadays more popular ReLU activation function since
+$\sigma(z+1) - \sigma(z)$ is sigmoidal.
 
 %%% Local Variables: 
 %%% mode: latex

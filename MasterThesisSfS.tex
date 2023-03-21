@@ -64,10 +64,9 @@
 
 
 % ******************************************************************************
-% *                               PACKAGE OPTIONS                              *
+% *                              listings options                              *
 % ******************************************************************************
 
-% listings
 \definecolor{Mygrey}{gray}{0.75}% for linenumbers only!
 \definecolor{Cgrey}{gray}{0.4}% for comments
 \lstloadlanguages{R}
@@ -107,29 +106,25 @@
 
 % for (*\ref{ }*) inside lstlistings (Scode)
 \lstset{escapeinside={(*}{*)}}
+
+
 % ******************************************************************************
 % *                                   Theorem                                  *
 % ******************************************************************************
-% \newtheorem{definition}{Definition}[subsection]
+
+% using chapter number in theorem
 \newtheorem{definition}{Definition}[chapter]
-\newtheorem{lemma}[definition]{Lemma}
-\newtheorem{theorem}[definition]{Theorem}
-\newtheorem{corollary}[definition]{Corollary}
-\newtheorem{proposition}[definition]{Proposition}
+% using section number in equation number
+\numberwithin{equation}{section}
+
 \theoremstyle{definition} 
+\newtheorem{corollary}[definition]{Corollary}
 \newtheorem{example}[definition]{Example}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{theorem}[definition]{Theorem}
 \newtheorem*{note}{Note}
 \newtheorem*{remark}{Remark}
-
-\DeclareMathOperator*{\plim}{plim}
-% \def\MR#1{\href{http://www.ams.org/mathscinet-getitem?mr=#1}{MR#1}}
-
-% \newcommand{\Lecture}[3]{\marginpar{#3.#2.#1}}
-% \newcommand{\Fu}{\mathcal{F}}
-\newcommand{\aatop}[2]{\genfrac{}{}{0pt}{}{#1}{#2}}
-
-%\renewcommand{\theequation}{\arabic{equation}}
-\numberwithin{equation}{section}
 
 
 % ******************************************************************************
@@ -140,55 +135,61 @@
 
 
 % ******************************************************************************
-% *                        Define your own commands here                       *
+% *                            Custom Math operators                           *
 % ******************************************************************************
-\newcommand{\mcal}[1]{\mathcal{#1}}
-\newcommand{\bigO}{\mathcal{O}}
-\newcommand{\indicator}[1]{\mathds{1}_{#1}}
-\newcommand{\bspace}[1]{\mathcal{B}_{#1}}
-\newcommand{\fourier}[1]{\mathcal{F}(#1)}
-\newcommand{\interior}[1]{\mathring{#1}}
-\newcommand{\lpspace}[2]{\mathcal{L}^{#1}(\mathcal{#2})}
+
+\DeclareMathOperator*{\cl}{cl}
+\DeclareMathOperator*{\conv}{conv}
+\DeclareMathOperator*{\disc}{disc}
+\DeclareMathOperator*{\ess}{ess}
+\DeclareMathOperator*{\plim}{plim}
+\DeclareMathOperator*{\spn}{span}
+\DeclareMathOperator*{\supp}{supp}
+
+
+% ******************************************************************************
+% *                               Custom commands                              *
+% ******************************************************************************
+% difference between w/o "*"
+% https://tex.stackexchange.com/questions/1050/whats-the-difference-between-newcommand-and-newcommand
 % when to use Lp
 % https://math.stackexchange.com/questions/109394/notation-l-p-vs-ell-p
 % https://www.math.ucdavis.edu/~hunter/measure_theory/measure_notes_ch7.pdf
-\newcommand{\lp}[1]{L^{#1}}
 
-\newcommand{\conv}{\textnormal{conv}}
-
+\newcommand*{\mcal}[1]{\mathcal{#1}}
+\newcommand*{\bigO}{\mathcal{O}}
+\newcommand*{\indicator}[1]{\mathds{1}_{#1}}
+\newcommand*{\fourier}[1]{\mathcal{F}(#1)}
+\newcommand*{\interior}[1]{\mathring{#1}}
+\newcommand*{\lp}[1]{L^{#1}}
+\newcommand*{\closure}[1]{\overline{#1}} % (or \bar{#1})
+% Barron spaces
+\newcommand*{\bspace}[1]{\mathcal{B}_{#1}}
 % Barron spectral seminorm
-\newcommand{\specseminorm}[2]{ \abs{#1}_{\mathcal{F}, {#2}} }
+\newcommand*{\specseminorm}[2]{ \abs{#1}_{\mathcal{F}, {#2}} }
 % Barron spectral norm
-\newcommand{\specnorm}[2]{ \norm{#1}_{\mathcal{F}, {#2}}}
+\newcommand*{\specnorm}[2]{ \norm{#1}_{\mathcal{F}, {#2}}}
 % Barron norm
-\newcommand{\barronnorm}[2]{\norm{{#1}}_{\mathcal{B}_{#2}}}
-
-% Minkowski norm or variation norm
-\newcommand{\normVar}[2]{\norm{{#1}}_{\mathcal{K}({#2})}}
-\newcommand{\spaceVar}[1]{\mathcal{K}({#1})}
-
-\newcommand{\inclusionMap}[2]{i_{{#1}\to{#2}}}
-
-\newcommand{\closedConvexHull}[1]{\closure{\conv({#1} \bigcup\, -{#1})}}
-
+\newcommand*{\barronnorm}[2]{\norm{{#1}}_{\mathcal{B}_{#2}}}
+% Variation norm
+\newcommand*{\normVar}[2]{\norm{{#1}}_{\mathcal{K}({#2})}}
+% Variation space
+\newcommand*{\spaceVar}[1]{\mathcal{K}({#1})}
+% inclusion map
+\newcommand*{\inclusionMap}[2]{i_{{#1}\to{#2}}}
+% closure of convex symmetric hull
+\newcommand*{\closedConvexHull}[1]{\closure{\conv({#1} \bigcup\, -{#1})}}
+% dyadic metric entropy
+\newcommand*{\entropyNum}[1]{\varepsilon_{n}({#1})}
 % custom TODO function
-\newcommand{\TOCITE}{\textcolor{blue}{\bf [TO CITE]}}
-\newcommand{\TONOTE}[1]{\textcolor{red}{(\textit{#1})}}
-\newcommand{\TODO}{\textcolor{red}{\textnormal{\textbf{TODO}}}}
+\newcommand*{\TOCITE}{\textcolor{blue}{\bf [TO CITE]}}
+\newcommand*{\TONOTE}[1]{\textcolor{red}{(\textit{#1})}}
+\newcommand*{\TODO}{\textcolor{red}{\textnormal{\textbf{TODO}}}}
 
-% amsmath
-% \numberwithin{equation}{section} % using section number in equation number
-\DeclareMathOperator{\supp}{supp}
-\DeclareMathOperator{\spn}{span} % span already defined ??
-\DeclareMathOperator{\cl}{cl}
-\DeclareMathOperator{\disc}{disc}
 
-% \newcommand{\closure}[1]{\cl{#1}} % (or \bar{#1})
-\newcommand{\closure}[1]{\overline{#1}} % (or \bar{#1})
-
-% replaced by spr in texab
-% \DeclarePairedDelimiterX{\inp}[2]{\langle}{\rangle}{#1, #2} % mathtools
-% [physics] already include abs and norm
+% ******************************************************************************
+% *                          The beginning of document                         *
+% ******************************************************************************
 
 \begin{document}
 \bibliographystyle{chicago}
@@ -197,6 +198,7 @@
 % OR DEFAULT : \citationstyle{agsm}
 
 \pagenumbering{roman} % roman numbering for first few pages
+
 
 % ******************************************************************************
 % *                                 Title page                                 *
@@ -274,6 +276,7 @@
 \include{tex/Chapter4}
 % \include{tex/Summary}
 
+
 % ******************************************************************************
 % *                                Bibliography                                *
 % ******************************************************************************
@@ -286,7 +289,6 @@
 % 'Assbib.bib' (included here as well), using
 % \bibliography{myReferences,Assbib}
 % ---------------------------------- instead of the above
-
 
 
 % ******************************************************************************

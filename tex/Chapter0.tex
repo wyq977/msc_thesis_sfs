@@ -1,4 +1,5 @@
-\chapter{Curse of dimensionality}
+\chapter{Introduction}
+\label{ch:introduction}
 
 The term \textit{curse of dimensionality} (\gls{cod}) was coined by
 \cite{bellmanTheoryDynamicProgramming1952} almost 70 years ago to describe the
@@ -189,99 +190,6 @@ The paradox of why
 
 % In applications, the phenomenon of implicit regularization is frequently observed [15, 27, 30, 29, 26, 22, 33]. Nonetheless, the theory behind it is still largely unexplored [26, 22, 33, 27]. 
 
-\section{What ia a two-layer neural network}
-
-This section begins with a brief introduction on \textit{feed-forward neural
-networks}. Although most targeted applications are utilizing other architectures,
-e.g. recurrent neural network, fully connected feed-forward neural
-networks allows us to connect the trade-off between model complexity and
-approximation efficiency conveniently.
-
-\subsection{Feed-forward neural network}
-
-The feed-forward neural network $\mathcal{N}$ is a class of artificial neural
-networks (\gls{ann}) equipped with a directed acyclic graph (\gls{dag}),
-\begin{equation*}
-    \mathcal{G} = (\mathcal{V}, \mathcal{E}).
-\end{equation*}
-
-The associated graph $\mathcal{G}$ is the \textit{architecture} of $\mathcal{N}$
-represented by a finite collection of vertices $\mathcal{V}$ 
-\footnote{
-    A computation unit associated with each $v \in \mathcal{V} \setminus \mathcal{I}$
-    is called a \textit{node} or \textit{neuron}. To unify terminology, we will 
-    refer the vertices as nodes.
-}
-and a finite set of edges $\mathcal{E}$. If we represent the input and output
-layer by $\mathcal{I, O}$, we have the following basic properties: 
-\begin{enumerate}
-    \item a activation function $\sigma$ is associated with each $v \in
-    \mathcal{V} \setminus \mathcal{I}$
-    \item a scalar $w$ is associated with each $e \in
-    \mathcal{E}$.    
-\end{enumerate}
-
-Nodes in the input layer observe a scalar input, seen by the downstream nodes.
-Aside from $\mathcal{I}$, a single node takes a superpositions of the upstream
-nodes via the respective weights $w_e$ mediated by the edges $e = (v, v')$
-between the associated vertex $v$ and upstream vertices $v'$. 
-
-We can then view the output function 
-\begin{equation*}
-    f_{\mathcal{N}} := 
-\end{equation*}
-as a mapping from $\R^d$ to $\R^{d'}$, $d = \abs{\mathcal{I}}, d' =
-\abs{\mathcal{O}}$. With a fixed architecture, the family of functions produced
-by $\mathcal{N}$ is determined by the number of trainable parameters: $\Theta :=
-\{w_e,b_v\}, e \in \mathcal{E}, v \in \mathcal{V} \setminus \mathcal{I}$.
-
-\subsection{Fully connected neural networks}
-
-The general definition stated covers virtually all networks architecture
-encountered in practice. In the next chapters, we will restrict ourself to a
-specialized class, \textit{fully connected networks}. and the vertices of such
-networks are structured into layers.
-
-\TONOTE{Add a small figure of Neural network}
-
-Within a fully connected network, each vertex is connected to all vertices in
-the proceeding layer via the edges and to no other layers. The \textit{input
-layer} $\mathcal{I}$ consists of simply $d$ input vertices where each vertex
-receive a external scalar signal $x_i \in \R, i \in \{1, \dots, d\}$ and the
-combined input $x := (x_1, \dots, x_d) \in \R^d$ forms the independent variable
-for the function mapping $f_{\mathcal{N}}$. Similarly, the \textit{output layer}
-$\mathcal{O}$ consists of $d'$ output vertices and the output vector is the
-value $f_{\mathcal{N}}(X) \in \R^{d'}$. $L$ hidden layers follows the input
-layer and the integer $L$ is the \textit{depth} of the networks. Each layer is
-constituted of $n_j$ hidden vertices, and the integer $n_j$ is called the
-\textit{width} of the $j$th layer. 
-
-There is a activation function $\sigma$ associated with each hidden node.
-Identity function is taken at nodes at $\mathcal{O}$ to ensure the
-$f_{\mathcal{N}}(   X)$ is a linear combination of the nodes at $L$th layers plus a bias
-term. Therefore for a fixed architecture, the \textit{weight matrices} and the
-\textit{bias vectors} are sufficient to describe the output function
-$f_{\mathcal{N}}$.
-
-
-
-future stuff
-
-The main interest of this section is to summarize the approximation power of
-ReLU networks, specifically ReLU networks. The problem of finding a stable
-algorithm to produce such approximation is intentionally omitted.
-
-The two main direction of discussing the approximation power are concerned with
-the width and the depth. The first case is to focus on the approximation as the
-width approaches infinity in a shallow network and we will see that even this
-case is fairly complicated even with one or two hidden layers. The other extreme
-would be deep neural networks where the width of the networks are usually fixed
-for simplicity and the depth $L$ is taken to infinity. 
-
-
-
-It also holds for the nowadays more popular ReLU activation function since
-$\sigma(z+1) - \sigma(z)$ is sigmoidal.
 %%% Local Variables: 
 %%% mode: latex
 %%% TeX-master: "MasterThesisSfS"

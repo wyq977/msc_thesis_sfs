@@ -265,7 +265,7 @@ The content of this section is based on
     \sum_{j=1}^n a_j \sigma(b_j\tr x+c_j), a_j, c_j \in \R, b_j \in \R^d$ such
     that
     \begin{equation}
-        \norm{f - f_n}_2 \leq n^{-\frac{1}{2}} \cdot 2C
+        \norm{f - f_n}_{\lp{2}(U)}\leq n^{-\frac{1}{2}} \cdot 2C
     \end{equation}
 \end{theorem}
 
@@ -624,7 +624,7 @@ klusowskiApproximationCombinationsReLU2018a} provide the basis for our
 discussion, unless explicitly cited otherwise.
 
 \cite{makovozRandomApproximantsNeural1996} showed that the error can be improved
-to $\bigO(n^{\frac{1}{2} - \frac{1}{q\cdot d}})$ in $\lp{p}(\Omega)$, $q <
+to $\bigO(n^{\frac{1}{2} - \frac{1}{p \cdot d}})$ in $\lp{p}(\Omega)$, $p <
 \infty$.
 
 \begin{theorem}
@@ -648,15 +648,15 @@ to $\bigO(n^{\frac{1}{2} - \frac{1}{q\cdot d}})$ in $\lp{p}(\Omega)$, $q <
 
     For any $f \in V$ and any $n \in \Nat$ such that 
     \begin{equation}
-        \norm{f- f_n}_{q} \leq C n^{-\frac{1}{2} - \frac{1}{q \cdot d}}
-        \quad 1 \leq q < \infty
+        \norm{f- f_n}_{\lp{p}(U)} \leq C n^{-\frac{1}{2} - \frac{1}{p \cdot d}}
+        \quad 1 \leq p < \infty
     \end{equation}
-    where $C$ is a constant dependent only $U$, $q$ and $s(\cdot)$.
+    where $C$ is a constant dependent only $U$, $p$ and $s(\cdot)$.
 \end{theorem}
 
 % In some literature, V is represented as the dictionary
 
-Note that this theorem does not cover the case $q = \infty$. However,
+Note that this theorem does not cover the case $p = \infty$. However,
 \cite{barronUniversalApproximationBounds1993} has already showed that $f\in V$ are
 dense w.r.t. supremum norm ($\norm{f - f_n}_{\infty} = \bigO(n^{-1/2})$), which
 implies $\norm{f-f_n}_{q}$ for all $\lp{q}, q<\infty$.
@@ -797,7 +797,7 @@ fixed $M > 0$
     $f_n \in \Sigma_n(\mathbb{D}_{\mcal{F}, s}, M)$ the approximation error in
     $\lp{\infty}(\Omega)$ is
     \begin{equation}
-        \norm{f-f_n}_{\infty} \lesssim 
+        \norm{f-f_n}_{\lp{\infty}(\Omega)} \lesssim 
         n^{-\frac{1}{2}-\frac{s}{d}} \sqrt{\log{n}} \norm{f}_{\bspace{\mcal{F},s}}.
     \end{equation}
 
@@ -808,7 +808,7 @@ fixed $M > 0$
     \cite{klusowskiApproximationCombinationsReLU2018,siegelSharpBoundsApproximation2022}.
 \end{proof}
 
-\subsection{Approximation in $\lp{q}$ with bounded coefficients}
+\subsection{Approximation in $\lp{p}$ with bounded coefficients}
 
 % A smoothness property of the function to be approximated is expressed in terms
 % of its Fourier representation. In particular, an average of the norm of the
@@ -823,7 +823,6 @@ fixed $M > 0$
 
 \section{Approximation with ReLU\textsuperscript{k} activation function}
 
-\
 
 %%% Local Variables: 
 %%% mode: latex

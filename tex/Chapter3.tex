@@ -230,7 +230,7 @@ $\mathcal{B}_{\infty} = \mathcal{B}_p$, $\barronnorm{\cdot}{\infty} =
     exists a 2NN $f_n = f(x, \Theta) = \frac{1}{n}\sum_{j=1}^n a_j \sigma(b_j\tr
     x + c_j)$ such that
     \begin{equation}
-        \norm{f - f_n}_2 \lesssim \frac{\norm{f}_{\mathcal{B}}}{\sqrt{n}}.
+        \norm{f - f_n}_{\lp{2}(U)}\lesssim \frac{\norm{f}_{\mathcal{B}}}{\sqrt{n}}.
     \end{equation}
     where $\Theta$ is the set of parameters $\Theta = \{(a_j, b_j, c_j),
     j=1,\dots,m\}$.
@@ -324,7 +324,7 @@ parameter $\Theta$ satisfies such condition in the theorem.
     it can be established that for any function $f \in \mcal{B}(U)$ and any
     integer $n \in \Nat$, there exists a 2NN such that
     \begin{equation}
-        \norm{f - f_n}_{\infty} \lesssim 
+        \norm{f - f_n}_{\lp{\infty}(U)} \lesssim 
         \norm{f}_{\mathcal{B}} \sqrt{\frac{d+1}{n}}.
     \end{equation}
 \end{theorem}
@@ -436,7 +436,7 @@ Similarly, an approximation upper bound using $n$ elements from the dictionary
 However, the compactness of $\mathbb{D}$ when $k > 0$ is not guaranteed. 
 
 \begin{proposition}
-    When $k > 0$, $\mathbb{D}$ is not bounded in $\lp{q}(\Omega)$.
+    When $k > 0$, $\mathbb{D}$ is not bounded in $\lp{p}(\Omega)$.
 \end{proposition}
 \begin{proof}
     
