@@ -13,7 +13,7 @@ This chapter is organized as follows. In section \ref{sec:spectral_condition},
 the class of functions that satisfies certain smoothness constrain is
 introduced. Section \ref{sec:construction_of_fouier} defines and characterizes
 the function spaces constructed based on the previous smoothness restriction. In
-section \ref{sec:approximation_fouier}, an approximation rate of
+section \ref{sec:approximation_rate_fouier}, an approximation rate of
 $\bigO(n^{-\frac{1}{2}})$ is proven w.r.t. the supremum norm where $n$ is the
 number of nodes. Section \ref{sec:fourier_variation_space} shows the dictionary
 corresponding to the smoothness condition. Finally, we give some high order
@@ -68,9 +68,9 @@ sigmoidal activation functions.
 
 In this section, we would identify the class of functions originally proposed by
 \cite{barronUniversalApproximationBounds1993}. We define the \textit{spectral
-conditions} on which the smoothness constrain is imposed. A modified spectral
-condition proposed by \cite{siegelCharacterizationVariationSpaces2022} is
-also introduced.
+condition} on which the smoothness constrain is imposed. A modified spectral
+condition proposed by \cite{siegelCharacterizationVariationSpaces2022} is also
+introduced.
 
 \begin{definition}[Barron class]
     \label{def:barron_class}
@@ -87,7 +87,7 @@ also introduced.
         ) \cdot \fourier{f}(\omega)\,d\omega
     \end{align}
 
-    where $\abs{\omega}_{U, x_0} := \sup_{x\in U}\norm{\spr{\omega}{x - x_0}}_2$
+    where $\abs{\omega}_{U, x_0} := \sup_{x\in U}\norm{\spr{\omega}{x - x_0}}$
     and it is denoted by $\abs{\omega}_U$ when $x_0 = 0$ for simplicity. We
     refer the class of all functions satisfying the above condition as 
     $\Gamma_C(U, x_0)$\footnote{
@@ -98,9 +98,28 @@ also introduced.
     }.
 \end{definition}
 
-% should be L1 norm of \omega
+\begin{remark}
+    In the above definition, the domain $U$ bounded using $\abs{\omega}_{U}$ is
+    interpreted as bounding the trigonometric component $e^{i\omega\tr x}$ where
+    $\omega$ is the frequency in the Fourier representation of the functions
+    restricted. It it easier to see that the constant $C$
+    \begin{equation}
+        C \leq r \int_{\R^d} \abs{\omega} \abs{\fourier{f}(\omega)}\,d\omega.
+    \end{equation}
+    if $U$ is in a ball of radius $r$ since $\abs{\omega}_{U} \leq r \cdot
+    \abs{\omega}$ by the Cauchy-Schwarz inequality.
 
-\TONOTE{Why is 1/2 allowed? in \cite{siegelCharacterizationVariationSpaces2022}}
+    More generally, if $U$ is a $l_p$ ball of radius $r$, we can rewrite the
+    condition as
+    \begin{equation}
+        r \int_{\R^d} \norm{\omega}_p \abs{\fourier{f}(\omega)}\,d\omega 
+        < \infty, \quad 1 \leq p \leq \infty.
+    \end{equation}
+
+\end{remark}
+
+
+% Here it is the L1 norm of \omega
 
 \begin{definition}[Spectral condition]
     \label{def:spectral_condition}
@@ -111,12 +130,11 @@ also introduced.
     \end{equation}
     where $\fourier{f}: \R^d \to \mathbb{C}$ is the Fourier transform of $f$.
 
-    For any $s \in \Nat$, the spectral condition of such function $f$ be defined
-    as
+    For any $s \in \Nat$, the spectral condition of $f$ is defined as
     \begin{equation}
         \label{eq:spectral_condition}
         v_{f,s} 
-            = \int_{\R^d} \norm{\omega}_1^s \abs{\fourier{f}(\omega)}\,d\omega.
+            = \int_{\R^d} \abs{\omega}^s \abs{\fourier{f}(\omega)}\,d\omega.
     \end{equation}
 \end{definition}
 
@@ -129,7 +147,7 @@ also introduced.
     \begin{equation}
         \label{eq:spectral_condition_mod}
         v'_{f,s} 
-            = \int_{\R^d} (1 + \norm{\omega}_1)^s \abs{\fourier{f}(\omega)}
+            = \int_{\R^d} (1 + \abs{\omega})^s \abs{\fourier{f}(\omega)}
             \,d\omega.
     \end{equation}
 \end{definition}
@@ -156,8 +174,7 @@ is controlled.
     \end{equation}
     where $\fourier{f}: \R^d \to \mathbb{C}$ is the Fourier transform of $f$.
 
-    For any $s \in \Nat$, the spectral seminorm of such function $f$ be defined
-    as
+    For any $s \in \Nat$, the spectral seminorm of $f$ is defined as
     \begin{equation}
         \specseminorm{f}{s} = \inf_{f_{e\mid U} = f} v_{f,s}
     \end{equation}
@@ -174,7 +191,7 @@ to the seminorm.
     Under the setup of Definition \ref{def:spectral_seminorm}, we define a
     spectra norm
     \begin{equation}
-        \specnorm{f}{s} = \inf_{f_{e\mid U} = f} v'_{f,s}
+        \specnorm{f}{s} = \inf_{f_{e\mid U} = f} v'_{f,s}.
     \end{equation}
 \end{definition}
 
@@ -191,6 +208,10 @@ to the seminorm.
     \end{equation}
     equipped with a norm $\specnorm{f}{s}$ for all $s \in \Nat$.
 \end{definition}
+
+\TONOTE{What is the extensions}
+
+\TONOTE{Why is 1/2 allowed? in \cite{siegelCharacterizationVariationSpaces2022}}
 
 $s \in \Nat$ is referred as the smoothness index. It is easy to conjecture
 that as $s$ increases, functions in $\bspace{\mcal{F}, s}$ are becoming
@@ -236,8 +257,8 @@ contribution, we will use two definitions:
 \end{itemize}
 
 
-\section{Approximation in Fourier-analytic Barron spaces}
-\label{sec:approximation_fouier}
+\section{Approximation rate in Fourier-analytic Barron spaces}
+\label{sec:approximation_rate_fouier}
 
 It is shown by \cite{barronUniversalApproximationBounds1993} that functions of
 $d$-variables with finite Fourier moments can be approximated with the
@@ -250,18 +271,15 @@ of the target function. Despite that the convergence rate itself is independent
 of dimension (i.e. the dimensionality $d$ of input vector $x\in\R^d$), the
 constant $C$ could be dimension-dependent as the Fourier transform is used here.
 
-The content of this section is based on
-\cite{barronUniversalApproximationBounds1993}.
-
-
+This section is based on \cite{barronUniversalApproximationBounds1993}.
 
 \begin{theorem}
     % \cite[Theorem~1]{barronUniversalApproximationBounds1993}
     \label{thm:barron_1993_1}
-    Let $U$ be a nonempty bounded domain in $\R^d$ and $C > 0$ a constant. For
-    every function in the Barron class $\Gamma_C(U, x_0)$, every sigmoidal
-    function $\phi$, every probability measure $\mu$, and every $n \in \Nat$,
-    there exists a linear combination of sigmoidal function $f_n(x) =
+    Let $U$ be a nonempty bounded domain in $\R^d$, $x_0 \in U$, and $C > 0$ a
+    constant. For every function in the Barron class $\Gamma_C(U, x_0)$, every
+    sigmoidal function $\phi$, every probability measure $\mu$, and every $n \in
+    \Nat$, there exists a linear combination of sigmoidal function $f_n(x) =
     \sum_{j=1}^n a_j \sigma(b_j\tr x+c_j), a_j, c_j \in \R, b_j \in \R^d$ such
     that
     \begin{equation}
@@ -270,40 +288,36 @@ The content of this section is based on
 \end{theorem}
 
 \begin{proof}
-
     The main idea behind the the proof is to show functions with finite Fourier
     moment are in the closure of the convex hull of the set of half planes.
 
-    \textbf{Step 0} (\textit{Fixing $x_0$ to $0$}): Changing $x_0$ to $x_1$
-    affects the norm, at most, by a factor of $2$. Let $x_0, x_1$ be two
-    arbitrarily selected points in $U$, and $f$ fulfilling the condition above,
-    i.e. $f \in \Gamma_C(U, x_0)$. For any $\omega \in \mathbb{R}^d$, given
-    $x_0, x_1$, we have
-
+    \textbf{Step 0} (\textit{Fix $x_0$ to $0$}): Let $x_0, x_1$ be two
+    arbitrarily selected points in $U$, and $f \in \Gamma_C(U, x_0)$.  For any
+    $\omega \in \mathbb{R}^d$, given $x_0, x_1$, we have
     \begin{equation}
         \abs{\omega}_{U, x_0} 
-            = \sup_{x\in U}\abs{\spr{\omega}{x-x_0}} 
-            \leq \sup_{x\in U}\abs{\spr{\omega}{x-x_1}} + \abs{\spr{\omega}{x_0-x_1}} 
+            = \sup_{x\in U}\norm{\spr{\omega}{x-x_0}} 
+            \leq \sup_{x\in U}\norm{\spr{\omega}{x-x_1}} + \norm{\spr{\omega}{x_0-x_1}} 
             \leq 2\abs{\omega}_{U, x_1}
     \end{equation}
 
-    Thus we have $\int_{\mathbb{R}^d} \abs{\omega}_{U, x_1} \cdot a < 2C$. If we
-    have $\tilde{c} = c + \int_{\mathbb{R}^d} (e^{\omega\tr x_0} - e^{\omega\tr
-    x_1}) d\omega$, then $f(x) = \tilde{c} + \int_{\mathbb{R}^d} (e^{i\omega\tr
-    x} - e^{i\omega\tr x_1})$ with $\tilde{c} \leq 2C$.
+    Therefore, we have $\int_{\mathbb{R}^d} \abs{\omega}_{U, x_1}
+    \abs{\fourier{f}(\omega)}\,d\omega \leq 2C$. If we have $\tilde{c} = c +
+    \int_{\mathbb{R}^d} (e^{\omega\tr x_0} - e^{\omega\tr x_1}) d\omega$, then
+    $f(x) = \tilde{c} + \int_{\mathbb{R}^d} (e^{i\omega\tr x} - e^{i\omega\tr
+    x_1})$ with $\tilde{c} \leq 2C$.
 
-    This shows that changing $x_0$ would only affect the norm in the RHS of
-    Theorem \ref{thm:barron_1993_1} at most by a factor of two, i.e.
+    This shows that changing $x_0$ would only affect the constant in the RHS of
+    Theorem \ref{thm:barron_1993_1} by a factor of at most two, i.e.
     $\Gamma_C(U, x_0) \subset \Gamma_{2C}(U, x_1)$. Therefore, we continue the
-    proof assuming $x_0 = 0$ for simplicity.
+    proof assuming $x_0 = 0$.
 
-    \textbf{Step 1} (\textit{Represent $f$ via Inverse Fourier Transform}): Note
-    that with polar decomposition, we have $\fourier{f}(\omega) =
-    e^{i\theta(\omega)} \cdot \abs{\fourier{f}(\omega)}$ where $\theta(\omega)
-    \in \mathbb{R}$ denote the magnitude decomposition. From the assumption, and
-    the fact that $f$ is real-valued ($U \subset \mathbb{R}^d \to \mathbb{R}$),
-    the real number part of $f(x) - f(0)$ can be written as:
-
+    \textbf{Step 1} (\textit{Represent $f$ via Inverse Fourier Transform}): With
+    the polar decomposition, we have $\fourier{f}(\omega) = e^{i\theta(\omega)}
+    \cdot \abs{\fourier{f}(\omega)}$ where $\theta(\omega) \in \mathbb{R}$
+    denote the magnitude decomposition. From the assumption, and the fact that
+    $f$ is real-valued ($f: U \to \mathbb{R}$), the real-valued part of $f(x) -
+    f(0)$ can be written as:
     \begin{align}
         \label{eq:barron_fouier_int}
         f(x) - f(0)
@@ -315,15 +329,17 @@ The content of this section is based on
         (\omega)) - \cos(\theta(\omega))\Big)\,d\mu_g \\
         & = \int_{\Omega} g(x, \omega)\,d\mu_g.
     \end{align}
+    where we denote $\int_{\mathbb{R}^d} \abs{\omega}_{U} \cdot
+    \abs{\fourier{f}(\omega)} d\omega \leq C$ by $C_{f, U}$.
 
-    $C_{f,U}$ is a constant defined with $f$ and $U$: $C_{f,U} =
-    \int_{\mathbb{R}^d} \abs{\omega}_{U, 0} \cdot \abs{\fourier{f}(\omega)}
-    d\omega \leq C$ and $\mu_g$ is a probability distribution $d\mu_g =
-    \abs{\omega}_{U,0}/C_{f,U}\abs{\fourier{f}(\omega)} d\omega$, the integral
-    is evaluated on $\Omega = \{\omega \in \R^d: \omega \not = 0\}$ and
-
+    $\mu_g$ is a probability distribution $d\mu_g =
+    \abs{\omega}_{U}/C_{f,U}\abs{\fourier{f}(\omega)} d\omega$, the integral is
+    evaluated on $\Omega = \{\omega \in \R^d: \omega \not = 0\}$ and
     \begin{equation}
-        g(x, \omega) = \frac{C_{f,U}}{\abs{\omega}_{U, 0}}\Big(\cos(\omega\tr x + \theta(\omega)) - \cos(\theta(\omega))\Big)
+        g(x, \omega) = \frac{C_{f,U}}{\abs{\omega}_{U}}
+        \Big(
+            \cos(\omega\tr x + \theta(\omega)) - \cos(\theta(\omega))
+        \Big).
     \end{equation}
 
     \textbf{Step 2} (\textit{$f(x) - f(0)$ is in the closure of the convex hull
@@ -332,19 +348,25 @@ The content of this section is based on
     functions in the class
 
     \begin{equation}
-        G_{\cos} = \Bigg\{\frac{\abs{\gamma}}{\abs{\omega}_{U, 0}}\Big(\cos(\omega\tr x + b) - \cos(b)\Big): \omega \not= 0, \abs{\gamma} \leq C, b \in \mathbb{R} \Bigg\}
+        G_{\cos} = \Bigg\{
+            \frac{\abs{\gamma}}{\abs{\omega}_{U}}
+            \Big(
+                \cos(\omega\tr x + b) - \cos(b)
+            \Big):
+                \omega \not= 0, \abs{\gamma} \leq C, b \in \mathbb{R} 
+        \Bigg\}
     \end{equation}
 
     Suppose we have drawn $n$ samples ($\{\omega_i, i = 1,\dots, n\}$) from
-    $\mu_g$, the expected norm in $\lp{2}(\mu_g, U)$ converges to zero as $n \to
-    \infty$ by $\lp{2}$ law of large numbers. Therefore, there exist a sequence
-    of convex combination in $G_{\cos}$ that converges to $f(x) - f(0)$ in
+    $\mu_g$, the expected norm in $\lp{2}(U, \mu_g)$ converges to zero as $n \to
+    \infty$ by $\lp{2}$ law of large numbers. Therefore, there exist a convex
+    combination of elements in $G_{\cos}$ that converges to $f(x) - f(0)$ in
     $\lp{2}$.
 
 
     \textbf{Step 3} (\textit{$G_{\cos}$ is in the closure of the convex hull of
     $G_{\textnormal{step}}$}): It is sufficient to check $g(z), z = \alpha x,
-    \alpha = \omega/\abs{\omega}_{U,0}$ on $[-1, 1]$ for some $\omega$. As
+    \alpha = \omega/\abs{\omega}_{U}$ on $[-1, 1]$ for some $\omega \not= 0$. As
     $g(z)$ is a uniformly continuous sinusoidal function on $[-1, 1]$, it can be
     uniformly approximately by piecewise constant step function.
 
@@ -368,7 +390,7 @@ The content of this section is based on
     the step functions (by Lemma 1 in
     \cite{barronUniversalApproximationBounds1993})
 
-    By substituting $z = \omega/\abs{\omega}_{U, 0} x$, we have $G_{\cos}
+    By substituting $z = \frac{\omega}{\abs{\omega}_{U}} x$, we have $G_{\cos}
     \subset G_{\textnormal{step}}$,
     \begin{equation}
         G_{\textnormal{step}} = \Bigg\{
@@ -384,14 +406,13 @@ The content of this section is based on
     they converge to step functions pointwise (except at points where $\alpha x
     - t = 0$). If we introduce a measure $\mu$ that has zero measure at those
     points, previous statement on $G_{\cos} \subset G^{\mu}_{\textnormal{step}}$
-    still holds on $\{\abs{t} \leq 1: \alpha x - t \not=0\}$ give a particular
-    $\alpha$. We subsequently have convergence in $L_2(\mu, U)$ by the dominated
-    convergence theorem, which implies that $G^{\mu}_{\textnormal{step}} \subset
+    still holds on $\{\abs{t} \leq 1: \alpha x - t \not=0\}$ given a particular
+    $\alpha$. We subsequently have convergence in $L_2(U, \mu)$ by the Dominated
+    Convergence Theorem, which implies that $G^{\mu}_{\textnormal{step}} \subset
     G_{\phi}$.
 
-    Finally we have the following relationship since the closure of a convex set
-    is also convex:
-
+    Finally, we arrive at the following relationship since the closure of a
+    convex set is also convex \eqref{def:closed_convex_hull}
     \begin{equation*}
         \Gamma_{U, x_0} \subset \closure{G_{\cos}} 
         \subset \closure{G_{\textnormal{step}}} \subset \closure{G_{\phi}}.
@@ -406,7 +427,7 @@ The content of this section is based on
     % norm between the function and the sequences $\{f_i, i = 1, \dots, N\}$ are
     % bounded in a magnitude of $\bigO(N^{-1})$.
 
-    It has been shown above that function $f(x) - f(0)$ are in the closure of
+    It has been shown above that function $f(x) - f(0)$ is in the closure of
     the convex hull of $G_{\phi}$ where $\norm{g} \leq (2C)^2$ for every $g \in
     G_{\phi}$. Hence the $L_2$ norm of the approximation error is bounded for
     any choice of $C' > (2C)^2 - \norm{f(x) - f(0)}^2$ by Corollary

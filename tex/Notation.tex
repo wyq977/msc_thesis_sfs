@@ -14,25 +14,26 @@ For a set $S$ in a space $P$, we write the closure of $S$ in $P$ as
 $\closure{S}$. The convex hull of $S$ is denoted by $\conv(S)$.
 
 % https://perso.lpsm.paris/~biau/BIAU/bma.pdf
-Let $d \in \Nat$ and $x = (x_1, \dots, x_d)$ be a $\R^d$-valued vector, we
-define the $p$-norm for $p>0$
+Let $d \in \Nat$ and $x = (x_1, \dots, x_d)$ be a $\R^d$-valued vector, the
+$p$-norm of $x$ is defined as
 \begin{equation*}
-    \norm{x}_p = \Biggl( \sum_{j=1}^d \abs{x_j}^p \Biggr)^{1/p}.
+    \norm{x}_p = \Biggl( \sum_{j=1}^d \abs{x_j}^p \Biggr)^{1/p}, \quad
+    0 < p < \infty.
 \end{equation*}
-
 When $p = \infty$, we define 
 \begin{equation*}
     \norm{x}_{\infty} := \max_i \abs{x_i}.
 \end{equation*}
 
-The standard scalar product of $x,y\in\R^d$ will be written as $x\tr y =
-\spr{x}{y} = \sum_{i=1}^d x_iy_i$. $\abs{x}$ and $\norm{x}$ is abbreviated for
-the $\lp{1}$ norm and $\lp{2}$ norm for a vector $x \in \R^d$.
+The standard scalar product of $x,y\in\R^d$ is written as $x\tr y = \spr{x}{y} =
+\sum_{i=1}^d x_iy_i$. $\abs{x}$ and $\norm{x}$ is abbreviated for the $\lp{1}$
+norm and $\lp{2}$ norm for $x \in \R^d$.
 
 For a measure space $(X, \mcal{M}, \mu)$, let $f$ is a measurable function on
-$X$ and $0 < p < \infty$, the $\norm{\cdot}_{p}$ is defined as
+$X$, the $\norm{\cdot}_{p}$ is defined as
 \begin{equation*}
-    \norm{f}_p = \Biggl( \int \abs{f}^p \, d\mu \Biggr)^{1/p}.
+    \norm{f}_p = \Biggl( \int \abs{f}^p \, d\mu \Biggr)^{1/p}, \quad
+    0 < p < \infty.
 \end{equation*}
 
 When $p = \infty$, we define 
@@ -56,9 +57,9 @@ We denote the
 We abbreviate it by $\norm{f - g}_{p}$ when this does not cause any confusion
 regarding the domain of $x$.
 
-We write $f(x) \lesssim g(x)$ (or simply $f \lesssim g$) if $f(x) \leq C g(x)$ for
-a constant $C>0$ and for all $x \in X$. We will explicitly state the constant if
-$C$ depends on $f$ or other relevant conditions.
+We write $f(x) \lesssim g(x)$ (or simply $f \lesssim g$) if there is a constant
+$C>0$, $f(x) \leq C \cdot g(x)$ for all $x \in X$. We will explicitly state the
+constant if $C$ depends on $f$ or other relevant conditions.
 
 \section*{List of abbreviations}
 
