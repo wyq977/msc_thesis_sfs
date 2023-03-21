@@ -82,8 +82,11 @@ $f_{\mathcal{N}}$,
 \end{equation}
 
 Let $X^{(l)} \in \R^l$ be the outputs of layer $l$, the output function
-$f_{\mcal{N}}(x)$ is $W^{L+1} X^{L} + b^{L+1}$ and each layer is calculated
-recursively:
+is 
+\begin{equation}
+    f_{\mcal{N}}(x) := W^{L+1} X^{L} + b^{L+1}
+\end{equation}
+and each layer is calculated recursively
 \begin{equation}
     X(l) = \sigma(W^{(l)} X^{(l-1)} + b^{(l)}), 
     \quad l = 1, 2, \dots, L+1, X^{(0)} = x.
@@ -131,10 +134,15 @@ The number of trainable parameters is given by
 \end{align}
 
 In what follows, we would consider the case of two-layer neural networks
-($L=1$), and we abbreviate the set of functions by $\mcal{M}(\sigma)$ and number
-of trainable parameters is $n$\footnote{
-    sd
-}
+($L=1$), and we abbreviate the set of functions by 
+\begin{equation}
+    \label{eq:set_of_all_functions_2nn}
+    \mcal{M}(\sigma) =  \Bigg\{
+        b_0 + \sum_{j=1}^W a_j \sigma(b_j\tr x + c_j), \quad
+        a_j, c_j \in \R,  b_j \in \R^d
+    \Bigg\}.
+\end{equation}
+
 
 
 \section{Preliminary results}
@@ -479,7 +487,6 @@ approximated up to a arbitrary precision under some mild restrictions on the
 activation functions $\sigma$ and the number of nodes are allowed to grow
 arbitrarily. Functions of $d$-variables can be approximated uniformly well by
 linear combinations of functions from the dictionary
-
 \begin{equation}
     \label{eq:uat_dict}
     \mathbb{D} = \{\sigma(b\tr x + c): b \in \R^d, c\in \R \}.
@@ -536,7 +543,7 @@ Let $h(x)$ be a linear combinations of elements from the dictionary $\mathbb{D}$
 \begin{align}
     \label{eq:sum_sigma}
     h(x) \in 
-    \Sigma_n(\mathbb{D}) = \Bigg\{
+    \Sigma_n(\mathbb{D}_{\sigma}) = \Sigma_n^{\sigma} := \Bigg\{
         \sum_{j=1}^n a_j \sigma(b_j\tr x + c_j), \quad
         a_j, c_j \in \R,  b_j \in \R^d
     \Bigg\}
@@ -547,17 +554,18 @@ where  $n < \infty$, and $\sigma$ is a univariate function from $\R$ to $\R$.
 The main contribution of approximation theorem is the statement on the
 conditions of $\sigma$ such that the above finite linear combination $h(x)$ is
 dense in $C(I_d)$ with respect to the supremum norm. It should also be stressed
-that there is no restriction for the number of combinations.
+that there is no restriction for the number of combinations. Here the set
+$\Sigma_n(\mathbb{D}_{\sigma})$ is the set $\mcal{M}(\sigma)$ in
+\eqref{eq:set_of_all_functions_2nn} where $n = W$ and $b_0$ is omitted.
 
 \begin{theorem}[Universal approximation theorem]
     \label{thm:uat}
     If $\sigma$ is sigmoidal as defined in Definition $\ref{def:sigmoidal}$,
     then any function $f \in C(I_d)$ be approximated uniformly well by a finite
-    linear combination of the form \eqref{eq:sum_sigma}.
+    linear combination of ridge functions of the form \eqref{eq:sum_sigma}.
 
     In other words, for any function $f: I_d \to \R$ and any $\epsilon > 0$,
-    there exists a linear combination of $n$ ridge functions $f_n$ of the form
-    \eqref{eq:uat_dict} such that
+    there exists a $f_n \in \Sigma_n^{\sigma}$ such that
     \begin{align}
         \norm{f - f_n}_{\lp{\infty}(I_d)} < \epsilon, \quad n \in \Nat.
     \end{align}
@@ -566,20 +574,20 @@ that there is no restriction for the number of combinations.
 \begin{proposition}
     Let $\sigma: \R \to \R$ be a continuous function. We consider the set
     \begin{equation}
-        \Sigma = \Bigg\{
+        \Sigma_n^{\sigma} = \Bigg\{
             \sum_{j=1}^n \alpha_j \sigma(b\tr x + c), \quad
             b_j \in \R^d, \alpha_j, c_j \in \R, n\in\Nat
         \Bigg\}.
     \end{equation}
 
     For any function $f \in C(\R^d)$, and any compact set $U$ of $\R^d$, and any
-    $\epsilon > 0$, there exists a $f_n \in \Sigma$ such that 
+    $\epsilon > 0$, there exists a $f_n \in \Sigma_n^{\sigma}$ such that 
     \begin{equation}
         \norm{f - f_n}_{\lp{\infty}(U)} < \epsilon
     \end{equation}
-    if and only if $\sigma$ is not a polynomial. In other words, $\Sigma$ is
-    dense in the space $C(\R^d)$ in the topology of uniform convergence on
-    compact sets.
+    if and only if $\sigma$ is not a polynomial. In other words,
+    $\Sigma_n^{\sigma}$ is dense in the space $C(\R^d)$ in the topology of
+    uniform convergence on compact sets.
 \end{proposition}
 
 \begin{remark}
