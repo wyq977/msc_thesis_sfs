@@ -188,6 +188,24 @@ generalization improves despite $L_{\text{train}} = 0$.
 
 The paradox of why 
 
+future stuff
+
+The main interest of this section is to summarize the approximation power of
+ReLU networks, specifically ReLU networks. The problem of finding a stable
+algorithm to produce such approximation is intentionally omitted.
+
+The two main direction of discussing the approximation power are concerned with
+the width and the depth. The first case is to focus on the approximation as the
+width approaches infinity in a shallow network and we will see that even this
+case is fairly complicated even with one or two hidden layers. The other extreme
+would be deep neural networks where the width of the networks are usually fixed
+for simplicity and the depth $L$ is taken to infinity. 
+
+
+
+It also holds for the nowadays more popular ReLU activation function since
+$\sigma(z+1) - \sigma(z)$ is sigmoidal.
+
 % In applications, the phenomenon of implicit regularization is frequently observed [15, 27, 30, 29, 26, 22, 33]. Nonetheless, the theory behind it is still largely unexplored [26, 22, 33, 27]. 
 
 %%% Local Variables: 
