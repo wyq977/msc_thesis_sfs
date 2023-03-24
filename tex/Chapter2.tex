@@ -1,13 +1,16 @@
 \chapter{Fourier-analytic Barron spaces}
-\label{sec:fourier}
+\label{ch:fourier}
 
-In this chapter, we study the approximation property. As shown in
-\cite{barronUniversalApproximationBounds1993}, 
-In Chapter \TODO, the question of \textit{density} has been answered for 2NN in
-which functions on any compact domain in $\R^d$ are dense in 2NN w.r.t. the
-supremum norm . Barron presented an different
-approach where given a dictionary $\mathbb{D}$, one tries to find the class of
-functions that are \textit{well approximated} by such dictionary.
+In this chapter, we study the generalization property of 2NN. As in
+\cite{barronUniversalApproximationBounds1993}, a dimension-independent
+approximation rate can be achieved by 2NN under some mild assumptions. To be
+specific, the assumption is formulated as a spectral condition on the Fourier
+transform of the target function. An approximation rate of $\bigO(n^{-1/2})$ is
+obtained in $\lp{2}$ when approximating functions with one finite Fourier moment
+by 2NN with $n$ nodes. Moreover, we connect this result with $n$-term dictionary
+approximation in section \ref{sec:fourier_variation_space} where the dictionary
+of choice is identified for the spectral condition.
+
 
 This chapter is organized as follows. In section \ref{sec:spectral_condition},
 the class of functions that satisfies certain smoothness constrain is
@@ -18,50 +21,6 @@ $\bigO(n^{-\frac{1}{2}})$ is proven w.r.t. the supremum norm where $n$ is the
 number of nodes. Section \ref{sec:fourier_variation_space} shows the dictionary
 corresponding to the smoothness condition. Finally, we give some high order
 error rate for ReLU\textsuperscript{k} networks
-
-To apply the argument of nonlinear approximation with $n$-term dictionary to
-2NN, we consider the dictionary
-\begin{equation}
-    \mathbb{D}_{\sigma} := \{
-        \sigma(b\tr x + c), \quad b\in\R^d, c\in\R
-    \}
-\end{equation}
-for any $x \in U$ where $U$ is a nonempty bounded domain in $\R^d$, and
-$\sigma:\R\to\R$ is a bounded activation function.
-
-Let $\Sigma_n(\mathbb{D}_{\sigma})$ be the class of function of $n$-width 2NN
-with activation function $\sigma$
-\begin{equation}
-    \Sigma_n(\mathbb{D}_{\sigma}) = \Sigma_n^{\sigma}
-    := \Bigg\{
-        \sum_{j=1}^n a_j d_j, \quad a_j\in\R, d_j\in \mathbb{D}_{\sigma}
-    \Bigg\}.
-\end{equation}
-
-If a function $f$ is in the closed convex hull of $\mathbb{D}_{\sigma}$
-\begin{equation}
-    \closure{\conv(D_{\sigma})} :=
-    \closure{
-        \Bigg\{ 
-            \sum_{j=1}^n a_j d_j: 
-            n\in\Nat, a_j\in\R, d_j\in\mathbb{D}_{\sigma}, 
-            \sum_{j=1}^n \norm{a_j}_1 \leq 1
-        \Bigg\}
-    }.
-\end{equation}
-Applying the Maurey's Theorem (\TODO or should I say the sampling argument?)
-yields a approximation rate
-\begin{equation}
-    \inf_{f_n\in\Sigma_n^{\sigma}} \norm{f - f_n} 
-    \lesssim n^{-\frac{1}{2}}
-\end{equation}
-where $f$ is any function in the closed convex hull of $\mathbb{D}_{\sigma}$
-and $2 \leq q < \infty$.
-
-This chapter will show that functions that satisfies certain smoothness
-conditions are in $\closure{\conv(D_{\sigma})}$ where $\sigma$ is any bounded
-sigmoidal activation functions.
-
 
 \section{Barron class and spectral condition}
 \label{sec:spectral_condition}
@@ -446,7 +405,7 @@ This section is based on \cite{barronUniversalApproximationBounds1993}.
 \end{proof}
 
 
-\section{Connection with variation spaces}
+\section{Connection with variation space}
 \label{sec:fourier_variation_space}
 
 What is separable? Is it necessary?

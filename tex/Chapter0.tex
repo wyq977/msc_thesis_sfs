@@ -1,6 +1,73 @@
 \chapter{Introduction}
 \label{ch:introduction}
 
+% explain the importance of approximation by NN
+
+Approximation with neural networks has been gaining momentum and become the
+``go-to'' method of choice when it comes to numerical approximations tools. The
+history of NN dates back to late 1940s when its applications only become the
+defector methods.
+
+Despite its wide gained popularity and state-of-the-art performance across many
+fields, a rigorous theory of why NN as an approximation tools are more
+beneficial to the classical models using polynomials, wavelets, etc. 
+
+% the 
+It has already been established in 1980s that NN are in universal approximators
+in the sense that any continuous function and a target accuracy $\epsilon$, one
+can produce an approximation to $f$ within set accuracy $\epsilon$. However,
+this does not explain well why NN is much more effective in practical numerical
+experiments. In fact, this universal approximation property is present in
+approximation with wavelets, splines or even polynomials. A understanding of why
+NN, even shallow NN perform so well 
+
+In Chapter \TODO, the question of
+\textit{density} has been answered for 2NN in which functions on any compact
+domain in $\R^d$ are dense in 2NN w.r.t. the supremum norm . Barron presented an
+different approach where given a dictionary $\mathbb{D}$, one tries to find the
+class of functions that are \textit{well approximated} by such dictionary.
+
+
+
+For a fixed architecture such as 2NN, we consider the set of functions
+$\mcal{M}$ produced by all possible choice of parameters in NN and we would like
+to ask the following question of \textit{density}. What condition must the
+activation function $\sigma: \R \to \R$ satisfy in order for the following
+statement to hold:
+
+For any $f \in C(\R^d)$, any compact set $U$ of $\R^d$, and an arbitrary accuracy
+$\epsilon > 0$, there is a $f' \in \mcal{M}$ such that 
+\begin{equation*}
+    \sup_{x \in U} \abs{f(x) - f'(x)} < \epsilon.
+\end{equation*}
+
+In the case of 2NN, the set $\mcal{M}$ reads as the linear span dependent on
+$\sigma$. Therefore, the questions is whether the linear space ($\mcal{M}$) is
+\textit{dense} in the space of $C(\R^d)$ in the uniform convergence on compact
+sets.
+
+It has been well understood that this density question is of high importance, in
+either shallow NN or NN of any number of hidden layers. However, density is only
+concerned with the ability of the set $\mcal{M}$ to approximate well, which does
+not translate into a efficient approximation scheme, not to mention finding a
+stable algorithm to find such $f' \in \mcal{M}$.
+
+There have been a wave of publications dealing with density in 2NN scheme in
+different approaches by \cite{carrollConstructionNeuralNets1989,
+cybenkoApproximationSuperpositionsSigmoidal1989,
+hornikMultilayerFeedforwardNetworks1989a,
+funahashiApproximateRealizationContinuous1989}. Using the Hahn-Banach Theorem
+and the Riesz Representation Theorem,
+\cite{cybenkoApproximationSuperpositionsSigmoidal1989} stated the density
+property required is $\sigma$ is sigmoidal, (defined in \eqref{def:sigmoidal}).
+In paper by \cite{hornikMultilayerFeedforwardNetworks1989a}, the activation
+function needs to monotone and bounded, which allows noncontinous $\sigma$.
+
+A sequence of paper adopted various techniques to attack this problem and yet
+the answer is surprisingly simple. The necessary and sufficient condition on
+$\sigma$  for the linear space $\mcal{M}$ to be dense is that $\sigma$ must not
+be a polynomial.
+
 The term \textit{curse of dimensionality} (\gls{cod}) was coined by
 \cite{bellmanTheoryDynamicProgramming1952} almost 70 years ago to describe the
 overwhelming complexity associated with solving a multi-stage processes through
@@ -207,6 +274,23 @@ It also holds for the nowadays more popular ReLU activation function since
 $\sigma(z+1) - \sigma(z)$ is sigmoidal.
 
 % In applications, the phenomenon of implicit regularization is frequently observed [15, 27, 30, 29, 26, 22, 33]. Nonetheless, the theory behind it is still largely unexplored [26, 22, 33, 27]. 
+
+
+The rest of this thesis is organized as follows. Chapter \ref{ch:preliminary}
+introduces the question setup and the 2NN model. The question of
+\textit{density} with 2NN is answered for any continuous functions from $\R^d$
+to $\R$. We showed that the 2NN are universal approximators with a activation
+function that is not a polynomial when the number of nodes are allowed to grow
+unlimited. In chapter \ref{ch:fourier}, we consider the model classes of
+functions (Fourier-analytic Barron spaces) that are guaranteed to be
+\textit{well approximated} by 2NN. The smoothness restriction is enforced by
+bounding the Fourier transform term of the functions. Chapter \ref{ch:infinite}
+describes the Infinite-width Barron spaces in which each function is also well
+approximated with the help of an integral representation. Furthermore, the
+connection between these spaces and their variation spaces is included. Each
+corresponding variation space is constructed using a compact dictionary of
+functions. Moreover, we compared and articulated the relationship between the
+model classes.
 
 %%% Local Variables: 
 %%% mode: latex

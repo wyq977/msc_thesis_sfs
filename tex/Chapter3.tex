@@ -3,28 +3,31 @@
 
 The main goal of this chapter is to construct and identify the function spaces
 associated with 2NN of different activation functions including Heaviside
-function and ReLU function family. To paraphrase, functions are in
+function and ReLU function family. To paraphrase
+\cite{carageaNeuralNetworkApproximation2022}, functions are in
 \textit{infinite-width Barron spaces} if and only if they admit a integral
 representation, and they could be well approximated by 2NN. By ``well
-approximation'', the approximation error rate is of the order $\bigO(n^{-1/2})$.
-In contrast to the Fourier-analytic Barron spaces, these spaces are more
-dependent on the choice of activation functions and certainly do not cover all
-conceivable functions that has a integral representation. 
+approximation'', the approximation error rate is of the order $\bigO(n^{-1/2})$
+when $n$ is the number of nodes. In contrast to the Fourier-analytic Barron
+spaces in chapter \ref{ch:fourier}, these spaces are more dependent on the
+choice of activation functions and certainly do not cover all conceivable
+functions that has a integral representation. 
 
 In section \ref{sec:construction_of_infinite_width}, we define the norm and
-finite integral condition for the functions in infinite-width Barron spaces,
-followed by the construction of these function spaces. The elementary properties
-of these spaces are included for completeness. Section
-\ref{sec:approximation_in_infinite_width} details the approximation rate in for
-functions in the space associated with ReLU function in $\lp{2}$ and
-$\lp{\infty}$. Section \ref{sec:infintie_width_variation_space} connects the the
-notion of the variation space and variation norm to infinite-width Barron space
-through some compact dictionaries. Next, the relationships between
+integral condition for the functions in infinite-width Barron spaces, followed
+by the construction of these function spaces. The elementary properties of these
+spaces are included for completeness. Section
+\ref{sec:approximation_in_infinite_width} details the approximation error rate
+for functions in these space associated in $\lp{2}$ and $\lp{\infty}$. Section
+\ref{sec:infintie_width_variation_space} connects the the notion of the
+variation space and variation norm to infinite-width Barron space through the
+construction of compact dictionaries. Next, the relationships between
 infinite-width Barron spaces and Fourier-analytic Barron space are examined in
 section \ref{sec:diff_barron_spaces}.
 
 This chapter aims to provide a concise summary of various well-known results
-concerning the approximation properties of 2NN, and we recommend work by
+concerning the approximation properties of 2NN with the ReLU activation function
+family, and we recommend the work by
 \cite{eMathematicalUnderstandingNeural2020,bernerModernMathematicsDeep2021} for
 a comprehensive review.
 
@@ -47,25 +50,24 @@ Let $U$ be a nonempty and bounded domain in $\R^d$. For functions $f: U \to
 \end{equation}
 
 Let $\Omega = \R^1 \times \R^d \times \R^1$ and $\Sigma_{\Omega}$ be the
-$\sigma$-algebra on $\Omega$. Define an integral condition for $f$ w.r.t. a
-measure $\mu \in \Sigma_{\Omega}$
+$\sigma$-algebra on $\Omega$. We define an integral condition for $f$ w.r.t. a
+a probability distribution $\mu$ on $(\Omega, \Sigma_\Omega)$
 \begin{align}
     r(f, \mu, p)
-    &= \Big(\int_{\R^d} \abs{a}^p  (\norm{b}_1 + \abs{c})^p \,d\mu(a,b,c)\Big)^{1/p} \\
-    &= \Big(\ERWi{\mu}{\abs{a}^p  (\norm{b}_1 + \abs{c})^p}\Big)^{1/p},
+    &= \Big(\int_{\R^d} \abs{a}^p  (\abs{b} + \abs{c})^p \,d\mu(a,b,c)\Big)^{1/p} \\
+    &= \Big(\ERWi{\mu}{\abs{a}^p  (\abs{b} + \abs{c})^p}\Big)^{1/p},
     \quad 1 \leq p \leq +\infty.
 \end{align}
 
-$\mu$ is a probability distribution on $(\Omega, \Sigma_\Omega)$, $\Omega =
-\mathbb{R}^1 \times \mathbb{R}^d \times \mathbb{R}^1$ and $\Sigma_\Omega$ is a
-Borel $\sigma$-algebra on $\Omega$ and $\sigma(\cdot)$ is the ReLU activation
-function.
+$\Omega = \mathbb{R}^1 \times \mathbb{R}^d \times \mathbb{R}^1$ and
+$\Sigma_\Omega$ is a Borel $\sigma$-algebra on $\Omega$ and $\sigma(\cdot)$ is
+the ReLU activation function.
 
-We consider another case where the ReLU function is replaced by the Heaviside
+We consider special case where the ReLU function is replaced by the Heaviside
 function.
 
 \begin{definition}[Heaviside function]
-    \label{eq:heaviside_represent}
+    \label{eq:heaviside}
     \begin{equation}
         H(x) = 
         \begin{cases}
@@ -76,22 +78,21 @@ function.
 \end{definition}
 
 
-Similarly, for a $\mu \in \Sigma_{\Omega}$, we consider functions $f$ that admit
-the representation below
+Similarly, we consider functions $f$ that admit the representation below
 \begin{equation}
     \label{eq:heaviside_represent}
     f(x) = \int_{\Omega} a H(b\tr x + c) \mu(da, db, dc), \quad x \in U.
 \end{equation}
 
-Accordingly, we define a condition for that particular $\mu$ where
+Accordingly, we define an integral condition for that particular $\mu$ where
 \eqref{eq:heaviside_represent} holds
 \begin{align}
     r(f,\mu, H)
     = \int_{\Omega} \abs{a}\,d\mu(a,b,c) = \ERWi{\mu}{\abs{a}}
 \end{align}
 
-These representations can be seen as a continuum analogy of the 2NN with $b$
-hidden nodes:
+The integral representation above can be seen as a continuum analogy of the 2NN
+with $n$ hidden nodes:
 
 \begin{equation}
     f_n(x, \Theta) := \frac{1}{n}
@@ -101,11 +102,11 @@ hidden nodes:
 \end{equation}
 
 \begin{definition}[Barron norm] For a function $f$ that admits the integral
-    representation in \eqref{eq:barron_represent}, the Barron norm is defined as:
+    representation in \eqref{eq:barron_represent}, its Barron norm is defined as
     \begin{equation}\label{eq:barron_norm}
-        \barronnorm{f}{p} := \inf_{\rho} \Big(\ERWi{\mu}{\abs{a}^p 
-        (\norm{b}_1 + \abs{c})^p}\Big)^{1/p},
-        \quad 1 \leq p \leq +\infty.
+        \barronnorm{f}{p} := \inf_{\rho} \Big(\ERWi{\rho}{\abs{a}^p 
+        (\abs{b} + \abs{c})^p}\Big)^{1/p},
+        \quad 1 \leq p \leq \infty.
     \end{equation}
     % where \begin{equation*} \Theta_f = \left\{ (a, \pi) \mid f(x) =
     % \int_{space} a(w) \sigma(\langle w, x \rangle)\dd{\pi(w)} \right\}.
@@ -113,34 +114,34 @@ hidden nodes:
 \end{definition}
 
 The infimum is taken over all probability distribution where
-\eqref{eq:barron_represent} holds for all $x \in U$. When $p = + \infty$, the
+\eqref{eq:barron_represent} holds for all $x \in U$. When $p = \infty$, the
 Barron norm reads
-
 \begin{equation}
     \label{eq:barron_infinite_norm}
     \barronnorm{f}{\infty} :=
-    \inf_{\rho} \max_{a, b, c \in \supp(\rho)} \abs{a} (\norm{b}_1 + \abs{c}).
+    \inf_{\rho} \max_{a, b, c \in \supp(\rho)} \abs{a} (\abs{b} + \abs{c}).
 \end{equation}
 
 Similarly, we can define a norm associated with Heaviside function where the
-infimum is taken for all measure $\mu$ where \eqref{eq:heaviside_represent}
+infimum is taken for all measure $\rho$ where \eqref{eq:heaviside_represent}
 holds
 \begin{equation}
     \label{def:heaviside_norm}
-    \norm{f}_{\mcal{B}_H} = \inf_{\rho} \ERWi{\mu}{\abs{a}},
+    \norm{f}_{\mcal{B}_H} = \inf_{\rho} \ERWi{\rho}{\abs{a}},
     \quad 1 \leq p \leq +\infty.
 \end{equation}
 
 \begin{definition}[Infinite-width Barron space]
     \label{def:barron_space}
-    Let $U$ be a nonempty bounded domain in $\R^d$. For functions that admit
-    representation \eqref{eq:barron_represent}, the infinite-width Barron space
-    with an order of $1 \leq p \leq \infty$ is
+    Let $U$ be a nonempty bounded domain in $\R^d$. For functions that admit the
+    integral representation in \eqref{eq:barron_represent}, the infinite-width
+    Barron space with an order of $1 \leq p \leq \infty$ is
     \begin{equation}
+        \label{eq:barron_space}
         \mcal{B}_p(U) = \Bigg\{
             f: U \to \R : \exists\, \mu \in \Sigma_{\Omega}: 
             r(f, \mu, p) < \infty \textnormal{ and }
-            \forall x \in U, f(x) = \int_{\Omega} a \sigma(b\tr x + c) \mu(da, db, dc)
+            \forall\, x \in U, f(x) = \int_{\Omega} a \sigma(b\tr x + c) \mu(da, db, dc)
         \Bigg\}.
     \end{equation}
 \end{definition}
@@ -150,14 +151,14 @@ A normed space can be defined for those associated with Heaviside function.
 \begin{definition}[Classical Barron space]
     \label{def:heaviside_space}
     Let $U$ be a nonempty unbounded domain in $\R^d$. For functions that admit
-    representation \eqref{eq:barron_represent}, the infinite-width Barron space
-    associated with Heaviside function is
+    the integral representation in \eqref{eq:heaviside_represent}, the
+    infinite-width Barron space associated with Heaviside function is
     \begin{equation}
-        \label{def:heaviside_space}
+        \label{eq:heaviside_space}
         \mcal{B}_H(U) = \Bigg\{
             f: U \to \R : \exists\, \mu \in \Sigma_{\Omega}:
             r(f, \mu, H) < \infty \textnormal{ and }
-            \forall x \in U, f(x) = \int_{\Omega} a H(b\tr x + c) \mu(da, db, dc)
+            \forall\, x \in U, f(x) = \int_{\Omega} a H(b\tr x + c) \mu(da, db, dc)
         \Bigg\}.
     \end{equation}
 \end{definition}
@@ -189,10 +190,14 @@ The idea is similar to the inclusion of $L_p$, $L_q$ space.
 Applying Hölder's inequality, for any $1 \leq p \leq q < \infty$
 
 \begin{align*}
-    \int \abs{a}^p (\norm{b}_1 + \abs{c})^p d\rho
-     & = \int \abs{a}^p (\norm{b}_1 + \abs{c})^p \cdot 1 d\rho                                                    \\
-     & \leq \Big(\int \abs{a}^{pq/p} (\norm{b}_1 + \abs{c})^{pq/p} d\rho \Big)^{p/q} \Big(\int d\rho\Big)^{1-p/q} \\
-     & = \Big(\int \abs{a}^q (\norm{b}_1 + \abs{c})^q d\rho \Big)^{p/q} \Big(\int d\rho\Big)^{1-p/q}
+    \int \abs{a}^p (\abs{b} + \abs{c})^p \,d\rho
+    & = \int \abs{a}^p (\abs{b} + \abs{c})^p \cdot 1 \,d\rho \\
+    & \leq \Big(
+        \int \abs{a}^{p \cdot q/p} (\abs{b} + \abs{c})^{p \cdot q/p} \,d\rho
+    \Big)^{p/q} \Big(\int \,d\rho\Big)^{1-p/q} \\
+    & = \Big(
+        \int \abs{a}^q (\abs{b} + \abs{c})^q \,d\rho
+    \Big)^{p/q} \Big(\int \,d\rho\Big)^{1-p/q}
 \end{align*}
 
 Therefore we have the inclusion $\mathcal{B}_{q} \subset \mathcal{B}_p$ for $1
@@ -201,29 +206,31 @@ Therefore we have the inclusion $\mathcal{B}_{q} \subset \mathcal{B}_p$ for $1
 
 As the reverse also holds in the class of ReLU functions,  we have
 $\mathcal{B}_{\infty} = \mathcal{B}_p$, $\barronnorm{\cdot}{\infty} =
-    \barronnorm{\cdot}{p}$  for all $1 \leq p \leq +\infty$.
+    \barronnorm{\cdot}{p}$  for all $1 \leq p \leq \infty$.
 
 % ~\cite[Proposition 1]{eBarronSpaceFlowinduced2021}
 \begin{proposition}
     \label{prop:equivalence_barron_space}
 
-    For any $f \in \mathcal{B}_1$, $f
-        \,\text{also}\, \in \mathcal{B}_{\infty}$ and $\barronnorm{f}{\infty} =
-        \barronnorm{f}{p}$ and hence $ \mathcal{B}_{\infty} = \cdots =
-        \mathcal{B}_{2} = \mathcal{B}_1$ when $\sigma(\cdot)$ is ReLU function.
+    For any $f \in \mathcal{B}_1$, $f \,\text{also}\, \in \mathcal{B}_{\infty}$
+        and $\barronnorm{f}{\infty} = \barronnorm{f}{p}$ and hence $
+        \mathcal{B}_{\infty} = \cdots = \mathcal{B}_{2} = \mathcal{B}_1$ when
+        $\sigma(\cdot)$ is the ReLU function.
 \end{proposition}
 
 \begin{proposition}
     \label{prop:barron_space_is_banach}
-    Barron space $\mcal{B}(U)$ is a Banach space with norm
-    $\norm{\cdot}_{\mcal{B}}$.
+    $\mcal{B}$ is a Banach space with norm $\norm{\cdot}_{\mcal{B}}$.
 \end{proposition}
 
+\begin{proof}
+    See Theorem 2.3 in \cite[p. 7]{eRepresentationFormulasPointwise2020}.
+\end{proof}
 
-\section{Approximation in infinite-width Barron spaces}
+\section{Approximation rate in infinite-width Barron spaces}
 \label{sec:approximation_in_infinite_width}
 
-\begin{theorem} [Direct Approximation in $\lp{2}$]\
+\begin{theorem} [Approximation in $\lp{2}$]\
     \label{thm:barron_direct_appro_l2}
     Let $U$ be a nonempty unbounded domain in $[0,1]^d$ and $f: U \to \R$. For
     any function $f \in \mathcal{B}(U)$ and any integer $n \in \Nat$, there
@@ -249,18 +256,17 @@ $\mathcal{B}_{\infty} = \mathcal{B}_p$, $\barronnorm{\cdot}{\infty} =
 
 \begin{proof}
 
-Let $\epsilon >0$ and $\mu$ be a probability on $\Omega$ such that
+Let $\epsilon >0$ and $\mu$ be a probability measure on $\Omega$ such that
 \begin{align}
     &f(x) 
     = \ERWi{\mu}{a \sigma(b\tr x + c)} \\
-    &\ERWi{\mu}{a^2 (\norm{b}_1 + \abs{c})^2} 
+    &\ERWi{\mu}{a^2 (\abs{b} + \abs{c})^2} 
     \leq (1+\epsilon) \norm{f}_{\mcal{B}}^2.
 \end{align}
 
-The second inequality means that the probability measure $\mu$ is chosen from
-$\Sigma_{\Omega}$ such that this integral representation is
-\textbf{\textit{not}} the minimum over all probability measure where the
-integral representation exists.
+The second inequality means that the probability measure $\mu$ is chosen such
+that this integral representation is \textbf{\textit{not}} the minimum over all
+possible probability measures where the integral representation exists.
 
 Let $\hat{f}_n(x)$ be the average drawn from the measure $\mu$, namely
 \begin{equation}
@@ -269,7 +275,7 @@ Let $\hat{f}_n(x)$ be the average drawn from the measure $\mu$, namely
 \end{equation}
 
 Next we would like to evaluate the approximation error between $f(x)$ and
-$\hat{f}_n(x)$ on $x \in I_d$.
+$\hat{f}_n(x)$ on $x \in [0,1]^d$.
 
 Let $e(\mu) = \ERWi{x}{\abs{\hat{f}_n(x) - f(x)}^2}$ and we evaluate the
 expectation of approximation error
@@ -296,7 +302,7 @@ expectation of approximation error
             \Big(a \sigma(b\tr x + c)\Big)^2
         }
     } \\
-    &= \frac{1}{n} \ERWi{\mu}{a^2 (\norm{b}_1 + \abs{c})^2} 
+    &= \frac{1}{n} \ERWi{\mu}{a^2 (\abs{b} + \abs{c})^2} 
     \leq \frac{(1+\epsilon)\norm{f}_{\mcal{B}}}{n}
 \end{align}
 
@@ -310,7 +316,7 @@ check
 \end{equation}
 
 For any $C > 0$, we can find a corresponding $\epsilon$, and choose a 2NN with
-parameter $\Theta$ satisfies such condition in the theorem.
+parameter $\Theta$ satisfies the condition in the theorem.
 
 \end{proof}
 
@@ -319,7 +325,7 @@ parameter $\Theta$ satisfies such condition in the theorem.
 % The $\norm{\Theta}_{\textnormal{path}}$ is the per-unit norm control for 2NN
 % defined in \cite{neyshaburNormBasedCapacityControl2015}. 
 
-\begin{theorem}[Direct approximation in $\lp{\infty}$]
+\begin{theorem}[Approximation in $\lp{\infty}$]
     Given the conditions outlined in Theorem \ref{thm:barron_direct_appro_l2},
     it can be established that for any function $f \in \mcal{B}(U)$ and any
     integer $n \in \Nat$, there exists a 2NN such that
@@ -414,11 +420,10 @@ parameter $\Theta$ satisfies such condition in the theorem.
 \end{proof}
 
 
-\section{Connection with variation spaces}
+\section{Connection with variation space}
 \label{sec:infintie_width_variation_space}
 
-In this section, we consider approximation by 2NN with ReLU$^k$ as activation
-function
+In this section, we consider the $n$-term approximation using ReLU$^k$ functions
 \begin{equation}
     \label{eq:reluk}
     \sigma_k(x) = [\max(0, x)]^k, \quad k \in \Nat^0
@@ -428,15 +433,18 @@ when $k = 0$, $\sigma_0$ is the Heaviside function in Definition
 
 Similarly, an approximation upper bound using $n$ elements from the dictionary 
 \begin{equation}
-    \mathbb{D}^k = \{
+    \mathbb{D} = \{
         \sigma_k(b\tr x + b): b\in\R^d, c\in\R
-    \}.
+    \} \quad k \in \Nat^0.
 \end{equation}
 
-However, the compactness of $\mathbb{D}^k$ when $k > 0$ is not guaranteed. 
+It should be noted that the dictionary with ReLU\textsuperscript{0} function is
+compact. However, the compactness of $\mathbb{D}^k$ when $k > 0$ is not
+guaranteed so the Maurey's argument does not apply automatically. 
 
 \begin{proposition}
-    When $k > 0$, $\mathbb{D}^k$ is not bounded in $\lp{p}(\Omega)$.
+    When $k > 0$, $\mathbb{D}^k$ is not compact in $\lp{p}(\Omega)$, $1 \leq p <
+    \infty$.
 \end{proposition}
 
 To ensure the compactness of the dictionary, we limit the $b, c$ in the
@@ -449,7 +457,7 @@ following dictionary for $k>0$
     \Bigg\}
 \end{equation}
 where $\sigma_k$ is ReLU$^k$ function described above, $S^{d-1} := \{x\in\R^d:
-\norm{x}_2 = 1\}$ is the unit sphere in $\R^d$. $c_1, c_2$ is chosen such that
+\norm{x} = 1\}$ is the unit sphere in $\R^d$. $c_1, c_2$ is chosen such that
 \begin{equation}
     c_1 < \inf_{x\in\Omega} b\tr x < 
     \sup_{x\in\Omega} b\tr x < c_2, \quad
@@ -457,14 +465,15 @@ where $\sigma_k$ is ReLU$^k$ function described above, $S^{d-1} := \{x\in\R^d:
 \end{equation}
 
 The parameters $b$ and $c$ are restricted such that the set $\mathbb{D}_k$ is
-bounded in $\lp{q}(\Omega)$.
+bounded in $\lp{p}(\Omega)$.
 
-It should be noted that the dictionary with ReLU\textsuperscript{0} function
-(i.e. Heaviside function) is compact.
+
 
 \begin{proposition}
-    Let $U$ be a bounded domain in $\R^d$ and $\mathbb{D}_1$ be the
-    dictionary constructed in \eqref{eq:barron_dict}. The variation space using $\mathbb{D}_1$ is equivalent to the \hyperref[def:barron_space]{infinite-width Barron space} $\mcal{B}(U)$:
+    Let $U$ be a nonempty bounded domain in $\R^d$ and $\mathbb{D}_1$ be the
+    dictionary constructed in \eqref{eq:barron_dict}. The variation space
+    constructed using $\mathbb{D}_1$ is equivalent to the
+    \hyperref[def:barron_space]{infinite-width Barron space} $\mcal{B}(U)$:
     \begin{equation}
         \mcal{B}(U) = \spaceVar{\mathbb{D}_1}.
     \end{equation}
@@ -500,14 +509,14 @@ It should be noted that the dictionary with ReLU\textsuperscript{0} function
     where $f$ is any function in the variation space on $\spaceVar{G}$.
 
     We can write the Barron norm of $f$ as the variation norm simply by changing
-    $\mu = \abs{a}(\norm{b}_1 + \abs{c}) \rho$:
+    $\mu = \abs{a}(\abs{b} + \abs{c}) \rho$:
     \begin{align*}
         \normVar{f}{G}
         &= \inf_{\mu} \Big\{ 
             \norm{\mu}_{G}: f = \int_G \inclusionMap{G}{\lp{2}(U)} \,d\mu
         \Big\} \\
         &= \inf_{\rho} \Big\{
-            \int_{} \abs{a} (\norm{b}_1 + \abs{c}) \,d\rho: 
+            \int_{} \abs{a} (\abs{b} + \abs{c}) \,d\rho: 
             f = \int_{} a \sigma(b\tr x + c) \rho(\,da,\,db,\,dc)
         \Big\}
         = \norm{f}_{\mathcal{B}}.
@@ -606,7 +615,7 @@ It should be noted that the dictionary with ReLU\textsuperscript{0} function
 %     \end{equation}
 
 
-\section{TODO}
+\section{Improved rate}
 
 We define the sets of functions whose coefficients $a_j$ are bounded in $\lp{1}$
 and $\lp{\infty}$ for all $0 < n < \infty$.
@@ -642,7 +651,7 @@ metric?
     \begin{equation}
         f(x) = \int_{S^d \times [-1,1]} c(b,c) H(b\tr x + b)\,d\mu
     \end{equation}
-    where $c$ is in $\lp{\infty}(D, \mu)$ and $\norm{}_{\infty} \leq 1$, and $H$
+    where $c$ is in $\lp{\infty}(D, \mu)$ \TODO and $\norm{}_{\infty} \leq 1$, and $H$
     is the Heaviside function. Then for any $n \in \Nat$, there exists a linear
     combination in the form:
     \begin{equation}
@@ -749,8 +758,8 @@ admits the integral form
     \forall x \in \R^d.
 \end{equation}
 
-Given a nonempty, bounded domain $U \subset \R^d$, we have already defined
-various Barron spaces:
+Given a nonempty, bounded domain $U$ in $\R^d$, we have already defined various
+Barron spaces:
 
 \begin{itemize}
     \item $\bspace{\mcal{F}, s}$, $s \in \{1,2\}$ Fourier-analytic Barron spaces 
@@ -774,16 +783,16 @@ $\bspace{p}(U), 1\leq p \leq\infty$ has been shown in Proposition
 \ref{prop:equivalence_barron_space}.
 
 % hookrightarrow or subset
-\begin{lemma}
+\begin{proposition}
     Given the constructions of spaces above and a nonempty bounded domain $U$ in
-    $\R^d$, then the following relationships holds:
+    $\R^d$, the following relationships holds:
 
     1) $\mcal{B}(U) \subset \bspace{H}(U)$
 
     2) $\bspace{\mathcal{F}, 1}(U) \subset \bspace{H}(U)$
 
     3) $\bspace{\mathcal{F}, 2}(U) \subset \mcal{B}(U)$
-\end{lemma}
+\end{proposition}
 
 
 \begin{proof}
@@ -1005,23 +1014,23 @@ constant $C$ dependent only on $d,\delta,x_0$. Hence the inclusion is shown.
 
 \begin{remark}
 
-    It has been argued in \cite{eRepresentationFormulasPointwise2020} that
-    $\bspace{\mcal{F},1}$ embeds into the $\mcal{B}$ but
-    \cite{carageaNeuralNetworkApproximation2022} proven that this embedment
-    wrongly interpretes the results of
+    It has been argued in Theorem 3.1 \cite[p.
+    12]{eRepresentationFormulasPointwise2020} that $\bspace{\mcal{F},1}$ embeds
+    into the $\mcal{B}$ but \cite{carageaNeuralNetworkApproximation2022} proven
+    that this embedding wrongly interpreted the results of
     \cite{barronUniversalApproximationBounds1993,barronNeuralNetApproximation1992}.
-    In other words, the original model class proposed by
-    \cite{barronNeuralNetApproximation1992} is not \textit{contained} in the
-    novel Barron space $\mcal{B}$ introduced recently by
-    \cite{eBarronSpaceFlowinduced2021}. 
+    In other words, the original model class (i.e. $\bspace{\mcal{F},1}$)
+    proposed by \cite{barronNeuralNetApproximation1992} is not
+    \textit{contained} or \textit{embeded} in the novel Barron space $\mcal{B}$
+    introduced recently by \cite{eBarronSpaceFlowinduced2021}. 
     
     % It has been discussed in earlier section that we have the equivalence of
     % Barron norm and Barron spaces for $1 \leq p\leq +\infty$ (see
     % \eqref{eq:barron_fouier_int}) with ReLU as activation function.
 
     One can observe that the class of functions in which $f$ admits a Fourier
-    representation with finite second moment, $\bspace{\mcal{F}, 2}$, is well
-    ``contained'' inside the \textit{infinite-width Barron space}. However,
+    representation with finite \textit{second} moment, $\bspace{\mcal{F}, 2}$,
+    is well contained inside the \textit{infinite-width Barron space}. However,
     $\mathcal{B}_{\mathcal{F}, 1}$ still encapsulates a boarder class of
     functions. In other words, the infinite-width Barron space $\mcal{B}$ is
     \textit{sandwiched} between $\bspace{\mcal{F}, 1}$ and $\bspace{\mcal{F},
