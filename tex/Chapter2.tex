@@ -186,34 +186,7 @@ In general, the activation function associated with the infinite-width Barron
 spaces is ReLU and we will explicitly state when other functions (e.g. squared
 ReLU, ReLU\textsuperscript{k}, Heaviside) are used.
 
-The notation of Barron spaces is not in consensus within the community and
-different terms have been given to describe the same model classes or spaces.
-For the function spaces in which functions have finite Fourier moments,
-~\cite{xuFiniteNeuronMethod2020} call this model classes \textit{Barron spectral
-spaces} while \cite{carageaNeuralNetworkApproximation2022} refers them as
-\textit{Fourier-analytic Barron space}.  For function spaces in which functions
-admit an integral representation \eqref{eq:barron_represent} with a ReLU
-activation function, \cite{eBarronSpaceFlowinduced2021} refer them simply as
-\textit{Barron spaces} of different orders $p \in \{1, 2, 3, \cdots, \infty\}$.
-The term \textit{Barron space} was coined by
-\cite{ePrioriEstimatesPopulation2019} to honor Prof. Andrew Barron's
-contribution in the understanding of neural nets. In some literature
-including~\cite{carageaNeuralNetworkApproximation2022}, these spaces are named
-\textit{infinite-width Barron spaces} associated with different activation
-functions and the term \textit{classical Barron space} is reserved for those
-associated with Heaviside function\footnote{Also called step function or unit
-step function}.
 
-To avoid confusion and in the meantime emphasize Prof. Andrew Barron's
-contribution, we will use two definitions:
-\begin{itemize}
-    \item Fourier-analytic Barron spaces
-    \item infinite-width Barron spaces\footnote{
-        We limit the model classes to those associated with ReLU only. In the 
-        case of Heaviside function, we denote the space still by the term 
-        \hyperref[def:heaviside_space]{\textit{classical Barron space}}.
-    }
-\end{itemize}
 
 
 \section{Approximation rate in Fourier-analytic Barron spaces}

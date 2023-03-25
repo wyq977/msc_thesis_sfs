@@ -19,36 +19,53 @@ complex function from limited observed data points. A comprehensive
 understanding of the approximation ability of NNs can provide a partial
 explanation for their success in practice.
 
+% cod
+
+The term \textit{curse of dimensionality} (\gls{cod}) was coined by
+\cite{bellmanTheoryDynamicProgramming1952} almost 70 years ago to describe the
+overwhelming complexity associated with solving a multi-stage processes through
+dynamic programming. In the scope of approximation theory, it amounts to the
+exponentially growing number of data points required to maintain the accuracy.
+Such dimensionality cursed problems has appeared in computational and applied
+mathematics. For approximations in high dimensions, the accuracy will drop
+exponentially as dimensionality increases but the deep learning based numerical
+application methods for partial differential equation (\gls{pde}) indicates
+satisfactory performance in \cite{eDeepRitzMethod2017,
+eDeepLearningbasedNumerical2017,beckMachineLearningApproximation2019} but there
+is a absence of rigorous mathematical results to demonstrate this conjecture.
+
+% https://arxiv.org/pdf/2205.14421.pdf
+
 % understanding helps solves other questions
 
-The understanding of the advantages of using NN over traditional methods as an
-approximation tool is crucial for explaining their performance. Classical
-approximation methods include polynomials, wavelets, splines, and sparse
-approximation from bases, and dictionaries \citep{devore_1998}. Additionally, it
-can facilitate the integration of their use in various domains, such as
-numerical methods for solving partial differential equations (PDEs).
+Naturally, the empirical success in numerical applications calls for a
+theoretical explanation. The understanding of the advantages of using NN over
+traditional methods as an approximation tool is crucial for explaining their
+performance. Classical approximation methods include polynomials, wavelets,
+splines, and sparse approximation from bases, and dictionaries
+\citep{devore_1998}. Additionally, it can facilitate the integration of their
+use in various domains, such as numerical methods for solving PDEs.
 
 % we only concern about 2NN
 
 The variety of architecture in NN presents a challenge in characterizing their
 approximation properties due to the wide variety of architectural choices
-available, such as the width, depth, activation functions, and connectivity,
-which can lead to a vast number of distinct NNs. To address this challenge, two
-main directions concerning the approximation power of NN have emerged in the
-community. Let $\nnFunc{W}{L}{\sigma}$ be the collections of the outputs of NN
-of width $W$, depth $L$, and a activation function $\sigma$. Similar to a
-classical approximation scheme, one can consider the output of 2NN,
-$\nnFunc{W}{1}{\sigma}$, where the depth is fixed at $L=1$ and $W$ can grow to
-infinity. Alternatively, one can investigate deep neural networks (DNNs) by
-fixing the width and allowing the depth to increase to infinity. The goal of
-this thesis is to shed light on the performance of 2NNs as an approximation
-tool.
+available, such as the width, depth, activation functions, and connectivity. To
+address this challenge, two main directions concerning the approximation power
+of NN have emerged in the community. Let $\nnFunc{W}{L}{\sigma}$ be the
+collections of the outputs of NN of width $W$, depth $L$, and a activation
+function $\sigma$. Similar to a classical approximation scheme, one can consider
+the output of 2NN, $\nnFunc{W}{1}{\sigma}$, where the depth is fixed at $L=1$
+and $W$ can grow to infinity. Alternatively, one can investigate deep neural
+networks (DNNs) by fixing the width and allowing the depth to increase to
+infinity. We will not dig too deeply into the DNNs and this thesis is confined
+on the performance of 2NNs as an approximation tool.
 
 % what is the question of density
 
-One of the first question in the approximation properties of 2NN is the question
-of \textit{density}: what condition must the activation function $\sigma: \R \to \R$
-satisfy in order for the following statement to hold:
+One of the first question in the approximation of 2NN is the question of
+\textit{density}: what conditions must 2NN satisfy in order for an arbitrary
+target function can be approximated arbitrarily well by 2NN:
 
 For any $f \in C(\R^d)$, any compact set $U$ of $\R^d$, and an arbitrary
 accuracy $\epsilon > 0$, there is a $g$ produced by 2NN, $g \in
@@ -65,15 +82,19 @@ funahashiApproximateRealizationContinuous1989}. Using the Hahn-Banach Theorem
 and the Riesz Representation Theorem,
 \cite{cybenkoApproximationSuperpositionsSigmoidal1989} stated the density
 property required is $\sigma$ is sigmoidal, (defined in \eqref{def:sigmoidal}).
-In paper by \cite{hornikMultilayerFeedforwardNetworks1989a}, the activation
-function needs to monotone and bounded, which allows noncontinuous $\sigma$.
-Additionally, the summation and product of activation functions are allowed in
-their statement. In \cite{jonesSimpleLemmaGreedy1992}, a constrctive method with
-a bounded sigmoidal function is sufficient to ensure the density. A sequence of
-paper adopted various techniques to attack this problem and yet the answer is
-surprisingly simple, as shown by \cite{leshnoMultilayerFeedforwardNetworks1993}.
-The necessary and sufficient condition on $\sigma$ for $\nnFunc{W}{1}{\sigma}$
-to be dense is that $\sigma$ must not be a polynomial. 
+Indepedent from Cybenko, Funahashi’s proof uses the result of
+\cite{irieCapabilitiesThreelayeredPerceptrons1988} on the integral
+representation $\lp{1}$ functions, using a kernel which can be expressed as a
+difference of two sigmoidal functions. In paper by
+\cite{hornikMultilayerFeedforwardNetworks1989a}, the activation function needs
+to monotone and bounded, which allows noncontinuous $\sigma$. Additionally, the
+summation and product of activation functions are allowed in their statement. In
+\cite{jonesSimpleLemmaGreedy1992}, a constrctive method with a bounded sigmoidal
+function is sufficient to ensure the density. A sequence of paper adopted
+various techniques to attack this problem and yet the answer is surprisingly
+simple, as shown by \cite{leshnoMultilayerFeedforwardNetworks1993}. The
+necessary and sufficient condition on $\sigma$ for $\nnFunc{W}{1}{\sigma}$ to be
+\textit{dense} is that $\sigma$ must not be a polynomial. 
 
 % one way to look at the NN approximation power
 % F -> NN 
@@ -88,7 +109,7 @@ approximates. The effectiveness of NN-based learning in high-dimensional
 settings remains a mystery. To gain insights into the approximation abilities of
 2NN, one can estimate the worst-case error rate of approximation by measuring
 the performance of the network on a target function $f$ from a classical model
-class. One then tries to answer the following question.
+class. One then tries to answer the following question \ref{problem:1}.
 \begin{problem}
     \label{problem:1}
     Given a target function $f$ in one of the classical model class such as unit
@@ -99,10 +120,10 @@ class. One then tries to answer the following question.
 % other  way to look at the NN approximation power
 % NN -> F
 
-A different approach is to describe the functions that are \textit{well
-approximated} by 2NN. By the success in practical numerical experiments, one
-could assume that the model classes of functions that can be well approximated
-by 2NN should be quite large. 
+A different approach is to describe the class of functions that are \textit{well
+approximated} by 2NN. This is generally more difficult and less straightforward.
+By the success in practical numerical experiments, one could assume that the
+model class should be quite large.
 \begin{problem}
     \label{problem:2}
     Describe the model classes of functions that are guaranteed to be well
@@ -119,247 +140,76 @@ transform $\fourier{f}$ satisfies
     \int_{\R^d} \abs{\omega} \abs{\fourier{f}(\omega)} \,d\omega < \infty
 \end{equation}
 
-In Chapter \TODO, the question of
-\textit{density} has been answered for 2NN in which functions on any compact
-domain in $\R^d$ are dense in 2NN w.r.t. the supremum norm . Barron presented an
-different approach where given a dictionary $\mathbb{D}$, one tries to find the
-class of functions that are \textit{well approximated} by such dictionary. 
-
-In the case of 2NN, the set $\mcal{M}$ reads as the linear span dependent on
-$\sigma$. Therefore, the questions is whether the linear space ($\mcal{M}$) is
-\textit{dense} in the space of $C(\R^d)$ in the uniform convergence on compact
-sets.
-
-On the other hand, we can aim to identify the functions that are well
-approximated by a $\mcal{M}$. The main problem of interest discussed in this
-thesis is that
-
 Initially, the approximation error was obtained for any sigmoidal activation
-functions for $\lp{2}(\Omega)$ norm 
+functions for $\lp{2}$ norm on $U$. This result clearly holds for
+\textit{rectified linear unit} (ReLU) activation as wells since
+$\sigma_{\text{ReLU}}(x) - \sigma_{\text{ReLU}}(x-1)$ is a sigmoidal function.
 \begin{equation}
     \sup_{x \in U} \norm{f - f_n}_{\lp{2}(\Omega)} \leq C n^{-1/2}, \quad 
-    f_n \in K, n \in \Nat
+    f_n \in K, n \in \Nat.
 \end{equation}
 
-The above result clearly holds for \textit{rectified linear unit} (ReLU)
-activation as wells since $\sigma_{\text{ReLU}}(x) - \sigma_{\text{ReLU}}(x-1)$
-is a sigmoidal function.
+% inspired by Barron
 
-Inspired by Barron's result \cite{eRepresentationFormulasPointwise2020,
+Inspired by Barron's result \citep{eRepresentationFormulasPointwise2020,
 carageaNeuralNetworkApproximation2022}, a lot of generalizations and
-improvements have been made. 
+improvements have been made. A important generalization is given by
+\cite{makovozRandomApproximantsNeural1996} where improved error rate is
+$\bigO(n^{-1/2-1 / p\cdot d})$. This improvement relies on the fact that one can
+reduce the number of terms needed in the approximation. 
 
-In the context of nonlinear approximation. Let $\mcal{H}$ be a Hilbert space. We
-define a set (or dictionary) $\mathbb{D} \subset \mcal{H}$ such that each
-element is bounded $\sup_{d\in\mathbb{D}} \norm{d}_{\mcal{H}} \leq \infty$.
-Given such a dictionary, the closed convex, symmetric hull of $\mathbb{D}$, then
-there is a $g = \sum_{j=1}^n a_j d_j$ with $d_j \in \mathbb{D}$ such that
+As noted earlier, there is much interest in identifing new classes of functions
+associated with 2NN. To honor Prof. Andrew Barron's contribution in the
+understanding of neural nets, the term \textit{Barron space} was coined by many
+but the notation of Barron spaces is not in consensus within the community, and
+different terms have been given to describe the same model classes or spaces.
+For the function spaces in which functions have finite Fourier moments,
+~\cite{xuFiniteNeuronMethod2020} call this model classes \textit{Barron spectral
+spaces} while \cite{carageaNeuralNetworkApproximation2022} refers them as
+\textit{Fourier-analytic Barron space}.  For function spaces in which functions
+admit an integral representation with a ReLU activation function,
+\cite{eBarronSpaceFlowinduced2021} refer them simply as \textit{Barron spaces}
+of different orders $p \in \{1, 2, 3, \cdots, \infty\}$. In some literature
+including~\cite{carageaNeuralNetworkApproximation2022}, these spaces are named
+\textit{infinite-width Barron spaces} associated with different activation
+functions and the term \textit{classical Barron space} is reserved for those
+associated with Heaviside function\footnote{Also called step function or unit
+step function}.
+
+To avoid confusion, we will use two definitions throughout
+\begin{itemize}
+    \item Fourier-analytic Barron spaces
+    \item infinite-width Barron spaces\footnote{
+        We limit the model classes to those associated with ReLU only. In the 
+        case of Heaviside function, we denote the space still by the term 
+        \hyperref[def:heaviside_space]{\textit{classical Barron space}}.
+    }
+\end{itemize}
+
+Recently, \cite{siegelCharacterizationVariationSpaces2022} connect the variation
+space introduced by \cite{parhiBanachSpaceRepresenter2021,
+parhiWhatKindsFunctions2022}. It has been shown that the spectral Barron norm in
+is equivalent to the variation norm of a dictionary. 
+
+% nonlinear approximation
+
+We will not dig too deeply into the known approximation rates for Barron classes
+and their generalizations here. Rather, we confine ourselves to some comments to
+properly frame these results in the context of nonlinear approximation. Let
+$\mcal{H}$ be a Hilbert space. We define a set (or dictionary) $\mathbb{D}
+\subset \mcal{H}$ such that each element is bounded $\sup_{d\in\mathbb{D}}
+\norm{d}_{\mcal{H}} \leq \infty$. Given such a dictionary, if function $f$ is in
+the closed convex, symmetric hull of $\mathbb{D}$, then there is a $g =
+\sum_{j=1}^n a_j d_j$ with $d_j \in \mathbb{D}$ such that
 \begin{equation}
     \norm{f - g}_{\mcal{H}} \lesssim n^{-1/2}, \quad n \in \Nat.
 \end{equation}
 
-A fundamental result in approximation theory is that 
-
-The term \textit{curse of dimensionality} (\gls{cod}) was coined by
-\cite{bellmanTheoryDynamicProgramming1952} almost 70 years ago to describe the
-overwhelming complexity associated with solving a multi-stage processes through
-dynamic programming. In the scope of approximation theory, it amounts to the
-exponentially growing number of data points required to maintain the accuracy.
-Such dimensionality cursed problems has appeared in computational and applied
-mathematics. For approximations in high dimensions, the accuracy will drop
-exponentially as dimensionality increases but the deep learning based numerical
-application methods for partial differential equation (\gls{pde}) indicates
-satisfactory performance in \cite{eDeepRitzMethod2017,
-eDeepLearningbasedNumerical2017,beckMachineLearningApproximation2019} but there
-is a absence of rigorous mathematical results to demonstrate this conjecture.
-Naturally, the success in applications like computer vision and pattern
-detection even in the case of low data points calls for a theoretical
-explanation.
-% https://arxiv.org/pdf/2205.14421.pdf
-
-
- 
-A few analyses attempt to explain the success of learning nonlinear operators by
-neural networks including DeepOnets with a focus on reducing the high/infinite
-dimensional space to a low dimensional space.
-\cite{lanthalerErrorEstimatesDeepOnets2022} rigorously proves that the CoD is
-overcome when considering smooth functions with exponentially decaying
-coefficients.
-
-I also need to talk about something in PDE, monte carol sampling shit https://arxiv.org/pdf/1807.01212.pdf
-
-Indeed, any supervised learning model suffers in principle from the curse of
-dimensionality: under minimal assumptions on the function to be learnt,
-achieving a fixed target generalisation error e requires a number of training
-samples P which grows exponentially with the dimensionality d of input data ,
- https://openreview.net/pdf?id=sBBnfOFtPc
-
-What is the teacher-student model
-
-\section{Approximation and estimation scheme}
-
-Here they author prove the CoD is overcome by a factor of $1/m$
-https://arxiv.org/pdf/2205.14421.pdf
-
-Approximation of functions in Ko space https://arxiv.org/pdf/2012.05451.pdf
-
-\section{Classical approximation spaces}
-
-Here I will need to talk about something like affine or spilne regression as the
-bach paper
-
-Polynomial spaces?
-
-Ko spaces?
-
-Repres thm https://pages.stat.wisc.edu/~wahba/ftp1/wahba.wang.2019submit.pdf
-
-\section{RKHS and kernel regression shit}
-
-I need to briefly go over some kernel regression stuff and talk a bit about its
-connection with NN?
-
-Also on the represnetation results
-
-\subsection{Difference between representation theorem and approximation}
-
-Also on the debate between linking kernel with NN.
-
-
-\section{The setup of supervised learning}
-
-Here I need to answer what is the functions?
-
-The error
-
-The norm
-
-and the spaces
-
-What is student teacher model ???
-
-Here we briefly review the statistical learning framework and we refer readers to \cite{shalev-shwartzUnderstandingMachineLearning2014a} for details.
-
-Under the batch learning settings, a \textit{training set} dataset $S$ is
-accessible to the learner. Generally, it is assumed that $S = \{(x_1,y_1),
-\dots, (x_n, y_n)\}$ of $n$ points independently and identically distributed
-(i.i.d.) $\mathcal{X} \times \mathcal{Y}$ with some unknown distribution
-$\mathcal{D}$. For simplicity, we only write the regression where the output
-function $f: \mathcal{X} \to \mathcal{Y}$ with minimum expected error on $S$
-with some loss function $L: \mathcal{Y} \to \R$:
-
-\begin{equation}
-    \label{eq:training_loss}
-    L_{\mathcal{D}}(f) = \PRi{(x, y) \sim \mathcal{D}}{y - f(x)}
-\end{equation}
-
-The learner cannot minimize the expected loss $L_{\mathcal{D}}$ due to limited
-sample points $n$ but an estimate of the expected loss of using training set $S$
-can be evaluated:
-
-\begin{equation}
-    L_{S}(f) = \frac{1}{n} \cdot
-\end{equation}
-
-$L(f)$ and $\hat{L}(f)$ is used. A expected margin loss for any margin $\gamma$:
-
-\begin{equation}
-    L_{\gamma} = \PRi{sad}{sdsd}
-\end{equation}
-
-
-A minimized loss \eqref{eq:training_loss} does not guarantee a low expected
-error and the simplest case would be the case where a trained predictor $f$ that
-memorize $S$ and has zero $L_{s}(f)$. However, it is shown in \TOCITE{about over
-fitting} training in deep networks (over-parameterized) beyond $0$ training
-error, i.e. during the \textit{terminal phase of training} (\Gls{tpt}) \TOCITE.
-This is in sharp contrast to the conventional belief in learning or regression
-models where \textit{over-fitting} is discouraged. Interesting empirical
-phenomena such as ``Nerual Collapse'' by \TOCITE sheds some lights into why deep
-networks can escape or evade the complexity based techniques.
-
-Add a section of over parameterization in NN.
-
-In learning, we are interested in the size of NN or the numbers of parameters
-required for an accuracy $\epsilon$. An \textit{generalisation error} is
-difference $L_\mathcal{D}(f) - L_{S}(f)$ and this quantity shows the differnece between learning and memorizing.
-
-As the predictor $f$ is chosen by the training algorithm using $S$, we would
-like to obtain a bound that holds for the set of all possible functions.
-Therefore, it is 
-
-Add something from neural network theory????
-
-Historically, linear regression \TOCITE was the method of choice in supervised
-learning where the search for \textit{true} function is performed only within a
-small subspace of all functions: $\mathcal{H}_{\text{linear}}$, the space of
-linear functions. Despite its popularity and extensive usage in real-world
-applications, the space of linear functions is often insufficient since the
-\textit{true} relations between input $\mathcal{X}$ and $\mathcal{Y}$ often
-involve non-linearity. Therefore, it is preferable to choose a \textit{larger}
-or more expressive hypothesis space $\mathcal{H}$ so that these mappings
-$\mathcal{X} \to \mathcal{Y}$ can be found.
-
-This intuition that the target functions can be formalized as the Bayesian prior
-knowledge \TOCITE. In theory, the prior distribution of $(X, Y)$ on $\mathcal{X}
-\times \mathcal{Y}$ can be formulated as a probability measure over all
-probability measures on $\mathcal{X} \times \mathcal{Y}$.  For example, one
-could hypothesize that $f_{\text{True}}$ is mostly likely to be linear and
-consider all the other functions equally likely. This is the case where the we
-assign zero measure to all non-linear functions and assign all linear functions
-the same weights. Note that the measure here is improper since it assigns
-$\infty$ to the space of all linear functions $\mathcal{H}_{\text{linear}}$.
-However, it is often difficult to articulate a realist intuition such as ``we
-favors a smoother, simpler function rather than a more highly fluctuating
-function''. These realist \textit{insights} or \textit{impressions} are
-harder to formalize mathematically and the calculation of such problems within
-the Bayesian framework is often intractable.
-
-\TONOTE{Add something on LASSO, high dim regulzation stuffs}
-Is Lasso or spline regression 
-
-
-There have been great efforts in high-dimensional statistics where the idea
-of smoothing or stabilizing can be incorporated through regularization. These
-include LASSO, ridge regression with a sparsity-inducing norm. Yet, the shallow
-as well as deep neural networks \cite{neyshaburSearchRealInductive2015,
-maennelGradientDescentQuantizes2018, liLearningOverparameterizedNeural2019,
-kuboImplicitRegularizationOverparameterized2019,
-neyshaburImplicitRegularizationDeep2017} trained with standard algorithms
-(gradient descent based applied to a loss $L$) are able to find solution close
-to $f_{\text{True}}$ without explicit regularization including drop-outs,
-weight-decay or early-stopping. This phenomenon is referred as \textit{Implicit
-Regularization}.\footnote{ It is also defined as \textit{Implicit Bias} in
-\cite{soudryImplicitBiasGradient2022} }
-\cite{kuboImplicitRegularizationOverparameterized2019} has shown that the
-(stochastic) gradient descent algorithm along with random initialization can
-lead to surprisingly \textit{low} complexity of the over-parameterized networks.
-\cite{maennelGradientDescentQuantizes2018} has shown in 2NN the with small
-randomly initialized weights leads to ``simpler'' functions and
-\cite{maennelGradientDescentQuantizes2018, neyshaburSearchRealInductive2015} has
-empirically shown that the network size in the case of 1 hidden layer does not
-behave as a regularization term (i.e. encourage ``simpler'' functions by the
-predictors). In both setups, increasing the number of nodes results in a lower
-test error and overall more general results even with overfitting with random
-labels in \cite{neyshaburSearchRealInductive2015}. Therefore, a \textit{hidden}
-notion of complexity must be present to account for lower complexity/better
-generalization. Furthermore, this is proven by the phenomenon of training beyond
-zero training loss \TOCITE $L_{\text{train}}$, i.e. the test error and
-generalization improves despite $L_{\text{train}} = 0$.
-
-The paradox of why 
-
-future stuff
-
-The main interest of this section is to summarize the approximation power of
-ReLU networks, specifically ReLU networks. The problem of finding a stable
-algorithm to produce such approximation is intentionally omitted.
 
 
 
 
-It also holds for the nowadays more popular ReLU activation function since
-$\sigma(z+1) - \sigma(z)$ is sigmoidal.
+
 
 % In applications, the phenomenon of implicit regularization is frequently observed [15, 27, 30, 29, 26, 22, 33]. Nonetheless, the theory behind it is still largely unexplored [26, 22, 33, 27]. 
 

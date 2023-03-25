@@ -1,81 +1,92 @@
 \chapter{Nonlinear approximation}
 \label{ch:preliminary}
 
-In this chapter, we study the approximation results of. 
-Write an overview based on \cite{devore_1998,pinkusApproximationTheoryMLP1999}.
+In this chapter, we will introduce the 2NN model and some fundamental results
+regarding $n$-term approximation with a dictionary. Firstly, in section
+\ref{sec:what_is_2nn}, we introduction 2NN model and its elementary properties.
+In section \ref{sec:preliminary}, we provide the problem setups. Section
+\ref{sec:maurey} and. Finally, in section \ref{sec:uat}, we state the
+results on the \textit{density} of 2NN. This chapter aims to provide a summary
+of some well-known theories that will be used in the rest of this thesis and
+derive some results to the kernels we are interested in. We recommend
+\cite{devore_1998,pinkusApproximationTheoryMLP1999} for a comprehensive
+introduction on nonlinear approximation.
 
 
 \section{What is a two-layer neural network}
 \label{sec:what_is_2nn}
 
-In this section, we will define the two-layer neural networks and their
-elementary properties. This section begins with a brief introduction on
-\textit{feed-forward neural networks}. Although most targeted applications are
-utilizing other architectures, e.g. recurrent neural network, fully connected
-feed-forward neural networks allows us to connect the trade-off between model
-complexity and approximation efficiency conveniently.
+This section provides an introduction to \textit{feed-forward neural networks}
+and their basic properties, with a focus on 2NN. While recurrent neural networks
+and other architectures are commonly used for specific applications, fully
+connected feed-forward neural networks offer a convenient way to balance model
+complexity and approximation efficiency. This is especially the case in 2NN:
+complexity is solely determined by the width or the number of nodes $n$. We will
+begin by defining 2NN and then discuss their elementary properties.
 
-We refer reads to \cite{devoreNeuralNetworkApproximation2021,
-shalev-shwartzUnderstandingMachineLearning2014} for further details.
+This section is based on \cite{devoreNeuralNetworkApproximation2021,
+shalev-shwartzUnderstandingMachineLearning2014}.
 
 \subsection{Feed-forward neural network}
 
-The feed-forward neural network $\mathcal{N}$ is a class of artificial neural
-networks (\gls{ann}) equipped with a directed acyclic graph (\gls{dag}),
+The class of artificial neural networks (\gls{ann}) known as feed-forward neural
+networks, denoted by $\nn$, is characterized by a directed acyclic graph
+(\gls{dag})
 \begin{equation*}
     \mathcal{G} = (\mathcal{V}, \mathcal{E}).
 \end{equation*}
 
-The associated graph $\mathcal{G}$ is the \textit{architecture} of $\mathcal{N}$
-represented by a finite collection of vertices $\mathcal{V}$ 
-\footnote{
-    A computation unit associated with each $v \in \mathcal{V} \setminus \mathcal{I}$
-    is called a \textit{node} or \textit{neuron}. To unify terminology, we will 
-    refer the vertices as nodes.
-}
-and a finite set of edges $\mathcal{E}$. If we represent the input and output
-layer by $\mathcal{I, O}$, we have the following basic properties: 
+The \textit{architecture} of $\nn$ is represented by the associated graph
+$\mathcal{G}$, which consists of a finite collection of vertices $\mathcal{V}$
+and a finite set of edges $\mathcal{E}$. A computation unit associated with each
+$v \in \mathcal{V} \setminus \mathcal{I}$ is known as a \textit{node} or
+\textit{neuron}. The variables $\mathcal{I}$ and $\mathcal{O}$ represent the
+input and output layers of the neural network, respectively. The following basic
+properties holds for $\nn$: 
 \begin{enumerate}
-    \item a activation function $\sigma$ is associated with each $v \in
-    \mathcal{V} \setminus \mathcal{I}$
-    \item a scalar $w_e \in \R$ is associated with each $e \in \mathcal{E}$.    
+    \item For each vertex $v \in \mathcal{V} \setminus \mathcal{I}$, there is an
+    associated activation function $\sigma: \R \to \R$.
+    \item For each edge $e \in \mathcal{E}$, there is an associated scalar
+    weight $w_e \in \R$.
 \end{enumerate}
 
-Nodes in the input layer observe a scalar input, seen by the downstream nodes.
-Aside from $\mathcal{I}$, a single node takes a superpositions of the upstream
-nodes via the respective weights $w_e$. Each weight is mediated by the edges $e
-= (v, v')$ between the associated vertex $v$ and upstream vertices $v'$. 
+The nodes in the input layer receive scalar inputs, which are then observed by
+downstream nodes. Apart from the nodes in $\mathcal{I}$, each node in $\nn$
+takes a superposition of inputs from its upstream nodes, mediated by the
+associated weights $w_e$. The edges $e = (v, v')$ between a vertex $v$ and its
+upstream vertices $v'$ correspond to these weights.
 
-We can then view the output function as a mapping from $\R^d$ to $\R^{d'}$, $d =
-\abs{\mathcal{I}}, d' = \abs{\mathcal{O}}$. With a fixed architecture
-$\mcal{G}$, the family of functions produced by $\mathcal{N}$ is determined by
-the number of trainable parameters: $\Theta := \{w_e,b_v\}, e \in \mathcal{E}, v
+The output function of $\nn$ can be seen as a mapping from $\R^d$ to $\R^{d'}$,
+$d = \abs{\mathcal{I}}, d' = \abs{\mathcal{O}}$. The family of functions
+produced by $\nn$, given a fixed architecture $\mathcal{G}$, is determined by
+the trainable parameters, denoted by $\Theta := \{w_e,b_v\}, e \in \mathcal{E}, v
 \in \mathcal{V} \setminus \mathcal{I}$.
 
 \subsection{Fully connected neural networks}
 
-The general definition stated covers virtually all networks architecture
-encountered in practice. In the coming chapters, we will restrict ourself to a
-specialized class, \textit{fully connected networks}. and the vertices of such
-networks are structured into layers.
+The general definition previously presented covers virtually all networks
+architecture encountered in practice. However, in the following chapters, we
+will focus specifically on a specialized class of neural networks known as
+\textit{fully connected neural networks}, where the vertices are organized into
+layers.
 
-Within a fully connected network, each vertex is connected only to all vertices
-in the proceeding layer via the edges and to no other layers. The \textit{input
-layer} $\mathcal{I}$ consists of simply $d$ input vertices where each vertex
-receive a external scalar signal $x_i \in \R, i \in \{1, \dots, d\}$. The
-combined input $x := (x_1, \dots, x_d) \in \R^d$ forms the independent variable
-for $f_{\mathcal{N}}$. Similarly, the \textit{output layer} $\mathcal{O}$
-consists of $d'$ output vertices and the output vector $f_{\mathcal{N}}(x) \in
-\R^{d'}$. $L$ \textit{hidden layers} follow the input layer and the integer $L$
-is the \textit{depth} of the networks. Each layer is constituted of $n_j$ hidden
-vertices, and the integer $n_j$ is called the \textit{width} of the $j$th layer. 
+In a fully connected network, each vertex is connected exclusively to all
+vertices in the next layer via edges and to no other layers.  The input layer,
+$\mathcal{I}$, consists of $d$ input vertices, where each vertex receives an
+external scalar signal $x_i \in \R, i \in \{1, \dots, d\}$. The combined input
+$x := (x_1, \dots, x_d) \in \R^d$ serves as the independent variable for the
+output function $f_{\nn}$. The input layer is followed by $L$ hidden layers,
+with $L$ representing the \textit{depth} of the network. Each hidden layer
+contains $n_j$ hidden vertices, where $n_j$ is the \textit{width} of the $j$th
+layer, $j = 1, 2,\dots, L$.
 
-There is a activation function $\sigma$ associated with each hidden node.
-Identity function is taken at nodes at $\mathcal{O}$ to ensure the
-$f_{\mathcal{N}}(x)$ is a linear combination of the nodes at $L$th layers plus a
-bias term. Therefore for a fixed architecture, the \textit{weight matrices} and
-the \textit{bias vectors} are sufficient to describe the output function
-$f_{\mathcal{N}}$, 
+
+Each hidden node is associated with an activation function $\sigma$, while nodes
+at the output layer $\mathcal{O}$ take the identity function to ensure that
+$f_{\nn}(x)$ is a linear combination of nodes at the $L$th layer plus a bias
+term. Consequently, for a fixed architecture, the \textit{weight matrices} and
+\textit{bias vectors} alone suffice to describe the output function
+$f_{\nn}(x)$,
 \begin{equation}
     W^{(l)} \in \R^l \times \R^{l-1}, b^{(l)} \in \R^l 
     \quad l = 1, 2, \dots, L+1.
@@ -84,66 +95,73 @@ $f_{\mathcal{N}}$,
 Let $X^{(l)} \in \R^l$ be the outputs of layer $l$, the output function
 is 
 \begin{equation}
-    f_{\mcal{N}}(x) := W^{L+1} X^{L} + b^{L+1}
+    f_{\nn}(x) := W^{L+1} X^{L} + b^{L+1}
 \end{equation}
 and each layer is calculated recursively
-\begin{equation}
-    X(l) = \sigma(W^{(l)} X^{(l-1)} + b^{(l)}), 
-    \quad l = 1, 2, \dots, L+1, X^{(0)} = x.
-\end{equation}
+\begin{align}
+    X^{(0)} 
+        &= x \in \R^d, \quad d = \abs{\mathcal{I}} \\
+    X^{(l)} 
+        &= \sigma(W^{(l)} X^{(l-1)} + b^{(l)}), 
+        \quad l = 1, 2, \dots, L+1, 
+\end{align}
 
 Here the activation function $\sigma: \R \to \R$ is assumed to be
 coordinate-wise or element-wise independent:
-\begin{equation}
+\begin{equation*}
     \sigma(x) = (\sigma(x_1), \sigma(x_2), \dots, \sigma(x_d)),
-\end{equation}
-for $x = (x_1, x_2, \dots, x_d) \in \R^d, d \geq 1$.
+\end{equation*}
+for $x = (x_1, x_2, \dots, x_d) \in \R^d, d \in \Nat$.
 
-\subsection{The set of functions with a width of $W$ and a depth of $L$}
+\subsection{The family of functions from neural networks}
 
-In what follows, we will assume the width of the fully connected neural networks
-are identical in each layer, i.e.
-\begin{equation}
+Throughout the following discussion, we will assume that each layer of the fully
+connected neural network has an identical width, that is,
+\begin{equation*}
     n_1 = n_2 = \cdots = n_L = W.
-\end{equation}
-This is convenient notation-wise and it is thanks to the fact that we can
-represent or embed a network of different width by a ``larger'' neural networks
-of fixed width $W := \max_{j=1,\dots,L} n_j$. This can be simply achieved by
-inserting zero bias term in each bias vector $b^{(l)}$ and adding zero weighted
-edges between layers. For each of the $W-n_j$ newly added vertices, $W$ new
-edges of $0$ are added connecting to the forthcoming $j+1$th layer. If not
-specified, the neural networks discussed will be fully connected neural networks
-with fixed width and depth.
+\end{equation*}
+A NN of different width can be embedded into a wider NN of fixed width
+$$
+    W := \max_{j=1,\dots,L} n_j.
+$$
+This can be achieved simply by inserting zero bias terms in each bias vector
+$b^{(l)}$ in each $l$th layer and adding zero-weighted edges between layers. To
+account for the newly added vertices, new edges with a weight of $0$ are added,
+connecting to the forthcoming $(j + 1)$th layer. The fully connected neural
+networks we discuss will be of a fixed width.
 
-For a fully connected neural network $\mcal{N}$ of depth $L$ and width $W$, let
-$\sigma$ be the activation function and $d, d'$ be the input and output
-dimensions, respectively, the set of all possible functions is denoted by
+Consider a fully connected neural network with width $W$ and depth $L$, and let
+$\sigma$ be the activation function. If $d$ and $d'$ are the input and output
+dimension, respectively, we denote the set of all possible functions $f: \R^d
+\to \R^{d'}$ produced by a fixed architecture with trainable parameters as
 \begin{equation}
-    \mcal{M}^{W,L}(\sigma).
+    \nnFunc{W}{L}{\sigma}.
 \end{equation}
-The set is produced by variable choice of trainable parameters for a fixed
-architecture. It should be noted that the $\mcal{M}^{W,L}(\sigma)$ is
-\textit{not} a linear space even if $L=1$ (not closed under the additions of
-functions) because we can find two functions $f_1, f_2 \in
-\mcal{M}^{W,L}(\sigma)$ such that $f_1 + f_2$ does not belong in
-$\mcal{M}^{W,L}(\sigma)$.
 
 The number of trainable parameters is given by 
 \begin{align}
     n(W, L) := (d + 1)W + W(W + 1)(L - 1) + d'(W + 1).
 \end{align}
 
-In what follows, we would consider the case of two-layer neural networks
-($L=1$), and we abbreviate the set of functions by 
+\begin{remark}
+    It is worth noting that $\nnFunc{W}{L}{\sigma}$ is not a linear space, even
+    when $L = 1$, as it is not closed under addition of functions. For example,
+    there exist functions $f_1, f_2 \in \nnFunc{W}{L}{\sigma}$ such that their
+    sum $f_1 + f_2$ does not belong to $\nnFunc{W}{L}{\sigma}$.
+\end{remark}
+
+In what follows, we only consider the specialized case of 2NN ($L=1$), and the
+set of functions by 2NN is denoted by
 \begin{equation}
     \label{eq:set_of_all_functions_2nn}
-    \mcal{M}(\sigma) =  \Bigg\{
+    \nnFunc{W}{1}{\sigma} = \mcal{M}(\sigma) =  \Bigg\{
         b_0 + \sum_{j=1}^W a_j \sigma(b_j\tr x + c_j), \quad
         a_j, c_j \in \R,  b_j \in \R^d
     \Bigg\}.
 \end{equation}
-
-
+Here, $W$ refers to the width of the 2NN model, i.e. the number of nodes. When
+discussing complexity in approximation, $n$ is usually used to represent the
+number of nodes required for a certain level of accuracy.
 
 \section{Preliminary results}
 \label{sec:preliminary}
@@ -156,9 +174,9 @@ In what follows, we would consider the case of two-layer neural networks
 
 % Here I will start classical probabilistic argument of Maurey
 
-In this section, we will introduce the approximation theory using $n$-terms from
-a dictionary in a Hilbert space. This approximation problem is highly nonlinear
-introduced by the selection of a dictionary. A dictionary could be an
+In this section, we will introduce the approximation theory concerning $n$-terms
+from a dictionary in a Hilbert space. This approximation problem is highly
+nonlinear introduced by the selection of a dictionary. A dictionary could be an
 arbitrarily chosen subset of $\mcal{H}$ but limits have to be imposed for
 computational feasibility in practice. 
 
@@ -261,6 +279,7 @@ the approximation error is given as
 \end{equation}
 
 \section{Maurey's Theorem}
+\label{sec:maurey}
 
 \begin{definition}[Covering numbers]
     % http://www.stat.yale.edu/~yw562/teaching/598/lec14.pdf
