@@ -1,59 +1,64 @@
 \chapter{Introduction}
 \label{ch:introduction}
 
-% explain the importance of approximation by NN
+% talk about NN is good in many fields
+% its history
+% lack good theory
 
-Approximation with neural networks has been gaining momentum and become the
-``go-to'' method of choice when it comes to numerical approximations tools. The
-history of NN dates back to late 1940s when its applications only become the
-defector methods.
+Neural networks (NNs) have emerged as a standard method for numerical
+approximation and learning algorithms due to their empirical success in various
+fields such as computer vision and natural language processing
+\citep{shalev-shwartzUnderstandingMachineLearning2014}. Although the history of
+NN dates back to late 1940s, its popularity only emerged from the
+state-of-the-art performance in a variety of learning domains. However, despite
+their popularity, NN-based learning is often viewed as "black magic" due to the
+lack of convincing and rigorous theoretical explanations, particularly in the
+context of hyperparameter tuning and architecture design. The fundamental
+challenge of these learning tasks revolves around approximating an unknown
+complex function from limited observed data points. A comprehensive
+understanding of the approximation ability of NNs can provide a partial
+explanation for their success in practice.
 
-Despite its wide gained popularity and state-of-the-art performance across many
-fields, a rigorous theory of why NN as an approximation tools are more
-beneficial to the classical models using polynomials, wavelets, etc. 
+% understanding helps solves other questions
 
-% the 
-It has already been established in 1980s that NN are in universal approximators
-in the sense that any continuous function and a target accuracy $\epsilon$, one
-can produce an approximation to $f$ within set accuracy $\epsilon$. However,
-this does not explain well why NN is much more effective in practical numerical
-experiments. In fact, this universal approximation property is present in
-approximation with wavelets, splines or even polynomials. A understanding of why
-NN, even shallow NN perform so well 
+The understanding of the advantages of using NN over traditional methods as an
+approximation tool is crucial for explaining their performance. Classical
+approximation methods include polynomials, wavelets, splines, and sparse
+approximation from bases, and dictionaries \citep{devore_1998}. Additionally, it
+can facilitate the integration of their use in various domains, such as
+numerical methods for solving partial differential equations (PDEs).
 
-In Chapter \TODO, the question of
-\textit{density} has been answered for 2NN in which functions on any compact
-domain in $\R^d$ are dense in 2NN w.r.t. the supremum norm . Barron presented an
-different approach where given a dictionary $\mathbb{D}$, one tries to find the
-class of functions that are \textit{well approximated} by such dictionary.
+% we only concern about 2NN
 
+The variety of architecture in NN presents a challenge in characterizing their
+approximation properties due to the wide variety of architectural choices
+available, such as the width, depth, activation functions, and connectivity,
+which can lead to a vast number of distinct NNs. To address this challenge, two
+main directions concerning the approximation power of NN have emerged in the
+community. Let $\nnFunc{W}{L}{\sigma}$ be the collections of the outputs of NN
+of width $W$, depth $L$, and a activation function $\sigma$. Similar to a
+classical approximation scheme, one can consider the output of 2NN,
+$\nnFunc{W}{1}{\sigma}$, where the depth is fixed at $L=1$ and $W$ can grow to
+infinity. Alternatively, one can investigate deep neural networks (DNNs) by
+fixing the width and allowing the depth to increase to infinity. The goal of
+this thesis is to shed light on the performance of 2NNs as an approximation
+tool.
 
+% what is the question of density
 
-For a fixed architecture such as 2NN, we consider the set of functions
-$\mcal{M}$ produced by all possible choice of parameters in NN and we would like
-to ask the following question of \textit{density}. What condition must the
-activation function $\sigma: \R \to \R$ satisfy in order for the following
-statement to hold:
+One of the first question in the approximation properties of 2NN is the question
+of \textit{density}: what condition must the activation function $\sigma: \R \to \R$
+satisfy in order for the following statement to hold:
 
-For any $f \in C(\R^d)$, any compact set $U$ of $\R^d$, and an arbitrary accuracy
-$\epsilon > 0$, there is a $f' \in \mcal{M}$ such that 
+For any $f \in C(\R^d)$, any compact set $U$ of $\R^d$, and an arbitrary
+accuracy $\epsilon > 0$, there is a $g$ produced by 2NN, $g \in
+\nnFunc{W}{1}{\sigma}$ such that 
 \begin{equation*}
-    \sup_{x \in U} \abs{f(x) - f'(x)} < \epsilon.
+    \sup_{x \in U} \abs{f(x) - g(x)} < \epsilon.
 \end{equation*}
 
-In the case of 2NN, the set $\mcal{M}$ reads as the linear span dependent on
-$\sigma$. Therefore, the questions is whether the linear space ($\mcal{M}$) is
-\textit{dense} in the space of $C(\R^d)$ in the uniform convergence on compact
-sets.
-
-It has been well understood that this density question is of high importance, in
-either shallow NN or NN of any number of hidden layers. However, density is only
-concerned with the ability of the set $\mcal{M}$ to approximate well, which does
-not translate into a efficient approximation scheme, not to mention finding a
-stable algorithm to find such $f' \in \mcal{M}$.
-
-There have been a wave of publications dealing with density in 2NN scheme in
-different approaches by \cite{carrollConstructionNeuralNets1989,
+Since the late 1980s, it has been established that NNs are universal
+approximators \citep{carrollConstructionNeuralNets1989,
 cybenkoApproximationSuperpositionsSigmoidal1989,
 hornikMultilayerFeedforwardNetworks1989a,
 funahashiApproximateRealizationContinuous1989}. Using the Hahn-Banach Theorem
@@ -61,29 +66,118 @@ and the Riesz Representation Theorem,
 \cite{cybenkoApproximationSuperpositionsSigmoidal1989} stated the density
 property required is $\sigma$ is sigmoidal, (defined in \eqref{def:sigmoidal}).
 In paper by \cite{hornikMultilayerFeedforwardNetworks1989a}, the activation
-function needs to monotone and bounded, which allows noncontinous $\sigma$.
+function needs to monotone and bounded, which allows noncontinuous $\sigma$.
+Additionally, the summation and product of activation functions are allowed in
+their statement. In \cite{jonesSimpleLemmaGreedy1992}, a constrctive method with
+a bounded sigmoidal function is sufficient to ensure the density. A sequence of
+paper adopted various techniques to attack this problem and yet the answer is
+surprisingly simple, as shown by \cite{leshnoMultilayerFeedforwardNetworks1993}.
+The necessary and sufficient condition on $\sigma$ for $\nnFunc{W}{1}{\sigma}$
+to be dense is that $\sigma$ must not be a polynomial. 
 
-A sequence of paper adopted various techniques to attack this problem and yet
-the answer is surprisingly simple. The necessary and sufficient condition on
-$\sigma$  for the linear space $\mcal{M}$ to be dense is that $\sigma$ must not
-be a polynomial.
+% one way to look at the NN approximation power
+% F -> NN 
+
+While the density question is an essential step in understanding the
+approximation power of NNs, this fact alone does not provide a sufficient
+explanation for why NNs are more effective than traditional approximation
+methods, as methods using polynomials, splines, and wavelets are also universal
+approximators. In particular, we need to consider the degree of approximation as
+well as the possibility of developing stable algorithms to find the
+approximates. The effectiveness of NN-based learning in high-dimensional
+settings remains a mystery. To gain insights into the approximation abilities of
+2NN, one can estimate the worst-case error rate of approximation by measuring
+the performance of the network on a target function $f$ from a classical model
+class. One then tries to answer the following question.
+\begin{problem}
+    \label{problem:1}
+    Given a target function $f$ in one of the classical model class such as unit
+    balls of Lipschitz, Sobolev and Besov space, find the upper and lower bound
+    for the approximation error with 2NN. 
+\end{problem}
+
+% other  way to look at the NN approximation power
+% NN -> F
+
+A different approach is to describe the functions that are \textit{well
+approximated} by 2NN. By the success in practical numerical experiments, one
+could assume that the model classes of functions that can be well approximated
+by 2NN should be quite large. 
+\begin{problem}
+    \label{problem:2}
+    Describe the model classes of functions that are guaranteed to be well
+    approximated by NN.
+\end{problem}
+
+% Barron result
+
+One of the celebrated results was introduced by Prof. Andrew
+\cite{barronApproximationEstimationBounds1994}. Given a domain $U \subset \R^d$,
+the model class $K$ consists of all functions $f$ in $\lp{2}(U)$ whose Fourier
+transform $\fourier{f}$ satisfies
+\begin{equation}
+    \int_{\R^d} \abs{\omega} \abs{\fourier{f}(\omega)} \,d\omega < \infty
+\end{equation}
+
+In Chapter \TODO, the question of
+\textit{density} has been answered for 2NN in which functions on any compact
+domain in $\R^d$ are dense in 2NN w.r.t. the supremum norm . Barron presented an
+different approach where given a dictionary $\mathbb{D}$, one tries to find the
+class of functions that are \textit{well approximated} by such dictionary. 
+
+In the case of 2NN, the set $\mcal{M}$ reads as the linear span dependent on
+$\sigma$. Therefore, the questions is whether the linear space ($\mcal{M}$) is
+\textit{dense} in the space of $C(\R^d)$ in the uniform convergence on compact
+sets.
+
+On the other hand, we can aim to identify the functions that are well
+approximated by a $\mcal{M}$. The main problem of interest discussed in this
+thesis is that
+
+Initially, the approximation error was obtained for any sigmoidal activation
+functions for $\lp{2}(\Omega)$ norm 
+\begin{equation}
+    \sup_{x \in U} \norm{f - f_n}_{\lp{2}(\Omega)} \leq C n^{-1/2}, \quad 
+    f_n \in K, n \in \Nat
+\end{equation}
+
+The above result clearly holds for \textit{rectified linear unit} (ReLU)
+activation as wells since $\sigma_{\text{ReLU}}(x) - \sigma_{\text{ReLU}}(x-1)$
+is a sigmoidal function.
+
+Inspired by Barron's result \cite{eRepresentationFormulasPointwise2020,
+carageaNeuralNetworkApproximation2022}, a lot of generalizations and
+improvements have been made. 
+
+In the context of nonlinear approximation. Let $\mcal{H}$ be a Hilbert space. We
+define a set (or dictionary) $\mathbb{D} \subset \mcal{H}$ such that each
+element is bounded $\sup_{d\in\mathbb{D}} \norm{d}_{\mcal{H}} \leq \infty$.
+Given such a dictionary, the closed convex, symmetric hull of $\mathbb{D}$, then
+there is a $g = \sum_{j=1}^n a_j d_j$ with $d_j \in \mathbb{D}$ such that
+\begin{equation}
+    \norm{f - g}_{\mcal{H}} \lesssim n^{-1/2}, \quad n \in \Nat.
+\end{equation}
+
+A fundamental result in approximation theory is that 
 
 The term \textit{curse of dimensionality} (\gls{cod}) was coined by
 \cite{bellmanTheoryDynamicProgramming1952} almost 70 years ago to describe the
 overwhelming complexity associated with solving a multi-stage processes through
-dynamic programming. In approximation, it amounts to the exponentially growing
-number of data points required to maintain the accuracy. Such dimensionality
-cursed problems has appeared in computational and applied mathematics. For
-approximations in high dimensions, the accuracy will drop exponentially as
-dimensionality increases but the deep learning based numerical application
-methods for partial differential equation (\gls{pde}) indicates satisfactory
-performance in \cite{eDeepRitzMethod2017,
+dynamic programming. In the scope of approximation theory, it amounts to the
+exponentially growing number of data points required to maintain the accuracy.
+Such dimensionality cursed problems has appeared in computational and applied
+mathematics. For approximations in high dimensions, the accuracy will drop
+exponentially as dimensionality increases but the deep learning based numerical
+application methods for partial differential equation (\gls{pde}) indicates
+satisfactory performance in \cite{eDeepRitzMethod2017,
 eDeepLearningbasedNumerical2017,beckMachineLearningApproximation2019} but there
 is a absence of rigorous mathematical results to demonstrate this conjecture.
 Naturally, the success in applications like computer vision and pattern
 detection even in the case of low data points calls for a theoretical
 explanation.
 % https://arxiv.org/pdf/2205.14421.pdf
+
+
  
 A few analyses attempt to explain the success of learning nonlinear operators by
 neural networks including DeepOnets with a focus on reducing the high/infinite
@@ -261,12 +355,6 @@ The main interest of this section is to summarize the approximation power of
 ReLU networks, specifically ReLU networks. The problem of finding a stable
 algorithm to produce such approximation is intentionally omitted.
 
-The two main direction of discussing the approximation power are concerned with
-the width and the depth. The first case is to focus on the approximation as the
-width approaches infinity in a shallow network and we will see that even this
-case is fairly complicated even with one or two hidden layers. The other extreme
-would be deep neural networks where the width of the networks are usually fixed
-for simplicity and the depth $L$ is taken to infinity. 
 
 
 
