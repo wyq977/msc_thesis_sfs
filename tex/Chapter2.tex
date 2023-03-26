@@ -204,17 +204,16 @@ could be dimension-dependent, as the Fourier transform is used in this approach.
 
 This section is based on \cite{barronUniversalApproximationBounds1993}.
 
-\TONOTE{what is the probability here?}
+% \TONOTE{what is the probability here?}
 
 \begin{theorem}
     % \cite[Theorem~1]{barronUniversalApproximationBounds1993}
     \label{thm:barron_1993_1}
     Let $U$ be a nonempty bounded domain in $\R^d$, $x_0 \in U$, and $C > 0$ a
     constant. For every function in the Barron class $\Gamma_C(U, x_0)$, every
-    sigmoidal function $\sigma$, every probability measure $\mu$, and every $n
-    \in \Nat$, there exists a linear combination of sigmoidal function $f_n(x) =
-    \sum_{j=1}^n a_j \sigma(b_j\tr x+c_j), a_j, c_j \in \R, b_j \in \R^d$ such
-    that
+    sigmoidal function $\sigma$, and every $n \in \Nat$, there exists a linear
+    combination of sigmoidal function $f_n(x) = \sum_{j=1}^n a_j \sigma(b_j\tr
+    x+c_j), a_j, c_j \in \R, b_j \in \R^d$ such that
     \begin{equation}
         \norm{f - f_n}_{\lp{2}(U)}\leq n^{-\frac{1}{2}} \cdot 2C
     \end{equation}
@@ -473,7 +472,7 @@ hold.
 \begin{proof}
     Without loss of generality, we only need to prove for $M = 1$.
 
-    From the definition, $\Sigma_n(\mathbb{D}, M) \subset
+    From the definition, $\Sigma_n(\mathbb{D}, 1) \subset
     \closedConvexHull{\mathbb{D}}$ for every $n \in \Nat$. Therefore, $f_n \in
     \closedConvexHull{\mathbb{D}}$. Noted that the set is closed, we immediately
     have $f \in \closedConvexHull{\mathbb{D}}$ and hence the
@@ -567,15 +566,14 @@ Furthermore, the spectral norm is equivalent to the variation norm:
 In the following sections, we will discuss how the approximation error rates can
 be improved by imposing stricter conditions on the smoothness of the dictionary
 set or by ensuring its compactness. The key idea is to derive the $n$-th dyadic
-entropy number corresponding to the dictionary $\mathbb{D}$. To this end,
-Maurey’s Theorem \ref{thm:maurey} provides a bound for any compact dictionary in
-a Hilbert space.
+entropy number corresponding to the dictionary $\mathbb{D}$. Maurey’s Theorem
+\ref{thm:maurey} provides a bound for any compact dictionary in a Hilbert space.
 
 The first instance of improvement in this area was reported in
 \cite{makovozRandomApproximantsNeural1996}, where the compactness of the
 dictionary of Heaviside functions was used and showed that the error can be
 improved to $\bigO(n^{\frac{1}{2} - \frac{1}{p \cdot d}})$ in $\lp{p}(\Omega)$,
-$p < \infty$. More recently, \cite{klusowskiApproximationCombinationsReLU2018}
+$p < \infty$. More recently, \cite{klusowskiApproximationCombinationsReLU2018a}
 demonstrated that ReLU and ReLU\textsuperscript{2} networks can also be made
 compact by controlling the $\lp{1}$ and $\lp{\infty}$ norms of their parameters.
 In the latter case, the inner parameters $b\in\R^d$ in
@@ -704,8 +702,9 @@ arbitrarily small on the space $\lp{d}(\R)$ with a sufficiently large $b$.
 
 \section{Improved rate with higher smoothness index}
 
-In the previous section, an error of $\bigO(n^{-1/2})$ is obtained for functions
-in $\bspace{\mcal{F}, 1}$ using $n$ elements from the dictionary
+In section \ref{sec:approximation_rate_fouier}, an error rate of
+$\bigO(n^{-1/2})$ is obtained for functions in $\bspace{\mcal{F}, 1}$ using $n$
+elements from the dictionary
 \eqref{eq:dict_represent}
 \begin{align}
     \label{eq:improved_fourier_dict}
@@ -713,6 +712,7 @@ in $\bspace{\mcal{F}, 1}$ using $n$ elements from the dictionary
         \sigma(b\tr x + c), \quad b\in\R^d, c\in\R
     \}.
 \end{align}
+where $\sigma$ is a sigmoidal function.
 
 The smoothness of a function $f$ is expressed through its \textit{first} Fourier
 representation and controlled via the spectral condition $v_{f,s}$
@@ -725,38 +725,36 @@ approximation is made possible with stricter conditions on the Barron spectral
 norm while bounding the inner parameter $b\in\R^d$ in
 \eqref{eq:improved_fourier_dict}.
 
-It it shown recently in \cite{siegelSharpBoundsApproximation2022} that the
-spectral norm $\norm{f}_{\bspace{\mcal{F}, s}}$, $s \geq 1$ is the variation
-norm of the dictionary:
+It it shown in section \ref{sec:fourier_variation_space}, the Fourier analytic
+Barron space $\bspace{\mcal{F},s}$ is equivalent to the variation space
+$\spaceVar{\mcal{F}_s}$ of the dictionary:
 \begin{equation}
     \mathbb{F}_{s} := \{
         (1 + \abs{\omega})^{-s} e^{i\omega\tr x}: \omega \in \R^d
     \}.
 \end{equation}
 
-This implies that functions in Fourier-analytic Barron spaces $\bspace{\mcal{F},
-s}$ can be approximated with $n$-term dictionary $\mathbb{D}_{\mcal{F}, s}$. We
-define a set of finite linear combination of elements from
-$\mathbb{D}_{\mcal{F},s}$ in which $\abs{a_j}$ is bounded in $\lp{1}$ for a
-fixed $M > 0$
+This implies that we can apply Maurey's argument regarding $n$-term
+approximation using dictionaries. Improvements in this direction
+\cite{siegelCharacterizationVariationSpaces2022,
+siegelHighOrderApproximationRates2021,
+siegelSharpBoundsApproximation2022,klusowskiRiskBoundsHighdimensional2018a} is
+concerned about calculating the metric entropy of the convex hull. 
+
+We define the collection of functions which can be expressed as linear
+combinations of elements from $\mathbb{F}_s$
 \begin{equation}
     \Sigma_n := \Bigg\{
         \sum_{j=1}^n \alpha_j d_j: 
-        d_j \in \mathbb{D}_{\mcal{F}, s} \textnormal{ and } 
+        d_j \in \mathbb{F}_s \textnormal{ and } 
         \sum_{j=1}^n \abs{\alpha_j} \leq M, \quad 
         n \in \Nat, \alpha_j \in \R
     \Bigg\}.
 \end{equation}
 
-
-\subsection{Approximation in $\lp{\infty}$ with bounded coefficients}
-
-\begin{theorem}
-    Let $\Omega = [0,1]^d$ and $s > 0$. If $f$ is in the closed, symmetric
-    convex hull of $\mathbb{D}_{\mcal{F}, s, M}$, then for a fixed $M<\infty$
-    and any $n \in \Nat$, there exists a finite linear combination of elements
-    $f_n \in \Sigma_n(\mathbb{D}_{\mcal{F}, s}, M)$ the approximation error in
-    $\lp{\infty}(\Omega)$ is
+\begin{theorem}[Approximation in $\lp{\infty}$ with bounded coefficients]
+    Let $\Omega = [0,1]^d$ and $s > 0$. If $f \in \mcal{K}(\mathbb{F}_s)$, then
+    for $n \in \Nat$, there exists a $f_n \in \Sigma_n$ such that
     \begin{equation}
         \norm{f-f_n}_{\lp{\infty}(\Omega)} \lesssim 
         n^{-\frac{1}{2}-\frac{s}{d}} \sqrt{\log{n}} \norm{f}_{\bspace{\mcal{F},s}}.
@@ -768,8 +766,6 @@ fixed $M > 0$
     One can find the proof in
     \cite{klusowskiApproximationCombinationsReLU2018,siegelSharpBoundsApproximation2022}.
 \end{proof}
-
-\subsection{Approximation in $\lp{p}$ with bounded coefficients}
 
 % A smoothness property of the function to be approximated is expressed in terms
 % of its Fourier representation. In particular, an average of the norm of the
@@ -792,7 +788,7 @@ this section, we extend that analysis to include the approximation by
 ReLU\textsuperscript{k} networks. 
 
 This part builds on the research by
-\cite{klusowskiApproximationCombinationsReLU2018}.
+\cite{klusowskiApproximationCombinationsReLU2018a}.
 \cite{siegelHighOrderApproximationRates2021} obtained the error rate in $\lp{2}$
 and the result is extended to $\lp{\infty}$ in
 \cite{maUniformApproximationRates2022}.
@@ -820,7 +816,11 @@ We define
     where $t=0$ when $s < (d+1)k+1$ and $t=1$ when $s = (d+1)k+1$.
 \end{theorem}
 
-When the target functions are highly smooth, we have the error rate below.
+An error rate of $\bigO(n^{-\frac{1}{2}- \frac{2k+1}{2(d+1)}})$ is obtained for
+$\lp{p}$ norm in Theorem 3 \citep{siegelHighOrderApproximationRates2021}.
+
+In the case where the target functions are highly smooth (large $s$), we
+obtained the error rate below.
 
 \begin{theorem}
     Let $\Omega = [0,1]^d$, $k \geq 1$, and $f \in \mcal{K}(\mathbb{F}_s)$. The
@@ -833,6 +833,13 @@ When the target functions are highly smooth, we have the error rate below.
     \end{equation}
     where $t=0$ when $s < (d+1)(k+1)$ and $t=1$ when $s = (d+1)(k+1)$.
 \end{theorem}
+
+\begin{remark}
+    The implied constants denoted by $\lesssim$ can be seen to be only depend on
+    $s, k, p, d$ but not on the target function $f$ or the number nodes $n$.
+    Furthermore, the constant might depend on the dimension $d$. This dependence
+    could be exponential, i.e. $C^d$ for some $C$.
+\end{remark}
 
 %%% Local Variables: 
 %%% mode: latex

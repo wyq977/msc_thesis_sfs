@@ -1,18 +1,44 @@
-\chapter{Summary and Future Work}
+\chapter{Summary and future work}
 
-In this thesis, we study the approximation properties of two-layer neural
-networks with different activation functions.
+In this thesis, we investigate the approximation properties of two-layer neural
+networks with various activation functions. Chapter \ref{ch:preliminary}
+summarizes the results from $n$-term approximation theory and addresses the
+question of density regarding 2NN. We state Maurey's theorem for approximation
+with an $n$-term dictionary and introduce Jones' iterative approach for
+obtaining the same approximation error rate.
 
-In chapter \ref{ch:preliminary}, we summarize the result from $n$-term approximation
-theory and answer the question of density regarding 2NN. 
+In Chapter \ref{ch:fourier}, we focus on the smooth functions identified by
+Barron in the early 1990s. We show that a model class of functions
+(Fourier-analytic Barron space $\bspace{\mcal{F},s}$) bounded in their first
+Fourier moment is the closed convex hull of a dictionary of sigmoidal functions.
+This result implies an error rate of $\bigO(n^{-1/2})$ when $n$ is the number of
+nodes, which connects the \textit{complexity} of 2NN models with an upper bound
+for the approximation error rate. A lot of improvements on the error rate
+follows, by either placing more restrictions on the activation function (such as
+the Heaviside function) or requiring the target functions to be smoother by
+bounding their Fourier moment.
 
+Finally, we consider functions that can be represented in integral form and well
+approximated by 2NNs. The function space, infinite-width Barron space, is a
+Banach space. We first construct the infinite-width Barron space via integral
+representation and show how it connects to the variation space. We describe the
+relationship between Fourier-analytic Barron spaces and infinite-width Barron
+spaces, where we find that $\mcal{B}$ is sandwiched between
+$\bspace{\mcal{F},1}$ and $\bspace{\mcal{F},2}$.
 
 There remains some interesting problems to investigate in the future:
 
 \begin{itemize}
-    \item CoD
-    \item Varitaion space
-    \item 
+    \item First, despite the exponent term of $n$ in the approximation error not
+    containing $d$, the constant implied in the error rate by $\lesssim$ may be
+    exponential in $d$. 
+    \item The connection between the variation space and the Barron spaces helps
+    unify the techniques and notation for obtaining the error rate, but there
+    has not been much progress other than the representation theorem by
+    \cite{parhiBanachSpaceRepresenter2021}.
+    \item A detailed investigation of the model class from the closed convex
+    hull of ReLU\textsuperscript{k} functions still remains open in $\lp{p}$ for
+    the ReLU\textsuperscript{k} family $k > 1$.
 \end{itemize}
 
 

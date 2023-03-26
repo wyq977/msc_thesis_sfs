@@ -1,18 +1,15 @@
-\chapter{Functional Analysis And Measure Theory}
+\chapter{Functional Analysis}
 \label{app:function_measure}
+
+\numberwithin{equation}{chapter}
 
 
 We will briefly review some of the constructions and theorems of functional
 analysis and measure theory used throughout this paper. Further background
-material can be found.
-
-\TODO some of the basics might need to be included for completeness
-Like lp norm, Lesbegue measure, ess sup norm.
-
-\section{Functional Analysis}
-
-Familiarity with the basic notions of topology is assumed (inner product
-spaces, normed spaces, Banach and Hilbert spaces)
+material can be found in
+\cite{rudinFunctionalAnalysis1991,rudinRealComplexAnalysis1987}. Familiarity
+with the basic notions of topology is assumed (inner product spaces, normed
+spaces, Banach and Hilbert spaces).
 
 % https://www.math.uzh.ch/gorodnik/functional_analysis/lecture4.pdf
 
@@ -166,30 +163,6 @@ A linear functional $T$ is \textit{bounded} if and only if there exists a $\lamb
    \end{equation}
 \end{theorem}
 
-\section{Measure Theory}
-
-We assume familiarity with notions such as measures, $\sigma$-algebra, \dots
-
-\begin{definition}[Signed Borel measure]
-   A 
-\end{definition}
-
-\begin{definition}[Radon measure]
-   a Borel measure that is finite on all compact sets   
-\end{definition}
-
-\begin{definition}[Measurable function]
-   
-\end{definition}
-
-What is a bounded measurable function?
-
-\begin{definition}[Polish space]
-   
-\end{definition}
-
-\section{VC}
-
 \begin{theorem}[Discrepancy of a set]
    Let $(X, \mcal{R})$ be a set system and $\mcal{R} = P(X)$ is the power set of
    $X$. Let a mapping $\chi: X \to \{-1, +1\}$ and we name it a
@@ -216,17 +189,29 @@ What is a bounded measurable function?
 \end{theorem}
 
 \begin{definition}[VC-class]
-   
+   VC-dimension of the set system $(X, \mcal{R})$ is defined as the maximum size
+   of a shattered subset of $X$. A subset $S \subset X$ is called a
+   $\epsilon$-net provided that $S \bigcap R \not= \emptyset$ for every set $R
+   \subset \mcal{R}$.
 \end{definition}
 
 \begin{proposition}
-   Let 
+   Let $X=\{1, \dots, N\}$ and a subset $R_x \subset X$ is
+   \begin{equation}
+      R_x = \{i: a_i \tr x + b_i \geq 0, \quad a_i \in \R^d, b_i \in \R\}.
+   \end{equation}
+   Let $\mcal{R} = \{R_x: x \in \R^d\}$. Then VC-dimension of the set system of
+   $(X, \mcal{R})$ is at most d.
 \end{proposition}
 
 \begin{theorem}
    \cite[Theorem 1.2, p. 595]{matousekDiscrepancyApproximationsBounded1993}
    \label{thm:coloring_set_bound}
-   sds
+   Let $d$ be the VC-dimension of a set system $(X, \mcal{R})$. Then for every
+   $N > 1$, there is a coloring of the set $X$, $\chi: X \to \{-1,1\}$ such that
+   \begin{equation}
+      \max_{R \in \mcal{R}} \abs{\sum_{i\in R}\chi(i)} \lesssim N^{1/2 - 1/2d}.
+   \end{equation}
 \end{theorem}
 
 %%% Local Variables: 

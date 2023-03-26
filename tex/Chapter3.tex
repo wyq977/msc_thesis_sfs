@@ -1,35 +1,34 @@
 \chapter{Infinite-width Barron spaces}
 \label{ch:infinite}
 
-The main goal of this chapter is to construct and identify the function spaces
-associated with 2NN of different activation functions including Heaviside
-function and ReLU function family. To paraphrase
-\cite{carageaNeuralNetworkApproximation2022}, functions are in
-\textit{infinite-width Barron spaces} if and only if they admit a integral
-representation, and they could be well approximated by 2NN. By ``well
-approximation'', the approximation error rate is of the order $\bigO(n^{-1/2})$
-when $n$ is the number of nodes. In contrast to the Fourier-analytic Barron
-spaces in chapter \ref{ch:fourier}, these spaces are more dependent on the
-choice of activation functions and certainly do not cover all conceivable
-functions that has a integral representation. 
+The objective of this chapter is to establish and characterize the function
+spaces related to 2NN utilizing various activation functions, including
+Heaviside function and ReLU function family. As
+\cite{carageaNeuralNetworkApproximation2022} state, functions belong to
+\textit{infinite-width Barron spaces}if they possess an integral representation
+and can be adequately approximated by 2NN. The approximation error rate is of
+the order $\bigO(n^{-1/2})$ when $n$ represents the number of nodes. Unlike the
+Fourier-analytic Barron spaces discussed in Chapter \ref{ch:fourier}, these
+spaces rely more heavily on the choice of activation functions and do not cover
+all possible functions with integral representation.
 
-In section \ref{sec:construction_of_infinite_width}, we define the norm and
-integral condition for the functions in infinite-width Barron spaces, followed
-by the construction of these function spaces. The elementary properties of these
-spaces are included for completeness. Section
-\ref{sec:approximation_in_infinite_width} details the approximation error rate
-for functions in these space associated in $\lp{2}$ and $\lp{\infty}$. Section
-\ref{sec:infintie_width_variation_space} connects the the notion of the
-variation space and variation norm to infinite-width Barron space through the
-construction of compact dictionaries. Next, the relationships between
-infinite-width Barron spaces and Fourier-analytic Barron space are examined in
-section \ref{sec:diff_barron_spaces}.
+Section \ref{sec:construction_of_infinite_width} defines the norm and integral
+condition for the functions in infinite-width Barron spaces and proceeds to
+construct these function spaces. The elementary properties of these spaces are
+also included for completeness. Section
+\ref{sec:approximation_in_infinite_width} examines the approximation error rate
+for functions in these spaces associated with $\lp{2}$ and $\lp{\infty}$. In
+section \ref{sec:infintie_width_variation_space}, the concept of the variation
+space and variation norm is connected to infinite-width Barron space through the
+construction of compact dictionaries. In section \ref{sec:diff_barron_spaces},
+the connections between infinite-width Barron spaces and Fourier-analytic Barron
+space are explored.
 
-This chapter aims to provide a concise summary of various well-known results
-concerning the approximation properties of 2NN with the ReLU activation function
-family, and we recommend the work by
-\cite{eMathematicalUnderstandingNeural2020,bernerModernMathematicsDeep2021} for
-a comprehensive review.
+The goal of this chapter is to provide a concise summary of well-established
+findings related to the approximation properties of 2NN utilizing the ReLU
+activation function family. For a comprehensive review, we recommend the works
+by \cite{eMathematicalUnderstandingNeural2020,bernerModernMathematicsDeep2021}
+for a comprehensive review.
 
 % sparsity-inducing norm ? in bach 2017 paper.
 
@@ -50,18 +49,15 @@ Let $U$ be a nonempty and bounded domain in $\R^d$. For functions $f: U \to
 \end{equation}
 
 Let $\Omega = \R^1 \times \R^d \times \R^1$ and $\Sigma_{\Omega}$ be the
-$\sigma$-algebra on $\Omega$. We define an integral condition for $f$ w.r.t. a
-a probability distribution $\mu$ on $(\Omega, \Sigma_\Omega)$
+$\sigma$-algebra on $\Omega$, and $\sigma(\cdot)$ is the ReLU activation
+function. We define an integral condition for $f$ w.r.t. a a probability
+distribution $\mu$ on $(\Omega, \Sigma_\Omega)$
 \begin{align}
     r(f, \mu, p)
     &= \Big(\int_{\R^d} \abs{a}^p  (\abs{b} + \abs{c})^p \,d\mu(a,b,c)\Big)^{1/p} \\
     &= \Big(\ERWi{\mu}{\abs{a}^p  (\abs{b} + \abs{c})^p}\Big)^{1/p},
     \quad 1 \leq p \leq +\infty.
 \end{align}
-
-$\Omega = \mathbb{R}^1 \times \mathbb{R}^d \times \mathbb{R}^1$ and
-$\Sigma_\Omega$ is a Borel $\sigma$-algebra on $\Omega$ and $\sigma(\cdot)$ is
-the ReLU activation function.
 
 We consider special case where the ReLU function is replaced by the Heaviside
 function.
@@ -136,14 +132,14 @@ holds
     Let $U$ be a nonempty bounded domain in $\R^d$. For functions that admit the
     integral representation in \eqref{eq:barron_represent}, the infinite-width
     Barron space with an order of $1 \leq p \leq \infty$ is
-    \begin{equation}
+    \begin{multline}
         \label{eq:barron_space}
         \mcal{B}_p(U) = \Bigg\{
             f: U \to \R : \exists\, \mu \in \Sigma_{\Omega}: 
-            r(f, \mu, p) < \infty \textnormal{ and }
+            r(f, \mu, p) < \infty \textnormal{ and } \\
             \forall\, x \in U, f(x) = \int_{\Omega} a \sigma(b\tr x + c) \mu(da, db, dc)
         \Bigg\}.
-    \end{equation}
+    \end{multline}
 \end{definition}
 
 A normed space can be defined for those associated with Heaviside function.
@@ -153,14 +149,14 @@ A normed space can be defined for those associated with Heaviside function.
     Let $U$ be a nonempty unbounded domain in $\R^d$. For functions that admit
     the integral representation in \eqref{eq:heaviside_represent}, the
     infinite-width Barron space associated with Heaviside function is
-    \begin{equation}
+    \begin{multline}
         \label{eq:heaviside_space}
         \mcal{B}_H(U) = \Bigg\{
             f: U \to \R : \exists\, \mu \in \Sigma_{\Omega}:
-            r(f, \mu, H) < \infty \textnormal{ and }
+            r(f, \mu, H) < \infty \textnormal{ and } \\
             \forall\, x \in U, f(x) = \int_{\Omega} a H(b\tr x + c) \mu(da, db, dc)
         \Bigg\}.
-    \end{equation}
+    \end{multline}
 \end{definition}
 
 Barron spaces are denoted by $\mathcal{B}_p$~\footnote{
@@ -237,7 +233,7 @@ $\mathcal{B}_{\infty} = \mathcal{B}_p$, $\barronnorm{\cdot}{\infty} =
     exists a 2NN $f_n = f(x, \Theta) = \frac{1}{n}\sum_{j=1}^n a_j \sigma(b_j\tr
     x + c_j)$ such that
     \begin{equation}
-        \norm{f - f_n}_{\lp{2}(U)}\lesssim \frac{\norm{f}_{\mathcal{B}}}{\sqrt{n}}.
+        \norm{f - f_n}_{\lp{2}(U)}\lesssim n^{-\frac{1}{2}}\norm{f}_{\mathcal{B}}.
     \end{equation}
     where $\Theta$ is the set of parameters $\Theta = \{(a_j, b_j, c_j),
     j=1,\dots,m\}$.
@@ -347,18 +343,18 @@ parameter $\Theta$ satisfies the condition in the theorem.
 
     Let $\xi$ be Rademacher variables, i.e. $\PR{\xi=1} = \PR{\xi=-1} =
     \frac{1}{2}$, we have
-    \begin{equation}
+    \begin{align*}
         \label{eq:proof_l_infty_fouier_1}
-        \ERWi{\mu}{\sup_{x\in I_d} 
+        &\ERWi{\mu}{\sup_{x\in I_d} 
         \frac{1}{n} \sum_{j=1}^n (a_j\sigma(b_j\tr x + c_j) - f(x))}
-        \leq 
-        2 \ERWi{\mu}{
+        \leq \\
+        2& \ERWi{\mu}{
             \frac{1}{n} 
             \ERWi{\xi}{
                 \sum_{j=1}^n \sup \xi_j a_j\sigma(b_j\tr x + c_j)
             }
         }
-    \end{equation}
+    \end{align*}
     where $(a,b,c)\sim\mu$, and $\xi_j$ are Rademacher variables.
 
     We continue bounding the RHS
@@ -487,46 +483,46 @@ bounded in $\lp{p}(\Omega)$.
     \end{equation}
 \end{proposition}
 
-\begin{proof}
+% \begin{proof}
 
-    \TODO
+%     \TODO
 
-    This is Proposition 4. in \cite{siegelCharacterizationVariationSpaces2022}.
+%     This is Proposition 4. in \cite{siegelCharacterizationVariationSpaces2022}.
 
-    We consider a dictionary
-    \begin{equation}
-        G = \{
-            f
-        \}
-    \end{equation}
+%     We consider a dictionary
+%     \begin{equation}
+%         G = \{
+%             f
+%         \}
+%     \end{equation}
 
-    Since B is compact set on $\lp{2}(U)$, it follows from Lemma
-    \ref{lemma:compact_set_integral_representation} that there is Borel measure
-    $\mu$ on $G$ such that 
-    \begin{equation}
-        f = \int_G \inclusionMap{G}{\lp{2}(U)} \,d\mu
-    \end{equation}
-    where $f$ is any function in the variation space on $\spaceVar{G}$.
+%     Since B is compact set on $\lp{2}(U)$, it follows from Lemma
+%     \ref{lemma:compact_set_integral_representation} that there is Borel measure
+%     $\mu$ on $G$ such that 
+%     \begin{equation}
+%         f = \int_G \inclusionMap{G}{\lp{2}(U)} \,d\mu
+%     \end{equation}
+%     where $f$ is any function in the variation space on $\spaceVar{G}$.
 
-    We can write the Barron norm of $f$ as the variation norm simply by changing
-    $\mu = \abs{a}(\abs{b} + \abs{c}) \rho$:
-    \begin{align*}
-        \normVar{f}{G}
-        &= \inf_{\mu} \Big\{ 
-            \norm{\mu}_{G}: f = \int_G \inclusionMap{G}{\lp{2}(U)} \,d\mu
-        \Big\} \\
-        &= \inf_{\rho} \Big\{
-            \int_{} \abs{a} (\abs{b} + \abs{c}) \,d\rho: 
-            f = \int_{} a \sigma(b\tr x + c) \rho(\,da,\,db,\,dc)
-        \Big\}
-        = \norm{f}_{\mathcal{B}}.
-    \end{align*}
+%     We can write the Barron norm of $f$ as the variation norm simply by changing
+%     $\mu = \abs{a}(\abs{b} + \abs{c}) \rho$:
+%     \begin{align*}
+%         \normVar{f}{G}
+%         &= \inf_{\mu} \Big\{ 
+%             \norm{\mu}_{G}: f = \int_G \inclusionMap{G}{\lp{2}(U)} \,d\mu
+%         \Big\} \\
+%         &= \inf_{\rho} \Big\{
+%             \int_{} \abs{a} (\abs{b} + \abs{c}) \,d\rho: 
+%             f = \int_{} a \sigma(b\tr x + c) \rho(\,da,\,db,\,dc)
+%         \Big\}
+%         = \norm{f}_{\mathcal{B}}.
+%     \end{align*}
 
-    If functions are in the closed symmetric convex hull of $\mathbb{D}_1$, then
-    they are in the variation space $\spaceVar{\mathbb{D}_1}$ by Proposition
-    \ref{prop:spaceVar_properties}.
+%     If functions are in the closed symmetric convex hull of $\mathbb{D}_1$, then
+%     they are in the variation space $\spaceVar{\mathbb{D}_1}$ by Proposition
+%     \ref{prop:spaceVar_properties}.
 
-\end{proof}
+% \end{proof}
 
 
 
@@ -617,32 +613,34 @@ bounded in $\lp{p}(\Omega)$.
 
 \section{Improved rate}
 
-We define the sets of functions whose coefficients $a_j$ are bounded in $\lp{1}$
-and $\lp{\infty}$ for all $0 < n < \infty$.
+This section details the improved approximation error rate.
 
-\begin{align*}
-    \Sigma_n^1(\mathbb{D}_k, M) &:= \Big\{
-        \sum_{j=1}^n a_j d_j:
-        d_j \in D^d_{\sigma_k}, \sum_{j=1}^n \norm{a_j}_1 \leq M 
-    \Big\} \\
-    \Sigma_n^{\infty}(\mathbb{D}_k, M) &:= \Big\{
-        \sum_{j=1}^n a_j d_j:
-        d_j \in D^d_{\sigma_k}, \max_{j} \abs{a_j} \leq M 
-    \Big\}
-\end{align*}
+% We define the sets of functions whose coefficients $a_j$ are bounded in $\lp{1}$
+% and $\lp{\infty}$ for all $0 < n < \infty$.
+
+% \begin{align*}
+%     \Sigma_n^1(\mathbb{D}_k, M) &:= \Big\{
+%         \sum_{j=1}^n a_j d_j:
+%         d_j \in D^d_{\sigma_k}, \sum_{j=1}^n \norm{a_j}_1 \leq M 
+%     \Big\} \\
+%     \Sigma_n^{\infty}(\mathbb{D}_k, M) &:= \Big\{
+%         \sum_{j=1}^n a_j d_j:
+%         d_j \in D^d_{\sigma_k}, \max_{j} \abs{a_j} \leq M 
+%     \Big\}
+% \end{align*}
 
 
-We will consider the cases where the $\lp{1}$-norm of $a_i$ is bounded or
-unbounded.
+% We will consider the cases where the $\lp{1}$-norm of $a_i$ is bounded or
+% unbounded.
 
-\TONOTE{Theorems on the improved rates with its conditions}
+% \TONOTE{Theorems on the improved rates with its conditions}
 
-\TONOTE{A summary table for all rates}
+% \TONOTE{A summary table for all rates}
 
-\subsection{Improved rate in classical Barron space through stricter conditions}
+% \subsection{Improved rate in classical Barron space through stricter conditions}
 
-By imposing strict. Wait is the dictionary with Heaviside compact? w.r.t. a
-metric?
+% By imposing strict. Wait is the dictionary with Heaviside compact? w.r.t. a
+% metric?
 
 \begin{theorem}\cite[Theorem 2, p. 218]{makovozUniformApproximationNeural1998}
 
@@ -651,9 +649,12 @@ metric?
     \begin{equation}
         f(x) = \int_{S^d \times [-1,1]} c(b,c) H(b\tr x + b)\,d\mu
     \end{equation}
-    where $c$ is in $\lp{\infty}(D, \mu)$ \TODO and $\norm{}_{\infty} \leq 1$, and $H$
-    is the Heaviside function. Then for any $n \in \Nat$, there exists a linear
-    combination in the form:
+    where $c$ is bounded 
+    \begin{equation}
+        \sup_{(b,c)\subset S^{d-1}\times [-1,1]} \abs{c(b,c)} \leq 1.
+    \end{equation}
+    $H$ is the Heaviside function. Then for any $n \in
+    \Nat$, there exists a linear combination in the form:
     \begin{equation}
         \label{eq:fn_Heaviside}
         f_n = \sum_{j=1}^n \frac{1}{n} a_j H(b_j\tr x + c_j), \quad
@@ -666,11 +667,17 @@ metric?
     \end{equation}
 \end{theorem}
 
-\begin{corollary}
-    \TONOTE{Add lp norm simply by lp space properties?}
-\end{corollary}
+\begin{remark}
+    It should be highlighted that the condition above define a strict subset of
+    the $\closedConvexHull{\mathbb{D}_0}$. This stricter condition gives a
+    better approximation error rate.
+\end{remark}
 
 \subsection{Improved rate in classical Barron space with less stricter conditions}
+
+Compared to the condition above, the error rate given below is for all functions
+$f$ in the closed convex hull of $\mathbb{D}_0$ and the uniform approximation is
+over all of $\R^d$.
 
 \begin{theorem}\cite[Theorem 4, p. 45]{maUniformApproximationRates2022} 
     

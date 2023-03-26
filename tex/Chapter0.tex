@@ -178,8 +178,8 @@ step function}.
 
 To avoid confusion, we will use two definitions throughout
 \begin{itemize}
-    \item Fourier-analytic Barron spaces
-    \item infinite-width Barron spaces\footnote{
+    \item Fourier-analytic Barron spaces.
+    \item infinite-width Barron spaces.\footnote{
         We limit the model classes to those associated with ReLU only. In the 
         case of Heaviside function, we denote the space still by the term 
         \hyperref[def:heaviside_space]{\textit{classical Barron space}}.
@@ -189,27 +189,19 @@ To avoid confusion, we will use two definitions throughout
 Recently, \cite{siegelCharacterizationVariationSpaces2022} connect the variation
 space introduced by \cite{parhiBanachSpaceRepresenter2021,
 parhiWhatKindsFunctions2022}. It has been shown that the spectral Barron norm in
-is equivalent to the variation norm of a dictionary. 
+is equivalent to the variation norm of a dictionary. This allows us to properly
+frame these results in the context of nonlinear approximation. The compactness
+or smoothness condition can then be used for calculating the metric entropy of
+the closed convex hull of said dictionaries.
 
-% nonlinear approximation
-
-We will not dig too deeply into the known approximation rates for Barron classes
-and their generalizations here. Rather, we confine ourselves to some comments to
-properly frame these results in the context of nonlinear approximation. Let
-$\mcal{H}$ be a Hilbert space. We define a set (or dictionary) $\mathbb{D}
-\subset \mcal{H}$ such that each element is bounded $\sup_{d\in\mathbb{D}}
-\norm{d}_{\mcal{H}} \leq \infty$. Given such a dictionary, if function $f$ is in
-the closed convex, symmetric hull of $\mathbb{D}$, then there is a $g =
-\sum_{j=1}^n a_j d_j$ with $d_j \in \mathbb{D}$ such that
-\begin{equation}
-    \norm{f - g}_{\mcal{H}} \lesssim n^{-1/2}, \quad n \in \Nat.
-\end{equation}
-
-
-
-
-
-
+% Let $\mcal{H}$ be a Hilbert space. We define a set (or dictionary) $\mathbb{D}
+% \subset \mcal{H}$ such that each element is bounded $\sup_{d\in\mathbb{D}}
+% \norm{d}_{\mcal{H}} \leq \infty$. Given such a dictionary, if function $f$ is in
+% the closed convex, symmetric hull of $\mathbb{D}$, then there is a $g =
+% \sum_{j=1}^n a_j d_j$ with $d_j \in \mathbb{D}$ such that
+% \begin{equation}
+%     \norm{f - g}_{\mcal{H}} \lesssim n^{-1/2}, \quad n \in \Nat.
+% \end{equation}
 
 % In applications, the phenomenon of implicit regularization is frequently observed [15, 27, 30, 29, 26, 22, 33]. Nonetheless, the theory behind it is still largely unexplored [26, 22, 33, 27]. 
 
@@ -219,7 +211,7 @@ introduces the question setup and the 2NN model. The question of
 \textit{density} with 2NN is answered for any continuous functions from $\R^d$
 to $\R$. We showed that the 2NN are universal approximators with a activation
 function that is not a polynomial when the number of nodes are allowed to grow
-unlimited. In chapter \ref{ch:fourier}, we consider the model classes of
+unlimited. In Chapter \ref{ch:fourier}, we consider the model classes of
 functions (Fourier-analytic Barron spaces) that are guaranteed to be
 \textit{well approximated} by 2NN. The smoothness restriction is enforced by
 bounding the Fourier transform term of the functions. Chapter \ref{ch:infinite}
