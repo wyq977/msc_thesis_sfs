@@ -1,16 +1,17 @@
-\chapter{Nonlinear approximation}
+\chapter{Two-layer neural networks and nonlinear approximation}
 \label{ch:preliminary}
 
-In this chapter, we will introduce the 2NN model and some fundamental results
-regarding $n$-term approximation with a dictionary. Firstly, in section
-\ref{sec:what_is_2nn}, we introduction 2NN model and its elementary properties.
-In section \ref{sec:preliminary}, we provide the problem setups. Section
-\ref{sec:maurey} and. Finally, in section \ref{sec:uat}, we state the
-results on the \textit{density} of 2NN. This chapter aims to provide a summary
-of some well-known theories that will be used in the rest of this thesis and
-derive some results to the kernels we are interested in. We recommend
-\cite{devore_1998,pinkusApproximationTheoryMLP1999} for a comprehensive
-introduction on nonlinear approximation.
+This chapter introduces the 2NN model and explores fundamental findings
+concerning $n$-term approximation using a dictionary. Section
+\ref{sec:what_is_2nn} presents an overview of the 2NN model and its basic
+properties. In section \ref{sec:preliminary}, we delve into the well-known
+results regarding $n$-term approximation from a dictionary. Finally, section
+\ref{sec:uat} outlines the problem of \textit{density} around approximation with
+2NN.
+
+The aim of this chapter is to summarize well-established results that will be
+utilized in subsequent sections of this thesis. For an in-depth introduction, we
+recommend reading \cite{devore_1998,pinkusApproximationTheoryMLP1999}.
 
 
 \section{What is a two-layer neural network}
@@ -163,10 +164,8 @@ Here, $W$ refers to the width of the 2NN model, i.e. the number of nodes. When
 discussing complexity in approximation, $n$ is usually used to represent the
 number of nodes required for a certain level of accuracy.
 
-\section{Preliminary results}
+\section{$n$-term approximation}
 \label{sec:preliminary}
-
-% \TONOTE{Is it Banach spaces or Hilbert space?}
 
 % Jonas-Barron method
 
@@ -174,13 +173,17 @@ number of nodes required for a certain level of accuracy.
 
 % Here I will start classical probabilistic argument of Maurey
 
-In this section, we will introduce the approximation theory concerning $n$-terms
-from a dictionary in a Hilbert space. This approximation problem is highly
-nonlinear introduced by the selection of a dictionary. A dictionary could be an
-arbitrarily chosen subset of $\mcal{H}$ but limits have to be imposed for
-computational feasibility in practice. 
+This section introduces some fundamental findings regarding $n$-term
+approximations derived from a dictionary. Nonlinear approximation problems are
+typically presented as follows: given a target function $f\in\mcal{H}$, select a
+basis and an $n$-term approximation to $f$ from that basis. The class of bases
+is known as $library$, as seen in wavelets or splines approximation. Our focus
+is on a closely related form of approximation: $n$-term approximation from a
+dictionary $\mathbb{D} \subset \mcal{H}$. The dictionary $\mathbb{D}$ can be an
+arbitrary subset but its choice is subject to practical computational
+limitations. 
 
-This section is mainly based on \cite[Chapter 8]{devore_1998} and
+This section is mainly based on \cite[Section 8]{devore_1998} and
 \cite{vandervaartWeakConvergenceEmpirical1996}, unless stated otherwise.
 
 Let $\mathbb{D} = \{d_1,d_2,\dots\}$ be a uniformly bounded domain in a Hilbert
@@ -192,32 +195,24 @@ space $(\mcal{H}, \norm{\cdot}_{\mcal{H}})$
 
 For every $n \in \Nat$, the collection of all functions in $\mcal{H}$
 which can be expressed as a linear combination of at most $n$ elements of
-$\mathbb{D}$ (i.e. elements of \eqref{eq:gm}) is denoted by
-
+$\mathbb{D}$ is denoted by
 \begin{equation}
     \label{eq:dict_represent}
     \Sigma_n(\mathbb{D}) = \Bigg\{
-        \sum_{j=1}^n \alpha_j d_j, \quad
-        d_j \in \mathbb{D}, \alpha_j \in \R
+        \sum_{j=1}^n a_j d_j, \quad
+        d_j \in \mathbb{D}, a_j \in \R
     \Bigg\}.
 \end{equation}
 
 Any function $f_n \in \Sigma_n(\mathbb{D})$ with $n \in \Nat$ is represented as
 \begin{equation}
     \label{eq:gm}
-    f_n = \sum_{j=1}^n \alpha_j d_j, \quad d_j \in \mathbb{D}.
+    f_n = \sum_{j=1}^n a_j d_j, \quad d_j \in \mathbb{D}.
 \end{equation}
 
-The problem of nonlinear approximation would generally be framed as: given a
-target function $f \in \mcal{H}$, one needs to choose both a dictionary
-$\mathbb{D}$ and $n$-term elements from $\mathbb{D}$ to approximate $f$. These
-dictionaries \eqref{eq:dict_represent} can be interpreted as splines
-approximation with free knots with a selected dictionary and we will study the
-approximation results when $\mathbb{D}$ is comprised of sigmoidal functions and
-ReLU.
-
-To include the control over the coefficients, also called \textit{outer
-parameters}, $\alpha_j$ in the above expansion, we introduce
+To include the control over the
+coefficients, also called \textit{outer parameters}, $\alpha_j$ in the above
+expansion, we introduce
 \begin{equation}
     \label{eq:dict_sigma}
     \Sigma^{t}_n(\mathbb{D}, M) := \Bigg\{
@@ -235,10 +230,10 @@ $\mcal{H}$
     K^t_n(\mathbb{D}, M) := \closure{\Sigma^t_n(\mathbb{D}, M)}.
 \end{equation}
 
-When $t = 1$, $K^1_n(\mathbb{D}, M)$ is the class of functions that are a
-\textit{convex} combination of elements in $\mathbb{D}$. When $t = \infty$,
-$\Sigma^{\infty}_n(\mathbb{D}, M)$ corresponds to the sets whose coefficients
-are bounded in $\lp{\infty}$. 
+It should be noted that $t = 1$, $K^1_n(\mathbb{D}, M)$ is the class of
+functions that are a signed \textit{convex} combination of elements in
+$\mathbb{D}$. When $t = \infty$, $K^{\infty}_n(\mathbb{D}, M)$ corresponds to
+the sets whose coefficients are bounded in $\lp{\infty}$. 
 
 Next, we define the union for all $M > 0$
 \begin{equation}
@@ -252,6 +247,7 @@ We define a seminorm for functions $f \in K^t(\mathbb{D})$
         M >0: f \in K^t_n(\mathbb{D}, M)
     \}.
 \end{equation}
+
 
 For $f \in \mcal{H}$, the approximation error is defined as
 \begin{equation}
@@ -270,18 +266,15 @@ such that for any function $f \in \mcal{H}$, the approximation error is
 We are concerned with the coefficients in the exponents $\alpha$ and what
 $C_{\mathbb{D}}$ is dependent on.
 
-For the special cases where $\mathbb{D}$ is the orthonormal basis of $\mcal{H}$,
-the approximation error is given as
-\begin{equation}
-    \label{eq:appro_error_ortho}
-    e_n(f, \mathbb{D}, \mcal{H}) 
-        \lesssim n^{-\alpha} \abs{f}_{K^t(\mathbb{D})}.
-\end{equation}
+\subsection{Maurey's Theorem}
+\label{subsec:maurey}
 
-\section{Maurey's Theorem}
-\label{sec:maurey}
+Approximation with a finite linear combination of elements from a bounded
+dictionary in a Hilbert space $\mcal{H}$ achieves an error rate of
+$\bigO(n^{-1/2})$ by~\cite{pisierRemarquesResultatNon1980} and this holds for
+any bounded $\mathbb{D} \subset \mcal{H}$.
 
-\begin{definition}[Covering numbers]
+\begin{definition}[Covering numbers and entropy]
     % http://www.stat.yale.edu/~yw562/teaching/598/lec14.pdf
     \label{def:covering_num}
     Let $(\mcal{F}, \norm{\cdot}_{\mcal{F}})$ be a subset of a normed space. The
@@ -290,7 +283,7 @@ the approximation error is given as
     radius $\epsilon$ required to cover the set $\mcal{F}$. 
 \end{definition}
 
-\begin{definition}[Entropy]
+\begin{definition}[$n$-th dyadic entropy number]
     \label{def:entropy} The \textit{entropy} is the logarithm of the covering
     number. For $n \in \Nat$, the $n$-th (dyadic) entropy number is given by
     \begin{equation}
@@ -303,10 +296,7 @@ the approximation error is given as
     % https://arxiv.org/pdf/1211.1559.pdf
 \end{definition}
 
-Approximation with a finite linear combination of elements from a bounded
-dictionary in a Hilbert space $\mcal{H}$ achieves an error rate of
-$\bigO(n^{-1/2})$ by~\cite{pisierRemarquesResultatNon1980} and this holds for
-any bounded $\mathbb{D} \subset \mcal{H}$.
+
 
 \begin{theorem}[Maurey's Theorem]
     \label{thm:maurey}
@@ -398,84 +388,86 @@ any bounded $\mathbb{D} \subset \mcal{H}$.
     \in \mathbb{D}$ is bounded, then for every $n \in \Nat$, there is an $f_n$
     in the convex hull of $n$ elements in $\mathbb{D}$ such that
     \begin{equation}
-        \norm{f - f_n}_{\mcal{H}}\leq \sqrt{C} n^{-\frac{1}{2}}
+        \norm{f - f_n}_{\mcal{H}}\leq C n^{-\frac{1}{2}}
     \end{equation}
 
     where $f_n = \sum_{j=1}^n \alpha_j \cdot d_j, \quad d_j \in \mathbb{D},
-    \quad \sum_{j=1}^n \alpha_j = 1$, and $C \geq \sup_{d\in \mathbb{D}}
+    \quad \sum_{j=1}^n \alpha_j = 1$, and $C^2 \geq \sup_{d\in \mathbb{D}}
     \norm{g}_{\mcal{H}}^2 - \norm{f}_{\mcal{H}}^2$.
 
 \end{corollary}
 
-\section{Iterative approximation}
+\subsection{Iterative approximation}
+\label{subsec:iterative}
 
-\cite{jonesSimpleLemmaGreedy1992} has also showed the same approximation error
+\cite{jonesSimpleLemmaGreedy1992} has also shown the same approximation error
 $\bigO(n^{-1/2})$ using an iterative argument. One can find a proof in
 \cite[p. 611]{jonesSimpleLemmaGreedy1992} and a refinement of Jone's result in
 \cite[Theorem 5]{barronUniversalApproximationBounds1993}. 
 
-Let $G$ be a nonempty bounded subset of a Hilbert space $\mcal{H}$. Suppose a
-sequence of function $f_n$ were used to approximate a element $f$ in $\mcal{H}$
-with the following algorithm
+Let $\mathbb{D}$ be a nonempty bounded subset of a Hilbert space $\mcal{H}$.
+Suppose a sequence of function $f_n$ were used to approximate a element $f$ in
+$\mcal{H}$ with the following algorithm
 \begin{equation}
     \label{eq:seq_appro_jones}
-    f_n = \alpha_n + f_{n-1} + (1-\alpha_n) g_n, \quad
-    g_n \in G, \alpha_n \in [0,1], n \geq 1.
+    f_n = \alpha_n + f_{n-1} + (1-\alpha_n) d_n, \quad
+    d_n \in \mathbb{D}, \alpha_n \in [0,1], n \geq 1.
 \end{equation}
-The iteration starts with $f_1 = g_1 \in G$ and $\alpha_1 = 0$ and the sequence
-$\{f_n\}$ defined as above is in the convex hull of the points $\{g_1,\dots,
-g_n\}$.
+The iteration starts with $f_1 = d_1 \in \mathbb{D}$ and $\alpha_1 = 0$ and the
+sequence $\{f_n\}$ defined as above is in the convex hull of the points
+$\{d_1,\dots, d_n\}$.
 
 \begin{theorem}[Jone's Theorem]
-    Let $G$ be a nonempty bounded domain of a Hilbert space $\mcal{H}$. Let $C_G
-    = \sup_{g\in G} \norm{g}^2 < \infty$ and set $C_f = C_G - \norm{f}^2$. If
-    $f$ is in the closure of the convex hull of $G$, i.e. $f \in \conv(G)$. Then
-    for every $n \in \Nat$, $f_n$ is chosen iteratively as
+    Let $\mathbb{D}$ be a nonempty bounded domain of a Hilbert space $\mcal{H}$.
+    Let $C_{\mathbb{D}} = \sup_{d \in \mathbb{D}} \norm{d}^2 < \infty$ and set
+    $C_f = C_{\mathbb{D}} - \norm{f}^2$. If $f$ is in the closure of the convex
+    hull of $\mathbb{D}$, i.e. $f \in \conv(\mathbb{D})$. Then for every $n \in
+    \Nat$, $f_n$ is chosen iteratively as
     \begin{equation}
-        \norm{f_n - f}^2 \leq \inf_{\alpha \in [0,1]} \inf_{g \in G}
-        \norm{\alpha f_{n-1} + (1-\alpha)g - f}^2 + e_n
+        \norm{f_n - f}^2 \leq \inf_{\alpha \in [0,1]} \inf_{d \in \mathbb{D}}
+        \norm{\alpha f_{n-1} + (1-\alpha)d - f}^2 + e_n
     \end{equation}
-    where $e_n \leq \frac{}{n(n+C -1 )}$.
-    Then approximation error for each $n \geq 1$ is $\bigO(n^{-1/2})$
+    where $e_n \leq \frac{C}{n(n+C/C_f -1 )}$ for some $C > C_f$. Then
+    approximation error for each $n \in \Nat$ is $\bigO(n^{-1/2})$.
 \end{theorem}
 
 \begin{proof}
 
-     Set $f_{\delta} = \sum_{j=1}^m a_j g_j$ be a convex combination
-    of $m$ elements from $G$ for some $\delta > 0$ such that $f$ and
+     Set $f_{\delta} = \sum_{j=1}^m a_j d_j$ be a convex combination of $m$
+    elements from $\mathbb{D}$ for some $\delta > 0$ such that $f$ and
     $f_{\delta}$ is close
     \begin{equation}
         \norm{f - f_{\delta}} \leq \delta.
     \end{equation}
     We have
     \begin{align}
-        \norm{\alpha (f_{n-1} - f) + (1-\alpha) (g - f_{\delta})}^2
-        &= \alpha^2 \norm{f_{n-1} - f}^2 + (1-\alpha)^2 \norm{g - f_{\delta}}^2 \\
-        &+ 2 \alpha (1-\alpha) \spr{f_{n-1}-f}{g - f_{\delta}}
+        \norm{\alpha (f_{n-1} - f) + (1-\alpha) (d - f_{\delta})}^2
+        &= \alpha^2 \norm{f_{n-1} - f}^2 + (1-\alpha)^2 \norm{d - f_{\delta}}^2 \\
+        &+ 2 \alpha (1-\alpha) \spr{f_{n-1}-f}{d - f_{\delta}}
     \end{align}
 
-    We can then calculate the average of terms containing $g$
+    We can then calculate the average of terms containing $d$
     \begin{align}
-        &\sum_{j=1}^m a_j (1-\alpha)^2 \norm{g_j - f_{\delta}}^2 + 
-        2 a_j \alpha (1-\alpha) \spr{f_{n-1}-f}{g_j - f_{\delta}} \\
-        &= (1-\alpha)^2 \sum_{j=1}^m a_j \norm{g_j - f_{\delta}}^2 
-        + 2 \alpha (1-\alpha) \spr{f_{n-1}-f}{\sum_{j=1}^m a_j g_j - f_{\delta}}\\
-        &= (1-\alpha)^2 \sum_{j=1}^m a_j \norm{g_j - f_{\delta}}^2 + 0 \\
-        &= (1-\alpha)^2 \sum_{j=1}^m a_j \norm{g_j}^2 - \norm{f_{\delta}}^2 \\
-        &\leq (1-\alpha)^2 (C_G - \norm{f_{\delta}}^2).
+        &\sum_{j=1}^m a_j (1-\alpha)^2 \norm{d_j - f_{\delta}}^2 + 
+        2 a_j \alpha (1-\alpha) \spr{f_{n-1}-f}{d_j - f_{\delta}} \\
+        &= (1-\alpha)^2 \sum_{j=1}^m a_j \norm{d_j - f_{\delta}}^2 
+        + 2 \alpha (1-\alpha) \spr{f_{n-1}-f}{\sum_{j=1}^m a_j d_j - f_{\delta}}\\
+        &= (1-\alpha)^2 \sum_{j=1}^m a_j \norm{d_j - f_{\delta}}^2 + 0 \\
+        &= (1-\alpha)^2 \sum_{j=1}^m a_j \norm{d_j}^2 - \norm{f_{\delta}}^2 \\
+        &\leq (1-\alpha)^2 (C_{\mathbb{D}} - \norm{f_{\delta}}^2).
     \end{align}
 
-    This implies that there must exist a $g \in G$ such that
+    This implies that there must exist a $d \in \mathbb{D}$ such that
     \begin{align}
-        \norm{\alpha (f_{n-1} - f) + (1-\alpha) (g - f_{\delta})}^2
+        \norm{\alpha (f_{n-1} - f) + (1-\alpha) (d - f_{\delta})}^2
         \leq \alpha^2 \norm{f_{n-1} - f}^2 + 
-        (1-\alpha)^2 \norm{(g - f_{\delta})}^2 + \delta.
+        (1-\alpha)^2 \norm{(d - f_{\delta})}^2 + \delta.
     \end{align}
 
     By triangle inequality and setting $\delta \to 0$, we have
     \begin{align}
-        \inf_{g\in G} \norm{\alpha f_{n-1} + (1-\alpha) g - f}^2
-        &= \inf_{g\in G} \norm{\alpha (f_{n-1} - f) + (1-\alpha) (g - f)}^2 \\
+        \inf_{g\in \mathbb{D}} \norm{\alpha f_{n-1} + (1-\alpha) d - f}^2
+        &= \inf_{g\in \mathbb{D}} \norm{\alpha (f_{n-1} - f) + (1-\alpha) (d - f)}^2 \\
         &\leq \alpha^2 \norm{f_{n-1} - f}^2 + (1-\alpha)^2 C_f.
     \end{align}
 
@@ -500,26 +492,23 @@ g_n\}$.
 \section{Universal approximation theorem}
 \label{sec:uat}
 
-In general, neural networks, even 2NN with one hidden layer, are universal
-approximators, which means any continuous functions on a compact set can be
-approximated up to a arbitrary precision under some mild restrictions on the
-activation functions $\sigma$ and the number of nodes are allowed to grow
-arbitrarily. Functions of $d$-variables can be approximated uniformly well by
-linear combinations of functions from the dictionary
+Neural networks, even those with just one hidden layer such as 2NN, are
+universal approximators. This means that any continuous function on a compact
+set can be approximated up to a desired level of precision, given some mild
+restrictions on the activation functions $\sigma$, and the number of nodes can
+grow arbitrarily. For functions of $d$-variables, a linear combination of
+functions from the dictionary
 \begin{equation}
     \label{eq:uat_dict}
     \mathbb{D} = \{\sigma(b\tr x + c): b \in \R^d, c\in \R \}.
 \end{equation}
-
-The requirements on $\sigma$ is formally stated
-in~\cite{cybenkoApproximationSuperpositionsSigmoidal1989} and functions in
-$\mathbb{D}$ are called \textit{ridge functions} or \textit{planar waves}.
-Despite its obvious importance, one can not extract quantitative information
-about the error rate since there is no restriction for $n$. Nevertheless, we
-will state the univariate approximation theorem in this section. 
-
-This section is mainly based on
-\cite{cybenkoApproximationSuperpositionsSigmoidal1989}, unless stated otherwise.
+can be used to achieve a good approximation. These functions, also known as
+ridge functions or planar waves, are subject to certain requirements on
+$\sigma$. However, the lack of restriction on n makes it difficult to obtain
+quantitative information about the error rate. Despite this limitation, we will
+present the univariate approximation theorem in this section, which is mainly
+based on the work of \cite{cybenkoApproximationSuperpositionsSigmoidal1989},
+unless otherwise stated.
 
 % We will state the the universal approximation theorem that the finite linear
 % combinations of sigmoidal functions (sum of the functions of the form
@@ -590,7 +579,7 @@ $\Sigma_n(\mathbb{D}_{\sigma})$ is the set $\mcal{M}(\sigma)$ in
     \end{align}
 \end{theorem}
 
-\begin{proposition}
+\begin{theorem}
     Let $\sigma: \R \to \R$ be a continuous function. We consider the set
     \begin{equation}
         \Sigma_n^{\sigma} = \Bigg\{
@@ -607,13 +596,13 @@ $\Sigma_n(\mathbb{D}_{\sigma})$ is the set $\mcal{M}(\sigma)$ in
     if and only if $\sigma$ is not a polynomial. In other words,
     $\Sigma_n^{\sigma}$ is dense in the space $C(\R^d)$ in the topology of
     uniform convergence on compact sets.
-\end{proposition}
+\end{theorem}
 
 \begin{remark}
-    The requirements for the set $\Sigma$ constructed using a function $\sigma$
-    is surprisingly simple and it is proven in Theorem 1
-    \cite[p. 10]{leshnoMultilayerFeedforwardNetworks1993} that $\sigma$ simply need not
-    to be a polynomial.
+    The requirements for the set $\Sigma_n^{\sigma}$ constructed using a
+    function $\sigma$ is surprisingly simple and it is proven in Theorem 1
+    \cite[p. 10]{leshnoMultilayerFeedforwardNetworks1993} that $\sigma$ simply
+    need not to be a polynomial.
 \end{remark}
 
 The main structure of the proof for Theorem \ref{thm:uat} is as follows:

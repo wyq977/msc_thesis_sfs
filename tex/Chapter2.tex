@@ -1,35 +1,35 @@
 \chapter{Fourier-analytic Barron spaces}
 \label{ch:fourier}
 
-In this chapter, we study the generalization property of 2NN. As in
-\cite{barronUniversalApproximationBounds1993}, a dimension-independent
-approximation rate can be achieved by 2NN under some mild assumptions. To be
-specific, the assumption is formulated as a spectral condition on the Fourier
-transform of the target function. An approximation rate of $\bigO(n^{-1/2})$ is
-obtained in $\lp{2}$ when approximating functions with one finite Fourier moment
-by 2NN with $n$ nodes. Moreover, we connect this result with $n$-term dictionary
-approximation in section \ref{sec:fourier_variation_space} where the dictionary
-of choice is identified for the spectral condition.
+In this chapter, we study the model classes of functions that are \textit{well
+approximated} by 2NN. \cite{barronUniversalApproximationBounds1993} has
+demonstrated that under some mild assumptions for the target functions, a
+dimension-independent approximation rate can be achieved by 2NN. Specifically,
+this assumption is formulated as a spectral condition on the Fourier transform
+of the target function. When approximating functions with finite Fourier moment
+by 2NN with n nodes, an approximation rate of $\bigO(n^{-1/2})$ is obtained in
+$\lp{2}$. In section \ref{sec:fourier_variation_space}, we connect this result
+with $n$-term dictionary approximation, where we identify the dictionary of
+choice for the spectral condition.
 
-
-This chapter is organized as follows. In section \ref{sec:spectral_condition},
-the class of functions that satisfies certain smoothness constrain is
-introduced. Section \ref{sec:construction_of_fouier} defines and characterizes
-the function spaces constructed based on the previous smoothness restriction. In
-section \ref{sec:approximation_rate_fouier}, an approximation rate of
-$\bigO(n^{-\frac{1}{2}})$ is proven w.r.t. the supremum norm where $n$ is the
-number of nodes. Section \ref{sec:fourier_variation_space} shows the dictionary
-corresponding to the smoothness condition. Finally, we give some high order
-error rate for ReLU\textsuperscript{k} networks
+The chapter is structured as follows. In section \ref{sec:spectral_condition},
+we introduce the class of functions that satisfies certain smoothness
+constraints. Section \ref{sec:construction_of_fouier} characterizes the function
+spaces constructed based on the previous smoothness restriction. In section
+\ref{sec:approximation_rate_fouier}, we prove an approximation rate of
+$\bigO(n^{-\frac{1}{2}})$ with respect to the supremum norm, where $n$ is the
+number of nodes. Section \ref{sec:fourier_variation_space} presents the
+dictionary corresponding to the smoothness condition. Finally, we provide some
+high order error rates for ReLU\textsuperscript{k} networks.
 
 \section{Barron class and spectral condition}
 \label{sec:spectral_condition}
 
 In this section, we would identify the class of functions originally proposed by
 \cite{barronUniversalApproximationBounds1993}. We define the \textit{spectral
-condition} on which the smoothness constrain is imposed. A modified spectral
-condition proposed by \cite{siegelCharacterizationVariationSpaces2022} is also
-introduced.
+condition} on which the smoothness constrain of a function is imposed. A
+modified spectral condition proposed by
+\cite{siegelCharacterizationVariationSpaces2022} is also introduced.
 
 \begin{definition}[Barron class]
     \label{def:barron_class}
@@ -168,19 +168,18 @@ to the seminorm.
     equipped with a norm $\specnorm{f}{s}$ for all $s \in \Nat$.
 \end{definition}
 
-\TONOTE{What is the extensions}
+% \TONOTE{What is the extensions}
 
-\TONOTE{Why is 1/2 allowed? in \cite{siegelCharacterizationVariationSpaces2022}}
+% \TONOTE{Why is 1/2 allowed? in \cite{siegelCharacterizationVariationSpaces2022}}
 
-$s \in \Nat$ is referred as the smoothness index. It is easy to conjecture
-that as $s$ increases, functions in $\bspace{\mcal{F}, s}$ are becoming
-``smoother''. Therefore the \textit{size} of the function spaces of higher
-smoothness index $s$ is expected to ``shrink'' which might suggests better
-approximation error rate. In the coming sections, we will provide an accurate
-statement of the improved approximation error rates with a depiction of the
-intricacies inherent within and between these spaces.
-
-\TODO
+The smoothness index $s \in \Nat$ refers to the degree of smoothness of
+functions in $\bspace{\mcal{F}, s}$. It is reasonable to expect that as $s$
+increases, the functions in $\bspace{\mcal{F}, s}$ become smoother.
+Consequently, the size of the function spaces of higher smoothness index is
+expected to shrink, which may suggest better approximation error rates. In the
+following sections, we will provide a precise statement of the improved
+approximation error rates, along with a detailed explanation of the complexities
+inherent within and between these spaces.
 
 In general, the activation function associated with the infinite-width Barron
 spaces is ReLU and we will explicitly state when other functions (e.g. squared
@@ -192,26 +191,28 @@ ReLU, ReLU\textsuperscript{k}, Heaviside) are used.
 \section{Approximation rate in Fourier-analytic Barron spaces}
 \label{sec:approximation_rate_fouier}
 
-It is shown by \cite{barronUniversalApproximationBounds1993} that functions of
-$d$-variables with finite Fourier moments can be approximated with the
-superpositions of sigmoidal functions at a rate independent of the
-dimensionality $d$. The result is extended to ReLU activation function. In other
-words, any functions in that class can be approximated with a 2NN at an error
-rate of $\bigO(n^{-1} \cdot C)$ where $n$ is the number of nodes in the the
-single hidden layer and $C$ is a constant dependent \textit{only} the smoothness
-of the target function. Despite that the convergence rate itself is independent
-of dimension (i.e. the dimensionality $d$ of input vector $x\in\R^d$), the
-constant $C$ could be dimension-dependent as the Fourier transform is used here.
+\cite{barronUniversalApproximationBounds1993} has demonstrated that functions of
+d-variables with finite Fourier moments can be approximated using the
+superpositions of sigmoidal functions at a rate that is independent of the
+dimensionality $d$. This result has also been extended to the ReLU activation
+function. In other words, any function in this class can be approximated using a
+2NN with an error rate of $\bigO(n^{-1} \cdot C)$, where $n$ is the number of
+nodes in the single hidden layer, and $C$ is a constant that depends only on the
+smoothness of the target function. Although the convergence rate is independent
+of the dimensionality $d$ of the input vector $x \in \R^d$, the constant $C$
+could be dimension-dependent, as the Fourier transform is used in this approach.
 
 This section is based on \cite{barronUniversalApproximationBounds1993}.
+
+\TONOTE{what is the probability here?}
 
 \begin{theorem}
     % \cite[Theorem~1]{barronUniversalApproximationBounds1993}
     \label{thm:barron_1993_1}
     Let $U$ be a nonempty bounded domain in $\R^d$, $x_0 \in U$, and $C > 0$ a
     constant. For every function in the Barron class $\Gamma_C(U, x_0)$, every
-    sigmoidal function $\phi$, every probability measure $\mu$, and every $n \in
-    \Nat$, there exists a linear combination of sigmoidal function $f_n(x) =
+    sigmoidal function $\sigma$, every probability measure $\mu$, and every $n
+    \in \Nat$, there exists a linear combination of sigmoidal function $f_n(x) =
     \sum_{j=1}^n a_j \sigma(b_j\tr x+c_j), a_j, c_j \in \R, b_j \in \R^d$ such
     that
     \begin{equation}
@@ -381,15 +382,19 @@ This section is based on \cite{barronUniversalApproximationBounds1993}.
 \section{Connection with variation space}
 \label{sec:fourier_variation_space}
 
-What is separable? Is it necessary?
-
-Let $(\mcal{H}, \norm{\cdot}_{\mcal{H}})$ be a separable Hilbert space.
+As a expansion of nonlinear approximation of dictionary, the variation space is
+defined in terms of a convex hull based on integral representations
+\citep{parhiBanachSpaceRepresenter2021, parhiWhatKindsFunctions2022}. Suppose
+that the dictionary is uniformly bounded in a separable Hilbert space
+$(\mcal{H}, \norm{\cdot}_{\mcal{H}})$.
+\begin{equation}
+    \sup_{d\in\mathbb{D}} \norm{d}_{\mcal{H}} < \infty.
+\end{equation}
 
 If $G$ is a subset of $\mcal{H}$ and $c \in \R$, then we define the set
 \begin{equation}
-    cG = \{cg: g \in G\}
+    cG = \{cg: g \in G\}.
 \end{equation}
-
 
 \begin{definition}[Varitaion norm]
     The variation norm of $\normVar{f}{\mathbb{D}}$ of a subset $\mathbb{D}$ of
@@ -404,7 +409,7 @@ If $G$ is a subset of $\mcal{H}$ and $c \in \R$, then we define the set
     \begin{equation}
         \closure{\conv(\mathbb{D} \bigcup - \mathbb{D})} := \Bigg\{ 
             \sum_{j=1}^n a_j d_j: n \in \Nat, d_j \in \mathbb{D}, 
-            \sum_{j=1}^n \norm{a_j}_1 \leq 1
+            \sum_{j=1}^n \abs{a_j} \leq 1
         \Bigg\}.
     \end{equation}
 \end{definition}
@@ -423,9 +428,6 @@ hold.
 \begin{proposition}
     \label{prop:spaceVar_properties}
     Let $\mathbb{D}$ be a uniformly bounded subset of a Hilbert space $\mcal{H}$
-    \begin{equation}
-        \sup_{d\in\mathbb{D}} \norm{d}_{\mcal{H}} < \infty.
-    \end{equation}
     \begin{enumerate}
         \item $\closure{\conv(\mathbb{D} \bigcup - \mathbb{D})} = \{
             f\in\mcal{H}: \normVar{f}{\mathbb{D}} \leq 1
@@ -448,15 +450,21 @@ hold.
 \end{proof}
 
 
-
 \begin{proposition}
-    \TONOTE{Is H separable?}
-
-    Let $(\mcal{H}, \norm{\cdot}_{\mcal{H}})$ be a Hilbert space and $f$ be a
-    function in $\mcal{H}$. Suppose that a sequence $\{f_n\}$ in $\mcal{H}$
-    where $f_n \in \Sigma_{n,M}(\mathbb{D})$ \TODO and $f_n \to f$ in $\mcal{H}$
-    for some fixed $M < \infty$. Then $f$ is in the variation space
-    $\spaceVar{\mathbb{D}}$ and its variation norm is bounded by $M$
+    Let $(\mcal{H}, \norm{\cdot}_{\mcal{H}})$ be a separable Hilbert space and
+    $f$ be a function in $\mcal{H}$. Suppose that a sequence $\{f_n\}$ in
+    $\mcal{H}$ where $f_n \in \Sigma_{n}(\mathbb{D}, M)$
+    \begin{equation}
+        \Sigma_n(\mathbb{D}, M) := \Bigg\{
+            f = \sum_{j=1}^n \alpha_j d_j: 
+            d_j \in \mathbb{D} \textnormal{ and } 
+            \sum_{j=1}^n \abs{\alpha_j} \leq M, \quad 
+            n \in \Nat, \alpha_j \in \R
+        \Bigg\}.
+    \end{equation}
+    $f_n \to f$ in $\mcal{H}$ for some fixed $M < \infty$. Then $f$ is in the
+    variation space $\spaceVar{\mathbb{D}}$ and its variation norm is bounded by
+    $M$
     \begin{equation}
         f \in \spaceVar{\mathbb{D}}, \quad \normVar{f}{\mathbb{D}}\leq M.
     \end{equation}
@@ -464,10 +472,17 @@ hold.
 
 \begin{proof}
     Without loss of generality, we only need to prove for $M = 1$.
+
+    From the definition, $\Sigma_n(\mathbb{D}, M) \subset
+    \closedConvexHull{\mathbb{D}}$ for every $n \in \Nat$. Therefore, $f_n \in
+    \closedConvexHull{\mathbb{D}}$. Noted that the set is closed, we immediately
+    have $f \in \closedConvexHull{\mathbb{D}}$ and hence the
+    $\normVar{f}{\mathbb{D}} \leq 1$.
 \end{proof}
 
 
-Here we would like to connect $\mathbb{D}$ with the integral representation. An integral representation of a function $f$ using dictionary $\mathbb{D}$ is
+Here we would like to connect $\mathbb{D}$ with the integral representation. An
+integral representation of a function $f$ using dictionary $\mathbb{D}$ is
 \begin{equation}
     f = \int_{\mathbb{D}} \inclusionMap{\mathbb{D}}{\mcal{H}} \,d\mu.
 \end{equation}
@@ -481,8 +496,11 @@ Here, $\mu$ is a signed Borel measure on $\mathbb{D}$ with finite variation on $
     } \int_{\mathbb{D}} g\,d\mu < \infty.
 \end{equation}
 
-
-Here I need to add some argument on why the map is integrable
+\begin{remark}
+    The existence of $\mu$ by is detailed in \cite[Proposition
+    2]{siegelCharacterizationVariationSpaces2022} and \citep[Chapter
+    4]{diestelSequencesSeriesBanach1984}
+\end{remark}
 
 \begin{definition}[Inclusion map]
     \label{def:inclusionMap}
@@ -513,28 +531,15 @@ Here I need to add some argument on why the map is integrable
     \end{equation}
 \end{lemma}
 
-\begin{remark}
-    the compactness is necessary as $\bspace{\mcal{H}}$ is not included by the
-\end{remark}
-
 \begin{definition}[Spectral dictionary]
     The spectral dictionary of order $s \in \Nat^0$ is given by
     \begin{equation}
         \mathbb{F}_s := \Bigg\{ 
-            (1 + \norm{\omega})^{-s} \cdot e^{2\pi i\omega\tr x}: 
+            (1 + \abs{\omega})^{-s} \cdot e^{2\pi i\omega\tr x}: 
             \omega \in \R^d
         \Bigg\}
     \end{equation}
 \end{definition}
-
-The variation space of $\mathbb{F}_s$ can be characterized in terms of the
-Fourier transform.
-
-The variation space $\spaceVar{\mathbb{F}_s}$ corresponding to the spetral
-dictionary $\mathbb{F}_s$.
-
-I suppose that the domain $U \subseteq \R^d$ is required to be compact?
-It seems like $U$ is only bounded.
 
 \begin{theorem}[Equal norm]
 The Fourier-analytic Barron space is equivalent to the variation space
@@ -552,33 +557,34 @@ Furthermore, the spectral norm is equivalent to the variation norm:
 \end{theorem}
 
 \begin{proof}
-    
+    One can find a proof in the Section 5 of
+    \cite{siegelCharacterizationVariationSpaces2022}.
 \end{proof}
-
 
 \section{Improved rate via Heaviside function}
 \label{sec:improved_heaviside}
 
-In the following sections, we present an exposition on the improved
-approximation error rates either by compactness condition of the dictionary set
-or stricter smoothness condition. The curx of the notion is to derive the
-entropy number corresponding to the convex hull of the dictionary $\mathbb{D}$.
-Maurey's Theorem \ref{thm:maurey} provides a bound for \textit{any} bounded
-dictionaries in a Hilbert space. The improvement was first done in
-\cite{makovozRandomApproximantsNeural1996} by the compactness of the dictionary
-of Heaviside networks. Subsequently,
-\cite{klusowskiApproximationCombinationsReLU2018} showed ReLU and squared ReLU
-networks where the compactness of the dictionary is guaranteed by controlling
-the $\lp{1}$ and $\lp{\infty}$ norm of parameters. In the latter, the
-\textit{inner parameters} $b\in\R^d$ in \eqref{eq:improved_fourier_dict} are
-suitably constrained to ensure compactness. The works of
-\cite{maUniformApproximationRates2022, siegelSharpBoundsApproximation2022,
-klusowskiApproximationCombinationsReLU2018a} provide the basis for our
-discussion, unless explicitly cited otherwise.
+In the following sections, we will discuss how the approximation error rates can
+be improved by imposing stricter conditions on the smoothness of the dictionary
+set or by ensuring its compactness. The key idea is to derive the $n$-th dyadic
+entropy number corresponding to the dictionary $\mathbb{D}$. To this end,
+Maurey’s Theorem \ref{thm:maurey} provides a bound for any compact dictionary in
+a Hilbert space.
 
-\cite{makovozRandomApproximantsNeural1996} showed that the error can be improved
-to $\bigO(n^{\frac{1}{2} - \frac{1}{p \cdot d}})$ in $\lp{p}(\Omega)$, $p <
-\infty$.
+The first instance of improvement in this area was reported in
+\cite{makovozRandomApproximantsNeural1996}, where the compactness of the
+dictionary of Heaviside functions was used and showed that the error can be
+improved to $\bigO(n^{\frac{1}{2} - \frac{1}{p \cdot d}})$ in $\lp{p}(\Omega)$,
+$p < \infty$. More recently, \cite{klusowskiApproximationCombinationsReLU2018}
+demonstrated that ReLU and ReLU\textsuperscript{2} networks can also be made
+compact by controlling the $\lp{1}$ and $\lp{\infty}$ norms of their parameters.
+In the latter case, the inner parameters $b\in\R^d$ in
+\eqref{eq:improved_fourier_dict} are suitably constrained to ensure compactness.
+
+Our discussion will primarily be based on the works of
+\cite{maUniformApproximationRates2022, siegelSharpBoundsApproximation2022,
+klusowskiApproximationCombinationsReLU2018a}, unless we explicitly cite other
+sources.
 
 \begin{theorem}
     % \cite[Theorem 3]{makovozRandomApproximantsNeural1996}
@@ -604,24 +610,25 @@ to $\bigO(n^{\frac{1}{2} - \frac{1}{p \cdot d}})$ in $\lp{p}(\Omega)$, $p <
         \norm{f- f_n}_{\lp{p}(U)} \leq C n^{-\frac{1}{2} - \frac{1}{p \cdot d}}
         \quad 1 \leq p < \infty
     \end{equation}
-    where $C$ is a constant dependent only $U$, $p$ and $s(\cdot)$.
+    where $C$ is a constant dependent only $U$, $p$.
 \end{theorem}
 
 % In some literature, V is represented as the dictionary
 
 Note that this theorem does not cover the case $p = \infty$. However,
-\cite{barronUniversalApproximationBounds1993} has already showed that $f\in V$ are
-dense w.r.t. supremum norm ($\norm{f - f_n}_{\infty} = \bigO(n^{-1/2})$), which
-implies $\norm{f-f_n}_{q}$ for all $\lp{q}, q<\infty$.
+\cite{barronUniversalApproximationBounds1993} has already showed that $f\in V$
+are dense w.r.t. supremum norm ($\norm{f - f_n}_{\lp{\infty}(U)} =
+\bigO(n^{-1/2})$), which implies $\norm{f-f_n}_{\lp{p}(U)}$ for all $\lp{p},
+1 \leq p < \infty$.
 
 As the dimensionality $d$ increases, this rate approaches to the original rate
 and therefore this theorem is insignificant for high dimensionality. It is
-sufficient to prove the case $s$ is sigmoidal. It is easy to check $s(\lambda t)
-\to s(t)$ as $\lambda \to \infty$ and $s(\lambda t) \to s{t}$ as $\lambda \to
--\infty$. On a closed interval $[-u, u]$ on $\R$, note that the difference $s(t)
-- \sigma(\lambda t)$ is still bounded everywhere. Therefore, we can see that
-distance between $s$ and $\sigma$ can be made arbitrarily small on the space
-$\lp{d}(\R)$ with a sufficiently large $b$.
+sufficient to prove the case $\sigma$ is the Heaviside function. It is easy to
+check $\sigma(\lambda t) \to H(t)$ as $\lambda \to \infty$ and $\sigma(\lambda
+t) \to H(t)$ as $\lambda \to -\infty$. On a closed interval $[-u, u]$ on $\R$,
+note that the difference $H(t) - \sigma(\lambda t)$ is still bounded everywhere.
+Therefore, we can see that distance between $H$ and $\sigma$ can be made
+arbitrarily small on the space $\lp{d}(\R)$ with a sufficiently large $b$.
 
 \begin{proof}
     We denote the set of sigmoidal functions
@@ -649,15 +656,16 @@ $\lp{d}(\R)$ with a sufficiently large $b$.
     \end{equation}
     in $\lp{2}$ with some constant independent of $d$.
     
-    By the volume ratio argument \cite{vandervaartWeakConvergenceEmpirical1996},
-    one can obtain a $\bigO(\sqrt{\epsilon})$-net for $A$ in $\lp{2}(U)$ if we
-    are able to find a $\epsilon$-net for the set $P:= \{(b,c)\in \R^{d+1}:
-    \abs{b} = 1, \abs{c} \leq r\}$. To build a $\epsilon$-net for the sphere
-    $\abs{b}=1$, $\bigO(\epsilon^{1-d})$ elements is needed for the
-    sphere $\{v \in \R^d, \abs{v}=1\}$. An interval $[-r,r]$ requires
-    $\bigO(\epsilon^{-d})$ elements. Therefore, a $\epsilon$-net of
-    $\bigO(\epsilon^{-2d})$ elements can be constructed for $A$ and hence the
-    covering number for $A$ is of the order $\bigO(\epsilon^{-\frac{1}{2d}})$.
+    By the volume ratio argument
+    \citep{vandervaartWeakConvergenceEmpirical1996}, one can obtain a
+    $\bigO(\sqrt{\epsilon})$-net for $A$ in $\lp{2}(U)$ if we are able to find a
+    $\epsilon$-net for the set $P:= \{(b,c)\in \R^{d+1}: \abs{b} = 1, \abs{c}
+    \leq r\}$. To build a $\epsilon$-net for the sphere $\abs{b}=1$,
+    $\bigO(\epsilon^{1-d})$ elements is needed for the sphere $\{v \in \R^d,
+    \abs{v}=1\}$. An interval $[-r,r]$ requires $\bigO(\epsilon^{-d})$ elements.
+    Therefore, a $\epsilon$-net of $\bigO(\epsilon^{-2d})$ elements can be
+    constructed for $A$ and hence the covering number for $A$ is of the order
+    $\bigO(\epsilon^{-\frac{1}{2d}})$.
 
     The statement then follows the Corollary on~\cite[p.
     104]{makovozRandomApproximantsNeural1996}.
@@ -721,7 +729,7 @@ It it shown recently in \cite{siegelSharpBoundsApproximation2022} that the
 spectral norm $\norm{f}_{\bspace{\mcal{F}, s}}$, $s \geq 1$ is the variation
 norm of the dictionary:
 \begin{equation}
-    \mathbb{D}_{\mcal{F}, s} := \{
+    \mathbb{F}_{s} := \{
         (1 + \abs{\omega})^{-s} e^{i\omega\tr x}: \omega \in \R^d
     \}.
 \end{equation}
@@ -732,8 +740,8 @@ define a set of finite linear combination of elements from
 $\mathbb{D}_{\mcal{F},s}$ in which $\abs{a_j}$ is bounded in $\lp{1}$ for a
 fixed $M > 0$
 \begin{equation}
-    \Sigma_n(\mathbb{D}_{\mcal{F}, s}, M) := \Bigg\{
-        f = \sum_{j=1}^n \alpha_j d_j: 
+    \Sigma_n := \Bigg\{
+        \sum_{j=1}^n \alpha_j d_j: 
         d_j \in \mathbb{D}_{\mcal{F}, s} \textnormal{ and } 
         \sum_{j=1}^n \abs{\alpha_j} \leq M, \quad 
         n \in \Nat, \alpha_j \in \R
@@ -776,6 +784,55 @@ fixed $M > 0$
 
 \section{Approximation with ReLU\textsuperscript{k} activation function}
 
+This section focuses on the problem of approximating functions $f\in
+\mcal{K}(\mathbb{F}_s)$ uniformly using 2NN with the ReLU\textsuperscript{k}
+activation function. In the previous section, we examined the approximation
+rates for ReLU and Heaviside networks in the space $\mcal{K}(\mathbb{F}_s)$. In
+this section, we extend that analysis to include the approximation by
+ReLU\textsuperscript{k} networks. 
+
+This part builds on the research by
+\cite{klusowskiApproximationCombinationsReLU2018}.
+\cite{siegelHighOrderApproximationRates2021} obtained the error rate in $\lp{2}$
+and the result is extended to $\lp{\infty}$ in
+\cite{maUniformApproximationRates2022}.
+
+
+We define 
+\begin{equation}
+    \Sigma_n^k := \Bigg\{
+        \sum_{j=1}^n a_j \sigma_k(b_j\tr x + c_j): 
+        b_j \in \R^d, a_j, c_j \in \R
+    \Bigg\}.
+\end{equation}
+
+\begin{theorem}
+    Let $\Omega = [0,1]^d$, $k \geq 1$, and $f \in \mcal{K}(\mathbb{F}_s)$. The
+    smoothness index $1 < s \leq (d+1)k + 1$. Then for a large $n \in \Nat$,
+    there exists a finite linear combination of elements $f_n \in \Sigma_n^k$
+    such that
+    \begin{equation}
+        \norm{f-f_n}_{\lp{\infty}(\Omega)} \lesssim 
+        n^{-\frac{1}{2} - \frac{s-1}{d+1}}
+        (\log{n})^{1 + \frac{(s-1)t}{d+1}}
+        \norm{f}_{\bspace{\mcal{F},s}}
+    \end{equation}
+    where $t=0$ when $s < (d+1)k+1$ and $t=1$ when $s = (d+1)k+1$.
+\end{theorem}
+
+When the target functions are highly smooth, we have the error rate below.
+
+\begin{theorem}
+    Let $\Omega = [0,1]^d$, $k \geq 1$, and $f \in \mcal{K}(\mathbb{F}_s)$. The
+    smoothness index $s \geq (d+1)(k+1)$. Then for a large $n \in \Nat$, there
+    exists a finite linear combination of elements $f_n \in \Sigma_n^k$ such
+    that
+    \begin{equation}
+        \norm{f-f_n}_{\lp{\infty}(\Omega)} \lesssim 
+        n^{-(k+1)} (\log{n})^t \norm{f}_{\bspace{\mcal{F},s}}
+    \end{equation}
+    where $t=0$ when $s < (d+1)(k+1)$ and $t=1$ when $s = (d+1)(k+1)$.
+\end{theorem}
 
 %%% Local Variables: 
 %%% mode: latex
