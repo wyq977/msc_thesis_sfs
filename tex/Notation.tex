@@ -33,8 +33,10 @@ For a measure space $(X, \mcal{M}, \mu)$, let $f$ is a measurable function on
 $X$, the $\norm{\cdot}_{p}$ is defined as
 \begin{equation*}
     \norm{f}_p = \Biggl( \int \abs{f}^p \, d\mu \Biggr)^{1/p}, \quad
-    0 < p < \infty.
+    1 \leq p < \infty.
 \end{equation*}
+
+% https://www.youtube.com/watch?v=NKuLYRui-NU
 
 When $p = \infty$, we define 
 \begin{equation*}
@@ -51,7 +53,13 @@ $\lp{1}$ and $\lp{2}$ norm.
 We denote the 
 \begin{equation*}
     \norm{f - g}_{\lp{p}(X)} := 
-    \sup_{x \in X} \norm{f(x) - g(x)}_{\lp{p}(X)}, \quad 1 \leq p \leq \infty.
+    \Biggl( \int_X \abs{f(x) - g(x)}^p \, d\mu \Biggr)^{1/p}, \quad
+    1 \leq p < \infty.
+\end{equation*}
+
+When $p = \infty$, we define 
+\begin{equation*}
+    \norm{f - g}_{\lp{\infty}(X)} = \ess{\sup_{x\in X} \abs{f(x) - g(x)}}.
 \end{equation*}
 
 We abbreviate it by $\norm{f - g}_{p}$ when this does not cause any confusion
