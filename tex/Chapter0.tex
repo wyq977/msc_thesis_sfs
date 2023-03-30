@@ -1,6 +1,8 @@
 \chapter{Introduction}
 \label{ch:introduction}
 
+\numberwithin{equation}{chapter}
+
 % talk about NN is good in many fields
 % its history
 % lack good theory
@@ -70,9 +72,9 @@ target function can be approximated arbitrarily well by 2NN:
 For any $f \in C(\R^d)$, any compact set $U$ of $\R^d$, and an arbitrary
 accuracy $\epsilon > 0$, there is a $g$ produced by 2NN, $g \in
 \nnFunc{W}{1}{\sigma}$ such that 
-\begin{equation*}
+\begin{equation}
     \sup_{x \in U} \abs{f(x) - g(x)} < \epsilon.
-\end{equation*}
+\end{equation}
 
 Since the late 1980s, it has been established that NNs are universal
 approximators \citep{carrollConstructionNeuralNets1989,
@@ -145,7 +147,7 @@ functions for $\lp{2}$ norm on $U$. For any $n \in \Nat$, there exists a a
 linear combination of sigmoidal functions $f_n = \sum_{j=1}^n a_j \sigma(b_j\tr
 x + c_j), a_j,c_j \in \R, b_j \in \R^d$ such that 
 \begin{equation}
-    \sup_{x \in U} \norm{f - f_n}_{\lp{2}(\Omega)} \leq C n^{-1/2}, \quad 
+    \norm{f - f_n}_{\lp{2}(\Omega)} \leq C n^{-1/2}, \quad 
     f_n \in K.
 \end{equation}
 
@@ -225,6 +227,8 @@ connection between these spaces and their variation spaces is included. Each
 corresponding variation space is constructed using a compact dictionary of
 functions. Moreover, we compare and articulate the relationship between the
 model classes.
+
+\numberwithin{equation}{section}
 
 %%% Local Variables: 
 %%% mode: latex
