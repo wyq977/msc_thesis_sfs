@@ -26,7 +26,7 @@ The term \textit{curse of dimensionality} (\gls{cod}) was coined by
 overwhelming complexity associated with solving a multi-stage processes through
 dynamic programming. In the scope of approximation theory, it amounts to the
 exponentially growing number of data points required to maintain the accuracy.
-Such dimensionality cursed problems has appeared in computational and applied
+Such dimensionality cursed problems have appeared in computational and applied
 mathematics. For approximations in high dimensions, the accuracy will drop
 exponentially as dimensionality increases but the deep learning based numerical
 application methods for partial differential equation (\gls{pde}) indicates
@@ -48,7 +48,7 @@ use in various domains, such as numerical methods for solving PDEs.
 
 % we only concern about 2NN
 
-The variety of architecture in NN presents a challenge in characterizing their
+The variety of architectures in NN presents a challenge in characterizing their
 approximation properties due to the wide variety of architectural choices
 available, such as the width, depth, activation functions, and connectivity. To
 address this challenge, two main directions concerning the approximation power
@@ -64,7 +64,7 @@ confined on the performance of 2NN as an approximation tool.
 % what is the question of density
 
 One of the first question in the approximation of 2NN is the question of
-\textit{density}: what conditions must 2NN satisfy in order for an arbitrary
+\textit{density}: what conditions must 2NN satisfy in order that an arbitrary
 target function can be approximated arbitrarily well by 2NN:
 
 For any $f \in C(\R^d)$, any compact set $U$ of $\R^d$, and an arbitrary
@@ -82,19 +82,19 @@ funahashiApproximateRealizationContinuous1989}. Using the Hahn-Banach Theorem
 and the Riesz Representation Theorem,
 \cite{cybenkoApproximationSuperpositionsSigmoidal1989} stated the density
 property required is $\sigma$ is sigmoidal, (defined in \eqref{def:sigmoidal}).
-Indepedent from Cybenko, Funahashi’s proof uses the result of
+Independent from Cybenko, Funahashi’s proof uses the result of
 \cite{irieCapabilitiesThreelayeredPerceptrons1988} on the integral
 representation $\lp{1}$ functions, using a kernel which can be expressed as a
 difference of two sigmoidal functions. In paper by
 \cite{hornikMultilayerFeedforwardNetworks1989a}, the activation function needs
 to monotone and bounded, which allows noncontinuous $\sigma$. Additionally, the
 summation and product of activation functions are allowed in their statement. In
-\cite{jonesSimpleLemmaGreedy1992}, a constrctive method with a bounded sigmoidal
-function is sufficient to ensure the density. A sequence of paper adopted
-various techniques to attack this problem and yet the answer is surprisingly
-simple, as shown by \cite{leshnoMultilayerFeedforwardNetworks1993}. The
-necessary and sufficient condition on $\sigma$ for $\nnFunc{W}{1}{\sigma}$ to be
-\textit{dense} is that $\sigma$ must not be a polynomial. 
+\cite{jonesSimpleLemmaGreedy1992}, a constructive method with a bounded
+sigmoidal function is sufficient to ensure the density. A sequence of papers
+adopted various techniques to attack this problem and yet the answer is
+surprisingly simple, as shown by \cite{leshnoMultilayerFeedforwardNetworks1993}.
+The necessary and sufficient condition on $\sigma$ for $\nnFunc{W}{1}{\sigma}$
+to be \textit{dense} is that $\sigma$ must not be a polynomial. 
 
 % one way to look at the NN approximation power
 % F -> NN 
@@ -109,7 +109,7 @@ approximates. The effectiveness of NN-based learning in high-dimensional
 settings remains a mystery. To gain insights into the approximation abilities of
 2NN, one can estimate the worst-case error rate of approximation by measuring
 the performance of the network on a target function $f$ from a classical model
-class. One then tries to answer the following question \ref{problem:1}.
+class. One then tries to address the following problem \ref{problem:1}.
 \begin{problem}
     \label{problem:1}
     Given a target function $f$ in one of the classical model class such as unit
@@ -137,22 +137,26 @@ One of the celebrated results was introduced by Prof. Andrew
 the model class $K$ consists of all functions $f$ in $\lp{2}(U)$ whose Fourier
 transform $\fourier{f}$ satisfies
 \begin{equation}
-    \int_{\R^d} \abs{\omega} \abs{\fourier{f}(\omega)} \,d\omega < \infty
+    \int_{\R^d} \abs{\omega} \abs{\fourier{f}(\omega)} \,d\omega < \infty.
 \end{equation}
 
 Initially, the approximation error was obtained for any sigmoidal activation
-functions for $\lp{2}$ norm on $U$. This result clearly holds for
-\textit{rectified linear unit} (ReLU) activation as wells since
-$\sigma_{\text{ReLU}}(x) - \sigma_{\text{ReLU}}(x-1)$ is a sigmoidal function.
+functions for $\lp{2}$ norm on $U$. For any $n \in \Nat$, there exists a a
+linear combination of sigmoidal functions $f_n = \sum_{j=1}^n a_j \sigma(b_j\tr
+x + c_j), a_j,c_j \in \R, b_j \in \R^d$ such that 
 \begin{equation}
     \sup_{x \in U} \norm{f - f_n}_{\lp{2}(\Omega)} \leq C n^{-1/2}, \quad 
-    f_n \in K, n \in \Nat.
+    f_n \in K.
 \end{equation}
+
+This result clearly extend to the \textit{rectified linear unit} (ReLU)
+activation as wells since $\sigma_{\text{ReLU}}(x) - \sigma_{\text{ReLU}}(x-1)$
+is a sigmoidal function.
 
 % inspired by Barron
 
 Inspired by Barron's result \citep{eRepresentationFormulasPointwise2020,
-carageaNeuralNetworkApproximation2022}, a lot of generalizations and
+carageaNeuralNetworkApproximation2022}, many generalizations and
 improvements have been made. A important generalization is given by
 \cite{makovozRandomApproximantsNeural1996} where improved error rate is
 $\bigO(n^{-1/2-1 / p\cdot d})$. This improvement relies on the fact that one can
@@ -209,7 +213,7 @@ the closed convex hull of said dictionaries.
 The rest of this thesis is organized as follows. Chapter \ref{ch:preliminary}
 introduces the question setup and the 2NN model. The question of
 \textit{density} with 2NN is answered for any continuous functions from $\R^d$
-to $\R$. We showed that the 2NN are universal approximators with a activation
+to $\R$. We show that the 2NN are universal approximators with a activation
 function that is not a polynomial when the number of nodes are allowed to grow
 unlimited. In Chapter \ref{ch:fourier}, we consider the model classes of
 functions (Fourier-analytic Barron spaces) that are guaranteed to be
@@ -219,7 +223,7 @@ describes the Infinite-width Barron spaces in which each function is also well
 approximated with the help of an integral representation. Furthermore, the
 connection between these spaces and their variation spaces is included. Each
 corresponding variation space is constructed using a compact dictionary of
-functions. Moreover, we compared and articulated the relationship between the
+functions. Moreover, we compare and articulate the relationship between the
 model classes.
 
 %%% Local Variables: 

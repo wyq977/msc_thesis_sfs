@@ -253,8 +253,11 @@ For $f \in \mcal{H}$, the approximation error is defined as
 \begin{equation}
     \label{eq:appro_err_hilbert}
     e_n(f, \mathbb{D}, \mcal{H})
-        := \sup_{g\in\Sigma_{\mathbb{D}}} \norm{f - g}_{\mcal{H}}.
+        := \sup_{g\in\Sigma_n(\mathbb{D})} \norm{f - g}_{\mcal{H}}.
 \end{equation}
+where $\Sigma_n(\mathbb{D})$ is the collection of all functions in $\mcal{H}$
+that can be expressed as a linear combination of at most $n$ elements of
+$\mathbb{D}$ \eqref{eq:dict_represent}.
 
 Assuming that approximation holds with a dictionary $\mathbb{D}$ in $\mcal{H}$
 such that for any function $f \in \mcal{H}$, the approximation error is
@@ -492,23 +495,30 @@ $\{d_1,\dots, d_n\}$.
 \section{Universal approximation theorem}
 \label{sec:uat}
 
-Neural networks, even those with just one hidden layer such as 2NN, are
-universal approximators. This means that any continuous function on a compact
-set can be approximated up to a desired level of precision, given some mild
-restrictions on the activation functions $\sigma$, and the number of nodes can
-grow arbitrarily. For functions of $d$-variables, a linear combination of
-functions from the dictionary
+Neural networks, including those with a single hidden layer, such as 2NN, have
+the ability to approximate any continuous function $f$ on a compact set up to an
+arbitrary precision. This is known as universal approximation, which can be
+achieved with mild restrictions on the activation functions $\sigma$. For
+functions of $d$-variables, a linear combination of functions from the
+dictionary
 \begin{equation}
     \label{eq:uat_dict}
-    \mathbb{D} = \{\sigma(b\tr x + c): b \in \R^d, c\in \R \}.
+    \mathbb{D} = \{\sigma(b\tr x + c): b \in \R^d, c\in \R \}
 \end{equation}
-can be used to achieve a good approximation. These functions, also known as
-ridge functions or planar waves, are subject to certain requirements on
-$\sigma$. However, the lack of restriction on n makes it difficult to obtain
-quantitative information about the error rate. Despite this limitation, we will
-present the univariate approximation theorem in this section, which is mainly
-based on the work of \cite{cybenkoApproximationSuperpositionsSigmoidal1989},
-unless otherwise stated.
+can be used to obtain a good approximation to $f$. These functions in
+$\mathbb{D}$, also known as ridge functions or planar waves, are subject to
+the requirements on $\sigma$.
+
+However, the problem of complexity in approximation remains a challenge, as it
+is unclear how many nodes $n$ in the hidden layer are required to achieve a
+desired degree of approximation. While $n$ is allowed to grow uncontrolled, one
+is unable to obtain quantitative information about the error rate. Despite this
+limitation, this section will present the univariate approximation theorem based
+on \cite{cybenkoApproximationSuperpositionsSigmoidal1989}, unless otherwise
+specified.
+
+% https://arxiv.org/abs/1601.00013
+% use the notion of complexity problem
 
 % We will state the the universal approximation theorem that the finite linear
 % combinations of sigmoidal functions (sum of the functions of the form
@@ -814,10 +824,10 @@ of Lemma \ref{lemma:zero_measure}.
     \end{equation}
     is zero for all $n\in\Nat$ where $a_j \in \R$, and ${A_j} \subseteq \R$ are
     measurable and pairwise disjoint sets of $\R$. Since the simple functions
-    \eqref{eq:simple_function} are dense in $\lp{\infty}(\R)$ (\TOCITE
-    Proposition 6.7 in Folland's Real Analysis), then for a function $h \in
-    \lp{\infty}(\R)$, there exists a sequence of functions $s_n$ converge
-    pointwise to $h$ for all $n \in \Nat$ and $x \in \R$
+    \eqref{eq:simple_function} are dense in $\lp{\infty}(\R)$ \citep[Proposition
+    6.7]{alma991031140799705251} , then for a function $h \in \lp{\infty}(\R)$,
+    there exists a sequence of functions $s_n$ converge pointwise to $h$ for all
+    $n \in \Nat$ and $x \in \R$
     \begin{align}
         L(h) &= \int_{I_d} h(b_0\tr x) \,d\mu(x) 
              = \int_{I_d} \lim_{n\to\infty} s_n(b_0\tr x) \,d\mu(x) \\
@@ -863,7 +873,7 @@ of Lemma \ref{lemma:zero_measure}.
 
 \subsection{Application to the classification problem}
 
-This section will explicate the implications of Theorem \ref{thm:uat} for
+This section will explain the implications of Theorem \ref{thm:uat} for
 classification problems. It should be noted that the decision function defined
 below is not continuous on $I_d$. We would like to check whether such
 classification problem can also be well understood as the regression problem.
