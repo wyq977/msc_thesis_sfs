@@ -1,0 +1,415 @@
+\documentclass[aspectratio=32]{beamer}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage[longnamesfirst]{natbib}
+
+% \usepackage[natbib=true, style=apa]{biblatex}
+% \addbibresource{../bib/myReferences.bib} %Imports bibliography file
+\usepackage{../style/texab}     % SfS sty: tex abb.
+
+\newcommand*{\barronnorm}[2]{\norm{{#1}}_{\mathcal{B}_{#2}}}
+
+
+\usetheme{Madrid}
+\usecolortheme{default}
+
+% https://web.mit.edu/rsi/www/pdfs/beamer-tutorial.pdf
+
+%Information to be included in the title page:
+\title[]
+{
+    Analysis of the Generalization Properties \\
+    and the Function Spaces Associated with \\
+    Two-Layer Neural Network Model
+}
+
+\author[Yongqi Wang]{
+    Yongqi Wang, Master Thesis\\
+    {\and} \\
+    {Adviser: Prof. Dr. Sara van de Geer}
+}
+
+% \institute[ETH Zurich]{D-BSSE, Swiss Federal Institute of Technology Zurich}
+\date{2025 Feb 07}
+
+
+\begin{document}
+
+\bibliographystyle{chicago}
+
+\frame{\titlepage}
+
+\begin{frame}[allowframebreaks]
+    \frametitle{Table of Contents}
+    \tableofcontents[
+        currentsection,
+        sectionstyle=show/show,
+        subsectionstyle=show/show/hide
+    ]
+\end{frame}
+
+\section{Introduction}
+
+\begin{frame}{NN excels in function approximation}
+    \begin{itemize}
+        \item Image classification: approximating function
+        \item Generative models: approximating and sampling distribution with finite samples
+        \item Go game: solving differential and difference equations
+    \end{itemize}
+
+    \begin{center}
+        The major difference is \textbf{dimensionality $d$}!
+    \end{center}
+
+    $d$ for a RGB image ($512 \times 512$) $= 3 \times 512 \times 512 = 786,432$
+
+    \begin{exampleblock}{ChatGPT and DeepSeek}
+    \begin{quotation}
+        ``Yes, you can say that both DeepSeek and ChatGPT are results of function approximation in a broad sense, as they are built using machine learning techniques that involve approximating complex functions.''        
+    \end{quotation}
+    \end{exampleblock}
+    
+\end{frame}
+
+\begin{frame}{These are not new problems in computational mathematics}
+
+    Given observed data $x, y$, often with noise in practical cases.
+
+    Find the target function $f_{\text{True}}: x \to y$
+
+    \begin{itemize}
+        \item $y$: labels in classification task
+        \item $y$: response in most prediction tasks.
+    \end{itemize}
+
+    \vspace{0.1\pdfpageheight}
+
+
+\end{frame}
+
+\begin{frame}{Decomposition of error in ML models}
+    % $W$ denotes the number of parameters, 
+    % $\mathcal{H}_{W}$ be the hypothesis space.
+
+    % \vspace{1em}
+
+    \begin{itemize}
+        \item $f_n$: best approximation to $f_{\text{True}}$ in $\mathcal{H}_{n}$, $n$ is the width in 2NN case
+        \item $\tilde{f}_{n, M}$: best approximation to $f_{\text{True}}$ in $\mathcal{H}_{n}$ 
+            given $M$ samples
+        \item $\hat{f}$: output of ML model
+    \end{itemize}
+
+    We can decompose the error between $f_{\text{True}}$ and $\hat{f}$
+    \begin{equation*}
+        f_{\text{True}} - \hat{f} 
+        = \underbrace{f_{\text{True}} - f_n}_\text{app. err.}
+        + \underbrace{f_n - \tilde{f}_{n, M}}_\text{est. err.}
+        + \underbrace{\tilde{f}_{n, M} - \hat{f}}_\text{opt. err.}
+    \end{equation*}
+
+    \begin{itemize}
+        \item $f_{\text{True}} - f_n$: only due to the hypothesis space chosen
+        \item $f_n - \tilde{f}_{n, M}$: limited by training data $S_n$
+        \item $\tilde{f}_{n, M} - \hat{f}$: by training algorithm
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Problem with approximation: Curse of dimensionality}
+
+    \begin{definition}[CoD]
+        For a specified accuracy $\epsilon > 0$, the number of parameters to
+        satisfy is growing exponentially.
+    \end{definition}
+
+    \vspace*{3em}
+
+
+    To reduce the error by a factor of $10$, we need to increase parameters by a factor of $10^d$.
+
+    Holds for all classical algorithms, e.g. approximating functions using
+    polynomials, trigonometric polynomials or wavelets.
+
+\end{frame}
+
+\begin{frame}{2NN: a special class of functions}
+
+    $$
+        f(x) = \sum_{j=1}^n a_j \sigma(b_j \cdot x + c_j)
+    $$
+    where $a_j, c_j \in \mathbb{R}, b_j \in \mathbb{R}^d$ and $\sigma$ is the
+    activation function.
+
+    \vspace*{3em}
+    Common activation functions:
+    \begin{itemize}
+        \item sigmoid: $\sigma(z) = (1+ e^{-z})^{-1}$
+        \item ReLU, $\sigma(z)= \max\{z, 0\}$
+        \item Tanh
+        \item ...
+    \end{itemize}
+\end{frame}
+
+% \section{Techniques used}
+
+
+
+% \subsection{Maurey's Theorem}
+
+% \begin{frame}{Maurey's Theorem \citep{pisierRemarquesResultatNon1980}}
+%     \begin{theorem}[Maurey]
+%     Let $\mathbb{D}$ be a compact set in a Hilbert space $\mathcal{H}$ where
+%     every $d \in \mathbb{D}$ is bounded. If $f \in \mathcal{H}$ is in the closed
+%     convex hull of $\mathbb{D}$, there exists a $n > 0$ and $f_n: = \sum_{j=1}^n
+%     \alpha_j d_j, \sum_{j=1}^n \alpha_j = 1$ such that
+%     \begin{equation*}
+%         \norm{f - f_n}_{\mathcal{H}} \lesssim n^{-1/2}
+%     \end{equation*}
+%     \end{theorem} 
+% \end{frame}
+
+\section{Question of density in approximation}
+
+\subsection{Necessary and sufficient cond.}
+
+\begin{frame}{Two main problems in approximation by 2NN}
+    \begin{itemize}
+        \item \textit{\textbf{Density}}: the conditions where
+              $f_{\text{True}}$ can be approximated arbitrarily well
+        \item \textit{\textbf{Complexity}}: how ``large'' are necessary to give
+              a prescribed degree of approximation $\epsilon$
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Density: Cybenko's Universal Approximation Theorem}
+
+    Any continuous functions on $\R^d$ can be approximated uniformly well with
+    2NN.
+
+    \begin{theorem}
+        If $\sigma$ is sigmoidal as $\sigma(t)=1$ as $t \to \infty$ and
+        $\sigma(t)=0$ as $t \to -\infty$, then any continuous functions over
+        $[0,1]^d $ be approximated uniformly well by 2NN.
+    \end{theorem}
+
+    Necessary and sufficient condition condition for ``density''
+
+    \vspace*{1em}
+
+    Later: The activation must not be a polynomials
+    \citep{leshnoMultilayerFeedforwardNetworks1993}
+\end{frame}
+
+\begin{frame}{Finding the correct function spaces associated with 2NN}
+
+    \begin{center}
+        {
+            Find the functions in $\R^d$ that are \textbf{well approximated} by 2NN
+        }
+    \end{center}
+
+    \vspace{2em}
+
+    By \textbf{well approximated}, we mean the approximation error rate is of 
+    the order $n^{-1/2}$, not depend on $d$
+
+
+\end{frame}
+
+\section{Fourier-analytic Barron spaces}
+
+\begin{frame}{Fourier-analytic Barron spaces: Approximation error rate}
+
+    \begin{theorem}[Barron 1993]
+        For any $f \in \mathcal{B}_{\mathcal{F},s}(U)$, there exists a $n > 0$
+        such that
+        \begin{equation}
+            \norm{f - f_n}_2 \lesssim n^{-1/2}
+        \end{equation}
+        and the implied constant does depend upon the dimension.
+    \end{theorem}
+
+    \begin{itemize}
+        \item $\mathcal{B}_{\mathcal{F},1}(U)$ in $L^{2}(U)$: $\norm{f - f_n}_2
+                  \lesssim n^{-1/2}$
+        \item $\mathcal{B}_{\mathcal{F},1}(U)$ in $L^{\infty}(U)$: $\norm{f -
+                      f_n}_{\infty} \lesssim n^{-1/2}$
+    \end{itemize}
+
+\end{frame}
+
+\subsection{How it is constructed}
+
+\begin{frame}{Fourier-analytic Barron spaces: construction}
+
+    Let $U$ be a nonempty bounded set on $\mathbb{R}^d$, functions $f: U \to
+        \mathbb{R}$ is said to be in
+    \begin{align*}
+        \mathcal{B}_{\mathcal{F},s}(U) := \Big\{
+         & f: U \to \R: v'_{f,s} < \infty  \textnormal{ and } \\
+         & \forall x\in U,
+        f(x) = \int_{\R^d} e^{i\omega\tr x} \mathcal{F}(f)(\omega)\,d\omega
+        \Big\}
+    \end{align*}
+
+    where $v'_{f,s} = \int_{\R^d} (1 + \abs{\omega})^s
+        \abs{\mathcal{F}(f)(\omega)} \,d\omega.$
+
+    $f \in \mathcal{B}_{\mathcal{F},1}(U)$: functions with finite Fourier first
+    moment.
+\end{frame}
+
+\begin{frame}{What is the norm?}
+    A norm can be defined as:
+
+    \begin{definition}
+        \begin{equation}
+            \abs{f}_{\mathcal{F}, s} := \inf_{f_{e \mid U} = f} v'_{f, s}
+        \end{equation}
+    \end{definition}
+
+    Here the infimum is taken over all $f$ is taken over all extensions $f_e$ of $f$ in $L_1(U)$.
+\end{frame}
+
+\section{Infinite-width Barron spaces}
+\begin{frame}{Infinite-width Barron spaces: construction}
+
+    Let $U$ be a nonempty bounded set on $\mathbb{R}^d$
+    \begin{align*}
+        \mathcal{B}(U) := \Big\{
+         & f: U \to \R: r(f, \mu, p) < \infty  \textnormal{ and } \\
+         & \forall x\in U,
+        f(x) = \int_{\Omega} a \sigma(b\tr x + c) \mu(da, db, dc)
+        \Big\}
+    \end{align*}
+
+    where $r(f, \mu, p) = \ERWi{\mu}{\abs{a} (\abs{b} + \abs{c})}$
+
+    \vspace*{1em}
+
+    \textbf{Inverse} and \textbf{Direct} approximation theorem.
+\end{frame}
+
+\begin{frame}{Infinite-width Barron spaces: Approximation error rate}
+    \begin{itemize}
+        \item in $L^{2}(U)$: $\norm{f - f_n}_2 \lesssim n^{-1/2}$
+        \item in $L^{\infty}(U)$: $\norm{f - f_n}_{\infty} \lesssim n^{-1/2}$
+    \end{itemize}
+
+
+\end{frame}
+
+\subsection{Infinite: norm}
+\begin{frame}{What is the norm?}
+    \begin{definition}[Barron norm] For a function $f$ that admits the integral
+        representation
+        \begin{equation}\label{eq:barron_norm}
+            \barronnorm{f}{p} := \inf_{\rho} \Big(\ERWi{\rho}{\abs{a}^p 
+            (\abs{b} + \abs{c})^p}\Big)^{1/p},
+            \quad 1 \leq p \leq \infty.
+        \end{equation}
+        % where \begin{equation*} \Theta_f = \left\{ (a, \pi) \mid f(x) =
+        % \int_{space} a(w) \sigma(\langle w, x \rangle)\dd{\pi(w)} \right\}.
+        % \end{equation*}
+    \end{definition}
+
+    The infimum is taken over all $\rho$ which the integral representation holds.
+
+    \vspace*{1em}
+
+    E et al. showed that For any $f \in \mathcal{B}_1$, $f$ also $\in \mathcal{B}_{\infty}$ and the spaces $\mathcal{B}_{\infty} = \cdots = \mathcal{B}_{2} = \mathcal{B}_{1}$. Space $\mathcal{B}$ is a Banach space.
+    
+\end{frame}
+
+\begin{frame}{Relationship between Fourier-analytic and Infinite-width Barron spaces}
+
+    \begin{itemize}
+        \item ReLU 2NN, $\mathcal{B}(U)$ is ``sandwiched'' between
+              $\mathcal{B}_{\mathcal{F},1}(U)$ and $\mathcal{B}_{\mathcal{F},2}(U)$
+    \end{itemize}
+
+    Given a nonempty bounded domain $U$ in $\R^d$, the following holds:
+
+    \begin{align*}
+        % \mathcal{B}(U) &\subset \mathcal{B}_{H}(U) \\
+        % \mathcal{B}_{\mathcal{F},1}(U) &\subset \mathcal{B}_{H}(U) \\
+        \mathcal{B}_{\mathcal{F},s}(U) &\subset \mathcal{B}(U) \quad \forall s \geq 2 \\
+        \mathcal{B}_{\mathcal{F},1}(U) &\not\subset \mathcal{B}(U) \\
+        \mathcal{B}(U) &\underbrace{\subset}_{\text{?}} \mathcal{B}_{\mathcal{F},1}(U) \\
+    \end{align*}
+
+\end{frame}
+
+\begin{frame}{Improved rates in later research}
+    Improved rate with higher $s$ in $\mathcal{B}_{\mathcal{F},s}$ \cite{barronApproximationEstimationHighDimensional2018}
+    \begin{itemize}
+        \item in $L^{\infty}(U)$: $\norm{f - f_n}_{\infty} \lesssim n^{-1/2-s/d} \sqrt{\log{n}} $
+    \end{itemize}
+    If $\sigma$ is Heaviside function, improved rate in $\mathcal{B}$ \cite{maUniformApproximationRates2022}
+    \begin{itemize}
+        \item in $L^{\infty}(U)$: $\norm{f - f_n}_{\infty} \lesssim n^{-1/2 - 1/2d}$
+    \end{itemize}
+\end{frame}
+
+% \begin{frame}{Varitaion space and variation norm}
+
+%     \begin{definition}[Varitaion norm]
+%         The variation norm, $\norm{f}_{\mathcal{K}(\mathbb{D})}$, of a subset
+%         $\mathbb{D}$ of a linear space $X$ is defined for all $f \in X$ as
+%         \begin{equation*}
+%             \norm{f}_{\mathcal{K}(\mathbb{D})} := \inf \{
+%             c > 0: f/c \in \textnormal{closed convex hull of } \mathbb{D}\}
+%         \end{equation*}
+%     \end{definition}
+
+%     \begin{definition}[Varitaion space]
+%         \begin{equation*}
+%             \mathcal{K}(\mathbb{D}) := \{
+%             f \in \mathcal{H}: \norm{f}_{\mathcal{K}(\mathbb{D})} < \infty \}
+%         \end{equation*}
+%     \end{definition}
+% \end{frame}
+
+\begin{frame}{Connection to variation space}
+
+    One can find a dictionary $\mathbb{D}$ and the variation space
+    $\mathcal{K}(\mathbb{D})$ for both
+    $\mathcal{B}_{\mathcal{F},s}(U)$
+    $\mathcal{B}(U)$
+
+    \begin{itemize}
+        \item $\mathbb{F}_s := \Bigg\{ (1 + \abs{\omega})^{-s} \cdot e^{2\pi
+                          i\omega\tr x}: \omega \in \R^d \Bigg\}$
+        \item $\mathbb{D}_{k} = \Bigg\{ \sigma_k(b\tr x + c), \quad b\in
+                  S^{d-1}, c\in [c_1, c_2] \Bigg\}$, $S^{d-1}$ is the unit sphere, $c$
+              is chosen to ensure $\mathbb{D}_{k}$'s compactness
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Scholars}
+    \begin{itemize}
+        \item Andrew Barron
+        \item Weinan E
+        \item Jason M. Klusowski
+        \item Jonathan W. Siegel
+        \item Robert D Nowak
+        \item Rahul Parhi
+        \item Josef Teichmann
+        \item Felix Voigtlaender, Philipp Petersen
+        \item Frank Gao
+        \item Maurey’s Theorem
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}[t,allowframebreaks]
+    \frametitle{Bibliography}
+    \bibliography{../bib/myReferences}
+    % \printbibliography[heading=none]
+\end{frame}
+
+\end{document}

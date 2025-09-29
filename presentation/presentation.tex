@@ -1,0 +1,339 @@
+\documentclass[aspectratio=32]{beamer}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage[longnamesfirst]{natbib}
+
+% \usepackage[natbib=true, style=apa]{biblatex}
+% \addbibresource{../bib/myReferences.bib} %Imports bibliography file
+\usepackage{../style/texab}     % SfS sty: tex abb.
+
+
+\usetheme{Madrid}
+\usecolortheme{default}
+
+% https://web.mit.edu/rsi/www/pdfs/beamer-tutorial.pdf
+
+%Information to be included in the title page:
+\title[]
+{
+    Analysis of the Generalization Properties \\
+    and the Function Spaces Associated with \\
+    Two-Layer Neural Network Model
+}
+
+\author[Yongqi Wang]{
+    Yongqi Wang, Master Thesis\\
+    {\and} \\
+    {Adviser: Prof. Dr. Sara van de Geer}
+}
+
+\institute[ETH Zurich]{D-BSSE, Swiss Federal Institute of Technology Zurich}
+\date{2023 Apr 11}
+
+% \AtBeginSection[]
+% {
+%     \begin{frame}
+%         \frametitle{Table of Contents}
+%         \tableofcontents[
+%             currentsection,
+%             sectionstyle=show/hide,
+%             subsectionstyle=show/show/hide
+%           ]
+%     \end{frame}
+% }
+
+\begin{document}
+
+\bibliographystyle{chicago}
+
+\frame{\titlepage}
+
+    \begin{frame}[allowframebreaks]
+        \frametitle{Table of Contents}
+        \tableofcontents[
+            currentsection,
+            sectionstyle=show/show,
+            subsectionstyle=show/show/hide
+          ]
+    \end{frame}
+
+\section{Introduction}
+
+\subsection{Empirical success of NN}
+
+\begin{frame}{Why neural networks (NN) excel across domains}
+    \begin{itemize}
+        \item Image and video processing, segmentation
+        \item Time series methods, NLP
+        \item Generative models
+    \end{itemize}
+
+    \vspace*{3em}
+    Even simplest one are very capable! Two-layer neural network (2NN)
+\end{frame}
+
+\begin{frame}{These are not new problems in computational mathematics}
+    \begin{itemize}
+        \item Image classification: approximating function
+        \item Generative models: approximating and sampling distribution with finite samples
+        \item Go game: solving differential and difference equations
+    \end{itemize}
+
+    \begin{center}
+        The major difference is \textbf{dimensionality $d$}!
+    \end{center}
+
+    $d$ for a RGB image ($512 \times 512$) $= 3 \times 512 \times 512 = 786,432$
+\end{frame}
+
+\subsection{Function approximation}
+
+\begin{frame}{These are not new problems in computational mathematics}
+
+    Given observed data $x, y$, often with noise in practical cases.
+
+    Find the target function $f_{\text{True}}: x \to y$
+
+    \begin{itemize}
+        \item $y$: labels in classification task
+        \item $y$: response in most prediction tasks.
+    \end{itemize}
+
+    \vspace{0.1\pdfpageheight}
+
+
+\end{frame}
+
+\begin{frame}{Curse of dimensionality}
+    \begin{definition}
+        For a specified accuracy $\epsilon > 0$, the number of parameters to
+        satisfy is growing exponentially.
+    \end{definition}
+
+    To reduce the error by a factor of $10$, we need to increase m by a factor of $10^d$.
+
+    Holds for all classical algorithms, e.g. approximating functions using
+    polynomials, trigonometric polynomials or wavelets.
+
+\end{frame}
+
+\begin{frame}{2NN: a special class of functions}
+
+    $$
+    f(x) = \sum_{j=1}^n a_j \sigma(b_j \cdot x + c_j) 
+    $$
+    where $a_j, c_j \in \mathbb{R}, b_j \in \mathbb{R}^d$ and $\sigma$ is the
+    activation function.
+
+    \vspace*{3em}
+    Common activation functions: 
+    \begin{itemize}
+        \item sigmoid: $\sigma(z) = \frac{1}{1+ e^{-z}}$
+        \item ReLU, $\sigma(z)= \max\{z, 0\}$
+        % \item tahn
+        \item ...
+    \end{itemize}
+\end{frame}
+
+% \section{Techniques used}
+
+% \subsection{Maurey's Theorem}
+
+% \begin{frame}{Maurey's Theorem \citep{pisierRemarquesResultatNon1980}}
+%     \begin{theorem}[Maurey]
+%     Let $\mathbb{D}$ be a compact set in a Hilbert space $\mathcal{H}$ where
+%     every $d \in \mathbb{D}$ is bounded. If $f \in \mathcal{H}$ is in the closed
+%     convex hull of $\mathbb{D}$, there exists a $n > 0$ and $f_n: = \sum_{j=1}^n
+%     \alpha_j d_j, \sum_{j=1}^n \alpha_j = 1$ such that
+%     \begin{equation*}
+%         \norm{f - f_n}_{\mathcal{H}} \lesssim n^{-1/2}
+%     \end{equation*}
+%     \end{theorem} 
+% \end{frame}
+
+% \subsection{Iterative approach}
+
+% \begin{frame}{Iterative approach by Jones}
+% \begin{align*}
+%     a = \\
+%     b = 
+% \end{align*}
+% \end{frame}
+
+% \subsection{VC}
+
+\section{Question of density in approximation}
+
+\subsection{Necessary and sufficient cond.}
+
+\begin{frame}{Two main problems in approximation by NN (2NN)}
+    \begin{itemize}
+        \item \textit{\textbf{density}}: the conditions where
+        $f_{\text{target}}$ can be approximated arbitrarily well
+        \item \textit{\textbf{complexity}}: how ``large'' are necessary to give
+        a prescribed degree of approximation $\epsilon$
+    \end{itemize}
+    
+\end{frame}
+
+\begin{frame}{Cybenko's Theorem: density}
+
+    Any continuous functions on $\R^d$ can be approximated uniformly well with
+    2NN. 
+
+    \begin{theorem}
+    If $\sigma$ is sigmoidal as $\sigma(t)=1$ as $t \to \infty$ and
+    $\sigma(t)=0$ as $t \to -\infty$, then any continuous functions over
+    $[0,1]^d $ be approximated uniformly well by 2NN.
+    \end{theorem}
+
+    Necessary and sufficient condition condition for ``density''
+
+    The activation must not be a polynomials
+    \citep{leshnoMultilayerFeedforwardNetworks1993}
+\end{frame}
+
+\begin{frame}{Finding the correct function spaces associated with 2NN}
+
+    \begin{center}
+        {
+            Find the functions that are \textbf{well approximated} by 2NN
+        }
+    \end{center}
+
+\end{frame}
+
+\section{Fourier-analytic Barron spaces}
+
+\subsection{How it is constructed}
+
+\begin{frame}{Fourier-analytic Barron spaces: construction}
+    
+    Let $U$ be a nonempty bounded set on $\mathbb{R}^d$, functions $f: U \to
+    \mathbb{R}$ is said to be in
+    \begin{align*}
+        \mathcal{B}_{\mathcal{F},s}(U) := \Big\{
+            &f: U \to \R: v'_{f,s} < \infty  \textnormal{ and } \\
+            &\forall x\in U, 
+                f(x) = \int_{\R^d} e^{i\omega\tr x} \mathcal{F}(f)(\omega)\,d\omega
+        \Big\}
+    \end{align*}
+
+    where $v'_{f,s} = \int_{\R^d} (1 + \abs{\omega})^s
+    \abs{\mathcal{F}(f)(\omega)} \,d\omega.$
+
+    $f \in \mathcal{B}_{\mathcal{F},1}(U)$: functions with finite Fourier first
+    moment.
+\end{frame}
+
+\begin{frame}{Fourier-analytic Barron spaces: Approximation error rate}
+
+    \begin{theorem}
+        For any $f \in \mathcal{B}_{\mathcal{F},s}(U)$, there exists a $n > 0$
+        such that 
+        \begin{equation}
+            \norm{f - f_n}_2 \lesssim n^{-1/2}
+        \end{equation}
+        and the implied constant does depend upon the dimension.
+    \end{theorem}
+
+    \begin{itemize}
+        \item $\mathcal{B}_{\mathcal{F},1}(U)$ in $L^{2}(U)$: $\norm{f - f_n}_2
+        \lesssim n^{-1/2}$
+        \item $\mathcal{B}_{\mathcal{F},1}(U)$ in $L^{\infty}(U)$: $\norm{f -
+        f_n}_{\infty} \lesssim n^{-1/2}$
+    \end{itemize}
+
+
+
+\end{frame}
+
+\section{Infinite-width Barron spaces}
+
+\begin{frame}{Infinite-width Barron spaces: construction}
+    
+    Let $U$ be a nonempty bounded set on $\mathbb{R}^d$
+    \begin{align*}
+        \mathcal{B}(U) := \Big\{
+            &f: U \to \R: r(f, \mu, p) < \infty  \textnormal{ and } \\
+            &\forall x\in U, 
+             f(x) = \int_{\Omega} a \sigma(b\tr x + c) \mu(da, db, dc)
+        \Big\}
+    \end{align*}
+
+    where $r(f, \mu, p) = \ERWi{\mu}{\abs{a} (\abs{b} + \abs{c})}$
+\end{frame}
+
+\begin{frame}{Infinite-width Barron spaces: Approximation error rate}
+    \begin{itemize}
+        \item in $L^{2}(U)$: $\norm{f - f_n}_2 \lesssim n^{-1/2}$
+        \item in $L^{\infty}(U)$: $\norm{f - f_n}_{\infty} \lesssim n^{-1/2}$
+    \end{itemize}
+
+
+\end{frame}
+
+\begin{frame}{relationship between Fourier-analytic and Infinite-width Barron spaces}
+    
+    \begin{itemize}
+        \item $\mathcal{B}(U)$ depends on the choice of activation function $\sigma$
+        \item ReLU 2NN, $\mathcal{B}(U)$ is sandwiched between
+        $\mathcal{B}_{\mathcal{F},1}(U)$ and $\mathcal{B}_{\mathcal{F},2}(U)$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Varitaion space and variation norm}
+    
+    \begin{definition}[Varitaion norm]
+        The variation norm, $\norm{f}_{\mathcal{K}(\mathbb{D})}$, of a subset
+        $\mathbb{D}$ of a linear space $X$ is defined for all $f \in X$ as
+        \begin{equation*}
+            \norm{f}_{\mathcal{K}(\mathbb{D})} := \inf \{
+                c > 0: f/c \in \textnormal{closed convex hull of } \mathbb{D}\}
+        \end{equation*}
+    \end{definition}
+
+    \begin{definition}[Varitaion space]
+        \begin{equation*}
+            \mathcal{K}(\mathbb{D}) := \{
+                f \in \mathcal{H}: \norm{f}_{\mathcal{K}(\mathbb{D})} < \infty \}
+        \end{equation*}
+    \end{definition}
+\end{frame}
+
+\begin{frame}{Connection to variation space}
+
+    One can find a dictionary $\mathbb{D}$ and the variation space
+    $\mathcal{K}(\mathbb{D})$ for both 
+    $\mathcal{B}_{\mathcal{F},s}(U)$
+    $\mathcal{B}(U)$
+
+    \begin{itemize}
+        \item $\mathbb{F}_s := \Bigg\{ (1 + \abs{\omega})^{-s} \cdot e^{2\pi
+            i\omega\tr x}: \omega \in \R^d \Bigg\}$
+        \item $\mathbb{D}_{k} = \Bigg\{ \sigma_k(b\tr x + c), \quad b\in
+            S^{d-1}, c\in [c_1, c_2] \Bigg\}$, $S^{d-1}$ is the unit sphere, $c$
+            is chosen to ensure $\mathbb{D}_{k}$'s compactness
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Improved rates}
+    Improved rate with higher $s$
+    \begin{itemize}
+        \item in $L^{\infty}(U)$: $\norm{f - f_n}_{\infty} \lesssim n^{-1/2-s/d} \sqrt{\log{n}} $
+    \end{itemize}
+    If $\sigma$ is Heaviside function, improved rate
+    \begin{itemize}
+        \item in $L^{\infty}(U)$: $\norm{f - f_n}_{\infty} \lesssim n^{-1/2 - 1/2d}$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[t,allowframebreaks]
+    \frametitle{Bibliography}
+    \bibliography{../bib/myReferences}
+    % \printbibliography[heading=none]
+\end{frame}
+
+\end{document}

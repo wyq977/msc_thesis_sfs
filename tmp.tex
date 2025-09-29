@@ -1,0 +1,267 @@
+
+\section{Trash}
+
+To apply the argument of nonlinear approximation with $n$-term dictionary to
+2NN, we consider the dictionary
+\begin{equation}
+    \mathbb{D}_{\sigma} := \{
+        \sigma(b\tr x + c), \quad b\in\R^d, c\in\R
+    \}
+\end{equation}
+for any $x \in U$ where $U$ is a nonempty bounded domain in $\R^d$, and
+$\sigma:\R\to\R$ is a bounded activation function.
+
+Let $\Sigma_n(\mathbb{D}_{\sigma})$ be the class of function of $n$-width 2NN
+with activation function $\sigma$
+\begin{equation}
+    \Sigma_n(\mathbb{D}_{\sigma}) = \Sigma_n^{\sigma}
+    := \Bigg\{
+        \sum_{j=1}^n a_j d_j, \quad a_j\in\R, d_j\in \mathbb{D}_{\sigma}
+    \Bigg\}.
+\end{equation}
+
+If a function $f$ is in the closed convex hull of $\mathbb{D}_{\sigma}$
+\begin{equation}
+    \closure{\conv(D_{\sigma})} :=
+    \closure{
+        \Bigg\{ 
+            \sum_{j=1}^n a_j d_j: 
+            n\in\Nat, a_j\in\R, d_j\in\mathbb{D}_{\sigma}, 
+            \sum_{j=1}^n \norm{a_j}_1 \leq 1
+        \Bigg\}
+    }.
+\end{equation}
+Applying the Maurey's Theorem (\TODO or should I say the sampling argument?)
+yields a approximation rate
+\begin{equation}
+    \inf_{f_n\in\Sigma_n^{\sigma}} \norm{f - f_n} 
+    \lesssim n^{-\frac{1}{2}}
+\end{equation}
+where $f$ is any function in the closed convex hull of $\mathbb{D}_{\sigma}$
+and $2 \leq q < \infty$.
+
+This chapter will show that functions that satisfies certain smoothness
+conditions are in $\closure{\conv(D_{\sigma})}$ where $\sigma$ is any bounded
+sigmoidal activation functions.
+
+
+\chapter{Summary and Future Work}
+
+Much progress has been made in recent years in the estimation of the population
+risk of the population risk, specifically under explicit regularization. Though
+numerical experiments has well documented \TOCITE the behavior that deep neural
+networks model and shallow neural neural model are ``biased'' or ``skewed''
+towards a more regularized, smooth output without explicitly setting
+regularization in the form of explicit penalty term or through various
+optimization techniques such as drop-outs, weight decay, etc.
+
+In the case of explicit regularization, 
+
+\section{Prevalence of Implicit Regularization}
+
+\section{GD based}
+
+Gradient descent ”favors”: min norm or max margin solution w/o explicit
+regularization
+
+\section{qualitative work}
+
+mainly on low-Complexity ones, mainly in the context of regression
+and mostly on infinitely wide network.
+
+\section{quantitative work}
+
+1d-1d function 
+
+\section{Norm of the weights}
+
+Function spaces associated with shallow NN, (bounded norm)
+
+\section{Learning rate}
+
+
+A few analyses attempt to explain the success of learning nonlinear operators by
+neural networks including DeepOnets with a focus on reducing the high/infinite
+dimensional space to a low dimensional space.
+\cite{lanthalerErrorEstimatesDeepOnets2022} rigorously proves that the CoD is
+overcome when considering smooth functions with exponentially decaying
+coefficients.
+
+I also need to talk about something in PDE, monte carol sampling shit https://arxiv.org/pdf/1807.01212.pdf
+
+Indeed, any supervised learning model suffers in principle from the curse of
+dimensionality: under minimal assumptions on the function to be learnt,
+achieving a fixed target generalisation error e requires a number of training
+samples P which grows exponentially with the dimensionality d of input data ,
+ https://openreview.net/pdf?id=sBBnfOFtPc
+
+What is the teacher-student model
+
+\section{Approximation and estimation scheme}
+
+Here they author prove the CoD is overcome by a factor of $1/m$
+https://arxiv.org/pdf/2205.14421.pdf
+
+Approximation of functions in Ko space https://arxiv.org/pdf/2012.05451.pdf
+
+\section{Classical approximation spaces}
+
+Here I will need to talk about something like affine or spilne regression as the
+bach paper
+
+Polynomial spaces?
+
+Ko spaces?
+
+Repres thm https://pages.stat.wisc.edu/~wahba/ftp1/wahba.wang.2019submit.pdf
+
+\section{RKHS and kernel regression shit}
+
+I need to briefly go over some kernel regression stuff and talk a bit about its
+connection with NN?
+
+Also on the represnetation results
+
+\subsection{Difference between representation theorem and approximation}
+
+Also on the debate between linking kernel with NN.
+
+\section{The setup of supervised learning}
+
+Here I need to answer what is the functions?
+
+The error
+
+The norm
+
+and the spaces
+
+What is student teacher model ???
+
+Here we briefly review the statistical learning framework and we refer readers to \cite{shalev-shwartzUnderstandingMachineLearning2014a} for details.
+
+Under the batch learning settings, a \textit{training set} dataset $S$ is
+accessible to the learner. Generally, it is assumed that $S = \{(x_1,y_1),
+\dots, (x_n, y_n)\}$ of $n$ points independently and identically distributed
+(i.i.d.) $\mathcal{X} \times \mathcal{Y}$ with some unknown distribution
+$\mathcal{D}$. For simplicity, we only write the regression where the output
+function $f: \mathcal{X} \to \mathcal{Y}$ with minimum expected error on $S$
+with some loss function $L: \mathcal{Y} \to \R$:
+
+\begin{equation}
+    \label{eq:training_loss}
+    L_{\mathcal{D}}(f) = \PRi{(x, y) \sim \mathcal{D}}{y - f(x)}
+\end{equation}
+
+The learner cannot minimize the expected loss $L_{\mathcal{D}}$ due to limited
+sample points $n$ but an estimate of the expected loss of using training set $S$
+can be evaluated:
+
+\begin{equation}
+    L_{S}(f) = \frac{1}{n} \cdot
+\end{equation}
+
+$L(f)$ and $\hat{L}(f)$ is used. A expected margin loss for any margin $\gamma$:
+
+\begin{equation}
+    L_{\gamma} = \PRi{sad}{sdsd}
+\end{equation}
+
+
+A minimized loss \eqref{eq:training_loss} does not guarantee a low expected
+error and the simplest case would be the case where a trained predictor $f$ that
+memorize $S$ and has zero $L_{s}(f)$. However, it is shown in \TOCITE{about over
+fitting} training in deep networks (over-parameterized) beyond $0$ training
+error, i.e. during the \textit{terminal phase of training} (\Gls{tpt}) \TOCITE.
+This is in sharp contrast to the conventional belief in learning or regression
+models where \textit{over-fitting} is discouraged. Interesting empirical
+phenomena such as ``Nerual Collapse'' by \TOCITE sheds some lights into why deep
+networks can escape or evade the complexity based techniques.
+
+Add a section of over parameterization in NN.
+
+In learning, we are interested in the size of NN or the numbers of parameters
+required for an accuracy $\epsilon$. An \textit{generalisation error} is
+difference $L_\mathcal{D}(f) - L_{S}(f)$ and this quantity shows the differnece between learning and memorizing.
+
+As the predictor $f$ is chosen by the training algorithm using $S$, we would
+like to obtain a bound that holds for the set of all possible functions.
+Therefore, it is 
+
+Add something from neural network theory????
+
+Historically, linear regression \TOCITE was the method of choice in supervised
+learning where the search for \textit{true} function is performed only within a
+small subspace of all functions: $\mathcal{H}_{\text{linear}}$, the space of
+linear functions. Despite its popularity and extensive usage in real-world
+applications, the space of linear functions is often insufficient since the
+\textit{true} relations between input $\mathcal{X}$ and $\mathcal{Y}$ often
+involve non-linearity. Therefore, it is preferable to choose a \textit{larger}
+or more expressive hypothesis space $\mathcal{H}$ so that these mappings
+$\mathcal{X} \to \mathcal{Y}$ can be found.
+
+This intuition that the target functions can be formalized as the Bayesian prior
+knowledge \TOCITE. In theory, the prior distribution of $(X, Y)$ on $\mathcal{X}
+\times \mathcal{Y}$ can be formulated as a probability measure over all
+probability measures on $\mathcal{X} \times \mathcal{Y}$.  For example, one
+could hypothesize that $f_{\text{True}}$ is mostly likely to be linear and
+consider all the other functions equally likely. This is the case where the we
+assign zero measure to all non-linear functions and assign all linear functions
+the same weights. Note that the measure here is improper since it assigns
+$\infty$ to the space of all linear functions $\mathcal{H}_{\text{linear}}$.
+However, it is often difficult to articulate a realist intuition such as ``we
+favors a smoother, simpler function rather than a more highly fluctuating
+function''. These realist \textit{insights} or \textit{impressions} are
+harder to formalize mathematically and the calculation of such problems within
+the Bayesian framework is often intractable.
+
+\TONOTE{Add something on LASSO, high dim regulzation stuffs}
+Is Lasso or spline regression 
+
+
+There have been great efforts in high-dimensional statistics where the idea
+of smoothing or stabilizing can be incorporated through regularization. These
+include LASSO, ridge regression with a sparsity-inducing norm. Yet, the shallow
+as well as deep neural networks \cite{neyshaburSearchRealInductive2015,
+maennelGradientDescentQuantizes2018, liLearningOverparameterizedNeural2019,
+kuboImplicitRegularizationOverparameterized2019,
+neyshaburImplicitRegularizationDeep2017} trained with standard algorithms
+(gradient descent based applied to a loss $L$) are able to find solution close
+to $f_{\text{True}}$ without explicit regularization including drop-outs,
+weight-decay or early-stopping. This phenomenon is referred as \textit{Implicit
+Regularization}.\footnote{ It is also defined as \textit{Implicit Bias} in
+\cite{soudryImplicitBiasGradient2022} }
+\cite{kuboImplicitRegularizationOverparameterized2019} has shown that the
+(stochastic) gradient descent algorithm along with random initialization can
+lead to surprisingly \textit{low} complexity of the over-parameterized networks.
+\cite{maennelGradientDescentQuantizes2018} has shown in 2NN the with small
+randomly initialized weights leads to ``simpler'' functions and
+\cite{maennelGradientDescentQuantizes2018, neyshaburSearchRealInductive2015} has
+empirically shown that the network size in the case of 1 hidden layer does not
+behave as a regularization term (i.e. encourage ``simpler'' functions by the
+predictors). In both setups, increasing the number of nodes results in a lower
+test error and overall more general results even with overfitting with random
+labels in \cite{neyshaburSearchRealInductive2015}. Therefore, a \textit{hidden}
+notion of complexity must be present to account for lower complexity/better
+generalization. Furthermore, this is proven by the phenomenon of training beyond
+zero training loss \TOCITE $L_{\text{train}}$, i.e. the test error and
+generalization improves despite $L_{\text{train}} = 0$.
+
+The paradox of why 
+
+future stuff
+
+The main interest of this section is to summarize the approximation power of
+ReLU networks, specifically ReLU networks. The problem of finding a stable
+algorithm to produce such approximation is intentionally omitted.
+
+
+
+
+It also holds for the nowadays more popular ReLU activation function since
+$\sigma(z+1) - \sigma(z)$ is sigmoidal.
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "MasterThesisSfS"
+%%% End: 
